@@ -65,7 +65,7 @@ For test the splash screen, from terminal write:
 ksplashqml --test --window ~/.local/share/plasma/look-and-feel/PearLight
 ```
 
-## For animation in Login manager
+## For animations in Login manager Plasma (SDDM) 
 
 Visit [Ittu themes for SDDM](https://adhec.github.io/sddm_themes/)
 
