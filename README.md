@@ -2,11 +2,15 @@
 
 <iframe width="753" height="380" src="https://www.youtube.com/embed/Fv4ryIh0_1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen autoplay="1"></iframe>
 
-### Themes
+---
+
+### Light and dark themes
 
 [![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_light_02b.png)](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_light_02.png)
 
 [![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_dark_01b.png)](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_dark_01.png)
+
+---
 
 ### 1 Installation
 
@@ -61,6 +65,9 @@ For test the splash screen, from terminal write:
 ksplashqml --test --window ~/.local/share/plasma/look-and-feel/PearLight
 ```
 
+## For animation in Login manager
+
+Visit [Ittu themes for SDDM](https://adhec.github.io/sddm_themes/)
 
 # Coffee
 
