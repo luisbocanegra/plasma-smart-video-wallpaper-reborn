@@ -2,6 +2,11 @@
 
 <iframe width="753" height="380" src="https://www.youtube.com/embed/Fv4ryIh0_1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen autoplay="1"></iframe>
 
+### Themes
+
+[![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_light_02b.png)](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_light_02.png)
+
+[![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_dark_01b.png)](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/pear_dark_01.png)
 
 ### 1 Installation
 
@@ -31,6 +36,8 @@ Ubuntu
 
 #### 3.1 Change animation of the session
 
+[![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/menu_session.png)]()
+
 ```bash
 1. Right click on your preferred animation to open the menu
 2. Select "Actions"
@@ -38,12 +45,9 @@ Ubuntu
 ```
 The chosen animation is independent of the animation used by the SDDM login manager.
 
-[![screen](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom_cut.jpg)](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom.jpg)
-
 ### 3.2 Change animation of the splashscreen
 
-
-[![screen](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom_cut.jpg)](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom.jpg)
+[![screen](https://raw.githubusercontent.com/adhec/plasma_tweaks/master/images/menu_splash.png)]()
 
 ```bash
 1. Right click on your preferred animation to open the menu
