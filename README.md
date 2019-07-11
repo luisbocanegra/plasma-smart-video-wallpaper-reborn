@@ -1,37 +1,68 @@
-## Welcome to GitHub Pages
+## Welcome to my look and feel themes for Plasma
 
-You can use the [editor on GitHub](https://github.com/adhec/plasma_tweaks/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+<iframe width="753" height="380" src="https://www.youtube.com/embed/Fv4ryIh0_1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen autoplay="1"></iframe>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### 1 Installation
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Install from Plasma SystemSettings:
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+[ SystemSettings > Look and Feel > Get New Look and Feel > Search "Pear" > Click in install button ]
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### 2 Usage
 
-### Jekyll Themes
+Select the theme from the SystemSettings > Look and Feel
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/adhec/plasma_tweaks/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### 3 Services menu for change animations
 
-### Support or Contact
+#### Dependencies
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Most cases are already installed by default, but to confirm install:
+
+Arch
+- sudo pacman -S imagemagick
+- sudo pacman -S kdialog
+
+Ubuntu
+- sudo apt install imagemagick
+- sudo apt install kdialog
+
+#### 3.1 Change animation of the session
+
+```bash
+1. Right click on your preferred animation to open the menu
+2. Select "Actions"
+3. Choose "Set as Session GIF"
+```
+The chosen animation is independent of the animation used by the SDDM login manager.
+
+[![screen](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom_cut.jpg)](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom.jpg)
+
+### 3.2 Change animation of the splashscreen
+
+
+[![screen](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom_cut.jpg)](https://git.opendesktop.org/adhe/ittusddm/raw/master/images/ittu_bottom.jpg)
+
+```bash
+1. Right click on your preferred animation to open the menu
+2. Select "Actions"
+3. Choose "Set as Splashscreen GIF"
+```
+
+For test the splash screen, from terminal write:
+```bash
+# replace "PearLight" with your current theme
+ksplashqml --test --window ~/.local/share/plasma/look-and-feel/PearLight
+```
+
+
+# Coffee
+
+Thanks for all the support :coffee: . If you liked my job send me a coffee :)  from [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url)
+
+[<img src="https://git.opendesktop.org/adhe/oie/raw/master/images/donate.png"  style="width:150px;">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url) 
+
+Have fun ;)
+
