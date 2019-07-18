@@ -71,9 +71,12 @@ Visit [Ittu themes for SDDM](https://adhec.github.io/sddm_themes/)
 
 # Coffee
 
-Thanks for all the support :coffee: . If you liked my job send me a coffee :)  from [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url)
+### Coffee
 
-[<img src="https://git.opendesktop.org/adhe/oie/raw/master/images/donate.png"  style="width:150px;">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url) 
+Thanks for all the support. If you like what I do,
+Share your ❤️ Buy me a ☕
+
+[<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png"  style="width:72px;">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url)  or  [<img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/_adhe_/donate)
 
 Have fun ;)
 
