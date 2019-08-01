@@ -9,3 +9,5 @@ Icon=preferences-desktop-wallpaper
 X-Plasma-MainScript=ui/main.qml
 X-KDE-PluginInfo-Name=smartvideowallpaper
 X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-PluginInfo-Author=adhe
+X-KDE-PluginInfo-Email=adhemarks2[at]gmail[dot]com
