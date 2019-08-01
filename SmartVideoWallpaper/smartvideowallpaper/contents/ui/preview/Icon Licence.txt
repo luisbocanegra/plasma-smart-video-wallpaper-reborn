@@ -1,0 +1,4 @@
+media-playback-pause.svg
+media-playback-start.svg
+
+Are part of the KDE Breeze icon theme.

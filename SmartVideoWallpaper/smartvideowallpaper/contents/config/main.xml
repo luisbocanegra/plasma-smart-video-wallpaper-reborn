@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="General">
+    <entry name="VideoWallpaperBackgroundVideo" type="String">
+      <label>Video file path</label>
+      <default></default>
+    </entry>
+    <entry name="BackgroundColor" type="String">
+      <label>Last folder used</label>
+      <default>black</default>
+    </entry>
+    <entry name="FillMode" type="int">
+      <label>Video fill mode</label>
+      <default>2</default>
+    </entry>
+    <entry name="MuteAudio" type="bool">
+      <label>Mute audio</label>
+      <default>true</default>
+    </entry>
+    <entry name="DoublePlayer" type="bool">
+      <label>Use double player as workaround to QTBUG-49446</label>
+      <default>true</default>
+    </entry>
+  </group>
+
+</kcfg>
