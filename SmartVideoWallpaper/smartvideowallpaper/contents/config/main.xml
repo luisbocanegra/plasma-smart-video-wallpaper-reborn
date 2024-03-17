@@ -18,6 +18,14 @@
       <label>Video fill mode</label>
       <default>2</default>
     </entry>
+    <entry name="checkedSmartPlay" type="bool">
+      <label>Pause the video when existing a maximized or full-screen windows.</label>
+      <default>false</default>
+    </entry>
+    <entry name="checkedBusyPlay" type="bool">
+      <label>Pause the video when the desktop is busy.</label>
+      <default>true</default>
+    </entry>
     <entry name="MuteAudio" type="bool">
       <label>Mute audio</label>
       <default>true</default>

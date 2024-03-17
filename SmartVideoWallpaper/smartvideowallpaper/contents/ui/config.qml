@@ -30,10 +30,12 @@ Item {
     id: root
     property string cfg_VideoWallpaperBackgroundVideo
     property string cfg_BackgroundColor: "black"
-    property int cfg_FillMode: 2
+    property int  cfg_FillMode: 2
     property bool cfg_MuteAudio:    true
     property bool cfg_DoublePlayer: true
-    //anchors.fill: parent
+
+    property alias cfg_checkedSmartPlay: checkedSmartPlay.checked
+    property alias cfg_checkedBusyPlay:  checkedBusyPlay.checked
 
     RowLayout {
         id: videoPath
@@ -42,8 +44,8 @@ Item {
         Layout.fillWidth:true
 
         Label {
-                text: "Video path: "
-            }
+            text: "Video path: "
+        }
         TextField {
             id: videoPathLine
             Layout.fillWidth:true
@@ -75,12 +77,13 @@ Item {
     RowLayout {
         id: fillModeRow
         anchors.top: videoPath.bottom
+        anchors.topMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
 
         Label {
-                text: "Video fill mode: "
-                Layout.alignment: Qt.AlignLeft
-            }
+            text: "Video fill mode: "
+            Layout.alignment: Qt.AlignLeft
+        }
         ComboBox {
             id: videoFillMode
             model: [
@@ -111,7 +114,7 @@ Item {
         }
         Label {
             text: "Background Color: "
-                Layout.alignment: Qt.AlignLeft
+            Layout.alignment: Qt.AlignLeft
         }
         Button {
             id: colorButton
@@ -131,32 +134,76 @@ Item {
         }
     }
 
+    ColumnLayout {
+        id: selectPlayRow
+        anchors.top: fillModeRow.bottom
+        anchors.topMargin: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        Row{
+            Rectangle{
+                width: 400;
+                height: 1
+                color: "#aaaaaa"
+            }
+        }
+        Row{
+            spacing: units.smallSpacing
+            RadioButton {
+                id: checkedSmartPlay
+                text: i18n("Pause the video when existing a maximized or full-screen windows.")
+                checked: true
+                onCheckedChanged: {
+                    checkedBusyPlay.checked = !checkedSmartPlay.checked
+                }
+            }
+        }
+        Row{
+            RadioButton {
+                id: checkedBusyPlay
+                checked: !checkedSmartPlay.checked
+                text: i18n("Pause the video when the desktop is busy.")
+                onCheckedChanged: {
+                    checkedSmartPlay.checked = !checkedBusyPlay.checked
+                }
+            }
+        }
+        Row{
+            Rectangle{
+                width: 400;
+                height: 1
+                color: "#aaaaaa"
+            }
+        }
+
+    }
     RowLayout {
         id: radioRow
-        anchors.top: fillModeRow.bottom
+        anchors.top: selectPlayRow.bottom
+        anchors.topMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
-        RadioButton {
+
+        CheckBox {
             id: muteRadio
             text: "Mute audio"
             checked: cfg_MuteAudio
             onCheckedChanged: {
-                    if (checked) { 
-                        cfg_MuteAudio = true
-                    } else { 
-                        cfg_MuteAudio = false
-                    }
+                if (checked) {
+                    cfg_MuteAudio = true
+                } else {
+                    cfg_MuteAudio = false
+                }
             }
         }
-        RadioButton {
+        CheckBox {
             id: doubleRadio
             text: "Use double player"
             checked: cfg_DoublePlayer
             onCheckedChanged: {
-                    if (checked) { 
-                        cfg_DoublePlayer = true
-                    } else { 
-                        cfg_DoublePlayer = false
-                    }
+                if (checked) {
+                    cfg_DoublePlayer = true
+                } else {
+                    cfg_DoublePlayer = false
+                }
             }
         }
         Button {
@@ -169,6 +216,11 @@ Item {
                 window.show()
             }
         }
+        Label {
+            text: "Not use for the lock screen!"
+            Layout.alignment: Qt.AlignLeft
+            color: "#ff0000"
+        }
     }
 
     Rectangle {
@@ -180,7 +232,7 @@ Item {
         color: "transparent"
         border.color: "lightgray"
         border.width: 2
-        Loader { 
+        Loader {
             id: videoPreviewLoader
             anchors.fill: parent
         }
@@ -201,12 +253,12 @@ Item {
         nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
         onAccepted: {
             cfg_VideoWallpaperBackgroundVideo = fileDialog.fileUrls[0]
-            videoPreviewLoader.source = "preview/QuickPreview.qml"
+            videoPreviewLoader.source = "QuickPreview.qml"
         }
     }
 
     onCfg_VideoWallpaperBackgroundVideoChanged: {
         videoPathLine.text = cfg_VideoWallpaperBackgroundVideo
-        videoPreviewLoader.source = "preview/QuickPreview.qml"
+        videoPreviewLoader.source = "QuickPreview.qml"
     }
 }

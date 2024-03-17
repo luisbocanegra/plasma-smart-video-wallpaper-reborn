@@ -18,34 +18,18 @@
  */
 
 import QtQuick 2.7
+import QtQuick.Controls 1.4
 
-import org.kde.plasma.core 2.0 as Plasmacore
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item {
+Rectangle {
+    id: back
     anchors.fill: parent
-
-/* Using loader as the plasma will crash if trying to change the video source on the fly.
- * Not crashing if setting the loader inactive and then again active */
-
-    Loader { 
-        id: mediaPlayerLoader
-        anchors.fill: parent
-    }
-
-    Timer {
-        id: smoother
-        interval: 100
-        onTriggered:  mediaPlayerLoader.source = "player.qml"
-    }
-    
-    Component.onCompleted: {
-        //mediaPlayerLoader.source = "mediaplayer/loading.qml"
-        reLoad ()
-        smoother.start()
-    }
-    
-    function reLoad() {
-        mediaPlayerLoader.active = false
-        mediaPlayerLoader.active = true
+    color: wallpaper.configuration.BackgroundColor
+ 
+    BusyIndicator {
+        anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter; 
+        running: true
     }
 }
+
