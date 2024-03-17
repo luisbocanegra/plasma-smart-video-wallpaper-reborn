@@ -26,6 +26,10 @@
       <label>Pause the video when the desktop is busy.</label>
       <default>true</default>
     </entry>
+    <entry name="overridePause" type="bool">
+      <label>If turned on, videos will play regardless of above pause options.</label>
+      <default>true</default>
+    </entry>
     <entry name="MuteAudio" type="bool">
       <label>Mute audio</label>
       <default>true</default>

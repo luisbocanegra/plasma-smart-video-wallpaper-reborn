@@ -36,6 +36,7 @@ Item {
 
     property alias cfg_checkedSmartPlay: checkedSmartPlay.checked
     property alias cfg_checkedBusyPlay:  checkedBusyPlay.checked
+    property alias cfg_overridePause: overridePause.checked
 
     RowLayout {
         id: videoPath
@@ -164,6 +165,16 @@ Item {
                 text: i18n("Pause the video when the desktop is busy.")
                 onCheckedChanged: {
                     checkedSmartPlay.checked = !checkedBusyPlay.checked
+                }
+            }
+        }
+        Row{
+            CheckBox {
+                id: overridePause
+                text: "Always Play mode! Disables above pause features."
+                checked: true
+                onCheckedChanged: {
+                //    this.text = cfg_overridePause
                 }
             }
         }

@@ -34,6 +34,7 @@ Item {
     property bool currentWindowMaximized: false
     property bool isActiveWindowPinned: false
     property bool modePlay: wallpaper.configuration.checkedBusyPlay
+    property bool overridePauseEnabled: wallpaper.configuration.overridePause
 
     TaskManager.VirtualDesktopInfo { id: virtualDesktopInfo }
     TaskManager.ActivityInfo { id: activityInfo }
@@ -92,6 +93,10 @@ Item {
     }
 
     function updateWindowsinfo(modePlay) {
+
+
+
+
         if(modePlay){
             playVideoWallpaper = (onlyWindowsModel.count === minimizedWindowModel.count) ? true : false
         }
@@ -133,6 +138,13 @@ Item {
             }
             playVideoWallpaper = (fullScreenWindowModel.count + maximizedWindowModel.count - twoStates) == 0 ? true : false
         }
+
+        if(overridePauseEnabled){
+            playVideoWallpaper = true;
+            return;
+        }
+
+
     }
     
     function removeDuplicates(arrArg){

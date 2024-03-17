@@ -31,7 +31,6 @@ Rectangle {
     color: wallpaper.configuration.BackgroundColor
 
     property bool playing: windowModel.playVideoWallpaper
-
     onPlayingChanged: background.playing ? playlistplayer.play() : playlistplayer.pause()
    
     WindowModel {
