@@ -32,17 +32,14 @@ Rectangle {
     
     MediaPlayer {
         id: mediaplayer
-        autoPlay: true
-        // autoLoad: true
         loops: MediaPlayer.Infinite
         activeAudioTrack: -1//cfg_MuteAudio
         source: cfg_VideoWallpaperBackgroundVideo
-        //source: Qt.resolvedUrl("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4")
         videoOutput: videoView
         
-        // onSourceChanged: { 
-        //     seeker()
-        // }
+        onSourceChanged: { 
+            play()
+        }
     }
 
     VideoOutput {
@@ -118,7 +115,7 @@ Rectangle {
                     }
                 }
             }
-        }    
+        }
 
         Rectangle {
             id: infoText

@@ -39,8 +39,10 @@ WallpaperItem {
 
         onVideoWallpaperBackgroundVideoChanged: {
             if (playing) {
-                playlistplayer.pause()
                 playlistplayer.play()
+            } else {
+                playlistplayer.play()
+                playlistplayer.pause()
             }
         }
         
@@ -52,13 +54,7 @@ WallpaperItem {
 
         MediaPlayer {
             id: playlistplayer
-            autoPlay: false
             activeAudioTrack: -1 //muted: wallpaper.configuration.MuteAudio
-            // playlist: Playlist {
-            //     id: playlist
-            //     playbackMode: Playlist.Loop
-            //     property var videoList: addItem( wallpaper.configuration.VideoWallpaperBackgroundVideo )
-            // }
             source: wallpaper.configuration.VideoWallpaperBackgroundVideo
             videoOutput: videoView
             loops: MediaPlayer.Infinite
