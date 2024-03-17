@@ -1,6 +1,7 @@
 /*
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
+ *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +18,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
  */
 
-import QtQuick 2.7
-import QtMultimedia 5.8
+import QtQuick
+import QtMultimedia
 
 import org.kde.plasma.core 2.0 as PlasmaCore
 
@@ -31,24 +32,23 @@ Rectangle {
     
     MediaPlayer {
         id: mediaplayer
-        autoPlay: false
-        autoLoad: true
+        autoPlay: true
+        // autoLoad: true
         loops: MediaPlayer.Infinite
-        muted: cfg_MuteAudio
+        activeAudioTrack: -1//cfg_MuteAudio
         source: cfg_VideoWallpaperBackgroundVideo
+        //source: Qt.resolvedUrl("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4")
+        videoOutput: videoView
         
-        onSourceChanged: { 
-            seeker()
-        }
+        // onSourceChanged: { 
+        //     seeker()
+        // }
     }
 
     VideoOutput {
         id: videoView
         fillMode: cfg_FillMode
         anchors.fill: parent
-        source: mediaplayer
-        
-       
 
         Rectangle {
             id: actionStripe
@@ -68,7 +68,7 @@ Rectangle {
                 }
                 onPressed:  { 
                     mediaplayer.play()
-                    mediaplayer.seek( Math.floor ((mouse.x - actionStripe.height) / ( background.width - actionStripe.height ) * mediaplayer.duration ))
+                    //mediaplayer.seek( Math.floor ((mouse.x - actionStripe.height) / ( background.width - actionStripe.height ) * mediaplayer.duration ))
                     if ( playButtonPressed == 0 ) { mediaplayer.pause() }
                 }
             }
@@ -114,7 +114,7 @@ Rectangle {
                         }
                     }
                     if (mouse.button == Qt.RightButton) {
-                        mediaplayer.seek(0)
+                        //mediaplayer.seek(0)
                     }
                 }
             }
@@ -144,7 +144,7 @@ Rectangle {
         id: delay
         interval: 500; running: false
         onTriggered: {
-            mediaplayer.seek(0)
+            // mediaplayer.seek(0)
             mediaplayer.pause()
         }
     }

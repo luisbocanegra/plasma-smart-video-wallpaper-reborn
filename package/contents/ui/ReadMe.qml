@@ -2,6 +2,7 @@
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
  *  Copyright 2020 sirpedroec <peter@peterctucker.com>
+ *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,8 +18,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
  */
 
-import QtQuick 2.7
-import QtQuick.Controls 1.4
+import QtQuick
+import QtQuick.Controls
 
 ApplicationWindow {
     id: root

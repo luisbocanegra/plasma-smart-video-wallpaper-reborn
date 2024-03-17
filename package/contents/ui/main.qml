@@ -1,6 +1,7 @@
 /*
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
+ *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,35 +18,73 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
  */
 
-import QtQuick 2.7
+import QtQuick
 
-import org.kde.plasma.core 2.0 as Plasmacore
+import org.kde.plasma.core as Plasmacore
+import org.kde.plasma.wallpapers.image as Wallpaper
+import org.kde.plasma.plasmoid
+import QtMultimedia
 
-Item {
+WallpaperItem {
     anchors.fill: parent
+    id: main
 
-/* Using loader as the plasma will crash if trying to change the video source on the fly.
- * Not crashing if setting the loader inactive and then again active */
-
-    Loader { 
-        id: mediaPlayerLoader
+    Rectangle {
+        id: background
         anchors.fill: parent
+        color: wallpaper.configuration.BackgroundColor
+        property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
+        property bool playing: windowModel.playVideoWallpaper
+        onPlayingChanged: background.playing ? playlistplayer.play() : playlistplayer.pause()
+
+        onVideoWallpaperBackgroundVideoChanged: {
+            if (playing) {
+                playlistplayer.pause()
+                playlistplayer.play()
+            }
+        }
+        
+
+        WindowModel {
+            id: windowModel
+            screenGeometry: main.parent.screenGeometry
+        }
+
+        MediaPlayer {
+            id: playlistplayer
+            autoPlay: false
+            activeAudioTrack: -1 //muted: wallpaper.configuration.MuteAudio
+            // playlist: Playlist {
+            //     id: playlist
+            //     playbackMode: Playlist.Loop
+            //     property var videoList: addItem( wallpaper.configuration.VideoWallpaperBackgroundVideo )
+            // }
+            source: wallpaper.configuration.VideoWallpaperBackgroundVideo
+            videoOutput: videoView
+            loops: MediaPlayer.Infinite
+        }
+
+        VideoOutput {
+            id: videoView
+            fillMode: wallpaper.configuration.FillMode
+            anchors.fill: parent
+        }
     }
 
-    Timer {
-        id: smoother
-        interval: 100
-        onTriggered:  mediaPlayerLoader.source = "player.qml"
+    function dumpProps(obj) {
+        console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        for (var k of Object.keys(obj)) {
+            print(k + "=" + obj[k]+"\n")
+        }
     }
-    
-    Component.onCompleted: {
-        //mediaPlayerLoader.source = "mediaplayer/loading.qml"
-        reLoad ()
-        smoother.start()
-    }
-    
-    function reLoad() {
-        mediaPlayerLoader.active = false
-        mediaPlayerLoader.active = true
-    }
+
+    // Timer {
+    //     id: debugTimer
+    //     interval: 1000
+    //     repeat: true
+    //     running: true
+    //     onTriggered: {
+    //         // 
+    //     }
+    // }
 }

@@ -1,6 +1,7 @@
 /*
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
+ *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,18 +19,19 @@
  */
 
 //import QtQuick 2.1
-import QtQuick 2.7
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.3
-import QtQuick.Window 2.1
-import org.kde.plasma.core 2.0 as PlasmaCore
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import org.kde.plasma.core as PlasmaCore
+import org.kde.kitemmodels 1.0 as KItemModels
 
 import org.kde.taskmanager 0.1 as TaskManager
 
 Item {
 
     id: wModel
-    property alias screenGeometry: tasksModel.screenGeometry
+    property var screenGeometry
     property bool playVideoWallpaper: true
     property bool currentWindowMaximized: false
     property bool isActiveWindowPinned: false
@@ -45,7 +47,7 @@ Item {
 
         activity: activityInfo.currentActivity
         virtualDesktop: virtualDesktopInfo.currentDesktop
-        screenGeometry: wallpaper.screenGeometry // Warns "Unable to assign [undefined] to QRect" during init, but works thereafter.
+        screenGeometry: wModel.screenGeometry
 
         filterByActivity: true
         filterByVirtualDesktop: true
@@ -61,41 +63,53 @@ Item {
         }
     }
 
-    PlasmaCore.SortFilterModel {
+    KItemModels.KSortFilterProxyModel {
         id: onlyWindowsModel
-        filterRole: 'IsWindow'
-        filterRegExp: 'true'
+        filterRole: TaskManager.AbstractTasksModel.IsWindow
+        filterString: 'true'
         onDataChanged: updateWindowsinfo(wModel.modePlay)
         onCountChanged: updateWindowsinfo(wModel.modePlay)
     }
 
-    PlasmaCore.SortFilterModel {
+    KItemModels.KSortFilterProxyModel {
         id: maximizedWindowModel
-        filterRole: 'IsMaximized'
-        filterRegExp: 'true'
+        filterRole: TaskManager.AbstractTasksModel.IsMaximized
+        filterString: 'true'
         onDataChanged: updateWindowsinfo(wModel.modePlay)
         onCountChanged: updateWindowsinfo(wModel.modePlay)
     }
-    PlasmaCore.SortFilterModel {
+    KItemModels.KSortFilterProxyModel {
         id: fullScreenWindowModel
-        filterRole: 'IsFullScreen'
-        filterRegExp: 'true'
+        filterRole: TaskManager.AbstractTasksModel.IsFullScreen
+        filterString: 'true'
         onDataChanged: updateWindowsinfo(wModel.modePlay)
         onCountChanged: updateWindowsinfo(wModel.modePlay)
     }
 
-    PlasmaCore.SortFilterModel {
+    KItemModels.KSortFilterProxyModel {
         id: minimizedWindowModel
-        filterRole: 'IsMinimized'
-        filterRegExp: 'true'
+        filterRole: TaskManager.AbstractTasksModel.IsMinimized
+        filterString: 'true'
         onDataChanged: updateWindowsinfo(wModel.modePlay)
         onCountChanged: updateWindowsinfo(wModel.modePlay)
+    }
+
+
+    function dumpProps(obj) {
+        console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        for (var k of Object.keys(obj)) {
+            print(k + "=" + obj[k]+"\n")
+        }
     }
 
     function updateWindowsinfo(modePlay) {
 
-
-
+        // dumpProps(fullScreenWindowModel)
+        var abstractTasksModel = TaskManager.AbstractTasksModel
+        var IsMaximized = abstractTasksModel.IsMaximized
+        var IsFullScreen = abstractTasksModel.IsFullScreen
+        var IsActive = abstractTasksModel.IsActive
+        var AppPid = abstractTasksModel.AppPid
 
         if(modePlay){
             playVideoWallpaper = (onlyWindowsModel.count === minimizedWindowModel.count) ? true : false
@@ -108,23 +122,22 @@ Item {
             var j;
             // add fullscreen apps
             for (i = 0 ; i < fullScreenWindowModel.count ; i++){
-                aObj = fullScreenWindowModel.get(i)
-                joinApps.push(aObj.AppPid)
+                let pid = fullScreenWindowModel.data(fullScreenWindowModel.index(i, 0), AppPid);
+                joinApps.push(pid)
             }
             // add maximized apps
             for (i = 0 ; i < maximizedWindowModel.count ; i++){
-                aObj = maximizedWindowModel.get(i)
-                joinApps.push(aObj.AppPid)                
+                let pid = maximizedWindowModel.data(maximizedWindowModel.index(i, 0), AppPid);
+                joinApps.push(pid)                
             }
 
             // add minimized apps
             for (i = 0 ; i < minimizedWindowModel.count ; i++){
-                aObj = minimizedWindowModel.get(i)
-                minApps.push(aObj.AppPid)
+                let pid = minimizedWindowModel.data(minimizedWindowModel.index(i, 0), AppPid);
+                minApps.push(pid)
             }
-           	
+
             joinApps = removeDuplicates(joinApps) // for qml Kubuntu 18.04
-            
             joinApps.sort();
             minApps.sort();
 

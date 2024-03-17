@@ -1,0 +1,32 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Rog131"
+            },
+            {
+                "Name": "adhe"
+            },
+            {
+                "Email": "luisbocanegra17b@gmail.com",
+                "Name": "Luis Bocanegra"
+            }
+        ],
+        "Category": "",
+        "Description": "Wallpaper plugin to play videos on your desktop",
+        "Icon": "preferences-desktop-wallpaper",
+        "Id": "com.luisbocanegra.smart.video.wallpaper",
+        "License": "GPLv2+",
+        "Version": "0.1.0",
+        "Name": "Smart Video Wallpaper",
+        "Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper",
+        "BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper/issues"
+    },
+    "Keywords": [
+        "video",
+        "wallpaper"
+    ],
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

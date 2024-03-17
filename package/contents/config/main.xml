@@ -34,10 +34,6 @@
       <label>Mute audio</label>
       <default>true</default>
     </entry>
-    <entry name="DoublePlayer" type="bool">
-      <label>Use double player as workaround to QTBUG-49446</label>
-      <default>true</default>
-    </entry>
   </group>
 
 </kcfg>

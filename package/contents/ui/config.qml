@@ -1,6 +1,7 @@
 /*
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
+ *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,18 +19,18 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.2
-import QtMultimedia 5.8
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtMultimedia
+import org.kde.kirigami as Kirigami
+import org.kde.kquickcontrols 2.0 as KQuickControls
 
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
     id: root
     property string cfg_VideoWallpaperBackgroundVideo
-    property string cfg_BackgroundColor: "black"
     property int  cfg_FillMode: 2
     property bool cfg_MuteAudio:    true
     property bool cfg_DoublePlayer: true
@@ -37,6 +38,7 @@ Item {
     property alias cfg_checkedSmartPlay: checkedSmartPlay.checked
     property alias cfg_checkedBusyPlay:  checkedBusyPlay.checked
     property alias cfg_overridePause: overridePause.checked
+    property alias cfg_BackgroundColor: colorButton.color
 
     RowLayout {
         id: videoPath
@@ -60,7 +62,7 @@ Item {
         Button {
             id: imageButton
             implicitWidth: height
-            PlasmaCore.IconItem {
+            Kirigami.Icon {
                 anchors.fill: parent
                 source: "folder-videos-symbolic"
                 PlasmaCore.ToolTipArea {
@@ -117,21 +119,11 @@ Item {
             text: "Background Color: "
             Layout.alignment: Qt.AlignLeft
         }
-        Button {
+
+        KQuickControls.ColorButton {
             id: colorButton
-            implicitWidth: height
-            Rectangle {
-                id: colorRect
-                anchors.fill: parent
-                border.color: "lightgray"
-                border.width: 1
-                radius: 4
-                color: cfg_BackgroundColor
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: colorDialog.open()
-            }
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_org.kde.color", "Color:")
+            dialogTitle: i18nd("plasma_wallpaper_org.kde.color", "Select Background Color")
         }
     }
 
@@ -148,7 +140,7 @@ Item {
             }
         }
         Row{
-            spacing: units.smallSpacing
+            spacing: Kirigami.Units.smallSpacing
             RadioButton {
                 id: checkedSmartPlay
                 text: i18n("Pause the video when existing a maximized or full-screen windows.")
@@ -205,18 +197,6 @@ Item {
                 }
             }
         }
-        CheckBox {
-            id: doubleRadio
-            text: "Use double player"
-            checked: cfg_DoublePlayer
-            onCheckedChanged: {
-                if (checked) {
-                    cfg_DoublePlayer = true
-                } else {
-                    cfg_DoublePlayer = false
-                }
-            }
-        }
         Button {
             id: readmeButton
             text: "Read me"
@@ -259,11 +239,11 @@ Item {
 
     FileDialog {
         id: fileDialog
-        selectMultiple : false
+        fileMode : FileDialog.OpenFile
         title: "Pick a video file"
         nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
         onAccepted: {
-            cfg_VideoWallpaperBackgroundVideo = fileDialog.fileUrls[0]
+            cfg_VideoWallpaperBackgroundVideo = fileDialog.selectedFile
             videoPreviewLoader.source = "QuickPreview.qml"
         }
     }
