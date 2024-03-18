@@ -18,7 +18,6 @@ message("Plugin Id: ${PLUGIN_ID}")
 message("Version: ${CUR_VERSION}")
 
 if(INSTALL_PLASMOID)
-    find_package(Plasma5Support ${PROJECT_DEP_VERSION} REQUIRED)
     find_package(Plasma ${PROJECT_DEP_VERSION} REQUIRED)
     plasma_install_package(package ${PLUGIN_ID} wallpapers)
 endif()
