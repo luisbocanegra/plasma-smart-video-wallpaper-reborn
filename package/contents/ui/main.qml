@@ -19,22 +19,48 @@
  */
 
 import QtQuick
-
 import org.kde.plasma.core as Plasmacore
-import org.kde.plasma.wallpapers.image as Wallpaper
-import org.kde.plasma.plasmoid
 import QtMultimedia
+import org.kde.plasma.plasma5support as P5Support
+import org.kde.plasma.plasmoid
 
 WallpaperItem {
     anchors.fill: parent
     id: main
     property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
-    property bool playing: windowModel.playVideoWallpaper
+    property bool playing: windowModel.playVideoWallpaper && !pauseBattery
     property bool isLoading: true
-    onPlayingChanged: playing && !isLoading ? main.play() : main.pause()
+    property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
+
+    onPlayingChanged: {
+        playing && !isLoading ? main.play() : main.pause()
+    }
     onVideoWallpaperBackgroundVideoChanged: {
         if (isLoading) return
         updateState()
+    }
+
+    property QtObject pmSource: P5Support.DataSource {
+        id: pmSource
+        engine: "powermanagement"
+        connectedSources: sources
+        onSourceAdded: source => {
+            disconnectSource(source);
+            connectSource(source);
+            dumpProps(pmSource.connectedSources)
+        }
+        onSourceRemoved: source => {
+            disconnectSource(source);
+            dumpProps(pmSource.connectedSources)
+        }
+    }
+
+    property bool pauseBattery: {
+        let result = false
+        if (pmSource.data.Battery["Has Cumulative"] && pmSource.data["Battery"]["State"] === "Discharging") {
+            result = pauseBatteryLevel > pmSource.data.Battery.Percent
+        }
+        return result
     }
 
     WindowModel {

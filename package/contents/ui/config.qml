@@ -36,12 +36,11 @@ Kirigami.FormLayout {
     property alias formLayout: root
 
     property alias cfg_VideoWallpaperBackgroundVideo: videoPathLine.text
-    property int  cfg_FillMode: 2
-    property bool cfg_MuteAudio: true
-    property bool cfg_DoublePlayer: true
-
+    property int cfg_FillMode: videoFillMode.currentIndex
+    property bool cfg_MuteAudio: muteRadio.checked
     property int cfg_PauseMode: wallpaper.configuration.PauseMode
     property alias cfg_BackgroundColor: colorButton.color
+    property int cfg_PauseBatteryLevel: pauseBatteryLevel.value
 
     RowLayout {
         Layout.fillWidth:true
@@ -107,18 +106,35 @@ Kirigami.FormLayout {
         dialogTitle: i18nd("@dialog:background_color_title", "Select Background Color")
     }
 
+    CheckBox {
+        id: muteRadio
+        Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Mute audio:")
+        checked: cfg_MuteAudio
+        onCheckedChanged: {
+            if (checked) {
+                cfg_MuteAudio = true
+            } else {
+                cfg_MuteAudio = false
+            }
+        }
+    }
+
+    Label {
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
+        text: "Window State"
+        font.weight: Font.DemiBold
+    }
 
     RadioButton {
         id: maximizedPauseRadioButtton
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
-        text: i18n("When there are maximized or full-screen windows.")
+        text: i18n("When there are maximized or full-screen windows")
         ButtonGroup.group: pauseModeGroup
         property int index: 0
         checked: wallpaper.configuration.PauseMode === index
     }
     RadioButton {
         id: busyPauseRadioButton
-        text: i18n("When the desktop is busy.")
+        text: i18n("When at least one window is shown")
         ButtonGroup.group: pauseModeGroup
         property int index: 1
         checked: wallpaper.configuration.PauseMode === index
@@ -130,24 +146,31 @@ Kirigami.FormLayout {
         property int index: 2
         checked: wallpaper.configuration.PauseMode === index
     }
+    Label {
+        text: "On Battery"
+        font.weight: Font.DemiBold
+    }
+    RowLayout {
+        Label {
+            id: batteryPauseCheckBox
+            text: i18n("When is below:")
+        }
+        SpinBox {
+            id: pauseBatteryLevel
+            from: 0
+            to: 100
+            value: cfg_PauseBatteryLevel
+            onValueChanged: {
+                cfg_PauseBatteryLevel = value
+            }
+        }
+    }
+
     ButtonGroup {
         id: pauseModeGroup
         onCheckedButtonChanged: {
             if (checkedButton) {
                 cfg_PauseMode = checkedButton.index
-            }
-        }
-    }
-
-    CheckBox {
-        id: muteRadio
-        Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Mute audio:")
-        checked: cfg_MuteAudio
-        onCheckedChanged: {
-            if (checked) {
-                cfg_MuteAudio = true
-            } else {
-                cfg_MuteAudio = false
             }
         }
     }

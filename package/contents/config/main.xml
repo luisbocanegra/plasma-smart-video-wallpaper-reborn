@@ -30,5 +30,8 @@
       <label>Mute audio</label>
       <default>true</default>
     </entry>
+    <entry name="PauseBatteryLevel" type="Int">
+      <default>10</default>
+    </entry>
   </group>
 </kcfg>
