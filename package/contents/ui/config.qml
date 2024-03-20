@@ -41,6 +41,7 @@ Kirigami.FormLayout {
     property int cfg_PauseMode: wallpaper.configuration.PauseMode
     property alias cfg_BackgroundColor: colorButton.color
     property int cfg_PauseBatteryLevel: pauseBatteryLevel.value
+    property bool cfg_BatteryPausesVideo: batteryPausesVideo.checked
 
     RowLayout {
         Layout.fillWidth:true
@@ -119,42 +120,46 @@ Kirigami.FormLayout {
         }
     }
 
-    Label {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
-        text: "Window State"
-        font.weight: Font.DemiBold
-    }
-
     RadioButton {
         id: maximizedPauseRadioButtton
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
         text: i18n("When there are maximized or full-screen windows")
         ButtonGroup.group: pauseModeGroup
         property int index: 0
         checked: wallpaper.configuration.PauseMode === index
     }
     RadioButton {
-        id: busyPauseRadioButton
-        text: i18n("When at least one window is shown")
+        id: activePauseRadioButton
+        text: i18n("When an active window is shown")
         ButtonGroup.group: pauseModeGroup
         property int index: 1
+        checked: wallpaper.configuration.PauseMode === index
+    }
+    RadioButton {
+        id: visiblePauseRadioButton
+        text: i18n("When a window is shown")
+        ButtonGroup.group: pauseModeGroup
+        property int index: 2
         checked: wallpaper.configuration.PauseMode === index
     }
     RadioButton {
         id: neverPauseRadioButton
         text: i18n("Never")
         ButtonGroup.group: pauseModeGroup
-        property int index: 2
+        property int index: 3
         checked: wallpaper.configuration.PauseMode === index
     }
-    Label {
-        text: "On Battery"
-        font.weight: Font.DemiBold
-    }
-    RowLayout {
-        Label {
-            id: batteryPauseCheckBox
-            text: i18n("When is below:")
+    ButtonGroup {
+        id: pauseModeGroup
+        onCheckedButtonChanged: {
+            if (checkedButton) {
+                cfg_PauseMode = checkedButton.index
+            }
         }
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "On Battery below:")
         SpinBox {
             id: pauseBatteryLevel
             from: 0
@@ -164,14 +169,16 @@ Kirigami.FormLayout {
                 cfg_PauseBatteryLevel = value
             }
         }
+        Label {
+            text: "%"
+        }
     }
 
-    ButtonGroup {
-        id: pauseModeGroup
-        onCheckedButtonChanged: {
-            if (checkedButton) {
-                cfg_PauseMode = checkedButton.index
-            }
+    CheckBox {
+        text: i18n("Pause video")
+        checked: cfg_BatteryPausesVideo
+        onCheckedChanged: {
+            cfg_BatteryPausesVideo = checked
         }
     }
 

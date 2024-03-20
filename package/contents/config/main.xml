@@ -19,9 +19,10 @@
       <default>2</default>
     </entry>
     <!-- Video pause mode
-        0: when the desktop is busy
-        1: when existing a maximized or full-screen windows
-        2: never
+        0: when existing a maximized or full-screen windows
+        1: when a visible window is active
+        2: when a window is visible
+        3: never
     -->
     <entry name="PauseMode" type="Int">
       <default>0</default>
@@ -32,6 +33,10 @@
     </entry>
     <entry name="PauseBatteryLevel" type="Int">
       <default>10</default>
+    </entry>
+    <entry name="BatteryPausesVideo" type="Bool">
+      <label>Pause video when battery is below PauseBatteryLevel</label>
+      <default>true</default>
     </entry>
   </group>
 </kcfg>
