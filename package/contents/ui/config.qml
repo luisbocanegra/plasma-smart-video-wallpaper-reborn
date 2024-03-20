@@ -41,7 +41,7 @@ Kirigami.FormLayout {
     property alias cfg_PauseMode: pauseModeCombo.currentIndex
     property alias cfg_BackgroundColor: colorButton.color
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
-    property alias cfg_BatteryPausesVideo: batteryPausesVideo.checked
+    property alias cfg_BatteryPausesVideo: batteryPausesVideoCheckBox.checked
     property alias cfg_BlurMode: blurModeCombo.currentIndex
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
@@ -54,7 +54,7 @@ Kirigami.FormLayout {
             Layout.fillWidth:true
             placeholderText: i18nd("@text:placeholder_video_file", "/media/videos/waves.mp4")
             text: cfg_VideoWallpaperBackgroundVideo
-            readOnly : true
+            // readOnly : true
         }
         Button {
             id: imageButton
@@ -124,17 +124,17 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause:")
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
         id: pauseModeCombo
         model: [
             {
-                'label': i18nd("@option:pause_mode", "When there are maximized or full-screen windows")
+                'label': i18nd("@option:pause_mode", "Maximized or full-screen windows")
             },
             {
-                'label': i18nd("@option:pause_mode", "When an active window is shown")
+                'label': i18nd("@option:pause_mode", "Active window is present")
             },
             {
-                'label': i18nd("@option:pause_mode", "When a window is shown")
+                'label': i18nd("@option:pause_mode", "At least one window is shown")
             },
             {
                 'label': i18nd("@option:pause_mode", "Never")
@@ -146,20 +146,20 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur:")
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur video:")
         id: blurModeCombo
         model: [
             {
-                'label': i18nd("@option:blur_mode", "When there are maximized or full-screen windows")
+                'label': i18nd("@option:blur_mode", "Maximized or full-screen windows")
             },
             {
-                'label': i18nd("@option:blur_mode", "When an active window is shown")
+                'label': i18nd("@option:blur_mode", "Active window is present")
             },
             {
-                'label': i18nd("@option:blur_mode", "When a window is shown")
+                'label': i18nd("@option:blur_mode", "At least one window is shown")
             },
             {
-                'label': i18nd("@option:blur_mode", "When video is paused")
+                'label': i18nd("@option:blur_mode", "Video is paused")
             },
             {
                 'label': i18nd("@option:blur_mode", "Always")
@@ -174,7 +174,7 @@ Kirigami.FormLayout {
     }
 
     SpinBox {
-        Kirigami.FormData.label: i18nd("@checkBox:blur_strength", "Blur radius")
+        Kirigami.FormData.label: i18nd("@checkBox:blur_strength", "Blur radius:")
         id: blurRadiusSpinBox
         from: 0
         to: 145
@@ -185,7 +185,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "On Battery below:")
+        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "On battery below:")
         SpinBox {
             id: pauseBatteryLevel
             from: 0
@@ -195,12 +195,10 @@ Kirigami.FormLayout {
                 cfg_PauseBatteryLevel = value
             }
         }
-        Label {
-            text: "%"
-        }
     }
 
     CheckBox {
+        id: batteryPausesVideoCheckBox
         text: i18n("Pause video")
         checked: cfg_BatteryPausesVideo
         onCheckedChanged: {
