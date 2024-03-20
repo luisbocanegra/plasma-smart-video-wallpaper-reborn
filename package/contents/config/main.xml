@@ -38,5 +38,23 @@
       <label>Pause video when battery is below PauseBatteryLevel</label>
       <default>true</default>
     </entry>
+    <entry name="BatteryDisablesBlur" type="Bool">
+      <label>Disable blur when battery is below PauseBatteryLevel</label>
+      <default>false</default>
+    </entry>
+    <!-- Show blur
+        0: when existing a maximized or full-screen windows
+        1: when a visible window is active
+        2: when a window is visible
+        3: video is paused
+        4: always
+        5: never
+    -->
+    <entry name="BlurMode" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="BlurRadius" type="Int">
+      <default>32</default>
+    </entry>
   </group>
 </kcfg>

@@ -42,6 +42,9 @@ Kirigami.FormLayout {
     property alias cfg_BackgroundColor: colorButton.color
     property int cfg_PauseBatteryLevel: pauseBatteryLevel.value
     property bool cfg_BatteryPausesVideo: batteryPausesVideo.checked
+    property int cfg_BlurMode: wallpaper.configuration.BlurMode
+    property bool cfg_BatteryDisablesBlur: wallpaper.configuration.BatteryDisablesBlur
+    property int cfg_BlurRadius: wallpaper.configuration.BlurRadius
 
     RowLayout {
         Layout.fillWidth:true
@@ -158,6 +161,70 @@ Kirigami.FormLayout {
         }
     }
 
+
+    RadioButton {
+        id: maximizedBlurRadioButtton
+        Kirigami.FormData.label: i18nd("@buttonGroup:blur_mode", "Blur video:")
+        text: i18n("When there are maximized or full-screen windows")
+        ButtonGroup.group: blurModeGroup
+        property int index: 0
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    RadioButton {
+        id: busyBlurRadioButton
+        text: i18n("When an active window is shown")
+        ButtonGroup.group: blurModeGroup
+        property int index: 1
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    RadioButton {
+        id: visibleBlurRadioButton
+        text: i18n("When a window is shown")
+        ButtonGroup.group: blurModeGroup
+        property int index: 2
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    RadioButton {
+        id: pausedBlurRadioButton
+        text: i18n("When video is paused")
+        ButtonGroup.group: blurModeGroup
+        property int index: 3
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    RadioButton {
+        id: alwaysBlurRadioButton
+        text: i18n("Always")
+        ButtonGroup.group: blurModeGroup
+        property int index: 4
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    RadioButton {
+        id: neverBlurRadioButton
+        text: i18n("Never")
+        ButtonGroup.group: blurModeGroup
+        property int index: 5
+        checked: wallpaper.configuration.BlurMode === index
+    }
+    ButtonGroup {
+        id: blurModeGroup
+        onCheckedButtonChanged: {
+            if (checkedButton) {
+                cfg_BlurMode = checkedButton.index
+            }
+        }
+    }
+
+    SpinBox {
+        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "Blur radius")
+        id: blurRadiusSpinBox
+        from: 0
+        to: 145
+        value: cfg_BlurRadius
+        onValueChanged: {
+            cfg_BlurRadius = value
+        }
+    }
+
     RowLayout {
         Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "On Battery below:")
         SpinBox {
@@ -179,6 +246,14 @@ Kirigami.FormLayout {
         checked: cfg_BatteryPausesVideo
         onCheckedChanged: {
             cfg_BatteryPausesVideo = checked
+        }
+    }
+
+    CheckBox {
+        text: i18n("Disable blur")
+        checked: cfg_BatteryDisablesBlur
+        onCheckedChanged: {
+            cfg_BatteryDisablesBlur = checked
         }
     }
 

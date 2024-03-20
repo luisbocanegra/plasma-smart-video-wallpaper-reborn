@@ -34,6 +34,9 @@ Item {
     property var screenGeometry
     property int pauseMode: wallpaper.configuration.PauseMode
     property bool playVideoWallpaper: false
+    property bool videoIsPlaying: false
+    property int blurMode: wallpaper.configuration.BlurMode
+    property bool showBlur: false
     property bool maximizedExists: false
     property bool visibleExists: false
     property bool activeExists: false
@@ -60,6 +63,30 @@ Item {
                 shouldPlay = true
         }
         playVideoWallpaper = shouldPlay
+    }
+
+    function updateBlur() {
+        let shouldBlur = true
+        switch(blurMode) {
+            case 0:
+                shouldBlur = maximizedExists
+                break
+            case 1:
+                shouldBlur = activeExists
+                break
+            case 2:
+                shouldBlur = visibleExists
+                break
+            case 3:
+                shouldBlur = !videoIsPlaying
+                break
+            case 4:
+                shouldBlur = true
+                break
+            case 5:
+                shouldBlur = false
+        }
+        showBlur = shouldBlur
     }
 
     TaskManager.VirtualDesktopInfo {
@@ -113,6 +140,7 @@ Item {
         maximizedExists = maximizedCount > 0
         activeExists = activeCount > 0
         updatePlay()
+        updateBlur()
     }
 }
 

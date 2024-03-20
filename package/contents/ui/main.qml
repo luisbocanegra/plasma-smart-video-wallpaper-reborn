@@ -23,14 +23,19 @@ import org.kde.plasma.core as Plasmacore
 import QtMultimedia
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
+import Qt5Compat.GraphicalEffects
 
 WallpaperItem {
     anchors.fill: parent
     id: main
-    property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
-    property bool playing: windowModel.playVideoWallpaper && !pauseBattery
     property bool isLoading: true
+    property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
     property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
+    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo
+    property bool batteryPausesVideo: pauseBattery && wallpaper.configuration.BatteryPausesVideo
+    
+    property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
+    property bool batteryDisablesBlur: pauseBattery && wallpaper.configuration.BatteryDisablesBlur
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -47,11 +52,9 @@ WallpaperItem {
         onSourceAdded: source => {
             disconnectSource(source);
             connectSource(source);
-            dumpProps(pmSource.connectedSources)
         }
         onSourceRemoved: source => {
             disconnectSource(source);
-            dumpProps(pmSource.connectedSources)
         }
     }
 
@@ -66,6 +69,7 @@ WallpaperItem {
     WindowModel {
         id: windowModel
         screenGeometry: main.parent.screenGeometry
+        videoIsPlaying: main.playing
     }
 
     Rectangle {
@@ -80,6 +84,17 @@ WallpaperItem {
             fillMode: wallpaper.configuration.FillMode
             anchors.fill: parent
             volume: wallpaper.configuration.MuteAudio ? 0.0 : 1
+        }
+    }
+
+    FastBlur {
+        source: player
+        radius: showBlur ? wallpaper.configuration.BlurRadius : 0
+        anchors.fill: parent
+        Behavior on radius {
+            NumberAnimation {
+                duration: 300
+            }
         }
     }
 
