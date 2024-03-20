@@ -16,12 +16,12 @@
         "Category": "",
         "Description": "Wallpaper plugin to play videos on your desktop",
         "Icon": "preferences-desktop-wallpaper",
-        "Id": "com.luisbocanegra.smart.video.wallpaper",
+        "Id": "luisbocanegra.smart.video.wallpaper.reborn",
         "License": "GPLv2+",
         "Version": "0.1.0",
-        "Name": "Smart Video Wallpaper",
-        "Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper",
-        "BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper/issues"
+        "Name": "Smart Video Wallpaper Reborn",
+        "Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn",
+        "BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues"
     },
     "Keywords": [
         "video",

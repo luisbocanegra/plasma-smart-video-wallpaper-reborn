@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project("plasma-smart-video-wallpaper")
+project("plasma-smart-video-wallpaper-reborn")
 option(INSTALL_PLASMOID "Install plasmoid" ON)
 
 set(PROJECT_DEP_VERSION "6.0.0")
