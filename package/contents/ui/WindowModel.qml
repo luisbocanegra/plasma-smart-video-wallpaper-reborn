@@ -24,7 +24,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
 import org.kde.plasma.core as PlasmaCore
-import org.kde.kitemmodels 1.0 as KItemModels
+// import org.kde.kitemmodels 1.0 as KItemModels
 
 import org.kde.taskmanager 0.1 as TaskManager
 
@@ -32,136 +32,87 @@ Item {
 
     id: wModel
     property var screenGeometry
-    property bool playVideoWallpaper: true
-    property bool currentWindowMaximized: false
-    property bool isActiveWindowPinned: false
     property int pauseMode: wallpaper.configuration.PauseMode
+    property bool playVideoWallpaper: false
+    property bool maximizedExists: false
+    property bool visibleExists: false
+    property bool activeExists: false
+    property var abstractTasksModel: TaskManager.AbstractTasksModel
+    property var isMaximized: abstractTasksModel.IsMaximized
+    property var isActive: abstractTasksModel.IsActive
+    property var isWindow: abstractTasksModel.IsWindow
+    property var isFullScreen: abstractTasksModel.IsFullScreen
+    property var isMinimized: abstractTasksModel.IsMinimized
 
-    TaskManager.VirtualDesktopInfo { id: virtualDesktopInfo }
-    TaskManager.ActivityInfo { id: activityInfo }
+    function updatePlay() {
+        let shouldPlay = true
+        switch(pauseMode) {
+            case 0:
+                shouldPlay = !maximizedExists
+                break
+            case 1:
+                shouldPlay = !activeExists
+                break
+            case 2:
+                shouldPlay = !visibleExists
+                break
+            case 3:
+                shouldPlay = true
+        }
+        playVideoWallpaper = shouldPlay
+    }
+
+    TaskManager.VirtualDesktopInfo {
+        id: virtualDesktopInfo
+    }
+
+    TaskManager.ActivityInfo {
+        id: activityInfo
+        readonly property string nullUuid: "00000000-0000-0000-0000-000000000000"
+    }
+
     TaskManager.TasksModel {
         id: tasksModel
         sortMode: TaskManager.TasksModel.SortVirtualDesktop
         groupMode: TaskManager.TasksModel.GroupDisabled
-
-        activity: activityInfo.currentActivity
         virtualDesktop: virtualDesktopInfo.currentDesktop
+        activity: activityInfo.currentActivity
         screenGeometry: wModel.screenGeometry
-
-        filterByActivity: true
         filterByVirtualDesktop: true
         filterByScreen: true
+        filterByActivity: true
+        filterMinimized: true
 
-        onActiveTaskChanged: updateWindowsinfo(wModel.pauseMode)
-        onDataChanged: updateWindowsinfo(wModel.pauseMode)
-        Component.onCompleted: {
-            maximizedWindowModel.sourceModel = tasksModel
-            fullScreenWindowModel.sourceModel = tasksModel
-            minimizedWindowModel.sourceModel = tasksModel
-            onlyWindowsModel.sourceModel = tasksModel
+        onActiveTaskChanged: {
+            console.error("ACTIVE CHANGED");
+            updateWindowsinfo()
+        }
+        onDataChanged: {
+            updateWindowsinfo()
+        }
+        onCountChanged: {
+            updateWindowsinfo()
         }
     }
 
-    KItemModels.KSortFilterProxyModel {
-        id: onlyWindowsModel
-        filterRole: TaskManager.AbstractTasksModel.IsWindow
-        filterString: 'true'
-        onDataChanged: updateWindowsinfo(wModel.pauseMode)
-        onCountChanged: updateWindowsinfo(wModel.pauseMode)
-    }
-
-    KItemModels.KSortFilterProxyModel {
-        id: maximizedWindowModel
-        filterRole: TaskManager.AbstractTasksModel.IsMaximized
-        filterString: 'true'
-        onDataChanged: updateWindowsinfo(wModel.pauseMode)
-        onCountChanged: updateWindowsinfo(wModel.pauseMode)
-    }
-    KItemModels.KSortFilterProxyModel {
-        id: fullScreenWindowModel
-        filterRole: TaskManager.AbstractTasksModel.IsFullScreen
-        filterString: 'true'
-        onDataChanged: updateWindowsinfo(wModel.pauseMode)
-        onCountChanged: updateWindowsinfo(wModel.pauseMode)
-    }
-
-    KItemModels.KSortFilterProxyModel {
-        id: minimizedWindowModel
-        filterRole: TaskManager.AbstractTasksModel.IsMinimized
-        filterString: 'true'
-        onDataChanged: updateWindowsinfo(wModel.pauseMode)
-        onCountChanged: updateWindowsinfo(wModel.pauseMode)
-    }
-
-
-    function dumpProps(obj) {
-        console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        for (var k of Object.keys(obj)) {
-            print(k + "=" + obj[k]+"\n")
+    function updateWindowsinfo() {
+        let activeCount = 0
+        let visibleCount = 0
+        let maximizedCount = 0
+        for (var i = 0; i < tasksModel.count; i++) {
+            const currentTask = tasksModel.index(i, 0)
+            if (currentTask === undefined) continue
+            if (tasksModel.data(currentTask, isWindow) && !tasksModel.data(currentTask, isMinimized)) {
+                visibleCount+=1
+                if (tasksModel.data(currentTask, isMaximized)) maximizedCount+=1
+                if (tasksModel.data(currentTask, isActive)) activeCount+=1
+            }
         }
-    }
 
-    function updateWindowsinfo(pauseMode) {
-        var abstractTasksModel = TaskManager.AbstractTasksModel
-        var IsMaximized = abstractTasksModel.IsMaximized
-        var IsFullScreen = abstractTasksModel.IsFullScreen
-        var IsActive = abstractTasksModel.IsActive
-        var AppPid = abstractTasksModel.AppPid
-
-        switch(pauseMode) {
-            case 0:
-                // maximized/fullscreen
-                var joinApps  = [];
-                var minApps  = [];
-                var aObj;
-                var i;
-                var j;
-                // add fullscreen apps
-                for (i = 0 ; i < fullScreenWindowModel.count ; i++){
-                    let pid = fullScreenWindowModel.data(fullScreenWindowModel.index(i, 0), AppPid);
-                    joinApps.push(pid)
-                }
-                // add maximized apps
-                for (i = 0 ; i < maximizedWindowModel.count ; i++){
-                    let pid = maximizedWindowModel.data(maximizedWindowModel.index(i, 0), AppPid);
-                    joinApps.push(pid)                
-                }
-
-                // add minimized apps
-                for (i = 0 ; i < minimizedWindowModel.count ; i++){
-                    let pid = minimizedWindowModel.data(minimizedWindowModel.index(i, 0), AppPid);
-                    minApps.push(pid)
-                }
-
-                joinApps = removeDuplicates(joinApps) // for qml Kubuntu 18.04
-                joinApps.sort();
-                minApps.sort();
-
-                var twoStates = 0
-                j = 0;
-                for(i = 0 ; i < minApps.length ; i++){
-                    if(minApps[i] === joinApps[j]){
-                        twoStates = twoStates + 1;
-                        j = j + 1;
-                    }
-                }
-                playVideoWallpaper = (fullScreenWindowModel.count + maximizedWindowModel.count - twoStates) == 0 ? true : false
-                break
-            case 1:
-                // at least one window is shown (busy)
-                playVideoWallpaper = (onlyWindowsModel.count === minimizedWindowModel.count) ? true : false
-                break
-            case 2:
-                // never pause
-                playVideoWallpaper = true;
-                break
-        }
-    }
-    
-    function removeDuplicates(arrArg){
-        return arrArg.filter(function(elem, pos,arr) {
-            return arr.indexOf(elem) == pos;
-        });
+        visibleExists = visibleCount > 0
+        maximizedExists = maximizedCount > 0
+        activeExists = activeCount > 0
+        updatePlay()
     }
 }
 
