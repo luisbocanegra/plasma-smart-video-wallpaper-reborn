@@ -32,19 +32,19 @@ import org.kde.kirigami as Kirigami
 
 Kirigami.FormLayout {
     id: root
-    twinFormLayouts: parentLayout
-    property alias formLayout: root
+    twinFormLayouts: parentLayout // required by parent
+    property alias formLayout: root // required by parent
 
     property alias cfg_VideoWallpaperBackgroundVideo: videoPathLine.text
-    property int cfg_FillMode: videoFillMode.currentIndex
-    property bool cfg_MuteAudio: muteRadio.checked
-    property int cfg_PauseMode: wallpaper.configuration.PauseMode
+    property alias cfg_FillMode: videoFillMode.currentIndex
+    property alias cfg_MuteAudio: muteRadio.checked
+    property alias cfg_PauseMode: pauseModeCombo.currentIndex
     property alias cfg_BackgroundColor: colorButton.color
-    property int cfg_PauseBatteryLevel: pauseBatteryLevel.value
-    property bool cfg_BatteryPausesVideo: batteryPausesVideo.checked
-    property int cfg_BlurMode: wallpaper.configuration.BlurMode
-    property bool cfg_BatteryDisablesBlur: wallpaper.configuration.BatteryDisablesBlur
-    property int cfg_BlurRadius: wallpaper.configuration.BlurRadius
+    property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
+    property alias cfg_BatteryPausesVideo: batteryPausesVideo.checked
+    property alias cfg_BlurMode: blurModeCombo.currentIndex
+    property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
+    property alias cfg_BlurRadius: blurRadiusSpinBox.value
 
     RowLayout {
         Layout.fillWidth:true
@@ -54,7 +54,7 @@ Kirigami.FormLayout {
             Layout.fillWidth:true
             placeholderText: i18nd("@text:placeholder_video_file", "/media/videos/waves.mp4")
             text: cfg_VideoWallpaperBackgroundVideo
-            // readOnly : true
+            readOnly : true
         }
         Button {
             id: imageButton
@@ -123,99 +123,58 @@ Kirigami.FormLayout {
         }
     }
 
-    RadioButton {
-        id: maximizedPauseRadioButtton
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
-        text: i18n("When there are maximized or full-screen windows")
-        ButtonGroup.group: pauseModeGroup
-        property int index: 0
-        checked: wallpaper.configuration.PauseMode === index
-    }
-    RadioButton {
-        id: activePauseRadioButton
-        text: i18n("When an active window is shown")
-        ButtonGroup.group: pauseModeGroup
-        property int index: 1
-        checked: wallpaper.configuration.PauseMode === index
-    }
-    RadioButton {
-        id: visiblePauseRadioButton
-        text: i18n("When a window is shown")
-        ButtonGroup.group: pauseModeGroup
-        property int index: 2
-        checked: wallpaper.configuration.PauseMode === index
-    }
-    RadioButton {
-        id: neverPauseRadioButton
-        text: i18n("Never")
-        ButtonGroup.group: pauseModeGroup
-        property int index: 3
-        checked: wallpaper.configuration.PauseMode === index
-    }
-    ButtonGroup {
-        id: pauseModeGroup
-        onCheckedButtonChanged: {
-            if (checkedButton) {
-                cfg_PauseMode = checkedButton.index
+    ComboBox {
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause:")
+        id: pauseModeCombo
+        model: [
+            {
+                'label': i18nd("@option:pause_mode", "When there are maximized or full-screen windows")
+            },
+            {
+                'label': i18nd("@option:pause_mode", "When an active window is shown")
+            },
+            {
+                'label': i18nd("@option:pause_mode", "When a window is shown")
+            },
+            {
+                'label': i18nd("@option:pause_mode", "Never")
             }
-        }
+        ]
+        textRole: "label"
+        onCurrentIndexChanged: cfg_PauseMode = currentIndex
+        currentIndex: cfg_PauseMode
     }
 
-
-    RadioButton {
-        id: maximizedBlurRadioButtton
-        Kirigami.FormData.label: i18nd("@buttonGroup:blur_mode", "Blur video:")
-        text: i18n("When there are maximized or full-screen windows")
-        ButtonGroup.group: blurModeGroup
-        property int index: 0
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    RadioButton {
-        id: busyBlurRadioButton
-        text: i18n("When an active window is shown")
-        ButtonGroup.group: blurModeGroup
-        property int index: 1
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    RadioButton {
-        id: visibleBlurRadioButton
-        text: i18n("When a window is shown")
-        ButtonGroup.group: blurModeGroup
-        property int index: 2
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    RadioButton {
-        id: pausedBlurRadioButton
-        text: i18n("When video is paused")
-        ButtonGroup.group: blurModeGroup
-        property int index: 3
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    RadioButton {
-        id: alwaysBlurRadioButton
-        text: i18n("Always")
-        ButtonGroup.group: blurModeGroup
-        property int index: 4
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    RadioButton {
-        id: neverBlurRadioButton
-        text: i18n("Never")
-        ButtonGroup.group: blurModeGroup
-        property int index: 5
-        checked: wallpaper.configuration.BlurMode === index
-    }
-    ButtonGroup {
-        id: blurModeGroup
-        onCheckedButtonChanged: {
-            if (checkedButton) {
-                cfg_BlurMode = checkedButton.index
+    ComboBox {
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur:")
+        id: blurModeCombo
+        model: [
+            {
+                'label': i18nd("@option:blur_mode", "When there are maximized or full-screen windows")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "When an active window is shown")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "When a window is shown")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "When video is paused")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "Always")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "Never")
             }
-        }
+        ]
+        textRole: "label"
+        onCurrentIndexChanged: cfg_BlurMode = currentIndex
+        currentIndex: cfg_BlurMode
     }
 
     SpinBox {
-        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "Blur radius")
+        Kirigami.FormData.label: i18nd("@checkBox:blur_strength", "Blur radius")
         id: blurRadiusSpinBox
         from: 0
         to: 145
@@ -250,6 +209,7 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
+        id: batteryDisablesBlurCheckBox
         text: i18n("Disable blur")
         checked: cfg_BatteryDisablesBlur
         onCheckedChanged: {
