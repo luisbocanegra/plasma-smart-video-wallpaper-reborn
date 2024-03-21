@@ -43,7 +43,7 @@ Item {
 
     Connections {
         target: wallpaper.configuration
-        onValueChanged: {
+        function onValueChanged() {
             updateWindowsinfo()
         }
     }

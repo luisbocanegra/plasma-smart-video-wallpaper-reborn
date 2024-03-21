@@ -85,7 +85,7 @@ Kirigami.FormLayout {
 
     Connections {
         target: videoUrls
-        onCountChanged: {
+        function onCountChanged() {
             if (isLoading) return
             updateVidsString()
         }
@@ -398,7 +398,7 @@ Kirigami.FormLayout {
         onAccepted: {
             let newFiles
             let currentFiles = cfg_VideoUrls.trim().split("\n")
-            console.log(currentFiles);
+            // console.log(currentFiles);
             for (let file of fileDialog.selectedFiles) {
                 if (!currentFiles.includes(file.toString())) {
                     cfg_VideoUrls+=file+"\n"
