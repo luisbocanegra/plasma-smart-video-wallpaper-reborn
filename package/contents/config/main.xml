@@ -72,10 +72,13 @@
       <label>Pause video when the screen is turned off based on ScreenStateCmd</label>
       <default>false</default>
     </entry>
-    
     <entry name="ScreenStateCmd" type="String">
       <label>Command/script to get the screen state should return 0 for Off and anything else for On state</label>
       <default>cat /sys/class/backlight/intel_backlight/actual_brightness</default>
+    </entry>
+    <entry name="CheckWindowsActiveScreen" type="Bool">
+      <label>Whether or not check for windows from all screens instead of just the active one.</label>
+      <default>true</default>
     </entry>
   </group>
 </kcfg>

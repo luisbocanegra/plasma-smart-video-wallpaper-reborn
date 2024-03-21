@@ -39,6 +39,7 @@ Item {
     property var isWindow: abstractTasksModel.IsWindow
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
+    property bool activeScreenOnly: wallpaper.configuration.CheckWindowsActiveScreen
 
     Connections {
         target: wallpaper.configuration
@@ -110,7 +111,7 @@ Item {
         activity: activityInfo.currentActivity
         screenGeometry: wModel.screenGeometry
         filterByVirtualDesktop: true
-        filterByScreen: true
+        filterByScreen: activeScreenOnly
         filterByActivity: true
         filterMinimized: true
 

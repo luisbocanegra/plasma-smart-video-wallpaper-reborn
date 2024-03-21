@@ -53,6 +53,7 @@ Kirigami.FormLayout {
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
     property bool showWarningMessage: false
+    property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
 
     ListModel {
         id: videoUrls
@@ -223,11 +224,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Mute audio:")
         checked: cfg_MuteAudio
         onCheckedChanged: {
-            if (checked) {
-                cfg_MuteAudio = true
-            } else {
-                cfg_MuteAudio = false
-            }
+            cfg_MuteAudio = checked
         }
     }
 
@@ -279,6 +276,16 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurMode = currentIndex
         currentIndex: cfg_BlurMode
+    }
+
+    CheckBox {
+        id: activeScreenOnlyCheckbx
+        Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Filter:")
+        checked: cfg_CheckWindowsActiveScreen
+        text: i18n("Only check for windows in active screen")
+        onCheckedChanged: {
+            cfg_CheckWindowsActiveScreen = checked
+        }
     }
 
     SpinBox {
