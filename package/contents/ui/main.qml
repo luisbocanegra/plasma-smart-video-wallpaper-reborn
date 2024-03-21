@@ -47,6 +47,7 @@ WallpaperItem {
         currentVideoIndex = 0
         if (isLoading) return
         // console.error(videoUrls);
+        player.position = player.duration
         updateState()
     }
 
