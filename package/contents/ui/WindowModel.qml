@@ -40,6 +40,17 @@ Item {
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
 
+    Connections {
+        target: wallpaper.configuration
+        onValueChanged: {
+            updateWindowsinfo()
+        }
+    }
+
+    onVideoIsPlayingChanged: {
+        updateBlur()
+    }
+
     function updatePlay() {
         let shouldPlay = true
         switch(pauseMode) {
