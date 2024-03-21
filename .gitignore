@@ -1,6 +1,6 @@
 build/
 
-# plasmoid
-*.plasmoid
+# package
+*.zip
 
 playground
