@@ -19,7 +19,6 @@
  */
 
 import QtQuick
-import org.kde.plasma.core as Plasmacore
 import QtMultimedia
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
@@ -31,11 +30,12 @@ WallpaperItem {
     property bool isLoading: true
     property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
     property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
-    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo
-    property bool batteryPausesVideo: pauseBattery && wallpaper.configuration.BatteryPausesVideo
-    
+    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked
     property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
+    property bool screenLocked: screenModel.screenIsLocked
+    property bool batteryPausesVideo: pauseBattery && wallpaper.configuration.BatteryPausesVideo
     property bool batteryDisablesBlur: pauseBattery && wallpaper.configuration.BatteryDisablesBlur
+    property bool screenLockedPausesVideo: wallpaper.configuration.ScreenLockedPausesVideo
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -70,6 +70,11 @@ WallpaperItem {
         id: windowModel
         screenGeometry: main.parent.screenGeometry
         videoIsPlaying: main.playing
+    }
+
+    ScreenModel {
+        id: screenModel
+        checkScreenLock: screenLockedPausesVideo
     }
 
     Rectangle {
@@ -126,7 +131,7 @@ WallpaperItem {
 
     Timer {
         id: startTimer
-        interval: 3000
+        interval: 100
         onTriggered: {
             isLoading = false
             updateState()

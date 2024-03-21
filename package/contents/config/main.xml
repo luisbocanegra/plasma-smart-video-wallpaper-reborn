@@ -56,5 +56,13 @@
     <entry name="BlurRadius" type="Int">
       <default>32</default>
     </entry>
+    <entry name="ScreenLockedPausesVideo" type="Bool">
+      <label>Whether screen locked pauses video</label>
+      <default>true</default>
+    </entry>
+    <entry name="QdbusExecName" type="String">
+      <label>QDBUS executable name</label>
+      <default>qdbus6</default>
+    </entry>
   </group>
 </kcfg>

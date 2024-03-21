@@ -45,6 +45,8 @@ Kirigami.FormLayout {
     property alias cfg_BlurMode: blurModeCombo.currentIndex
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
+    property alias cfg_QdbusExecName: qdbusExecTextField.text
+    property alias cfg_ScreenLockedPausesVideo: screenLockPausesVideoCheckbox.checked
 
     RowLayout {
         Layout.fillWidth:true
@@ -54,7 +56,7 @@ Kirigami.FormLayout {
             Layout.fillWidth:true
             placeholderText: i18nd("@text:placeholder_video_file", "/media/videos/waves.mp4")
             text: cfg_VideoWallpaperBackgroundVideo
-            // readOnly : true
+            readOnly : true
         }
         Button {
             id: imageButton
@@ -213,6 +215,30 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_BatteryDisablesBlur = checked
         }
+    }
+
+    CheckBox {
+        Kirigami.FormData.label: i18nd("@checkBox:lock_pause_video", "Screen lock pauses video:")
+        id: screenLockPausesVideoCheckbox
+        text: i18n("Uncheck if using as lock screen wallpaper!")
+        checked: cfg_ScreenLockedPausesVideo
+        onCheckedChanged: {
+            cfg_ScreenLockedPausesVideo = checked
+        }
+    }
+
+    TextField {
+        Kirigami.FormData.label: i18nd("@label:video_file", "Qdbus executable:")
+        id: qdbusExecTextField
+        placeholderText: i18nd("@text:placeholder_video_file", "qdbus6")
+        text: cfg_QdbusExecName
+        Layout.maximumWidth: 300
+    }
+
+    Label {
+        text: i18n("This used to detect when the screen is locked.")
+        opacity: 0.7
+        wrapMode: Text.Wrap
     }
 
     FileDialog {
