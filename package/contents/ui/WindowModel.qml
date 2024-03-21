@@ -18,14 +18,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
  */
 
-//import QtQuick 2.1
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Window
-import org.kde.plasma.core as PlasmaCore
-// import org.kde.kitemmodels 1.0 as KItemModels
-
 import org.kde.taskmanager 0.1 as TaskManager
 
 Item {
@@ -111,7 +104,6 @@ Item {
         filterMinimized: true
 
         onActiveTaskChanged: {
-            console.error("ACTIVE CHANGED");
             updateWindowsinfo()
         }
         onDataChanged: {
