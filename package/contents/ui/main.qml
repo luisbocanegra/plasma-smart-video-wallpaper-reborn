@@ -28,7 +28,9 @@ WallpaperItem {
     anchors.fill: parent
     id: main
     property bool isLoading: true
-    property string videoWallpaperBackgroundVideo: wallpaper.configuration.VideoWallpaperBackgroundVideo
+    property string videoUrls: wallpaper.configuration.VideoUrls
+    property var videosList: []
+    property int currentVideoIndex: 0
     property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
     property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked
     property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
@@ -40,8 +42,11 @@ WallpaperItem {
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
     }
-    onVideoWallpaperBackgroundVideoChanged: {
+    onVideoUrlsChanged: {
+        videosList = videoUrls.trim().split("\n")
+        currentVideoIndex = 0
         if (isLoading) return
+        // console.error(videoUrls);
         updateState()
     }
 
@@ -84,11 +89,21 @@ WallpaperItem {
 
         Video {
             id: player
-            source: wallpaper.configuration.VideoWallpaperBackgroundVideo
+            source: videosList[currentVideoIndex]
             loops: MediaPlayer.Infinite
             fillMode: wallpaper.configuration.FillMode
             anchors.fill: parent
             volume: wallpaper.configuration.MuteAudio ? 0.0 : 1
+            onPositionChanged: {
+                // console.log("pos:", position, "dur:", duration);
+                if (position == duration) {
+                    // console.error("Video ended:",source);
+                    currentVideoIndex = (currentVideoIndex + 1) % videosList.length
+                    source = videosList[currentVideoIndex]
+                    // console.error("Video next:",source);
+                    play()
+                }
+            }
         }
     }
 
@@ -139,6 +154,7 @@ WallpaperItem {
     }
 
     Component.onCompleted: {
+        videosList = videoUrls.trim().split("\n")
         startTimer.start()
     }
 }

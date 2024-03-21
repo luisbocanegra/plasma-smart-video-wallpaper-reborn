@@ -10,6 +10,10 @@
       <label>Video file path</label>
       <default></default>
     </entry>
+    <entry name="VideoUrls" type="String">
+      <label>List of video urls separated by newlines</label>
+      <default></default>
+    </entry>
     <entry name="BackgroundColor" type="String">
       <label>Last folder used</label>
       <default>black</default>

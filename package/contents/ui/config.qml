@@ -35,7 +35,7 @@ Kirigami.FormLayout {
     twinFormLayouts: parentLayout // required by parent
     property alias formLayout: root // required by parent
 
-    property alias cfg_VideoWallpaperBackgroundVideo: videoPathLine.text
+    property string cfg_VideoWallpaperBackgroundVideo
     property alias cfg_FillMode: videoFillMode.currentIndex
     property alias cfg_MuteAudio: muteRadio.checked
     property alias cfg_PauseMode: pauseModeCombo.currentIndex
@@ -47,30 +47,83 @@ Kirigami.FormLayout {
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property alias cfg_QdbusExecName: qdbusExecTextField.text
     property alias cfg_ScreenLockedPausesVideo: screenLockPausesVideoCheckbox.checked
+    property string cfg_VideoUrls
+    property var currentFiles: []
+    property bool isLoading: false
+
+    ListModel {
+        id: videoUrls
+        Component.onCompleted: {
+            updateVidsModel()
+        }
+    }
+
+    function updateVidsModel(){
+        isLoading = true
+        videoUrls.clear()
+        let currentFiles = cfg_VideoUrls.trim().split("\n")
+        for (let i = 0; i < currentFiles.length; i++) {
+            const video = currentFiles[i]
+            if (video.length > 0) {
+                videoUrls.append({"url": currentFiles[i]})
+            }
+        }
+        isLoading = false
+    }
+
+    function updateVidsString() {
+        let newUrls = ""
+        for (let i = 0; i < videoUrls.count; i++) {
+            newUrls += videoUrls.get(i).url + "\n"
+        }
+        cfg_VideoUrls = newUrls
+    }
+
+    Connections {
+        target: videoUrls
+        onCountChanged: {
+            if (isLoading) return
+            updateVidsString()
+        }
+    }
 
     RowLayout {
-        Layout.fillWidth:true
-        Kirigami.FormData.label: i18nd("@label:video_file", "Video path:")
-        TextField {
-            id: videoPathLine
-            Layout.fillWidth:true
-            placeholderText: i18nd("@text:placeholder_video_file", "/media/videos/waves.mp4")
-            text: cfg_VideoWallpaperBackgroundVideo
-            readOnly : true
-        }
         Button {
             id: imageButton
-            Kirigami.Icon {
-                anchors.fill: parent
-                source: "folder-videos-symbolic"
-                PlasmaCore.ToolTipArea {
-                    anchors.fill: parent
-                    subText: i18nd("@tooltip","Pick video")
-                }
+            icon.name: "folder-videos-symbolic"
+            text: i18nd("@button:toggle_show_videos", "Add new videos")
+            onClicked: {
+                fileDialog.open()
             }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {fileDialog.open() }
+        }
+        Button {
+            icon.name: "visibility-symbolic"
+            text: i18nd("@button:toggle_show_videos", videosList.visible ? "Hide videos list" : "Show videos list")
+            checkable: true
+            checked: videosList.visible
+            onClicked: {
+                videosList.visible = !videosList.visible
+            }
+        }
+    }
+    ColumnLayout {
+        id: videosList
+        visible: false
+        Repeater {
+            model: videoUrls
+            RowLayout {
+                Button{
+                    icon.name: "edit-delete-remove"
+                    onClicked: {
+                        videoUrls.remove(index)
+                    }
+                }
+                Label {
+                    text: index.toString() +" "+ modelData
+                    wrapMode: Text.Wrap
+                    Layout.maximumWidth: 300
+                    font: Kirigami.Theme.smallFont
+                }
             }
         }
     }
@@ -197,23 +250,22 @@ Kirigami.FormLayout {
                 cfg_PauseBatteryLevel = value
             }
         }
-    }
-
-    CheckBox {
-        id: batteryPausesVideoCheckBox
-        text: i18n("Pause video")
-        checked: cfg_BatteryPausesVideo
-        onCheckedChanged: {
-            cfg_BatteryPausesVideo = checked
+        CheckBox {
+            id: batteryPausesVideoCheckBox
+            text: i18n("Pause video")
+            checked: cfg_BatteryPausesVideo
+            onCheckedChanged: {
+                cfg_BatteryPausesVideo = checked
+            }
         }
-    }
 
-    CheckBox {
-        id: batteryDisablesBlurCheckBox
-        text: i18n("Disable blur")
-        checked: cfg_BatteryDisablesBlur
-        onCheckedChanged: {
-            cfg_BatteryDisablesBlur = checked
+        CheckBox {
+            id: batteryDisablesBlurCheckBox
+            text: i18n("Disable blur")
+            checked: cfg_BatteryDisablesBlur
+            onCheckedChanged: {
+                cfg_BatteryDisablesBlur = checked
+            }
         }
     }
 
@@ -240,14 +292,29 @@ Kirigami.FormLayout {
         opacity: 0.7
         wrapMode: Text.Wrap
     }
+    function dumpProps(obj) {
+        console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        for (var k of Object.keys(obj)) {
+            print(k + "=" + obj[k]+"\n")
+        }
+    }
+
 
     FileDialog {
         id: fileDialog
-        fileMode : FileDialog.OpenFile
+        fileMode : FileDialog.OpenFiles
         title: i18nd("@dialog_title:pick_video", "Pick a video file")
         nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
         onAccepted: {
-            cfg_VideoWallpaperBackgroundVideo = fileDialog.selectedFile
+            let newFiles
+            let currentFiles = cfg_VideoUrls.trim().split("\n")
+            console.log(currentFiles);
+            for (let file of fileDialog.selectedFiles) {
+                if (!currentFiles.includes(file.toString())) {
+                    cfg_VideoUrls+=file+"\n"
+                }
+            }
+            updateVidsModel()
         }
     }
 }
