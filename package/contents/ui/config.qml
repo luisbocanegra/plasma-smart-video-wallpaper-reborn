@@ -52,6 +52,7 @@ Kirigami.FormLayout {
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
+    property bool showWarningMessage: false
 
     ListModel {
         id: videoUrls
@@ -107,7 +108,17 @@ Kirigami.FormLayout {
                 videosList.visible = !videosList.visible
             }
         }
+        Button {
+            icon.name: "dialog-information-symbolic"
+            text: i18nd("@button:toggle_show_warning", "Important!")
+            checkable: true
+            checked: showWarningMessage
+            onClicked: {
+                showWarningMessage = !showWarningMessage
+            }
+        }
     }
+
     ColumnLayout {
         id: videosList
         visible: false
@@ -129,6 +140,46 @@ Kirigami.FormLayout {
             }
         }
     }
+
+    Kirigami.InlineMessage {
+        id: warningResources
+        Layout.fillWidth: true
+        type: Kirigami.MessageType.Warning
+        text: qsTr("Videos are loaded in Memory, bigger files will use more Memory and system resources!")
+        visible: showWarningMessage
+    }
+    Kirigami.InlineMessage {
+        id: warningCrashes
+        Layout.fillWidth: true
+        type: Kirigami.MessageType.Warning
+        text: qsTr("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.")
+        visible: showWarningMessage
+        actions: [
+            Kirigami.Action {
+                icon.name: "view-readermode-symbolic"
+                text: "Read instructions"
+                onTriggered: {
+                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes")
+                }
+            }
+        ]
+    }
+    Kirigami.InlineMessage {
+        id: warningHwAccel
+        Layout.fillWidth: true
+        text: qsTr("Make sure to enable Hardware video acceleration in your system to reduce CPU usage and save power.")
+        visible: showWarningMessage
+        actions: [
+            Kirigami.Action {
+                icon.name: "view-readermode-symbolic"
+                text: "Learn how"
+                onTriggered: {
+                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration")
+                }
+            }
+        ]
+    }
+
 
     ComboBox {
         Kirigami.FormData.label: i18nd("@option:video_fill_mode", "Fill mode:")
@@ -239,6 +290,13 @@ Kirigami.FormLayout {
         onValueChanged: {
             cfg_BlurRadius = value
         }
+    }
+
+    Kirigami.InlineMessage {
+        Layout.fillWidth: true
+        type: Kirigami.MessageType.Warning
+        visible: cfg_BlurRadius > 64
+        text: qsTr("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
     }
 
     RowLayout {
