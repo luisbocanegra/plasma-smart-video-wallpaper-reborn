@@ -2,6 +2,8 @@
 
 Wallpaper plugin to play videos on your desktop.
 
+https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/15076387/be5b8edf-f33f-4b8c-a1d0-1a00211a4784
+
 ## Features
 
 - Play a single video or slideshow of videos
