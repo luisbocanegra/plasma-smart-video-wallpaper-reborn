@@ -68,5 +68,14 @@
       <label>QDBUS executable name</label>
       <default>qdbus6</default>
     </entry>
+    <entry name="ScreenOffPausesVideo" type="Bool">
+      <label>Pause video when the screen is turned off based on ScreenStateCmd</label>
+      <default>false</default>
+    </entry>
+    
+    <entry name="ScreenStateCmd" type="String">
+      <label>Command/script to get the screen state should return 0 for Off and anything else for On state</label>
+      <default>cat /sys/class/backlight/intel_backlight/actual_brightness</default>
+    </entry>
   </group>
 </kcfg>

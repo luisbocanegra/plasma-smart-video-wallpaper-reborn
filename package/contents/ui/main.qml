@@ -32,12 +32,15 @@ WallpaperItem {
     property var videosList: []
     property int currentVideoIndex: 0
     property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
-    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked
+    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff
     property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
     property bool screenLocked: screenModel.screenIsLocked
     property bool batteryPausesVideo: pauseBattery && wallpaper.configuration.BatteryPausesVideo
     property bool batteryDisablesBlur: pauseBattery && wallpaper.configuration.BatteryDisablesBlur
+
+    property bool screenIsOff: screenModel.screenIsOff
     property bool screenLockedPausesVideo: wallpaper.configuration.ScreenLockedPausesVideo
+    property bool screenOffPausesVideo: wallpaper.configuration.ScreenOffPausesVideo
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -81,6 +84,7 @@ WallpaperItem {
     ScreenModel {
         id: screenModel
         checkScreenLock: screenLockedPausesVideo
+        checkScreenState: screenOffPausesVideo
     }
 
     Rectangle {

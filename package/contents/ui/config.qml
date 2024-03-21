@@ -50,6 +50,8 @@ Kirigami.FormLayout {
     property string cfg_VideoUrls
     property var currentFiles: []
     property bool isLoading: false
+    property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
+    property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
 
     ListModel {
         id: videoUrls
@@ -289,7 +291,7 @@ Kirigami.FormLayout {
 
     Label {
         text: i18n("This used to detect when the screen is locked.")
-        opacity: 0.7
+        opacity: 0.75
         wrapMode: Text.Wrap
     }
     function dumpProps(obj) {
@@ -299,6 +301,29 @@ Kirigami.FormLayout {
         }
     }
 
+    CheckBox {
+        Kirigami.FormData.label: i18nd("@checkBox:screenOff_pause_video", "Screen Off pauses video:")
+        id: screenOffPausesVideoCheckbox
+        text: i18n("Requires setting up command below!")
+        checked: cfg_ScreenOffPausesVideo
+        onCheckedChanged: {
+            cfg_ScreenOffPausesVideo = checked
+        }
+    }
+
+    TextField {
+        Kirigami.FormData.label: i18nd("@label:screen_state_cmd", "Screen state command:")
+        id: screenStateCmdTextField
+        placeholderText: i18nd("@text:placeholder_video_file", "cat /sys/class/backlight/intel_backlight/actual_brightness")
+        text: cfg_ScreenStateCmd
+        Layout.maximumWidth: 300
+    }
+
+    Label {
+        text: i18n("The command/script must return 0 (zero) when the screen is Off!")
+        opacity: 0.75
+        wrapMode: Text.Wrap
+    }
 
     FileDialog {
         id: fileDialog
