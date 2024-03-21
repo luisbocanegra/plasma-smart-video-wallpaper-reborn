@@ -134,7 +134,7 @@ Item {
             if (currentTask === undefined) continue
             if (tasksModel.data(currentTask, isWindow) && !tasksModel.data(currentTask, isMinimized)) {
                 visibleCount+=1
-                if (tasksModel.data(currentTask, isMaximized)) maximizedCount+=1
+                if (tasksModel.data(currentTask, isMaximized) || tasksModel.data(currentTask, isFullScreen)) maximizedCount+=1
                 if (tasksModel.data(currentTask, isActive)) activeCount+=1
             }
         }
