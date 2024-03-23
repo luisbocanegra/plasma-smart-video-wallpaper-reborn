@@ -1,8 +1,8 @@
 # Smart Video Wallpaper Reborn
 
-Wallpaper plugin to play videos on your desktop.
+Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen.
 
-https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/15076387/be5b8edf-f33f-4b8c-a1d0-1a00211a4784
+https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/15076387/45f32fde-a1b4-406f-8aeb-221bb071a6b9
 
 ## Features
 
