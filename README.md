@@ -28,6 +28,16 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
   - Disables Blur
 - Pause video when screen is Off/Locked
 
+## Installing
+
+Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2136963)
+
+1. **Right click on the Desktop** > **Configure Desktop and Wallpaper...** > **Get New Plugins**
+2. **Search** for "**Smart Video Wallpaper Reborn**", install and set it as your wallpaper.
+3. Click on **Add new videos** pick your video(s) and apply.
+
+To set as Lock Screen wallpaper go to **System settings** > **Screen Locking** > **Appearance: Configure...**
+
 ## Improve performance by enabling Hardware Video Acceleration
 
 > Hardware video acceleration makes it possible for the video card to decode/encode video, thus offloading the CPU and saving power.
@@ -39,16 +49,46 @@ To verify if is working with an Intel GPU install `intel-gpu-tools` and run `sud
 
 ## Black video or Plasma crashes
 
-If the video doesn't show, fails to loop or crashes your Desktop, try switching the Qt Media backend to `gstreamer` (default is `ffmpeg`):
+1. Install the media codecs and qt6-multimedia and gstreamer packages if you don't have them:
 
-1. Create the file `~/.config/plasma-workspace/env/qt-media-backend.sh`
+    **openSUSE**
+
+    ```sh
+    sudo zypper install opi
+    opi codecs
+    sudo zypper install qt6-multimedia gstreamer-plugins-libav
+    ```
+
+    **Arch**
+
+    ```sh
+    sudo pacman -S qt6-multimedia gst-libav --needed
+    ```
+
+    If you need extra codecs see https://wiki.archlinux.org/title/GStreamer
+
+    **PRs to expand this list are welcome :)**
+
+2. **Reboot**
+
+3. If after that the video doesn't play, fails to loop or crashes your Desktop, try switching the Qt Media backend to `gstreamer` (default is `ffmpeg`):
+
+    Create the file `~/.config/plasma-workspace/env/qt-media-backend.sh`
 
     ```sh
     #!/bin/bash
     export QT_MEDIA_BACKEND=gstreamer
     ```
 
-2. Reboot re-login to apply the changes
+4. Reboot again to apply the changes, and verify it was correctly set by running `echo $QT_MEDIA_BACKEND`
+
+Video still doesn't play? Follow these steps
+
+1. Run `journalctl -f` and `sudo dmesg -wHT` in separate terminals
+2. While both commands are running switch from the Image wallpaper plugin to video wallpaper
+3. Then stop both commands
+4. Get your system information from `kinfo` command or from **System settings** > **About this System**
+5. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) with the output of the three commands
 
 ## Acknowledgements
 
