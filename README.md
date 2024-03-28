@@ -49,6 +49,16 @@ To verify if is working with an Intel GPU install `intel-gpu-tools` and run `sud
 
 ## Black video or Plasma crashes
 
+To recover from crash remove the videos from the configuration using this command below in terminal/tty, then reboot
+
+```sh
+sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc
+```
+
+and restart plasmashell `systemctl --user restart plasma-plasmashell.service` or `plasmashell --replace` if the former doesn't work.
+
+### Possible solution, switching to GStreamer as Qt Media backend
+
 1. Install the media codecs and qt6-multimedia and gstreamer packages if you don't have them:
 
     **openSUSE**
@@ -71,7 +81,7 @@ To verify if is working with an Intel GPU install `intel-gpu-tools` and run `sud
 
 2. **Reboot**
 
-3. If after that the video doesn't play, fails to loop or crashes your Desktop, try switching the Qt Media backend to `gstreamer` (default is `ffmpeg`):
+3. If after that the video doesn't play, fails to loop or crashes your Desktop (remove the plugin configuration using `sed` command above if needed), try switching the Qt Media backend to `gstreamer` (default is `ffmpeg`):
 
     Create the file `~/.config/plasma-workspace/env/qt-media-backend.sh`
 
@@ -82,13 +92,15 @@ To verify if is working with an Intel GPU install `intel-gpu-tools` and run `sud
 
 4. Reboot again to apply the changes, and verify it was correctly set by running `echo $QT_MEDIA_BACKEND`
 
-Video still doesn't play? Follow these steps
+**Video still doesn't play/keeps crashing?** Follow these steps
 
 1. Run `journalctl -f` and `sudo dmesg -wHT` in separate terminals
 2. While both commands are running switch from the Image wallpaper plugin to video wallpaper
 3. Then stop both commands
-4. Get your system information from `kinfo` command or from **System settings** > **About this System**
-5. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) with the output of the three commands
+4. If needed, remove the plugin configuration (`sed` command above)
+5. Get your system information from `kinfo` command or from **System settings** > **About this System**
+6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QSG_INFO=1 QT_LOGGING_RULES="qml.debug=true" qml6 test.qml`, this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
+7. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) with the output of the commands from steps 1,5,6 including wether running the **test.qml** also crashes or not.
 
 ## Acknowledgements
 
