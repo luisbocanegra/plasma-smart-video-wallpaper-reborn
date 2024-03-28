@@ -34,8 +34,6 @@ Kirigami.FormLayout {
     id: root
     twinFormLayouts: parentLayout // required by parent
     property alias formLayout: root // required by parent
-
-    property string cfg_VideoWallpaperBackgroundVideo
     property alias cfg_FillMode: videoFillMode.currentIndex
     property alias cfg_MuteAudio: muteRadio.checked
     property alias cfg_PauseMode: pauseModeCombo.currentIndex

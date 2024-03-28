@@ -6,10 +6,6 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="VideoWallpaperBackgroundVideo" type="String">
-      <label>Video file path</label>
-      <default></default>
-    </entry>
     <entry name="VideoUrls" type="String">
       <label>List of video urls separated by newlines</label>
       <default></default>
