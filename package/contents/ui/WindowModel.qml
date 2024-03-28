@@ -29,6 +29,7 @@ Item {
     property bool playVideoWallpaper: false
     property bool videoIsPlaying: false
     property int blurMode: wallpaper.configuration.BlurMode
+    property int blurModeLocked: wallpaper.configuration.BlurModeLocked
     property bool showBlur: false
     property bool maximizedExists: false
     property bool visibleExists: false
@@ -40,6 +41,7 @@ Item {
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
     property bool activeScreenOnly: wallpaper.configuration.CheckWindowsActiveScreen
+    property bool lockScreenMode: wallpaper.configuration.LockScreenMode
 
     Connections {
         target: wallpaper.configuration
@@ -53,6 +55,10 @@ Item {
     }
 
     function updatePlay() {
+        if (lockScreenMode) {
+            playVideoWallpaper = true
+            return
+        }
         let shouldPlay = true
         switch(pauseMode) {
             case 0:
@@ -72,6 +78,20 @@ Item {
 
     function updateBlur() {
         let shouldBlur = true
+        if (lockScreenMode) {
+            switch(blurModeLocked) {
+                case 0:
+                    shouldBlur = !videoIsPlaying
+                    break
+                case 1:
+                    shouldBlur = true
+                    break
+                case 2:
+                    shouldBlur = false
+            }
+            showBlur = shouldBlur
+            return
+        }
         switch(blurMode) {
             case 0:
                 shouldBlur = maximizedExists

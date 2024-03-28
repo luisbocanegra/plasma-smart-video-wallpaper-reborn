@@ -53,6 +53,9 @@
     <entry name="BlurMode" type="Int">
       <default>0</default>
     </entry>
+    <entry name="BlurModeLocked" type="Int">
+      <default>0</default>
+    </entry>
     <entry name="BlurRadius" type="Int">
       <default>32</default>
     </entry>
@@ -75,6 +78,10 @@
     <entry name="CheckWindowsActiveScreen" type="Bool">
       <label>Whether or not check for windows from all screens instead of just the active one.</label>
       <default>true</default>
+    </entry>
+    <entry name="LockScreenMode" type="Bool">
+      <label>Disable windows and lock screen detection</label>
+      <default>false</default>
     </entry>
   </group>
 </kcfg>

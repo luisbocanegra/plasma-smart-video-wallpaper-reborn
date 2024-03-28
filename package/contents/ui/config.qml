@@ -41,6 +41,7 @@ Kirigami.FormLayout {
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
     property alias cfg_BatteryPausesVideo: batteryPausesVideoCheckBox.checked
     property alias cfg_BlurMode: blurModeCombo.currentIndex
+    property alias cfg_BlurModeLocked: blurModeLockedCombo.currentIndex
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property alias cfg_QdbusExecName: qdbusExecTextField.text
@@ -52,6 +53,9 @@ Kirigami.FormLayout {
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
     property bool showWarningMessage: false
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
+    property alias cfg_LockScreenMode: screenLockModeCheckbox.checked
+    property int prevPause
+    property int prevBlur
 
     ListModel {
         id: videoUrls
@@ -232,6 +236,13 @@ Kirigami.FormLayout {
         }
     }
 
+    CheckBox {
+        Kirigami.FormData.label: i18nd("@checkBox:lock_screen_mode", "Lock screen mode:")
+        id: screenLockModeCheckbox
+        text: i18n("Disables windows and lock screen detection")
+        checked: cfg_LockScreenMode
+    }
+
     ComboBox {
         Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
         id: pauseModeCombo
@@ -252,6 +263,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_PauseMode = currentIndex
         currentIndex: cfg_PauseMode
+        visible: !screenLockModeCheckbox.checked
     }
 
     ComboBox {
@@ -280,6 +292,27 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurMode = currentIndex
         currentIndex: cfg_BlurMode
+        visible: !screenLockModeCheckbox.checked
+    }
+
+    ComboBox {
+        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur video:")
+        id: blurModeLockedCombo
+        model: [
+            {
+                'label': i18nd("@option:blur_mode", "Video is paused")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "Always")
+            },
+            {
+                'label': i18nd("@option:blur_mode", "Never")
+            }
+        ]
+        textRole: "label"
+        onCurrentIndexChanged: cfg_BlurModeLocked = currentIndex
+        currentIndex: cfg_BlurModeLocked
+        visible: screenLockModeCheckbox.checked
     }
 
     CheckBox {
@@ -290,6 +323,7 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_CheckWindowsActiveScreen = checked
         }
+        visible: !screenLockModeCheckbox.checked
     }
 
     SpinBox {
@@ -301,12 +335,14 @@ Kirigami.FormLayout {
         onValueChanged: {
             cfg_BlurRadius = value
         }
+        visible: (screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
+                    (blurModeCombo.visible && cfg_BlurMode !== 5)
     }
 
     Kirigami.InlineMessage {
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        visible: cfg_BlurRadius > 64
+        visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
         text: qsTr("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
     }
 
@@ -337,17 +373,18 @@ Kirigami.FormLayout {
             onCheckedChanged: {
                 cfg_BatteryDisablesBlur = checked
             }
+            visible: blurRadiusSpinBox.visible
         }
     }
 
     CheckBox {
         Kirigami.FormData.label: i18nd("@checkBox:lock_pause_video", "Screen lock pauses video:")
         id: screenLockPausesVideoCheckbox
-        text: i18n("Uncheck if using as lock screen wallpaper!")
         checked: cfg_ScreenLockedPausesVideo
         onCheckedChanged: {
             cfg_ScreenLockedPausesVideo = checked
         }
+        visible: !screenLockModeCheckbox.checked
     }
 
     TextField {
@@ -356,12 +393,14 @@ Kirigami.FormLayout {
         placeholderText: i18nd("@text:placeholder_video_file", "qdbus6")
         text: cfg_QdbusExecName
         Layout.maximumWidth: 300
+        visible: !screenLockModeCheckbox.checked && screenLockPausesVideoCheckbox.checked
     }
 
     Label {
         text: i18n("This used to detect when the screen is locked.")
         opacity: 0.75
         wrapMode: Text.Wrap
+        visible: qdbusExecTextField.visible
     }
     function dumpProps(obj) {
         console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -386,12 +425,14 @@ Kirigami.FormLayout {
         placeholderText: i18nd("@text:placeholder_video_file", "cat /sys/class/backlight/intel_backlight/actual_brightness")
         text: cfg_ScreenStateCmd
         Layout.maximumWidth: 300
+        visible: screenOffPausesVideoCheckbox.checked
     }
 
     Label {
         text: i18n("The command/script must return 0 (zero) when the screen is Off!")
         opacity: 0.75
         wrapMode: Text.Wrap
+        visible: screenOffPausesVideoCheckbox.checked
     }
 
     FileDialog {
