@@ -107,15 +107,6 @@ Kirigami.FormLayout {
                 videosList.visible = !videosList.visible
             }
         }
-        Button {
-            icon.name: "dialog-information-symbolic"
-            text: i18nd("@button:toggle_show_warning", "Important!")
-            checkable: true
-            checked: showWarningMessage
-            onClicked: {
-                showWarningMessage = !showWarningMessage
-            }
-        }
     }
 
     ColumnLayout {
@@ -140,6 +131,21 @@ Kirigami.FormLayout {
         }
     }
 
+    Button {
+        icon.name: "dialog-information-symbolic"
+        text: i18nd("@button:toggle_show_warning", "Warning! Please read before applying (click to show)")
+        checkable: true
+        checked: showWarningMessage
+        onClicked: {
+            showWarningMessage = !showWarningMessage
+        }
+        highlighted: true
+        Kirigami.Theme.inherit: false
+        Kirigami.Theme.textColor: Kirigami.Theme.neutralTextColor
+        Kirigami.Theme.highlightColor: Kirigami.Theme.neutralTextColor
+        icon.color: Kirigami.Theme.neutralTextColor
+    }
+
     Kirigami.InlineMessage {
         id: warningResources
         Layout.fillWidth: true
@@ -151,12 +157,12 @@ Kirigami.FormLayout {
         id: warningCrashes
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: qsTr("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.")
+        text: qsTr("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
         visible: showWarningMessage
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
-                text: "Read instructions"
+                text: "Qt Media backend instructions"
                 onTriggered: {
                     Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes")
                 }
