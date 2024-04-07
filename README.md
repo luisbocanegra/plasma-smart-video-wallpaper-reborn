@@ -30,7 +30,7 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 
 ## Installing
 
-Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2136963)
+Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2139746)
 
 1. **Right click on the Desktop** > **Configure Desktop and Wallpaper...** > **Get New Plugins**
 2. **Search** for "**Smart Video Wallpaper Reborn**", install and set it as your wallpaper.
