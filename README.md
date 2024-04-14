@@ -72,7 +72,7 @@ and restart plasmashell `systemctl --user restart plasma-plasmashell.service` or
     **Arch**
 
     ```sh
-    sudo pacman -S qt6-multimedia gst-libav --needed
+    sudo pacman -S qt6-multimedia qt6-multimedia-gstreamer gst-libav --needed
     ```
 
     If you need extra codecs see https://wiki.archlinux.org/title/GStreamer
