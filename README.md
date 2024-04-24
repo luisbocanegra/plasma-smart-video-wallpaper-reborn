@@ -38,24 +38,42 @@ Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p
 
 To set as Lock Screen wallpaper go to **System settings** > **Screen Locking** > **Appearance: Configure...**
 
+## This plugin requires correctly setup Media codecs
+
+- [Fedora (RPM Fusion repo)](https://rpmfusion.org/Howto/Multimedia)
+- [openSUSE (Packman repositories)](https://en.opensuse.org/SDB:Installing_codecs_from_Packman_repositories)
+
 ## Improve performance by enabling Hardware Video Acceleration
 
 > Hardware video acceleration makes it possible for the video card to decode/encode video, thus offloading the CPU and saving power.
 
-Consult your distribution or the [Arch Wiki instructions on how to do this](https://wiki.archlinux.org/title/Hardware_video_acceleration).
-Make sure to also enable it for [FFmpeg](https://wiki.archlinux.org/title/FFmpeg#Hardware_video_acceleration) and [GStreamer](https://wiki.archlinux.org/title/GStreamer#Hardware_video_acceleration).
+First, verify acceleration you can install and run [nvtop](https://github.com/Syllo/nvtop), it will show a decoding usage when Hardware acceleration is working:
 
-To verify if is working with an Intel GPU install `intel-gpu-tools` and run `sudo intel_gpu_top`, you should see a non-zero value for the Video engine.
+![nvtop hw video decoding](screenshots/nvtop-hw-decoding.png)
+
+If `nvtop` is not available you can use:
+
+- `intel_gpu_top` from [intel-gpu-tools](https://gitlab.freedesktop.org/drm/igt-gpu-tools) for Intel GPU (video engine)
+- `nvidia-smi dmon` for Nvidia GPU (dec column)
+- [amdgpu_top](https://github.com/Umio-Yasuno/amdgpu_top) for AMD GPU (dec column)
+
+If there is no decoding usage you will have to enable video acceleration in your system
+
+- [Arch](https://wiki.archlinux.org/title/Hardware_video_acceleration).
+- [Fedora](https://fedoraproject.org/wiki/Firefox_Hardware_acceleration#Video_decoding)
+- Additional setup for [FFmpeg](https://wiki.archlinux.org/title/FFmpeg#Hardware_video_acceleration) and [GStreamer](https://wiki.archlinux.org/title/GStreamer#Hardware_video_acceleration) may be needed.
 
 ## Black video or Plasma crashes
 
-To recover from crash remove the videos from the configuration using this command below in terminal/tty, then reboot
+There may be some issues with Qt Causing crashes on AMD GPUs, this is currently being investigated in [QTBUG-124586 - QML video media player segmentation fault on AMD GPU with FFMPEG](https://bugreports.qt.io/browse/QTBUG-124586) and [Black screen with gstreamer as Qt Media backend (Recent KDE Neon update)](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/8)
+
+To recover from crash remove the videos from the configuration using this command below in terminal/tty
 
 ```sh
 sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc
 ```
 
-and restart plasmashell `systemctl --user restart plasma-plasmashell.service` or `plasmashell --replace` if the former doesn't work.
+then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.service` or `plasmashell --replace` if the former doesn't work.
 
 ### Possible solution, switching to GStreamer as Qt Media backend
 
@@ -94,13 +112,14 @@ and restart plasmashell `systemctl --user restart plasma-plasmashell.service` or
 
 **Video still doesn't play/keeps crashing?** Follow these steps
 
-1. Run `journalctl -f` and `sudo dmesg -wHT` in separate terminals
-2. While both commands are running switch from the Image wallpaper plugin to video wallpaper
+1. Run `journalctl -f > journal.txt` and `sudo dmesg -wHT > dmesg.txt` in separate terminals
+2. While both commands are running switch from the Image wallpaper plugin to video wallpaper and reproduce the issue
 3. Then stop both commands
 4. If needed, remove the plugin configuration (`sed` command above)
-5. Get your system information from `kinfo` command or from **System settings** > **About this System**
-6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QSG_INFO=1 QT_LOGGING_RULES="qml.debug=true" qml6 test.qml`, this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
-7. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) with the output of the commands from steps 1,5,6 including wether running the **test.qml** also crashes or not.
+5. Get your system information from `kinfo > sysinfo.txt` command or from **System settings** > **About this System**
+6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QT_FFMPEG_DEBUG=1 QSG_INFO=1 QT_LOGGING_RULES="*.debug=true" qml6 test.qml 2> qml_video_test_log.txt `, (qml6 may be qml-qt6 or /usr/lib/qt6/bin/qml please confirm is qt6 one with --version) this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
+7. Run `lspci -k | grep -EA3 'VGA|3D|Display' > lspci.txt`
+8. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) describing the problem and how to reproduce, and attach those files including wether running the **test.qml** also crashes or not.
 
 ## Acknowledgements
 
