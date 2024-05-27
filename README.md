@@ -30,6 +30,12 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 
 ## Installing
 
+### Arch Linux
+
+[aur/plasma6-wallpapers-smart-video-wallpaper-reborn](https://aur.archlinux.org/packages/plasma6-wallpapers-smart-video-wallpaper-reborn) use your preferred AUR helper (e.g `yay -S plasma6-wallpapers-smart-video-wallpaper-reborn`)
+
+### KDE Store
+
 Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2139746)
 
 1. **Right click on the Desktop** > **Configure Desktop and Wallpaper...** > **Get New Plugins**
