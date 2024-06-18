@@ -28,19 +28,21 @@ WallpaperItem {
     anchors.fill: parent
     id: main
     property bool isLoading: true
-    property string videoUrls: wallpaper.configuration.VideoUrls
+    property string videoUrls: main.configuration.VideoUrls
     property var videosList: []
     property int currentVideoIndex: 0
-    property int pauseBatteryLevel: wallpaper.configuration.PauseBatteryLevel
+    property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff
     property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
     property bool screenLocked: screenModel.screenIsLocked
-    property bool batteryPausesVideo: pauseBattery && wallpaper.configuration.BatteryPausesVideo
-    property bool batteryDisablesBlur: pauseBattery && wallpaper.configuration.BatteryDisablesBlur
+    property bool batteryPausesVideo: pauseBattery && main.configuration.BatteryPausesVideo
+    property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
 
     property bool screenIsOff: screenModel.screenIsOff
-    property bool screenLockedPausesVideo: wallpaper.configuration.ScreenLockedPausesVideo
-    property bool screenOffPausesVideo: wallpaper.configuration.ScreenOffPausesVideo
+    property bool screenLockedPausesVideo: main.configuration.ScreenLockedPausesVideo && !lockScreenMode
+    property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
+    property bool lockScreenMode: main.configuration.LockScreenMode
+    property bool debugEnabled : main.configuration.DebugEnabled
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -79,6 +81,7 @@ WallpaperItem {
         id: windowModel
         screenGeometry: main.parent.screenGeometry
         videoIsPlaying: main.playing
+        lockScreenMode: main.lockScreenMode
     }
 
     ScreenModel {
@@ -90,22 +93,20 @@ WallpaperItem {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: wallpaper.configuration.BackgroundColor
+        color: main.configuration.BackgroundColor
 
         Video {
             id: player
             source: videosList[currentVideoIndex]
             loops: MediaPlayer.Infinite
-            fillMode: wallpaper.configuration.FillMode
+            fillMode: main.configuration.FillMode
             anchors.fill: parent
-            volume: wallpaper.configuration.MuteAudio ? 0.0 : 1
+            volume: main.configuration.MuteAudio ? 0.0 : 1
             onPositionChanged: {
-                // console.log("pos:", position, "dur:", duration);
                 if (position == duration) {
-                    // console.error("Video ended:",source);
+                    const lastIndex = currentVideoIndex
                     currentVideoIndex = (currentVideoIndex + 1) % videosList.length
                     source = videosList[currentVideoIndex]
-                    // console.error("Video next:",source);
                     play()
                 }
             }
@@ -114,7 +115,7 @@ WallpaperItem {
 
     FastBlur {
         source: player
-        radius: showBlur ? wallpaper.configuration.BlurRadius : 0
+        radius: showBlur ? main.configuration.BlurRadius : 0
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {

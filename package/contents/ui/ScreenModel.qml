@@ -22,13 +22,13 @@ import org.kde.plasma.plasma5support as P5Support
 Item {
     id: screenModel
     property bool screenIsLocked: false
-    property string qdbusExecName: wallpaper.configuration.QdbusExecName
+    property string qdbusExecName: main.configuration.QdbusExecName
     property string getScreenLockCmd: qdbusExecName + " org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive"
     property bool getScreenLockCmdRunning: false
     property bool checkScreenLock: false
 
     property bool screenIsOff: false
-    property string screenStateCmd: wallpaper.configuration.ScreenStateCmd
+    property string screenStateCmd: main.configuration.ScreenStateCmd
     property bool screenStateCmdRunning: false
     property bool checkScreenState: false
 

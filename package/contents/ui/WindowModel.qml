@@ -25,11 +25,11 @@ Item {
 
     id: wModel
     property var screenGeometry
-    property int pauseMode: wallpaper.configuration.PauseMode
+    property int pauseMode: main.configuration.PauseMode
     property bool playVideoWallpaper: false
     property bool videoIsPlaying: false
-    property int blurMode: wallpaper.configuration.BlurMode
-    property int blurModeLocked: wallpaper.configuration.BlurModeLocked
+    property int blurMode: main.configuration.BlurMode
+    property int blurModeLocked: main.configuration.BlurModeLocked
     property bool showBlur: false
     property bool maximizedExists: false
     property bool visibleExists: false
@@ -40,11 +40,11 @@ Item {
     property var isWindow: abstractTasksModel.IsWindow
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
-    property bool activeScreenOnly: wallpaper.configuration.CheckWindowsActiveScreen
-    property bool lockScreenMode: wallpaper.configuration.LockScreenMode
+    property bool activeScreenOnly: main.configuration.CheckWindowsActiveScreen
+    property bool lockScreenMode: false
 
     Connections {
-        target: wallpaper.configuration
+        target: main.configuration
         function onValueChanged() {
             updateWindowsinfo()
         }

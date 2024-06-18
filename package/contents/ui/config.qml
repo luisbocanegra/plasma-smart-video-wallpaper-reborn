@@ -54,8 +54,6 @@ Kirigami.FormLayout {
     property bool showWarningMessage: false
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_LockScreenMode: screenLockModeCheckbox.checked
-    property int prevPause
-    property int prevBlur
 
     ListModel {
         id: videoUrls
