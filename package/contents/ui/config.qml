@@ -54,6 +54,7 @@ Kirigami.FormLayout {
     property bool showWarningMessage: false
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_LockScreenMode: screenLockModeCheckbox.checked
+    property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
 
     ListModel {
         id: videoUrls
@@ -431,6 +432,16 @@ Kirigami.FormLayout {
         opacity: 0.75
         wrapMode: Text.Wrap
         visible: screenOffPausesVideoCheckbox.checked
+    }
+
+    CheckBox {
+        Kirigami.FormData.label: i18n("Enable debug:")
+        text: i18n("Print debug messages to the system log")
+        id: debugEnabledCheckbox
+        checked: cfg_DebugEnabled
+        onCheckedChanged: {
+            cfg_DebugEnabled = checked
+        }
     }
 
     FileDialog {

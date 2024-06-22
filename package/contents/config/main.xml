@@ -12,7 +12,7 @@
     </entry>
     <entry name="BackgroundColor" type="String">
       <label>Last folder used</label>
-      <default>black</default>
+      <default>#000000</default>
     </entry>
     <entry name="FillMode" type="Int">
       <label>Video fill mode</label>
@@ -81,6 +81,10 @@
     </entry>
     <entry name="LockScreenMode" type="Bool">
       <label>Disable windows and lock screen detection</label>
+      <default>false</default>
+    </entry>
+    <entry name="DebugEnabled" type="Bool">
+      <label>Print log to Journal</label>
       <default>false</default>
     </entry>
   </group>

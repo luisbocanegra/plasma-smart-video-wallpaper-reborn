@@ -104,9 +104,10 @@ WallpaperItem {
             volume: main.configuration.MuteAudio ? 0.0 : 1
             onPositionChanged: {
                 if (position == duration) {
-                    const lastIndex = currentVideoIndex
+                    printLog("- Video ended " + currentVideoIndex + ": " + source)
                     currentVideoIndex = (currentVideoIndex + 1) % videosList.length
                     source = videosList[currentVideoIndex]
+                    printLog("- Playing " + currentVideoIndex + ": " + source)
                     play()
                 }
             }
@@ -155,7 +156,40 @@ WallpaperItem {
         interval: 100
         onTriggered: {
             isLoading = false
+            if (debugEnabled) dumpProps(main.configuration)
             updateState()
+        }
+    }
+
+    function printLog(msg) {
+        if (debugEnabled) {
+            console.log(main.pluginName, msg);
+        }
+    }
+
+    Timer {
+        id: debugTimer
+        running: debugEnabled
+        repeat: true
+        interval: 2000
+        onTriggered: {
+            printLog("------------------------")
+            printLog("Videos: " + videosList)
+            printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
+            printLog("Pause Locked: " + screenLockedPausesVideo + " Locked: " + screenLocked)
+            printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
+            printLog("Windows: " + windowModel.playVideoWallpaper + " Blur: " + windowModel.showBlur)
+            printLog("Video playing: " + playing + " Blur: " + showBlur)
+        }
+    }
+
+    function dumpProps(obj) {
+        printLog("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        for (var k of Object.keys(obj)) {
+            const val = obj[k]
+            if (typeof val === 'function') continue
+            if (k === 'metaData') continue
+            printLog(k + "=" + val + "\n")
         }
     }
 
