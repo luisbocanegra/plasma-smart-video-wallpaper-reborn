@@ -23,6 +23,8 @@ import QtMultimedia
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
 import Qt5Compat.GraphicalEffects
+import org.kde.plasma.extras as PlasmaExtras
+import org.kde.kirigami as Kirigami
 
 WallpaperItem {
     anchors.fill: parent
@@ -48,11 +50,10 @@ WallpaperItem {
         playing && !isLoading ? main.play() : main.pause()
     }
     onVideoUrlsChanged: {
-        videosList = videoUrls.trim().split("\n")
-        currentVideoIndex = 0
+        videosList = videoUrls.trim().split("\n").filter(Boolean)
         if (isLoading) return
         // console.error(videoUrls);
-        player.position = player.duration
+        if (videosList.length == 0) return
         updateState()
     }
 
@@ -93,29 +94,50 @@ WallpaperItem {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: main.configuration.BackgroundColor
+        color: videosList.length == 0 ?
+            Kirigami.Theme.backgroundColor : wallpaper.configuration.BackgroundColor
 
-        Video {
-            id: player
-            source: videosList[currentVideoIndex]
-            loops: MediaPlayer.Infinite
-            fillMode: main.configuration.FillMode
+        VideoOutput {
+            id: videoOutput
+            fillMode: VideoOutput.PreserveAspectCrop
             anchors.fill: parent
-            volume: main.configuration.MuteAudio ? 0.0 : 1
-            onPositionChanged: {
-                if (position == duration) {
+        }
+
+        AudioOutput {
+            id: audioOutput
+            muted: wallpaper.configuration.MuteAudio
+        }
+
+        MediaPlayer {
+            id: player
+            source: videosList[currentVideoIndex] || ''
+            videoOutput: videoOutput
+            audioOutput: audioOutput
+            loops: (videosList.length > 1) ? 1 : MediaPlayer.Infinite
+            // onPositionChanged: (position) => {
+            //     if (position == duration) {
+            onMediaStatusChanged: (status) => {
+                if (status == MediaPlayer.EndOfMedia) {
                     printLog("- Video ended " + currentVideoIndex + ": " + source)
                     currentVideoIndex = (currentVideoIndex + 1) % videosList.length
-                    source = videosList[currentVideoIndex]
+                    source = videosList[currentVideoIndex] || ''
                     printLog("- Playing " + currentVideoIndex + ": " + source)
-                    play()
+                    if (source) play()
                 }
             }
+        }
+
+        PlasmaExtras.PlaceholderMessage {
+            visible: videosList.length == 0
+            anchors.centerIn: parent
+            width: parent.width - Kirigami.Units.gridUnit * 2
+            iconName: "video-symbolic"
+            text: i18n("No video source")
         }
     }
 
     FastBlur {
-        source: player
+        source: videoOutput
         radius: showBlur ? main.configuration.BlurRadius : 0
         anchors.fill: parent
         Behavior on radius {
@@ -174,7 +196,7 @@ WallpaperItem {
         interval: 2000
         onTriggered: {
             printLog("------------------------")
-            printLog("Videos: " + videosList)
+            printLog("Videos: '" + videosList+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
             printLog("Pause Locked: " + screenLockedPausesVideo + " Locked: " + screenLocked)
             printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
@@ -194,7 +216,7 @@ WallpaperItem {
     }
 
     Component.onCompleted: {
-        videosList = videoUrls.trim().split("\n")
+        videosList = videoUrls.trim().split("\n").filter(Boolean)
         startTimer.start()
     }
 }
