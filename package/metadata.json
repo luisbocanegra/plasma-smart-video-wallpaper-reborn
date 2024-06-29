@@ -1,32 +1,33 @@
 {
-    "KPackageStructure": "Plasma/Wallpaper",
-    "KPlugin": {
-        "Authors": [
-            {
-                "Name": "Rog131"
-            },
-            {
-                "Name": "adhe"
-            },
-            {
-                "Email": "luisbocanegra17b@gmail.com",
-                "Name": "Luis Bocanegra"
-            }
-        ],
-        "Category": "",
-        "Description": "Wallpaper plugin to play videos on your desktop",
-        "Icon": "preferences-desktop-wallpaper",
-        "Id": "luisbocanegra.smart.video.wallpaper.reborn",
-        "License": "GPLv2+",
-        "Version": "0.2.0",
-        "Name": "Smart Video Wallpaper Reborn",
-        "Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn",
-        "BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues"
-    },
-    "Keywords": [
-        "video",
-        "wallpaper"
-    ],
-    "X-KDE-ParentApp": "org.kde.plasmashell",
-    "X-Plasma-API-Minimum-Version": "6.0"
+	"KPackageStructure": "Plasma/Wallpaper",
+	"KPlugin": {
+		"Authors": [
+			{
+				"Name": "Rog131"
+			},
+			{
+				"Name": "adhe"
+			},
+			{
+				"Email": "luisbocanegra17b@gmail.com",
+				"Name": "Luis Bocanegra"
+			}
+		],
+		"BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues",
+		"Category": "",
+		"Description": "Wallpaper plugin to play videos on your desktop",
+		"Icon": "preferences-desktop-wallpaper",
+		"Id": "luisbocanegra.smart.video.wallpaper.reborn",
+		"License": "GPLv2+",
+		"Name": "Smart Video Wallpaper Reborn",
+		"Name[es]": "Smart Video Wallpaper Reborn",
+		"Version": "0.2.0",
+		"Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn"
+	},
+	"Keywords": [
+		"video",
+		"wallpaper"
+	],
+	"X-KDE-ParentApp": "org.kde.plasmashell",
+	"X-Plasma-API-Minimum-Version": "6.0"
 }

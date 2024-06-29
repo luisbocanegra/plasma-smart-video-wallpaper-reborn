@@ -1,0 +1,224 @@
+# Translation of reborn in es
+# Copyright (C) 2024
+# This file is distributed under the same license as the reborn package.
+#
+# SPDX-FileCopyrightText: 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: reborn\n"
+"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
+"wallpaper-reborn\n"
+"POT-Creation-Date: 2024-06-28 19:56-0600\n"
+"PO-Revision-Date: 2024-06-28 21:04-0600\n"
+"Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 24.05.1\n"
+
+#: ../metadata.json
+msgid "Smart Video Wallpaper Reborn"
+msgstr "Smart Video Wallpaper Reborn"
+
+#: ../metadata.json
+msgid "Wallpaper plugin to play videos on your desktop"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Add new videos"
+msgstr "Añadir nuevos vídeos"
+
+#: ../contents/ui/config.qml
+msgid "Hide videos list"
+msgstr "Ocultar lista de videos"
+
+#: ../contents/ui/config.qml
+msgid "Warning! Please read before applying (click to show)"
+msgstr "¡Advertencia! Lea antes de aplicar el fondo (haga clic para mostrar)"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Videos are loaded in Memory, bigger files will use more Memory and system "
+"resources!"
+msgstr ""
+"Los vídeos se cargan en la memoria, los archivos más grandes utilizarán más "
+"memoria y recursos del sistema."
+
+#: ../contents/ui/config.qml
+msgid ""
+"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
+"recover from crash remove the videos from the configuration using this "
+"command below in terminal/tty then reboot:<br><strong><code>sed -i 's/"
+"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
+"appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgstr ""
+"¿Bloqueos/pantalla negra? Intente cambiar el backend de Qt Media a gstreamer."
+"<br>Para recuperarse de una falla, elimine los videos de la configuración "
+"usando este comando a continuación en la terminal/tty y luego reinicie:"
+"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
+"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
+"code></strong>"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
+"GPU usage when videos are playing."
+msgstr ""
+"Asegúrese de habilitar la aceleración de video por hardware en su sistema "
+"para reducir el uso de CPU/GPU cuando se reproducen videos."
+
+#: ../contents/ui/config.qml
+msgid "Fill mode:"
+msgstr "Modo de llenado:"
+
+#: ../contents/ui/config.qml
+msgid "Stretch"
+msgstr "Estirar"
+
+#: ../contents/ui/config.qml
+msgid "Keep Proportions"
+msgstr "Mantener proporciones"
+
+#: ../contents/ui/config.qml
+msgid "Scaled and Cropped"
+msgstr "Escalado y recortado"
+
+#: ../contents/ui/config.qml
+msgid "Background:"
+msgstr "Fondo:"
+
+#: ../contents/ui/config.qml
+msgid "Select Background Color"
+msgstr "Selecciona color de fondo"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Silenciar audio:"
+
+#: ../contents/ui/config.qml
+msgid "Lock screen mode:"
+msgstr "Modo de pantalla de bloqueo:"
+
+#: ../contents/ui/config.qml
+msgid "Disables windows and lock screen detection"
+msgstr "Desactiva la detección de ventanas y pantalla de bloqueo"
+
+#: ../contents/ui/config.qml
+msgid "Pause video:"
+msgstr "Pausa video:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Ventanas maximizadas o en pantalla completa"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Ventana activa está presente"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "Se muestra al menos una ventana."
+
+#: ../contents/ui/config.qml
+msgid "Never"
+msgstr "Nunca"
+
+#: ../contents/ui/config.qml
+msgid "Blur video:"
+msgstr "Desenfoca video:"
+
+#: ../contents/ui/config.qml
+msgid "Video is paused"
+msgstr "El video está en pausa"
+
+#: ../contents/ui/config.qml
+msgid "Always"
+msgstr "Siempre"
+
+#: ../contents/ui/config.qml
+msgid "Filter:"
+msgstr "Filtrar:"
+
+#: ../contents/ui/config.qml
+msgid "Only check for windows in active screen"
+msgstr "Verifique solo las ventanas en la pantalla activa"
+
+#: ../contents/ui/config.qml
+msgid "Blur radius:"
+msgstr "Radio de desenfoque:"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Quality of the blur is reduced if value exceeds 64. Higher values may cause "
+"the blur to stop working!"
+msgstr ""
+"La calidad del desenfoque se reduce si el valor excede 64. ¡Los valores más "
+"altos pueden hacer que el desenfoque deje de funcionar!"
+
+#: ../contents/ui/config.qml
+msgid "On battery below:"
+msgstr "Con batería por debajo del:"
+
+#: ../contents/ui/config.qml
+msgid "Pause video"
+msgstr "Pausar video"
+
+#: ../contents/ui/config.qml
+msgid "Disable blur"
+msgstr "Deshabilitar el desenfoque"
+
+#: ../contents/ui/config.qml
+msgid "Screen lock pauses video:"
+msgstr "El bloqueo de pantalla pausa el video:"
+
+#: ../contents/ui/config.qml
+msgid "Qdbus executable:"
+msgstr "Ejecutable Qdbus:"
+
+#: ../contents/ui/config.qml
+msgid "qdbus6"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "This is used to detect when the screen is locked."
+msgstr "Se utiliza para detectar cuando la pantalla está bloqueada."
+
+#: ../contents/ui/config.qml
+msgid "Screen Off pauses video:"
+msgstr "La pantalla apagada pausa el video:"
+
+#: ../contents/ui/config.qml
+msgid "Requires setting up command below!"
+msgstr "¡Requiere configurar el comando a continuación!"
+
+#: ../contents/ui/config.qml
+msgid "Screen state command:"
+msgstr "Comando de estado de pantalla:"
+
+#: ../contents/ui/config.qml
+msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "The command/script must return 0 (zero) when the screen is Off."
+msgstr ""
+"El comando/script debe devolver 0 (cero) cuando la pantalla está apagada."
+
+#: ../contents/ui/config.qml
+msgid "Enable debug:"
+msgstr "Habilitar depuración:"
+
+#: ../contents/ui/config.qml
+msgid "Print debug messages to the system log"
+msgstr "Muestra mensajes de depuración en el registro del sistema"
+
+#: ../contents/ui/config.qml
+msgid "Pick a video file"
+msgstr "Elige un archivo de vídeo"
+
+#: ../contents/ui/main.qml
+msgid "No video source"
+msgstr "Sin fuente de video"
