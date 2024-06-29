@@ -34,8 +34,8 @@ WallpaperItem {
     property var videosList: []
     property int currentVideoIndex: 0
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
-    property bool playing: windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff
-    property bool showBlur: windowModel.showBlur && !batteryDisablesBlur
+    property bool playing: (windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
+    property bool showBlur: (windowModel.showBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
     property bool screenLocked: screenModel.screenIsLocked
     property bool batteryPausesVideo: pauseBattery && main.configuration.BatteryPausesVideo
     property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
@@ -45,6 +45,17 @@ WallpaperItem {
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
     property bool lockScreenMode: main.configuration.LockScreenMode
     property bool debugEnabled : main.configuration.DebugEnabled
+
+    property var activeEffects: effectsModel.activeEffects
+    property var effectsHideBlur: main.configuration.EffectsHideBlur.split(",")
+    property var effectsShowBlur: main.configuration.EffectsShowBlur.split(",")
+    property bool effectHideBlur: effectsHideBlur.some(item => activeEffects.includes(item))
+    property bool effectShowBlur: effectsShowBlur.some(item => activeEffects.includes(item))
+
+    property var effectsPauseVideo: main.configuration.EffectsPauseVideo.split(",")
+    property var effectsPlayVideo: main.configuration.EffectsPlayVideo.split(",")
+    property bool effectPauseVideo: effectsPauseVideo.some(item => activeEffects.includes(item))
+    property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -89,6 +100,10 @@ WallpaperItem {
         id: screenModel
         checkScreenLock: screenLockedPausesVideo
         checkScreenState: screenOffPausesVideo
+    }
+
+    EffectsModel {
+        id: effectsModel
     }
 
     Rectangle {

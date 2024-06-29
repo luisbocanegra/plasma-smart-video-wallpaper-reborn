@@ -87,5 +87,18 @@
       <label>Print log to Journal</label>
       <default>false</default>
     </entry>
+    <!-- Desktop effects -->
+    <entry name="EffectsPauseVideo" type="String">
+      <default></default>
+    </entry>
+    <entry name="EffectsPlayVideo" type="String">
+      <default></default>
+    </entry>
+    <entry name="EffectsHideBlur" type="String">
+      <default></default>
+    </entry>
+    <entry name="EffectsShowBlur" type="String">
+      <default></default>
+    </entry>
   </group>
 </kcfg>

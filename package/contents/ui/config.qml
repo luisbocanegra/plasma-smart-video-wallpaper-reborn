@@ -55,6 +55,10 @@ Kirigami.FormLayout {
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_LockScreenMode: screenLockModeCheckbox.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
+    property alias cfg_EffectsPlayVideo: effectsPlayVideoInput.text
+    property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
+    property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
+    property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
 
     ListModel {
         id: videoUrls
@@ -465,6 +469,48 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_DebugEnabled = checked
         }
+    }
+
+    Kirigami.Separator {
+        Kirigami.FormData.label: i18n("Desktop Effects")
+        Layout.fillWidth: true
+    }
+
+    TextEdit {
+        wrapMode: Text.Wrap
+        Layout.maximumWidth: 400
+        readOnly: true
+        textFormat: TextEdit.RichText
+        text: "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:<br><strong><code>qdbus org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.loadedEffects</code></strong>"
+        color: Kirigami.Theme.textColor
+        selectedTextColor: Kirigami.Theme.highlightedTextColor
+        selectionColor: Kirigami.Theme.highlightColor
+    }
+
+    // TODO select from loaded effects instead of typing them
+
+    TextField {
+        Kirigami.FormData.label: i18n("Play in:")
+        id: effectsPlayVideoInput
+        Layout.maximumWidth: 300
+    }
+
+    TextField {
+        Kirigami.FormData.label: i18n("Pause in:")
+        id: effectsPauseVideoInput
+        Layout.maximumWidth: 300
+    }
+
+    TextField {
+        Kirigami.FormData.label: i18n("Show blur in:")
+        id: effectsShowBlurInput
+        Layout.maximumWidth: 300
+    }
+
+    TextField {
+        Kirigami.FormData.label: i18n("Hide blur in:")
+        id: effectsHideBlurInput
+        Layout.maximumWidth: 300
     }
 
     FileDialog {
