@@ -14,6 +14,7 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
   - Active window
   - Window is present
   - Never
+  - Based on active Desktop Effect (e.g overview, show desktop)
 - Blur
   - Conditions
     - Maximized or fullscreen window
@@ -22,6 +23,7 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
     - Video is paused
     - Always
     - Never
+    - Based on active Desktop Effect (e.g overview, show desktop)
   - Radius
 - Battery
   - Pauses video
