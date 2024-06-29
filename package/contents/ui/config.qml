@@ -96,14 +96,14 @@ Kirigami.FormLayout {
         Button {
             id: imageButton
             icon.name: "folder-videos-symbolic"
-            text: i18nd("@button:toggle_show_videos", "Add new videos")
+            text: i18n("Add new videos")
             onClicked: {
                 fileDialog.open()
             }
         }
         Button {
             icon.name: "visibility-symbolic"
-            text: i18nd("@button:toggle_show_videos", videosList.visible ? "Hide videos list" : "Show videos list")
+            text: i18n(videosList.visible ? "Hide videos list" : "Show videos list")
             checkable: true
             checked: videosList.visible
             onClicked: {
@@ -135,8 +135,8 @@ Kirigami.FormLayout {
     }
 
     Button {
-        icon.name: "dialog-information-symbolic"
-        text: i18nd("@button:toggle_show_warning", "Warning! Please read before applying (click to show)")
+        icon.name: "dialog-warning-symbolic"
+        text: i18n("Warning! Please read before applying (click to show)")
         checkable: true
         checked: showWarningMessage
         onClicked: {
@@ -153,14 +153,14 @@ Kirigami.FormLayout {
         id: warningResources
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: qsTr("Videos are loaded in Memory, bigger files will use more Memory and system resources!")
+        text: i18n("Videos are loaded in Memory, bigger files will use more Memory and system resources!")
         visible: showWarningMessage
     }
     Kirigami.InlineMessage {
         id: warningCrashes
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: qsTr("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
+        text: i18n("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
         visible: showWarningMessage
         actions: [
             Kirigami.Action {
@@ -175,7 +175,7 @@ Kirigami.FormLayout {
     Kirigami.InlineMessage {
         id: warningHwAccel
         Layout.fillWidth: true
-        text: qsTr("Make sure to enable Hardware video acceleration in your system to reduce CPU usage and save power.")
+        text: i18n("Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing.")
         visible: showWarningMessage
         actions: [
             Kirigami.Action {
@@ -190,19 +190,19 @@ Kirigami.FormLayout {
 
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@option:video_fill_mode", "Fill mode:")
+        Kirigami.FormData.label: i18n("Fill mode:")
         id: videoFillMode
         model: [
             {
-                'label': i18nd("@option:video_stretch", "Stretch"),
+                'label': i18n("Stretch"),
                 'fillMode': VideoOutput.Stretch
             },
             {
-                'label': i18nd("@option:video_scaled", "Scaled, Keep Proportions"),
+                'label': i18n("Keep Proportions"),
                 'fillMode': VideoOutput.PreserveAspectFit
             },
             {
-                'label': i18nd("@option:video_scaled_cropped", "Scaled and Cropped"),
+                'label': i18n("Scaled and Cropped"),
                 'fillMode': VideoOutput.PreserveAspectCrop
             }
         ]
@@ -221,14 +221,14 @@ Kirigami.FormLayout {
 
     KQuickControls.ColorButton {
         id: colorButton
-        Kirigami.FormData.label: i18nd("@button:background_color", "Background:")
+        Kirigami.FormData.label: i18n("Background:")
         visible: cfg_FillMode === VideoOutput.PreserveAspectFit
-        dialogTitle: i18nd("@dialog:background_color_title", "Select Background Color")
+        dialogTitle: i18n("Select Background Color")
     }
 
     CheckBox {
         id: muteRadio
-        Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Mute audio:")
+        Kirigami.FormData.label: i18n("Mute audio:")
         checked: cfg_MuteAudio
         onCheckedChanged: {
             cfg_MuteAudio = checked
@@ -236,27 +236,27 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18nd("@checkBox:lock_screen_mode", "Lock screen mode:")
+        Kirigami.FormData.label: i18n("Lock screen mode:")
         id: screenLockModeCheckbox
         text: i18n("Disables windows and lock screen detection")
         checked: cfg_LockScreenMode
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Pause video:")
+        Kirigami.FormData.label: i18n("Pause video:")
         id: pauseModeCombo
         model: [
             {
-                'label': i18nd("@option:pause_mode", "Maximized or full-screen windows")
+                'label': i18n("Maximized or full-screen windows")
             },
             {
-                'label': i18nd("@option:pause_mode", "Active window is present")
+                'label': i18n("Active window is present")
             },
             {
-                'label': i18nd("@option:pause_mode", "At least one window is shown")
+                'label': i18n("At least one window is shown")
             },
             {
-                'label': i18nd("@option:pause_mode", "Never")
+                'label': i18n("Never")
             }
         ]
         textRole: "label"
@@ -266,26 +266,26 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur video:")
+        Kirigami.FormData.label: i18n("Blur video:")
         id: blurModeCombo
         model: [
             {
-                'label': i18nd("@option:blur_mode", "Maximized or full-screen windows")
+                'label': i18n("Maximized or full-screen windows")
             },
             {
-                'label': i18nd("@option:blur_mode", "Active window is present")
+                'label': i18n("Active window is present")
             },
             {
-                'label': i18nd("@option:blur_mode", "At least one window is shown")
+                'label': i18n("At least one window is shown")
             },
             {
-                'label': i18nd("@option:blur_mode", "Video is paused")
+                'label': i18n("Video is paused")
             },
             {
-                'label': i18nd("@option:blur_mode", "Always")
+                'label': i18n("Always")
             },
             {
-                'label': i18nd("@option:blur_mode", "Never")
+                'label': i18n("Never")
             }
         ]
         textRole: "label"
@@ -295,17 +295,17 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18nd("@buttonGroup:pause_mode", "Blur video:")
+        Kirigami.FormData.label: i18n("Blur video:")
         id: blurModeLockedCombo
         model: [
             {
-                'label': i18nd("@option:blur_mode", "Video is paused")
+                'label': i18n("Video is paused")
             },
             {
-                'label': i18nd("@option:blur_mode", "Always")
+                'label': i18n("Always")
             },
             {
-                'label': i18nd("@option:blur_mode", "Never")
+                'label': i18n("Never")
             }
         ]
         textRole: "label"
@@ -316,7 +316,7 @@ Kirigami.FormLayout {
 
     CheckBox {
         id: activeScreenOnlyCheckbx
-        Kirigami.FormData.label: i18nd("@checkbox:mute_audio", "Filter:")
+        Kirigami.FormData.label: i18n("Filter:")
         checked: cfg_CheckWindowsActiveScreen
         text: i18n("Only check for windows in active screen")
         onCheckedChanged: {
@@ -324,29 +324,36 @@ Kirigami.FormLayout {
         }
         visible: !screenLockModeCheckbox.checked
     }
-
-    SpinBox {
-        Kirigami.FormData.label: i18nd("@checkBox:blur_strength", "Blur radius:")
-        id: blurRadiusSpinBox
-        from: 0
-        to: 145
-        value: cfg_BlurRadius
-        onValueChanged: {
-            cfg_BlurRadius = value
-        }
+    
+    RowLayout {
+        Kirigami.FormData.label: i18n("Blur radius:")
         visible: (screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
-                    (blurModeCombo.visible && cfg_BlurMode !== 5)
-    }
-
-    Kirigami.InlineMessage {
-        Layout.fillWidth: true
-        type: Kirigami.MessageType.Warning
-        visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
-        text: qsTr("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
+                        (blurModeCombo.visible && cfg_BlurMode !== 5)
+        SpinBox {
+            id: blurRadiusSpinBox
+            from: 0
+            to: 145
+            value: cfg_BlurRadius
+            onValueChanged: {
+                cfg_BlurRadius = value
+            }
+        }
+        Button {
+            visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
+            icon.name: "dialog-warning-symbolic"
+            ToolTip.text: i18n("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
+            highlighted: true
+            hoverEnabled: true
+            ToolTip.visible: hovered
+            Kirigami.Theme.inherit: false
+            Kirigami.Theme.textColor: Kirigami.Theme.neutralTextColor
+            Kirigami.Theme.highlightColor: Kirigami.Theme.neutralTextColor
+            icon.color: Kirigami.Theme.neutralTextColor
+        }
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18nd("@checkGroup:battery_mode", "On battery below:")
+        Kirigami.FormData.label: i18n("On battery below:")
         SpinBox {
             id: pauseBatteryLevel
             from: 0
@@ -377,7 +384,7 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18nd("@checkBox:lock_pause_video", "Screen lock pauses video:")
+        Kirigami.FormData.label: i18n("Screen lock pauses video:")
         id: screenLockPausesVideoCheckbox
         checked: cfg_ScreenLockedPausesVideo
         onCheckedChanged: {
@@ -386,21 +393,30 @@ Kirigami.FormLayout {
         visible: !screenLockModeCheckbox.checked
     }
 
-    TextField {
-        Kirigami.FormData.label: i18nd("@label:video_file", "Qdbus executable:")
-        id: qdbusExecTextField
-        placeholderText: i18nd("@text:placeholder_video_file", "qdbus6")
-        text: cfg_QdbusExecName
-        Layout.maximumWidth: 300
+    RowLayout {
         visible: !screenLockModeCheckbox.checked && screenLockPausesVideoCheckbox.checked
+        Kirigami.FormData.label: i18n("Qdbus executable:")
+        TextField {
+            id: qdbusExecTextField
+            placeholderText: i18n("qdbus6")
+            text: cfg_QdbusExecName
+            Layout.maximumWidth: 300
+        }
+
+        Button {
+            icon.name: "dialog-information-symbolic"
+            ToolTip.text: i18n("This is used to detect when the screen is locked.")
+            highlighted: true
+            hoverEnabled: true
+            flat: true
+            ToolTip.visible: hovered
+            Kirigami.Theme.inherit: false
+            Kirigami.Theme.textColor: Kirigami.Theme.highlightColor
+            icon.color: Kirigami.Theme.highlightColor
+            display: AbstractButton.IconOnly
+        }
     }
 
-    Label {
-        text: i18n("This used to detect when the screen is locked.")
-        opacity: 0.75
-        wrapMode: Text.Wrap
-        visible: qdbusExecTextField.visible
-    }
     function dumpProps(obj) {
         console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         for (var k of Object.keys(obj)) {
@@ -409,7 +425,7 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18nd("@checkBox:screenOff_pause_video", "Screen Off pauses video:")
+        Kirigami.FormData.label: i18n("Screen Off pauses video:")
         id: screenOffPausesVideoCheckbox
         text: i18n("Requires setting up command below!")
         checked: cfg_ScreenOffPausesVideo
@@ -418,20 +434,27 @@ Kirigami.FormLayout {
         }
     }
 
-    TextField {
-        Kirigami.FormData.label: i18nd("@label:screen_state_cmd", "Screen state command:")
-        id: screenStateCmdTextField
-        placeholderText: i18nd("@text:placeholder_video_file", "cat /sys/class/backlight/intel_backlight/actual_brightness")
-        text: cfg_ScreenStateCmd
-        Layout.maximumWidth: 300
+    RowLayout {
+        Kirigami.FormData.label: i18n("Screen state command:")
         visible: screenOffPausesVideoCheckbox.checked
-    }
-
-    Label {
-        text: i18n("The command/script must return 0 (zero) when the screen is Off!")
-        opacity: 0.75
-        wrapMode: Text.Wrap
-        visible: screenOffPausesVideoCheckbox.checked
+        TextField {
+            id: screenStateCmdTextField
+            placeholderText: i18n("cat /sys/class/backlight/intel_backlight/actual_brightness")
+            text: cfg_ScreenStateCmd
+            Layout.maximumWidth: 300
+        }
+        Button {
+            icon.name: "dialog-information-symbolic"
+            ToolTip.text: i18n("The command/script must return 0 (zero) when the screen is Off.")
+            highlighted: true
+            hoverEnabled: true
+            flat: true
+            ToolTip.visible: hovered
+            Kirigami.Theme.inherit: false
+            Kirigami.Theme.textColor: Kirigami.Theme.highlightColor
+            icon.color: Kirigami.Theme.highlightColor
+            display: AbstractButton.IconOnly
+        }
     }
 
     CheckBox {
@@ -447,7 +470,7 @@ Kirigami.FormLayout {
     FileDialog {
         id: fileDialog
         fileMode : FileDialog.OpenFiles
-        title: i18nd("@dialog_title:pick_video", "Pick a video file")
+        title: i18n("Pick a video file")
         nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
         onAccepted: {
             let newFiles
