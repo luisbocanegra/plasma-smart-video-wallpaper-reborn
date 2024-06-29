@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2024-06-28 19:56-0600\n"
+"POT-Creation-Date: 2024-06-29 02:44-0600\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -214,6 +214,26 @@ msgstr "Habilitar depuración:"
 #: ../contents/ui/config.qml
 msgid "Print debug messages to the system log"
 msgstr "Muestra mensajes de depuración en el registro del sistema"
+
+#: ../contents/ui/config.qml
+msgid "Desktop Effects"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Play in:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Pause in:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Show blur in:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Hide blur in:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Pick a video file"
