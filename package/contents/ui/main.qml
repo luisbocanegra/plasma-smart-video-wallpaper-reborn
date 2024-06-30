@@ -56,6 +56,8 @@ WallpaperItem {
     property var effectsPlayVideo: main.configuration.EffectsPlayVideo.split(",")
     property bool effectPauseVideo: effectsPauseVideo.some(item => activeEffects.includes(item))
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
+    property var blurItem: null
+    property int blurRadius: main.configuration.BlurRadius
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -151,10 +153,38 @@ WallpaperItem {
         }
     }
 
-    FastBlur {
+    function updateBlur() {
+        if (showBlur && blurRadius > 0) {
+            if (blurItem !== null) return
+            blurItem = blurComponent.createObject(main)
+        } else {
+            if (blurItem !== null) blurItem.radius = 0
+        }
+    }
+
+    onShowBlurChanged: {
+        updateBlur()
+    }
+
+    onBlurRadiusChanged: {
+        updateBlur()
+    }
+
+    property Component blurComponent: FastBlur {
         source: videoOutput
-        radius: showBlur ? main.configuration.BlurRadius : 0
+        radius: 0
         anchors.fill: parent
+
+        Component.onCompleted: {
+            radius = blurRadius
+        }
+
+        onRadiusChanged: {
+            if (radius === 0) {
+                this.destroy()
+            }
+        }
+
         Behavior on radius {
             NumberAnimation {
                 duration: 300
