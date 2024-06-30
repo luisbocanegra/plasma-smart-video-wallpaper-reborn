@@ -30,9 +30,10 @@ Item {
     property bool activeEffectsCmdRunning: false
     property string loadedEffectsCmd: qdbusExecName + " org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.loadedEffects"
     property bool loadedEffectsCmdRunning: false
+    property bool active: false
 
     Connections {
-        target: plasmoid.configuration
+        target: main.configuration
         function onValueChanged() {
             updateWindowsinfo()
         }
@@ -90,12 +91,11 @@ Item {
 
     function updateActiveEffects() {
         if (!activeEffectsCmdRunning) runCommand.exec(activeEffectsCmd)
-        if (!loadedEffectsCmdRunning) runCommand.exec(activeEffectsCmd)
     }
 
 
     Timer {
-        running: true
+        running: active
         repeat: true
         interval: 100
         onTriggered: {

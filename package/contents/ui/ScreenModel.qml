@@ -88,7 +88,7 @@ Item {
 
     Timer {
         id: screenTimer
-        running: true
+        running: checkScreenState || checkScreenLock
         repeat: true
         interval: 200
         onTriggered: {

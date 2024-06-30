@@ -47,13 +47,13 @@ WallpaperItem {
     property bool debugEnabled : main.configuration.DebugEnabled
 
     property var activeEffects: effectsModel.activeEffects
-    property var effectsHideBlur: main.configuration.EffectsHideBlur.split(",")
-    property var effectsShowBlur: main.configuration.EffectsShowBlur.split(",")
+    property var effectsHideBlur: main.configuration.EffectsHideBlur.split(",").filter(Boolean)
+    property var effectsShowBlur: main.configuration.EffectsShowBlur.split(",").filter(Boolean)
     property bool effectHideBlur: effectsHideBlur.some(item => activeEffects.includes(item))
     property bool effectShowBlur: effectsShowBlur.some(item => activeEffects.includes(item))
 
-    property var effectsPauseVideo: main.configuration.EffectsPauseVideo.split(",")
-    property var effectsPlayVideo: main.configuration.EffectsPlayVideo.split(",")
+    property var effectsPauseVideo: main.configuration.EffectsPauseVideo.split(",").filter(Boolean)
+    property var effectsPlayVideo: main.configuration.EffectsPlayVideo.split(",").filter(Boolean)
     property bool effectPauseVideo: effectsPauseVideo.some(item => activeEffects.includes(item))
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
     property var blurItem: null
@@ -106,6 +106,12 @@ WallpaperItem {
 
     EffectsModel {
         id: effectsModel
+        active: {
+            return [
+                effectsPlayVideo, effectsPauseVideo,
+                effectsShowBlur, effectsHideBlur
+            ].some(arr => arr.length > 0)
+        }
     }
 
     Rectangle {
