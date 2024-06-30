@@ -32,7 +32,7 @@ Item {
     property bool loadedEffectsCmdRunning: false
 
     Connections {
-        target: plasmoid.configuration
+        target: main.configuration
         function onValueChanged() {
             updateWindowsinfo()
         }
@@ -90,7 +90,6 @@ Item {
 
     function updateActiveEffects() {
         if (!activeEffectsCmdRunning) runCommand.exec(activeEffectsCmd)
-        if (!loadedEffectsCmdRunning) runCommand.exec(activeEffectsCmd)
     }
 
 
