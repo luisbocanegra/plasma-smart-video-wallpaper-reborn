@@ -160,6 +160,7 @@ WallpaperItem {
     FastBlur {
         source: videoOutput
         radius: showBlur ? main.configuration.BlurRadius : 0
+        visible: radius !== 0
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
