@@ -60,6 +60,8 @@ Kirigami.FormLayout {
     property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
     property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
     property alias cfg_AnimationDuration: animationDurationSpinBox.value
+    property alias cfg_FadeVideoEnd: fadeVideoEndCheckbox.checked
+    property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
 
     ListModel {
         id: videoUrls
@@ -240,6 +242,28 @@ Kirigami.FormLayout {
         }
     }
 
+    RowLayout {
+        Kirigami.FormData.label: i18n("Crossfade (Experimental):")
+        spacing: 0
+        CheckBox {
+            id: fadeVideoEndCheckbox
+            checked: cfg_FadeVideoEnd
+            onCheckedChanged: {
+                cfg_FadeVideoEnd = checked
+            }
+        }
+        Button {
+            icon.name: "dialog-information-symbolic"
+            ToolTip.text: i18n("Add a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>")
+            highlighted: true
+            hoverEnabled: true
+            ToolTip.visible: hovered
+            Kirigami.Theme.inherit: false
+            flat: true
+        }
+    }
+
+
     CheckBox {
         Kirigami.FormData.label: i18n("Lock screen mode:")
         id: screenLockModeCheckbox
@@ -331,16 +355,28 @@ Kirigami.FormLayout {
     }
 
     SpinBox {
-            Kirigami.FormData.label: i18n("Animation duration:")
-            id: animationDurationSpinBox
-            from: 0
-            to: 2000000000
-            stepSize: 100
-            value: cfg_AnimationDuration
-            onValueChanged: {
-                cfg_AnimationDuration = value
-            }
+        Kirigami.FormData.label: i18n("Animation duration:")
+        id: animationDurationSpinBox
+        from: 0
+        to: 2000000000
+        stepSize: 100
+        value: cfg_AnimationDuration
+        onValueChanged: {
+            cfg_AnimationDuration = value
         }
+    }
+
+    SpinBox {
+        Kirigami.FormData.label: i18n("Crossfade duration:")
+        id: crossfadeDurationSpinBox
+        from: 0
+        to: 2000000000
+        stepSize: 100
+        value: cfg_CrossfadeDuration
+        onValueChanged: {
+            cfg_CrossfadeDuration = value
+        }
+    }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")

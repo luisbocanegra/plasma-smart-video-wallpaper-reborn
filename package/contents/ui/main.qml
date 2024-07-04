@@ -33,6 +33,7 @@ WallpaperItem {
     property string videoUrls: main.configuration.VideoUrls
     property var videosList: []
     property int currentVideoIndex: 0
+    property string currentSource: videosList[currentVideoIndex]
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool playing: (windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
     property bool showBlur: (windowModel.showBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
@@ -58,6 +59,13 @@ WallpaperItem {
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
 
     property int animationDuration: main.configuration.AnimationDuration
+    // Crossfade must not be longer than the shortest video or the fade becomes glitchy
+    // we don't know the length until a video gets played, so the crossfade duration
+    // will decrease below the configured duration if needed as videos get played
+    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.duration, player2.duration) / 3, 1) )
+    property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
+    property bool fadeVideoEnd: main.configuration.FadeVideoEnd
+    property bool tick: true
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -66,8 +74,16 @@ WallpaperItem {
         videosList = videoUrls.trim().split("\n").filter(Boolean)
         if (isLoading) return
         // console.error(videoUrls);
-        if (videosList.length == 0) return
-        updateState()
+        if (videosList.length == 0) {
+            main.stop()
+        } else {
+            nextVideo()
+            tick = true
+            player2.pause()
+            videoOutput.opacity = 1
+            player1.source = currentSource
+            player1.play()
+        }
     }
 
     property QtObject pmSource: P5Support.DataSource {
@@ -114,39 +130,110 @@ WallpaperItem {
         }
     }
 
+    function nextVideo() {
+        printLog("- Video ended " + currentVideoIndex + ": " + currentSource)
+        currentVideoIndex = (currentVideoIndex + 1) % videosList.length
+        currentSource = videosList[currentVideoIndex] || ''
+        printLog("- Next " + currentVideoIndex + ": " + currentSource)
+    }
+
     Rectangle {
         id: background
         anchors.fill: parent
         color: videosList.length == 0 ?
-            Kirigami.Theme.backgroundColor : wallpaper.configuration.BackgroundColor
+            Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
 
         VideoOutput {
             id: videoOutput
-            fillMode: VideoOutput.PreserveAspectCrop
+            fillMode: main.configuration.FillMode
             anchors.fill: parent
+            z: 2
+            opacity: 1
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: crossfadeDuration
+                }
+            }
         }
 
         AudioOutput {
             id: audioOutput
-            muted: wallpaper.configuration.MuteAudio
+            muted: main.configuration.MuteAudio
+            volume: videoOutput.opacity
+        }
+
+        VideoOutput {
+            id: videoOutput2
+            fillMode: main.configuration.FillMode
+            anchors.fill: parent
+            z: 1
+        }
+
+        AudioOutput {
+            id: audioOutput2
+            muted: main.configuration.MuteAudio
+            volume: videoOutput2.opacity
         }
 
         MediaPlayer {
-            id: player
-            source: videosList[currentVideoIndex] || ''
+            id: player1
+            source: currentSource
             videoOutput: videoOutput
             audioOutput: audioOutput
-            loops: (videosList.length > 1) ? 1 : MediaPlayer.Infinite
-            // onPositionChanged: (position) => {
-            //     if (position == duration) {
+            loops: (videosList.length > 1) ?
+                1 : fadeVideoEnd ?
+                    1 : MediaPlayer.Infinite
+            onPositionChanged: (position) => {
+                if (!tick) return
+                // BUG This doesn't seem to work the first time???
+                if (position > duration - crossfadeDuration) {
+                    if (fadeVideoEnd) {
+                        nextVideo()
+                        printLog("player1 fading out");
+                        videoOutput.opacity = 0
+                        tick = false
+                        player2.source = currentSource
+                        player2.play()
+                    }
+                }
+            }
             onMediaStatusChanged: (status) => {
                 if (status == MediaPlayer.EndOfMedia) {
-                    printLog("- Video ended " + currentVideoIndex + ": " + source)
-                    currentVideoIndex = (currentVideoIndex + 1) % videosList.length
-                    source = videosList[currentVideoIndex] || ''
-                    printLog("- Playing " + currentVideoIndex + ": " + source)
-                    if (source) play()
+                    if (fadeVideoEnd) return
+                    nextVideo()
+                    source = currentSource
+                    play()
                 }
+            }
+            onPlayingChanged: (playing) => {
+                if(playing) {
+                    if (videoOutput.opacity === 0) {
+                        printLog("player1 fading in");
+                        videoOutput.opacity = 1
+                    }
+                    printLog("player1 playing");
+                }
+            }
+        }
+
+        MediaPlayer {
+            id: player2
+            videoOutput: videoOutput2
+            audioOutput: audioOutput2
+            loops: 1
+            onPositionChanged: (position) => {
+                if (tick) return
+                if (position > duration - crossfadeDuration) {
+                    printLog("player1 fading in");
+                    videoOutput.opacity = 1
+                    nextVideo()
+                    tick = true
+                    player1.source = currentSource
+                    player1.play()
+                }
+            }
+            onPlayingChanged: (playing) => {
+                if(playing) printLog("player2 playing");
             }
         }
 
@@ -163,6 +250,22 @@ WallpaperItem {
         source: videoOutput
         radius: showBlur ? main.configuration.BlurRadius : 0
         visible: radius !== 0
+        opacity: videoOutput.opacity
+        z: videoOutput.z
+        anchors.fill: parent
+        Behavior on radius {
+            NumberAnimation {
+                duration: animationDuration
+            }
+        }
+    }
+
+    FastBlur {
+        source: videoOutput2
+        radius: showBlur ? main.configuration.BlurRadius : 0
+        visible: radius !== 0
+        opacity: videoOutput2.opacity
+        z: videoOutput2.z
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
@@ -180,6 +283,12 @@ WallpaperItem {
         playTimer.stop()
         pauseTimer.start();
     }
+    function stop() {
+        player1.stop()
+        player2.stop()
+        player1.source = ""
+        player2.source = ""
+    }
 
     function updateState() {
         if (playing) {
@@ -195,7 +304,8 @@ WallpaperItem {
         id: pauseTimer
         interval: showBlur ? animationDuration : 10
         onTriggered: {
-            player.pause()
+            player1.pause()
+            player2.pause()
         }
     }
 
@@ -204,7 +314,8 @@ WallpaperItem {
         id: playTimer
         interval: 10
         onTriggered: {
-            player.play()
+            player1.play()
+            player2.play()
         }
     }
 
@@ -230,6 +341,10 @@ WallpaperItem {
         repeat: true
         interval: 2000
         onTriggered: {
+            printLog("Player1 duration: " + player1.duration);
+            printLog("Player2 duration: " + player2.duration);
+            printLog("Crossfade max duration: " + crossfadeMinDuration);
+            printLog("Crossfade actual duration: " + crossfadeDuration);
             printLog("------------------------")
             printLog("Videos: '" + videosList+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
