@@ -100,5 +100,8 @@
     <entry name="EffectsShowBlur" type="String">
       <default></default>
     </entry>
+    <entry name="AnimationDuration" type="Int">
+      <default>300</default>
+    </entry>
   </group>
 </kcfg>

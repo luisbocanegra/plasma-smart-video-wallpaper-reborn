@@ -57,6 +57,8 @@ WallpaperItem {
     property bool effectPauseVideo: effectsPauseVideo.some(item => activeEffects.includes(item))
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
 
+    property int animationDuration: main.configuration.AnimationDuration
+
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
     }
@@ -164,7 +166,7 @@ WallpaperItem {
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
-                duration: 300
+                duration: animationDuration
             }
         }
     }
@@ -191,7 +193,7 @@ WallpaperItem {
 
     Timer {
         id: pauseTimer
-        interval: showBlur ? 300 : 10
+        interval: showBlur ? animationDuration : 10
         onTriggered: {
             player.pause()
         }

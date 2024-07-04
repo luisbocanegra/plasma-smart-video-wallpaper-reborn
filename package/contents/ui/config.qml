@@ -59,6 +59,7 @@ Kirigami.FormLayout {
     property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
     property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
     property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
+    property alias cfg_AnimationDuration: animationDurationSpinBox.value
 
     ListModel {
         id: videoUrls
@@ -328,7 +329,19 @@ Kirigami.FormLayout {
         }
         visible: !screenLockModeCheckbox.checked
     }
-    
+
+    SpinBox {
+            Kirigami.FormData.label: i18n("Animation duration:")
+            id: animationDurationSpinBox
+            from: 0
+            to: 2000000000
+            stepSize: 100
+            value: cfg_AnimationDuration
+            onValueChanged: {
+                cfg_AnimationDuration = value
+            }
+        }
+
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")
         visible: (screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
