@@ -171,9 +171,11 @@ WallpaperItem {
 
     function play(){
         pauseTimer.stop();
-        player.play();
+        playTimer.start();
     }
     function pause(){
+        if (playing) return
+        playTimer.stop()
         pauseTimer.start();
     }
 
@@ -189,9 +191,18 @@ WallpaperItem {
 
     Timer {
         id: pauseTimer
-        interval: 300
+        interval: showBlur ? 300 : 10
         onTriggered: {
             player.pause()
+        }
+    }
+
+    // Fixes video playing between active window changes
+    Timer {
+        id: playTimer
+        interval: 10
+        onTriggered: {
+            player.play()
         }
     }
 
