@@ -100,11 +100,11 @@
     <entry name="EffectsShowBlur" type="String">
       <default></default>
     </entry>
-    <entry name="AnimationDuration" type="Int">
+    <entry name="BlurAnimationDuration" type="Int">
       <default>300</default>
     </entry>
-    <entry name="FadeVideoEnd" type="Bool">
-      <default>True</default>
+    <entry name="CrossfadeEnabled" type="Bool">
+      <default>False</default>
     </entry>
     <entry name="CrossfadeDuration" type="Int">
       <default>1000</default>

@@ -58,13 +58,13 @@ WallpaperItem {
     property bool effectPauseVideo: effectsPauseVideo.some(item => activeEffects.includes(item))
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
 
-    property int animationDuration: main.configuration.AnimationDuration
+    property int blurAnimationDuration: main.configuration.BlurAnimationDuration
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
     // will decrease below the configured duration if needed as videos get played
     property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.duration, player2.duration) / 3, 1) )
     property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
-    property bool fadeVideoEnd: main.configuration.FadeVideoEnd
+    property bool crossfadeEnabled: main.configuration.CrossfadeEnabled
     property bool tick: true
 
     onPlayingChanged: {
@@ -181,13 +181,13 @@ WallpaperItem {
             videoOutput: videoOutput
             audioOutput: audioOutput
             loops: (videosList.length > 1) ?
-                1 : fadeVideoEnd ?
+                1 : crossfadeEnabled ?
                     1 : MediaPlayer.Infinite
             onPositionChanged: (position) => {
                 if (!tick) return
                 // BUG This doesn't seem to work the first time???
                 if (position > duration - crossfadeDuration) {
-                    if (fadeVideoEnd) {
+                    if (crossfadeEnabled) {
                         nextVideo()
                         printLog("player1 fading out");
                         videoOutput.opacity = 0
@@ -199,7 +199,7 @@ WallpaperItem {
             }
             onMediaStatusChanged: (status) => {
                 if (status == MediaPlayer.EndOfMedia) {
-                    if (fadeVideoEnd) return
+                    if (crossfadeEnabled) return
                     nextVideo()
                     source = currentSource
                     play()
@@ -255,7 +255,7 @@ WallpaperItem {
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
-                duration: animationDuration
+                duration: blurAnimationDuration
             }
         }
     }
@@ -269,7 +269,7 @@ WallpaperItem {
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
-                duration: animationDuration
+                duration: blurAnimationDuration
             }
         }
     }
@@ -302,7 +302,7 @@ WallpaperItem {
 
     Timer {
         id: pauseTimer
-        interval: showBlur ? animationDuration : 10
+        interval: showBlur ? blurAnimationDuration : 10
         onTriggered: {
             player1.pause()
             player2.pause()

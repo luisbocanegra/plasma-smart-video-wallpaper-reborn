@@ -59,8 +59,8 @@ Kirigami.FormLayout {
     property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
     property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
     property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
-    property alias cfg_AnimationDuration: animationDurationSpinBox.value
-    property alias cfg_FadeVideoEnd: fadeVideoEndCheckbox.checked
+    property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
+    property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
 
     ListModel {
@@ -244,17 +244,30 @@ Kirigami.FormLayout {
 
     RowLayout {
         Kirigami.FormData.label: i18n("Crossfade (Experimental):")
-        spacing: 0
         CheckBox {
-            id: fadeVideoEndCheckbox
-            checked: cfg_FadeVideoEnd
+            id: crossfadeEnabledCheckbox
+            checked: cfg_CrossfadeEnabled
             onCheckedChanged: {
-                cfg_FadeVideoEnd = checked
+                cfg_CrossfadeEnabled = checked
+            }
+        }
+        Label {
+            text: i18n("Duration:")
+        }
+        SpinBox {
+            enabled: crossfadeEnabledCheckbox.checked
+            id: crossfadeDurationSpinBox
+            from: 0
+            to: 2000000000
+            stepSize: 100
+            value: cfg_CrossfadeDuration
+            onValueChanged: {
+                cfg_CrossfadeDuration = value
             }
         }
         Button {
             icon.name: "dialog-information-symbolic"
-            ToolTip.text: i18n("Add a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>")
+            ToolTip.text: i18n("Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>")
             highlighted: true
             hoverEnabled: true
             ToolTip.visible: hovered
@@ -354,30 +367,6 @@ Kirigami.FormLayout {
         visible: !screenLockModeCheckbox.checked
     }
 
-    SpinBox {
-        Kirigami.FormData.label: i18n("Animation duration:")
-        id: animationDurationSpinBox
-        from: 0
-        to: 2000000000
-        stepSize: 100
-        value: cfg_AnimationDuration
-        onValueChanged: {
-            cfg_AnimationDuration = value
-        }
-    }
-
-    SpinBox {
-        Kirigami.FormData.label: i18n("Crossfade duration:")
-        id: crossfadeDurationSpinBox
-        from: 0
-        to: 2000000000
-        stepSize: 100
-        value: cfg_CrossfadeDuration
-        onValueChanged: {
-            cfg_CrossfadeDuration = value
-        }
-    }
-
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")
         visible: (screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
@@ -393,15 +382,28 @@ Kirigami.FormLayout {
         }
         Button {
             visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
-            icon.name: "dialog-warning-symbolic"
+            icon.name: "dialog-information-symbolic"
             ToolTip.text: i18n("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
-            highlighted: true
             hoverEnabled: true
+            flat: true
             ToolTip.visible: hovered
             Kirigami.Theme.inherit: false
             Kirigami.Theme.textColor: Kirigami.Theme.neutralTextColor
             Kirigami.Theme.highlightColor: Kirigami.Theme.neutralTextColor
             icon.color: Kirigami.Theme.neutralTextColor
+        }
+        Label {
+            text: i18n("Animation duration:")
+        }
+        SpinBox {
+            id: blurAnimationDurationSpinBox
+            from: 0
+            to: 2000000000
+            stepSize: 100
+            value: cfg_BlurAnimationDuration
+            onValueChanged: {
+                cfg_BlurAnimationDuration = value
+            }
         }
     }
 
