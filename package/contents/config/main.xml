@@ -103,5 +103,11 @@
     <entry name="AnimationDuration" type="Int">
       <default>300</default>
     </entry>
+    <entry name="FadeVideoEnd" type="Bool">
+      <default>True</default>
+    </entry>
+    <entry name="CrossfadeDuration" type="Int">
+      <default>1000</default>
+    </entry>
   </group>
 </kcfg>
