@@ -243,7 +243,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Crossfade (Experimental):")
+        Kirigami.FormData.label: i18n("Crossfade (Beta):")
         CheckBox {
             id: crossfadeEnabledCheckbox
             checked: cfg_CrossfadeEnabled
