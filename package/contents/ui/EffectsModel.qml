@@ -24,20 +24,12 @@ Item {
     id: effectsModel
     property var activeEffects: []
     property var loadedEffects: []
-    // TODO: make config
     property string qdbusExecName: main.configuration.QdbusExecName
     property string activeEffectsCmd: qdbusExecName + " org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.activeEffects"
     property bool activeEffectsCmdRunning: false
     property string loadedEffectsCmd: qdbusExecName + " org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.loadedEffects"
     property bool loadedEffectsCmdRunning: false
     property bool active: false
-
-    Connections {
-        target: main.configuration
-        function onValueChanged() {
-            updateWindowsinfo()
-        }
-    }
 
     function isEffectActive(effectId) {
         return activeEffects.includes(effectId)
@@ -88,11 +80,9 @@ Item {
         }
     }
 
-
     function updateActiveEffects() {
         if (!activeEffectsCmdRunning) runCommand.exec(activeEffectsCmd)
     }
-
 
     Timer {
         running: active
