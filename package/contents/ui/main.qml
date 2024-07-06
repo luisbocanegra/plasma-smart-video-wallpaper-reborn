@@ -68,6 +68,7 @@ WallpaperItem {
     property bool tick: true
     property real playbackRate: main.configuration.PlaybackRate
     property real volume: main.configuration.Volume
+    property real volumeOutput2: 0
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -174,7 +175,12 @@ WallpaperItem {
         AudioOutput {
             id: audioOutput2
             muted: main.configuration.MuteAudio
-            volume: videoOutput2.opacity * main.volume
+            volume: volumeOutput2 * main.volume
+            Behavior on volume {
+                NumberAnimation {
+                    duration: crossfadeDuration
+                }
+            }
         }
 
         MediaPlayer {
@@ -196,6 +202,7 @@ WallpaperItem {
                         videoOutput.opacity = 0
                         tick = false
                         player2.source = currentSource
+                        volumeOutput2 = 1
                         player2.play()
                     }
                 }
@@ -232,6 +239,7 @@ WallpaperItem {
                     videoOutput.opacity = 1
                     nextVideo()
                     tick = true
+                    volumeOutput2 = 0
                     player1.source = currentSource
                     player1.play()
                 }
