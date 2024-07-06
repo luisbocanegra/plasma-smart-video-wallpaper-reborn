@@ -109,5 +109,11 @@
     <entry name="CrossfadeDuration" type="Int">
       <default>1000</default>
     </entry>
+    <entry name="PlaybackRate" type="Double">
+      <default>1</default>
+    </entry>
+    <entry name="Volume" type="Double">
+      <default>1</default>
+    </entry>
   </group>
 </kcfg>

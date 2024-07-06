@@ -66,6 +66,8 @@ WallpaperItem {
     property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
     property bool crossfadeEnabled: main.configuration.CrossfadeEnabled
     property bool tick: true
+    property real playbackRate: main.configuration.PlaybackRate
+    property real volume: main.configuration.Volume
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
@@ -159,7 +161,7 @@ WallpaperItem {
         AudioOutput {
             id: audioOutput
             muted: main.configuration.MuteAudio
-            volume: videoOutput.opacity
+            volume: videoOutput.opacity * main.volume
         }
 
         VideoOutput {
@@ -172,7 +174,7 @@ WallpaperItem {
         AudioOutput {
             id: audioOutput2
             muted: main.configuration.MuteAudio
-            volume: videoOutput2.opacity
+            volume: videoOutput2.opacity * main.volume
         }
 
         MediaPlayer {
@@ -180,6 +182,7 @@ WallpaperItem {
             source: currentSource
             videoOutput: videoOutput
             audioOutput: audioOutput
+            playbackRate: main.playbackRate
             loops: (videosList.length > 1) ?
                 1 : crossfadeEnabled ?
                     1 : MediaPlayer.Infinite
@@ -220,6 +223,7 @@ WallpaperItem {
             id: player2
             videoOutput: videoOutput2
             audioOutput: audioOutput2
+            playbackRate: main.playbackRate
             loops: 1
             onPositionChanged: (position) => {
                 if (tick) return

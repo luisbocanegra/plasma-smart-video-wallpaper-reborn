@@ -62,6 +62,8 @@ Kirigami.FormLayout {
     property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
     property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
+    property alias cfg_PlaybackRate: playbackRateSlider.value
+    property alias cfg_Volume: volumeSlider.value
 
     ListModel {
         id: videoUrls
@@ -233,14 +235,72 @@ Kirigami.FormLayout {
         dialogTitle: i18n("Select Background Color")
     }
 
-    CheckBox {
-        id: muteRadio
-        Kirigami.FormData.label: i18n("Mute audio:")
-        checked: cfg_MuteAudio
-        onCheckedChanged: {
-            cfg_MuteAudio = checked
+    RowLayout {
+        Kirigami.FormData.label: i18n("Playback speed:")
+        Slider {
+            id: playbackRateSlider
+            from: 0
+            value: cfg_PlaybackRate
+            to: 2
+            onValueChanged: {
+                cfg_PlaybackRate = value
+            }
+        }
+        Label {
+            text: parseFloat(playbackRateSlider.value).toFixed(2)
+        }
+        Button {
+            icon.name: "edit-undo-symbolic"
+            flat: true
+            onClicked: {
+                playbackRateSlider.value = 1.0
+            }
+            ToolTip.text: i18n("Reset to default")
+            ToolTip.visible: hovered
         }
     }
+
+    
+
+    RowLayout {
+        Kirigami.FormData.label: i18n("Mute audio:")
+        CheckBox {
+            id: muteRadio
+            checked: cfg_MuteAudio
+            onCheckedChanged: {
+                cfg_MuteAudio = checked
+            }
+        }
+        RowLayout {
+            enabled: !muteRadio.checked
+            opacity: enabled ? 1 : 0
+            Label {
+                text: i18n("Volume:")
+            }
+            Slider {
+                id: volumeSlider
+                from: 0
+                value: cfg_Volume
+                to: 1
+                onValueChanged: {
+                    cfg_Volume = value
+                }
+            }
+            Label {
+                text: parseFloat(volumeSlider.value).toFixed(2)
+            }
+            Button {
+                icon.name: "edit-undo-symbolic"
+                flat: true
+                onClicked: {
+                    volumeSlider.value = 1.0
+                }
+                ToolTip.text: i18n("Reset to default")
+                ToolTip.visible: hovered
+            }
+        }
+    }
+
 
     RowLayout {
         Kirigami.FormData.label: i18n("Crossfade (Beta):")
