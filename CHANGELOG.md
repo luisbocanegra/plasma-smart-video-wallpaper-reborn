@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.4.0 2024-07-05 Major improvements
+
+### Fixes
+
+- Performance
+  - Don't check Effects, Screen and Locked if not needed
+  - Fix 2x GPU usage when blur is disabled
+- Fix video playing between active window changes
+
+### Improvements
+
+- Added option to change animation duration
+- Added cross-fade (dissolve) transition between videos (**Beta**, disabled by default)
+- Global playback speed and volume control
+
 ## v0.3.0 2024-06-29 Desktop effects detection & playback improvements
 
 ### Fixes
