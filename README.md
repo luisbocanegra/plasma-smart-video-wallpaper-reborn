@@ -9,6 +9,8 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 - Play a single video or slideshow of videos
 - Enable/disable video sound
 - Lock screen support
+- Global playback speed and volume control
+- Cross-fade transition between videos (**Beta**)
 - Pause Video conditions
   - Maximized or fullscreen window
   - Active window
@@ -25,7 +27,8 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
     - Never
     - Based on active Desktop Effect (e.g overview, show desktop)
   - Radius
-- Battery
+  - Animation duration
+- Battery mode (threshold)
   - Pauses video
   - Disables Blur
 - Pause video when screen is Off/Locked
@@ -131,4 +134,5 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 
 ## Acknowledgements
 
-This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
+- This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
+- [Zren's kpac](https://github.com/Zren/plasma-applet-lib) to manage translations
