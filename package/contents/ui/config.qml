@@ -44,7 +44,6 @@ Kirigami.FormLayout {
     property alias cfg_BlurModeLocked: blurModeLockedCombo.currentIndex
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
-    property alias cfg_QdbusExecName: qdbusExecTextField.text
     property alias cfg_ScreenLockedPausesVideo: screenLockPausesVideoCheckbox.checked
     property string cfg_VideoUrls
     property var currentFiles: []
@@ -127,17 +126,35 @@ Kirigami.FormLayout {
         Repeater {
             model: videoUrls
             RowLayout {
+                CheckBox {id: vidEnabled}
+                TextField {
+                    text: modelData
+                    // wrapMode: Text.Wrap
+                    // Layout.maximumWidth: 400
+                    Layout.preferredWidth: 300
+                    // font: Kirigami.Theme.smallFont
+                    // maxLines: 1
+                }
+                RowLayout {
+                    enabled: vidEnabled.checked
+                    SpinBox {
+                        from: 0
+                        to: 3600
+                        value: 60
+                    }
+                    Button{
+                        icon.name: "go-up-symbolic"
+                    }
+                    Button{
+                        icon.name: "go-down-symbolic"
+                    }
+                }
                 Button{
                     icon.name: "edit-delete-remove"
+                    // text: "Remove"
                     onClicked: {
                         videoUrls.remove(index)
                     }
-                }
-                Label {
-                    text: index.toString() +" "+ modelData
-                    wrapMode: Text.Wrap
-                    Layout.maximumWidth: 300
-                    font: Kirigami.Theme.smallFont
                 }
             }
         }
@@ -508,30 +525,6 @@ Kirigami.FormLayout {
         visible: !screenLockModeCheckbox.checked
     }
 
-    RowLayout {
-        visible: !screenLockModeCheckbox.checked && screenLockPausesVideoCheckbox.checked
-        Kirigami.FormData.label: i18n("Qdbus executable:")
-        TextField {
-            id: qdbusExecTextField
-            placeholderText: i18n("qdbus6")
-            text: cfg_QdbusExecName
-            Layout.maximumWidth: 300
-        }
-
-        Button {
-            icon.name: "dialog-information-symbolic"
-            ToolTip.text: i18n("This is used to detect when the screen is locked.")
-            highlighted: true
-            hoverEnabled: true
-            flat: true
-            ToolTip.visible: hovered
-            Kirigami.Theme.inherit: false
-            Kirigami.Theme.textColor: Kirigami.Theme.highlightColor
-            icon.color: Kirigami.Theme.highlightColor
-            display: AbstractButton.IconOnly
-        }
-    }
-
     function dumpProps(obj) {
         console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         for (var k of Object.keys(obj)) {
@@ -592,7 +585,7 @@ Kirigami.FormLayout {
         Layout.maximumWidth: 400
         readOnly: true
         textFormat: TextEdit.RichText
-        text: "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:<br><strong><code>qdbus org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.loadedEffects</code></strong>"
+        text: "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor

@@ -22,8 +22,9 @@ import org.kde.plasma.plasma5support as P5Support
 Item {
     id: screenModel
     property bool screenIsLocked: false
-    property string qdbusExecName: main.configuration.QdbusExecName
-    property string getScreenLockCmd: qdbusExecName + " org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive"
+    // sed -e "s|^(\(.*\),)$|\1|;s|^<\(.*\)>$|\1|;s|'|\"|g"
+    property string sed: "sed -e \"s|^(\\(.*\\),)$|\\1|;s|^<\\(.*\\)>$|\\1|;s|'|\\\"|g\""
+    property string getScreenLockCmd: "gdbus call --session --dest org.kde.screensaver --object-path /ScreenSaver --method org.freedesktop.ScreenSaver.GetActive | " + sed
     property bool getScreenLockCmdRunning: false
     property bool checkScreenLock: false
 

@@ -24,10 +24,11 @@ Item {
     id: effectsModel
     property var activeEffects: []
     property var loadedEffects: []
-    property string qdbusExecName: main.configuration.QdbusExecName
-    property string activeEffectsCmd: qdbusExecName + " org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.activeEffects"
+    // sed -e "s|^(\(.*\),)$|\1|;s|^<\(.*\)>$|\1|;s|'|\"|g"
+    property string sed: "sed -e \"s|^(\\(.*\\),)$|\\1|;s|^<\\(.*\\)>$|\\1|;s|'|\\\"|g;s|@as ||g\""
+    property string activeEffectsCmd: "gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects activeEffects | " + sed
     property bool activeEffectsCmdRunning: false
-    property string loadedEffectsCmd: qdbusExecName + " org.kde.KWin.Effect.WindowView1 /Effects org.kde.kwin.Effects.loadedEffects"
+    property string loadedEffectsCmd: "gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects | " + sed
     property bool loadedEffectsCmdRunning: false
     property bool active: false
 
@@ -61,20 +62,28 @@ Item {
     Connections {
         target: runCommand
         function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if(cmd === activeEffectsCmd) {
+            if (cmd === activeEffectsCmd) {
                 activeEffectsCmdRunning = false
                 if (exitCode !== 0 ) return
                 if (stdout.length > 0) {
-                    activeEffects = stdout.trim().split("\n")
-                    // console.log("ACTIVE EFFECTS:", activeEffects);
+                    try {
+                        activeEffects = JSON.parse(stdout.trim())
+                        // console.log("ACTIVE EFFECTS:", activeEffects);
+                    } catch (e) {
+                        console.error(e, e.stack)
+                    }
                 }
             }
-            if(cmd === loadedEffectsCmd) {
+            if (cmd === loadedEffectsCmd) {
                 loadedEffectsCmdRunning = false
                 if (exitCode !== 0 ) return
                 if (stdout.length > 0) {
-                    loadedEffects = stdout.trim().split("\n")
-                    // console.log("LOADED EFFECTS:", loadedEffects);
+                    try {
+                        loadedEffects = JSON.parse(stdout.trim())
+                        // console.log("LOADED EFFECTS:", loadedEffects);
+                    } catch (e) {
+                        console.error(e, e.stack)
+                    }
                 }
             }
         }

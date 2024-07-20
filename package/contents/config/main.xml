@@ -63,10 +63,6 @@
       <label>Whether screen locked pauses video</label>
       <default>true</default>
     </entry>
-    <entry name="QdbusExecName" type="String">
-      <label>QDBUS executable name</label>
-      <default>qdbus6</default>
-    </entry>
     <entry name="ScreenOffPausesVideo" type="Bool">
       <label>Pause video when the screen is turned off based on ScreenStateCmd</label>
       <default>false</default>
