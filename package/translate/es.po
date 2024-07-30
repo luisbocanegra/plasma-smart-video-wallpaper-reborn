@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2024-06-29 02:44-0600\n"
+"POT-Creation-Date: 2024-07-30 08:52-0600\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -95,8 +95,34 @@ msgid "Select Background Color"
 msgstr "Selecciona color de fondo"
 
 #: ../contents/ui/config.qml
+msgid "Playback speed:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Reset to default"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Mute audio:"
 msgstr "Silenciar audio:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Crossfade (Beta):"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Duration:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid ""
+"Adds a smooth transition between videos. <strong>Uses additional Memory and "
+"may cause playback isues when enabled.</strong>"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Lock screen mode:"
@@ -159,6 +185,10 @@ msgstr ""
 "altos pueden hacer que el desenfoque deje de funcionar!"
 
 #: ../contents/ui/config.qml
+msgid "Animation duration:"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "On battery below:"
 msgstr "Con batería por debajo del:"
 
@@ -173,18 +203,6 @@ msgstr "Deshabilitar el desenfoque"
 #: ../contents/ui/config.qml
 msgid "Screen lock pauses video:"
 msgstr "El bloqueo de pantalla pausa el video:"
-
-#: ../contents/ui/config.qml
-msgid "Qdbus executable:"
-msgstr "Ejecutable Qdbus:"
-
-#: ../contents/ui/config.qml
-msgid "qdbus6"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "This is used to detect when the screen is locked."
-msgstr "Se utiliza para detectar cuando la pantalla está bloqueada."
 
 #: ../contents/ui/config.qml
 msgid "Screen Off pauses video:"
@@ -242,3 +260,9 @@ msgstr "Elige un archivo de vídeo"
 #: ../contents/ui/main.qml
 msgid "No video source"
 msgstr "Sin fuente de video"
+
+#~ msgid "Qdbus executable:"
+#~ msgstr "Ejecutable Qdbus:"
+
+#~ msgid "This is used to detect when the screen is locked."
+#~ msgstr "Se utiliza para detectar cuando la pantalla está bloqueada."

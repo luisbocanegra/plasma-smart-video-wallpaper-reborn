@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2024-06-29 02:44-0600\n"
+"POT-Creation-Date: 2024-07-30 08:52-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,7 +76,31 @@ msgid "Select Background Color"
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Playback speed:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Reset to default"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Mute audio:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Crossfade (Beta):"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Duration:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -136,6 +160,10 @@ msgid "Quality of the blur is reduced if value exceeds 64. Higher values may cau
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Animation duration:"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "On battery below:"
 msgstr ""
 
@@ -149,18 +177,6 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Screen lock pauses video:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Qdbus executable:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "qdbus6"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "This is used to detect when the screen is locked."
 msgstr ""
 
 #: ../contents/ui/config.qml
