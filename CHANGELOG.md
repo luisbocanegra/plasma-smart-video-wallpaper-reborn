@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.1 2024-07-30 Switch to gdbus
+
+## Fixes
+
+- Switched from `qdbus` to `gdbus` command (from glib2), no more hunting down for the correct qdbus executable name.
+
 ## v0.4.0 2024-07-05 Major improvements
 
 ### Fixes
