@@ -170,8 +170,8 @@ Kirigami.FormLayout {
         }
         highlighted: true
         Kirigami.Theme.inherit: false
-        Kirigami.Theme.textColor: Kirigami.Theme.neutralTextColor
-        Kirigami.Theme.highlightColor: Kirigami.Theme.neutralTextColor
+        Kirigami.Theme.textColor: root.Kirigami.Theme.neutralTextColor
+        Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
         icon.color: Kirigami.Theme.neutralTextColor
     }
 
@@ -276,8 +276,6 @@ Kirigami.FormLayout {
             ToolTip.visible: hovered
         }
     }
-
-    
 
     RowLayout {
         Kirigami.FormData.label: i18n("Mute audio:")
@@ -465,8 +463,8 @@ Kirigami.FormLayout {
             flat: true
             ToolTip.visible: hovered
             Kirigami.Theme.inherit: false
-            Kirigami.Theme.textColor: Kirigami.Theme.neutralTextColor
-            Kirigami.Theme.highlightColor: Kirigami.Theme.neutralTextColor
+            Kirigami.Theme.textColor: root.Kirigami.Theme.neutralTextColor
+            Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
             icon.color: Kirigami.Theme.neutralTextColor
         }
         Label {
@@ -559,7 +557,7 @@ Kirigami.FormLayout {
             flat: true
             ToolTip.visible: hovered
             Kirigami.Theme.inherit: false
-            Kirigami.Theme.textColor: Kirigami.Theme.highlightColor
+            Kirigami.Theme.textColor: root.Kirigami.Theme.highlightColor
             icon.color: Kirigami.Theme.highlightColor
             display: AbstractButton.IconOnly
         }
