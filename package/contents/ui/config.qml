@@ -63,6 +63,7 @@ Kirigami.FormLayout {
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
+    property alias cfg_RandomMode: randomModeCheckbox.checked
 
     RowLayout {
         Button {
@@ -108,16 +109,15 @@ Kirigami.FormLayout {
                 }
                 RowLayout {
                     enabled: vidEnabled.checked
-                    SpinBox {
-                        from: 0
-                        to: 3600
-                        value: videosConfig[modelData].duration
-                        onValueChanged: {
-                            videosConfig[modelData].duration = value
-                            Utils.updateConfig()
-                        }
-
-                    }
+                    // SpinBox {
+                    //     from: 0
+                    //     to: 3600
+                    //     value: videosConfig[modelData].duration
+                    //     onValueChanged: {
+                    //         videosConfig[modelData].duration = value
+                    //         Utils.updateConfig()
+                    //     }
+                    // }
                     Button{
                         icon.name: "go-up-symbolic"
                         enabled: index > 0
@@ -242,6 +242,11 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Background:")
         visible: cfg_FillMode === VideoOutput.PreserveAspectFit
         dialogTitle: i18n("Select Background Color")
+    }
+
+    CheckBox {
+        Kirigami.FormData.label: i18n("Play in random order:")
+        id: randomModeCheckbox
     }
 
     RowLayout {

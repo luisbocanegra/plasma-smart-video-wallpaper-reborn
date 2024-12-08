@@ -70,6 +70,7 @@ WallpaperItem {
     property real playbackRate: main.configuration.PlaybackRate
     property real volume: main.configuration.Volume
     property real volumeOutput2: 0
+    property bool randomMode: main.configuration.RandomMode
 
     function getVideos() {
         let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
@@ -142,7 +143,12 @@ WallpaperItem {
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource)
         currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length
-        currentSource = videosConfig[currentVideoIndex].filename || ''
+        if (randomMode && currentVideoIndex === 0) {
+            const shuffledVideos = Utils.shuffleArray(videosConfig)
+            currentSource = shuffledVideos[currentVideoIndex].filename || ''
+        } else {
+            currentSource = videosConfig[currentVideoIndex].filename || ''
+        }
         printLog("- Next " + currentVideoIndex + ": " + currentSource)
     }
 

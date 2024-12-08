@@ -111,5 +111,8 @@
     <entry name="Volume" type="Double">
       <default>1</default>
     </entry>
+    <entry name="RandomMode" type="Bool">
+      <default>False</default>
+    </entry>
   </group>
 </kcfg>
