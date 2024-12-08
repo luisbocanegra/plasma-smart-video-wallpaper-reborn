@@ -28,7 +28,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
-
+import "code/utils.js" as Utils
 
 Kirigami.FormLayout {
     id: root
@@ -46,7 +46,7 @@ Kirigami.FormLayout {
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property alias cfg_ScreenLockedPausesVideo: screenLockPausesVideoCheckbox.checked
     property string cfg_VideoUrls
-    property var currentFiles: []
+    property var videosConfig: Utils.parseCompat(cfg_VideoUrls)
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
@@ -63,42 +63,6 @@ Kirigami.FormLayout {
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
-
-    ListModel {
-        id: videoUrls
-        Component.onCompleted: {
-            updateVidsModel()
-        }
-    }
-
-    function updateVidsModel(){
-        isLoading = true
-        videoUrls.clear()
-        let currentFiles = cfg_VideoUrls.trim().split("\n")
-        for (let i = 0; i < currentFiles.length; i++) {
-            const video = currentFiles[i]
-            if (video.length > 0) {
-                videoUrls.append({"url": currentFiles[i]})
-            }
-        }
-        isLoading = false
-    }
-
-    function updateVidsString() {
-        let newUrls = ""
-        for (let i = 0; i < videoUrls.count; i++) {
-            newUrls += videoUrls.get(i).url + "\n"
-        }
-        cfg_VideoUrls = newUrls
-    }
-
-    Connections {
-        target: videoUrls
-        function onCountChanged() {
-            if (isLoading) return
-            updateVidsString()
-        }
-    }
 
     RowLayout {
         Button {
@@ -124,36 +88,64 @@ Kirigami.FormLayout {
         id: videosList
         visible: false
         Repeater {
-            model: videoUrls
+            model: Object.keys(videosConfig)
             RowLayout {
-                CheckBox {id: vidEnabled}
+                CheckBox {
+                    id: vidEnabled
+                    checked: videosConfig[modelData].enabled
+                    onCheckedChanged:{
+                        videosConfig[modelData].enabled = checked
+                        Utils.updateConfig()
+                    }
+                }
                 TextField {
-                    text: modelData
-                    // wrapMode: Text.Wrap
-                    // Layout.maximumWidth: 400
+                    text: videosConfig[modelData].filename
                     Layout.preferredWidth: 300
-                    // font: Kirigami.Theme.smallFont
-                    // maxLines: 1
+                    onTextChanged: {
+                        videosConfig[modelData].filename = text
+                        Utils.updateConfig()
+                    }
                 }
                 RowLayout {
                     enabled: vidEnabled.checked
                     SpinBox {
                         from: 0
                         to: 3600
-                        value: 60
+                        value: videosConfig[modelData].duration
+                        onValueChanged: {
+                            videosConfig[modelData].duration = value
+                            Utils.updateConfig()
+                        }
+
                     }
                     Button{
                         icon.name: "go-up-symbolic"
+                        enabled: index > 0
+                        onClicked: {
+                            const swapIndex = index - 1
+                            const swapItem = videosConfig[swapIndex]
+                            videosConfig[swapIndex] = videosConfig[index]
+                            videosConfig[index] = swapItem
+                            Utils.updateConfig()
+                        }
                     }
                     Button{
                         icon.name: "go-down-symbolic"
+                        enabled: index < videosConfig.length - 1
+                        onClicked: {
+                            const swapIndex = index + 1
+                            const swapItem = videosConfig[swapIndex]
+                            videosConfig[swapIndex] = videosConfig[index]
+                            videosConfig[index] = swapItem
+                            Utils.updateConfig()
+                        }
                     }
                 }
                 Button{
                     icon.name: "edit-delete-remove"
-                    // text: "Remove"
                     onClicked: {
-                        videoUrls.remove(index)
+                        videosConfig.splice(index)
+                        Utils.updateConfig()
                     }
                 }
             }
@@ -523,13 +515,6 @@ Kirigami.FormLayout {
         visible: !screenLockModeCheckbox.checked
     }
 
-    function dumpProps(obj) {
-        console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        for (var k of Object.keys(obj)) {
-            print(k + "=" + obj[k]+"\n")
-        }
-    }
-
     CheckBox {
         Kirigami.FormData.label: i18n("Screen Off pauses video:")
         id: screenOffPausesVideoCheckbox
@@ -621,15 +606,15 @@ Kirigami.FormLayout {
         title: i18n("Pick a video file")
         nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
         onAccepted: {
-            let newFiles
             let currentFiles = cfg_VideoUrls.trim().split("\n")
-            // console.log(currentFiles);
             for (let file of fileDialog.selectedFiles) {
-                if (!currentFiles.includes(file.toString())) {
-                    cfg_VideoUrls+=file+"\n"
+                console.log(file)
+                if (videosConfig.filter(video => video.filename === file ).length === 0) {
+                    videosConfig.push(new Utils.createVideo(file))
                 }
             }
-            updateVidsModel()
+            console.log(JSON.stringify(videosConfig))
+            Utils.updateConfig()
         }
     }
 }

@@ -25,15 +25,16 @@ import org.kde.plasma.plasmoid
 import Qt5Compat.GraphicalEffects
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.kirigami as Kirigami
+import "code/utils.js" as Utils
 
 WallpaperItem {
     anchors.fill: parent
     id: main
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
-    property var videosList: []
+    property var videosConfig: Utils.parseCompat(videoUrls)
     property int currentVideoIndex: 0
-    property string currentSource: videosList[currentVideoIndex]
+    property string currentSource: videosConfig[currentVideoIndex].filename
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool playing: (windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
     property bool showBlur: (windowModel.showBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
@@ -70,14 +71,19 @@ WallpaperItem {
     property real volume: main.configuration.Volume
     property real volumeOutput2: 0
 
+    function getVideos() {
+        let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
+        return videos
+    }
+
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
     }
     onVideoUrlsChanged: {
-        videosList = videoUrls.trim().split("\n").filter(Boolean)
+        videosConfig = getVideos()
         if (isLoading) return
         // console.error(videoUrls);
-        if (videosList.length == 0) {
+        if (videosConfig.length == 0) {
             main.stop()
         } else {
             nextVideo()
@@ -135,15 +141,15 @@ WallpaperItem {
 
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource)
-        currentVideoIndex = (currentVideoIndex + 1) % videosList.length
-        currentSource = videosList[currentVideoIndex] || ''
+        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length
+        currentSource = videosConfig[currentVideoIndex].filename || ''
         printLog("- Next " + currentVideoIndex + ": " + currentSource)
     }
 
     Rectangle {
         id: background
         anchors.fill: parent
-        color: videosList.length == 0 ?
+        color: videosConfig.length == 0 ?
             Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
 
         VideoOutput {
@@ -189,7 +195,7 @@ WallpaperItem {
             videoOutput: videoOutput
             audioOutput: audioOutput
             playbackRate: main.playbackRate
-            loops: (videosList.length > 1) ?
+            loops: (videosConfig.length > 1) ?
                 1 : crossfadeEnabled ?
                     1 : MediaPlayer.Infinite
             onPositionChanged: (position) => {
@@ -250,11 +256,11 @@ WallpaperItem {
         }
 
         PlasmaExtras.PlaceholderMessage {
-            visible: videosList.length == 0
+            visible: videosConfig.length == 0
             anchors.centerIn: parent
             width: parent.width - Kirigami.Units.gridUnit * 2
             iconName: "video-symbolic"
-            text: i18n("No video source")
+            text: i18n("No video source \n" + main.configuration.VideoUrls);
         }
     }
 
@@ -336,7 +342,7 @@ WallpaperItem {
         interval: 100
         onTriggered: {
             isLoading = false
-            if (debugEnabled) dumpProps(main.configuration)
+            if (debugEnabled) Utils.dumpProps(main.configuration)
             updateState()
         }
     }
@@ -358,7 +364,7 @@ WallpaperItem {
             printLog("Crossfade max duration: " + crossfadeMinDuration);
             printLog("Crossfade actual duration: " + crossfadeDuration);
             printLog("------------------------")
-            printLog("Videos: '" + videosList+"'")
+            printLog("Videos: '" + JSON.stringify(videosConfig)+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
             printLog("Pause Locked: " + screenLockedPausesVideo + " Locked: " + screenLocked)
             printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
@@ -367,18 +373,8 @@ WallpaperItem {
         }
     }
 
-    function dumpProps(obj) {
-        printLog("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        for (var k of Object.keys(obj)) {
-            const val = obj[k]
-            if (typeof val === 'function') continue
-            if (k === 'metaData') continue
-            printLog(k + "=" + val + "\n")
-        }
-    }
-
     Component.onCompleted: {
-        videosList = videoUrls.trim().split("\n").filter(Boolean)
+        videosConfig = getVideos()
         startTimer.start()
     }
 }
