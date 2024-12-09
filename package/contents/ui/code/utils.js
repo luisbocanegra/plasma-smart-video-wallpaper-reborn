@@ -31,12 +31,12 @@ function createVideo(filename) {
 }
 
 function dumpProps(obj) {
-  printLog("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
   for (var k of Object.keys(obj)) {
     const val = obj[k]
     if (typeof val === 'function') continue
     if (k === 'metaData') continue
-    printLog(k + "=" + val + "\n")
+    console.log(k + "=" + val + "\n")
   }
 }
 

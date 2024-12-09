@@ -64,8 +64,46 @@ Kirigami.FormLayout {
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
+    property int currentTab
+    property bool showVideosList: false
+
+    Kirigami.NavigationTabBar {
+        Layout.preferredWidth: 400
+        maximumContentWidth: {
+            const minDelegateWidth = Kirigami.Units.gridUnit * 6;
+            // Always have at least the width of 5 items, so that small amounts of actions look natural.
+            return minDelegateWidth * Math.max(visibleActions.length, 5);
+        }
+        actions: [
+            Kirigami.Action {
+                icon.name: "folder-video-symbolic"
+                text: "Videos"
+                checked: currentTab === 0
+                onTriggered: currentTab = 0
+            },
+            Kirigami.Action {
+                icon.name: "media-playback-start-symbolic"
+                text: "Playback"
+                checked: currentTab === 1
+                onTriggered: currentTab = 1
+            },
+            // Kirigami.Action {
+            //     icon.name: "battery-low-symbolic"
+            //     text: "Power"
+            //     checked: currentTab === 2
+            //     onTriggered: currentTab = 2
+            // },
+            Kirigami.Action {
+                icon.name: "star-shape-symbolic"
+                text: "Effects"
+                checked: currentTab === 3
+                onTriggered: currentTab = 3
+            }
+        ]
+    }
 
     RowLayout {
+        visible: currentTab === 0
         Button {
             id: imageButton
             icon.name: "folder-videos-symbolic"
@@ -76,18 +114,22 @@ Kirigami.FormLayout {
         }
         Button {
             icon.name: "visibility-symbolic"
-            text: i18n(videosList.visible ? "Hide videos list" : "Show videos list")
+            text: i18n(showVideosList ? "Hide videos list" : "Show videos list")
             checkable: true
-            checked: videosList.visible
+            checked: showVideosList
             onClicked: {
-                videosList.visible = !videosList.visible
+                if (currentTab !== 0) {
+                    showVideosList = false
+                } else {
+                    showVideosList = !showVideosList
+                }
             }
         }
     }
 
     ColumnLayout {
         id: videosList
-        visible: false
+        visible: showVideosList && currentTab === 0
         Repeater {
             model: Object.keys(videosConfig)
             RowLayout {
@@ -153,6 +195,7 @@ Kirigami.FormLayout {
     }
 
     Button {
+        visible: currentTab === 0
         icon.name: "dialog-warning-symbolic"
         text: i18n("Warning! Please read before applying (click to show)")
         checkable: true
@@ -172,14 +215,14 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
         text: i18n("Videos are loaded in Memory, bigger files will use more Memory and system resources!")
-        visible: showWarningMessage
+        visible: showWarningMessage && currentTab === 0
     }
     Kirigami.InlineMessage {
         id: warningCrashes
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
         text: i18n("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
-        visible: showWarningMessage
+        visible: showWarningMessage && currentTab === 0
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
@@ -194,7 +237,7 @@ Kirigami.FormLayout {
         id: warningHwAccel
         Layout.fillWidth: true
         text: i18n("Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing.")
-        visible: showWarningMessage
+        visible: showWarningMessage && currentTab === 0
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
@@ -227,6 +270,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_FillMode = model[currentIndex]["fillMode"]
         Component.onCompleted: setMethod();
+        visible: currentTab === 0
 
         function setMethod() {
             for (var i = 0; i < model.length; i++) {
@@ -240,17 +284,19 @@ Kirigami.FormLayout {
     KQuickControls.ColorButton {
         id: colorButton
         Kirigami.FormData.label: i18n("Background:")
-        visible: cfg_FillMode === VideoOutput.PreserveAspectFit
+        visible: cfg_FillMode === VideoOutput.PreserveAspectFit && currentTab === 0
         dialogTitle: i18n("Select Background Color")
     }
 
     CheckBox {
         Kirigami.FormData.label: i18n("Play in random order:")
         id: randomModeCheckbox
+        visible: currentTab === 1
     }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Playback speed:")
+        visible: currentTab === 1
         Slider {
             id: playbackRateSlider
             from: 0
@@ -276,6 +322,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         Kirigami.FormData.label: i18n("Mute audio:")
+        visible: currentTab === 1
         CheckBox {
             id: muteRadio
             checked: cfg_MuteAudio
@@ -316,6 +363,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         Kirigami.FormData.label: i18n("Crossfade (Beta):")
+        visible: currentTab === 1
         CheckBox {
             id: crossfadeEnabledCheckbox
             checked: cfg_CrossfadeEnabled
@@ -354,6 +402,7 @@ Kirigami.FormLayout {
         id: screenLockModeCheckbox
         text: i18n("Disables windows and lock screen detection")
         checked: cfg_LockScreenMode
+        visible: currentTab === 1
     }
 
     ComboBox {
@@ -376,7 +425,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_PauseMode = currentIndex
         currentIndex: cfg_PauseMode
-        visible: !screenLockModeCheckbox.checked
+        visible: !screenLockModeCheckbox.checked && currentTab === 1
     }
 
     ComboBox {
@@ -405,7 +454,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurMode = currentIndex
         currentIndex: cfg_BlurMode
-        visible: !screenLockModeCheckbox.checked
+        visible: !screenLockModeCheckbox.checked && currentTab === 1
     }
 
     ComboBox {
@@ -425,7 +474,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurModeLocked = currentIndex
         currentIndex: cfg_BlurModeLocked
-        visible: screenLockModeCheckbox.checked
+        visible: screenLockModeCheckbox.checked && currentTab === 1
     }
 
     CheckBox {
@@ -436,13 +485,13 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_CheckWindowsActiveScreen = checked
         }
-        visible: !screenLockModeCheckbox.checked
+        visible: !screenLockModeCheckbox.checked && currentTab === 1
     }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")
-        visible: (screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
-                        (blurModeCombo.visible && cfg_BlurMode !== 5)
+        visible: ((screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
+                        (blurModeCombo.visible && cfg_BlurMode !== 5)) && currentTab === 1
         SpinBox {
             id: blurRadiusSpinBox
             from: 0
@@ -481,6 +530,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         Kirigami.FormData.label: i18n("On battery below:")
+        visible: currentTab === 1
         SpinBox {
             id: pauseBatteryLevel
             from: 0
@@ -517,7 +567,7 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_ScreenLockedPausesVideo = checked
         }
-        visible: !screenLockModeCheckbox.checked
+        visible: !screenLockModeCheckbox.checked && currentTab === 1
     }
 
     CheckBox {
@@ -528,11 +578,12 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_ScreenOffPausesVideo = checked
         }
+        visible: currentTab === 1
     }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Screen state command:")
-        visible: screenOffPausesVideoCheckbox.checked
+        visible: screenOffPausesVideoCheckbox.checked && currentTab === 1
         TextField {
             id: screenStateCmdTextField
             placeholderText: i18n("cat /sys/class/backlight/intel_backlight/actual_brightness")
@@ -561,11 +612,7 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_DebugEnabled = checked
         }
-    }
-
-    Kirigami.Separator {
-        Kirigami.FormData.label: i18n("Desktop Effects")
-        Layout.fillWidth: true
+        visible: currentTab === 0
     }
 
     TextEdit {
@@ -577,6 +624,7 @@ Kirigami.FormLayout {
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor
+        visible: currentTab === 3
     }
 
     // TODO select from loaded effects instead of typing them
@@ -585,24 +633,28 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Play in:")
         id: effectsPlayVideoInput
         Layout.maximumWidth: 300
+        visible: currentTab === 3
     }
 
     TextField {
         Kirigami.FormData.label: i18n("Pause in:")
         id: effectsPauseVideoInput
         Layout.maximumWidth: 300
+        visible: currentTab === 3
     }
 
     TextField {
         Kirigami.FormData.label: i18n("Show blur in:")
         id: effectsShowBlurInput
         Layout.maximumWidth: 300
+        visible: currentTab === 3
     }
 
     TextField {
         Kirigami.FormData.label: i18n("Hide blur in:")
         id: effectsHideBlurInput
         Layout.maximumWidth: 300
+        visible: currentTab === 3
     }
 
     FileDialog {
