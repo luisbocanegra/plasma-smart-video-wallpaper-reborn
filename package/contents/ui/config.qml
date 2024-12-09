@@ -29,6 +29,7 @@ import org.kde.kquickcontrols 2.0 as KQuickControls
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
 import "code/utils.js" as Utils
+import "components" as Components
 
 Kirigami.FormLayout {
     id: root
@@ -66,6 +67,11 @@ Kirigami.FormLayout {
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property int currentTab
     property bool showVideosList: false
+
+    Components.Header {
+        Layout.leftMargin: Kirigami.Units.mediumSpacing
+        Layout.rightMargin: Kirigami.Units.mediumSpacing
+    }
 
     Kirigami.NavigationTabBar {
         Layout.preferredWidth: 400
