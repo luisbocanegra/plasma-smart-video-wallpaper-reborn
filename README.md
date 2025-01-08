@@ -9,7 +9,7 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 - Play a single video or slideshow of videos
 - Enable/disable video sound
 - Lock screen support
-- Global playback speed and volume control
+- Playback: speed, volume control, custom and random order
 - Cross-fade transition between videos (**Beta**)
 - Pause Video conditions
   - Maximized or fullscreen window
@@ -41,16 +41,40 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 
 ### KDE Store
 
+Install these dependencies or the equivalents for your distribution, **they are required for video playback**
+
+  ```txt
+  qt6-multimedia qt6-multimedia-ffmpeg
+  ```
+
+**On some distributions qt6-multimedia-ffmpeg is included with qt6-multimedia**
+
 Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2139746)
 
 1. **Right click on the Desktop** > **Configure Desktop and Wallpaper...** > **Get New Plugins**
-2. **Search** for "**Smart Video Wallpaper Reborn**", install and set it as your wallpaper.
-3. Click on **Add new videos** pick your video(s) and apply.
+2. **Search** for "**Smart Video Wallpaper Reborn**", install.
+
+### Manually from source
+
+Install these dependencies or the equivalents for your distribution
+
+```txt
+git gcc cmake extra-cmake-modules libplasma qt6-multimedia qt6-multimedia-ffmpeg
+```
+
+Clone and install
+
+```sh
+git clone https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn
+cd plasma-smart-video-wallpaper-reborn
+./install.sh
+```
 
 To set as Lock Screen wallpaper go to **System settings** > **Screen Locking** > **Appearance: Configure...**
 
 ## This plugin requires correctly setup Media codecs
 
+- [Arch Linux (ArchWiki - Codecs and containers - Video codecs)](https://wiki.archlinux.org/title/Codecs_and_containers#Video_codecs)
 - [Fedora (RPM Fusion repo)](https://rpmfusion.org/Howto/Multimedia)
 - [openSUSE (Packman repositories)](https://en.opensuse.org/SDB:Installing_codecs_from_Packman_repositories)
 
@@ -70,15 +94,14 @@ If `nvtop` is not available you can use:
 
 If there is no decoding usage you will have to enable video acceleration in your system
 
-- [Arch](https://wiki.archlinux.org/title/Hardware_video_acceleration).
-- [Fedora](https://fedoraproject.org/wiki/Firefox_Hardware_acceleration#Video_decoding)
-- Additional setup for [FFmpeg](https://wiki.archlinux.org/title/FFmpeg#Hardware_video_acceleration) and [GStreamer](https://wiki.archlinux.org/title/GStreamer#Hardware_video_acceleration) may be needed.
+- [Arch Linux (ArchWiki - Hardware video acceleration)](https://wiki.archlinux.org/title/Hardware_video_acceleration).
+- [Fedora (Fedora Project Wiki - Video decoding)](https://fedoraproject.org/wiki/Firefox_Hardware_acceleration#Video_decoding)
 
 ## Black video or Plasma crashes
 
 There may be some issues with Qt Causing crashes on AMD GPUs, this is currently being investigated in [QTBUG-124586 - QML video media player segmentation fault on AMD GPU with FFMPEG](https://bugreports.qt.io/browse/QTBUG-124586) and [Black screen with gstreamer as Qt Media backend (Recent KDE Neon update)](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/8)
 
-To recover from crash remove the videos from the configuration using this command below in terminal/tty
+To recover from a crash loop remove the videos from the configuration using this command below in terminal/tty
 
 ```sh
 sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc
@@ -108,9 +131,7 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 
     **PRs to expand this list are welcome :)**
 
-2. **Reboot**
-
-3. If after that the video doesn't play, fails to loop or crashes your Desktop (remove the plugin configuration using `sed` command above if needed), try switching the Qt Media backend to `gstreamer` (default is `ffmpeg`):
+2. Switch the Qt Media backend to `gstreamer` (default is `ffmpeg`):
 
     Create the file `~/.config/plasma-workspace/env/qt-media-backend.sh`
 
@@ -119,7 +140,7 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
     export QT_MEDIA_BACKEND=gstreamer
     ```
 
-4. Reboot again to apply the changes, and verify it was correctly set by running `echo $QT_MEDIA_BACKEND`
+3. **Reboot** to apply the changes, and verify it was correctly set by running `echo $QT_MEDIA_BACKEND`
 
 **Video still doesn't play/keeps crashing?** Follow these steps
 
