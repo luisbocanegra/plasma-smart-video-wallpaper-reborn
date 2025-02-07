@@ -33,7 +33,7 @@ WallpaperItem {
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: Utils.parseCompat(videoUrls)
-    property int currentVideoIndex: 0
+    property int currentVideoIndex: main.configuration.LastVideoIndex < videosConfig.length ? main.configuration.LastVideoIndex : 0
     property string currentSource: videosConfig[currentVideoIndex].filename
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool playing: (windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
@@ -71,6 +71,8 @@ WallpaperItem {
     property real volume: main.configuration.Volume
     property real volumeOutput2: 0
     property bool randomMode: main.configuration.RandomMode
+    property int lastVideoPosition: main.configuration.LastVideoPosition
+    property bool restoreLastPosition: true
 
     function getVideos() {
         let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
@@ -205,6 +207,7 @@ WallpaperItem {
                 1 : crossfadeEnabled ?
                     1 : MediaPlayer.Infinite
             onPositionChanged: (position) => {
+                main.lastVideoPosition = position
                 if (!tick) return
                 // BUG This doesn't seem to work the first time???
                 if (position > duration - crossfadeDuration) {
@@ -226,6 +229,13 @@ WallpaperItem {
                     source = currentSource
                     play()
                 }
+                if (status == MediaPlayer.LoadedMedia && player1.seekable) {
+                    if (!main.restoreLastPosition) return
+                    if (main.lastVideoPosition < player1.duration) {
+                        player1.position = main.lastVideoPosition
+                    }
+                    main.restoreLastPosition = false
+                }
             }
             onPlayingChanged: (playing) => {
                 if(playing) {
@@ -245,6 +255,7 @@ WallpaperItem {
             playbackRate: main.playbackRate
             loops: 1
             onPositionChanged: (position) => {
+                main.lastVideoPosition = position
                 if (tick) return
                 if (position > duration - crossfadeDuration) {
                     printLog("player1 fading in");
@@ -382,5 +393,20 @@ WallpaperItem {
     Component.onCompleted: {
         videosConfig = getVideos()
         startTimer.start()
+    }
+
+    function save() {
+        // Save last video and position to resume from it on next login/lock
+        main.configuration.LastVideoIndex = main.currentVideoIndex
+        main.configuration.LastVideoPosition = main.lastVideoPosition
+        main.configuration.writeConfig()
+        printLog("Bye!")
+    }
+
+    Connections {
+        target: Qt.application
+        function onAboutToQuit() {
+            main.save()
+        }
     }
 }
