@@ -20,7 +20,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import org.kde.kquickcontrols as KQuickControls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtMultimedia
@@ -192,7 +191,7 @@ Kirigami.FormLayout {
                 Button{
                     icon.name: "edit-delete-remove"
                     onClicked: {
-                        videosConfig.splice(index)
+                        videosConfig.splice(index,1)
                         Utils.updateConfig()
                     }
                 }
