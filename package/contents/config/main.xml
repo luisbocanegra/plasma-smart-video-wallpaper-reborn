@@ -114,5 +114,11 @@
     <entry name="RandomMode" type="Bool">
       <default>False</default>
     </entry>
+    <entry name="LastVideoIndex" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="LastVideoPosition" type="Int">
+      <default>0</default>
+    </entry>
   </group>
 </kcfg>
