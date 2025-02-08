@@ -602,6 +602,8 @@ class KPackage:
 	def translationDomain(self):
 		if self.packageServiceType == 'Plasma/Applet':
 			return "plasma_applet_{}".format(self.packageNamespace)
+		elif self.packageServiceType == 'Plasma/Wallpaper':
+			return "plasma_wallpaper_{}".format(self.packageNamespace)
 		else:
 			echoError("[kpac-i18n] TODO: Map translationDomain for '{}' ServiceType".format(self.packageServiceType))
 			sys.exit(1)
