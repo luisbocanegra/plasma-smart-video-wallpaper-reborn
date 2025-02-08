@@ -51,7 +51,6 @@ Kirigami.FormLayout {
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
     property bool showWarningMessage: false
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
-    property alias cfg_LockScreenMode: screenLockModeCheckbox.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
     property alias cfg_EffectsPlayVideo: effectsPlayVideoInput.text
     property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
@@ -65,6 +64,7 @@ Kirigami.FormLayout {
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property int currentTab
     property bool showVideosList: false
+    property var isLockScreenSettings: null
 
     Components.Header {
         Layout.leftMargin: Kirigami.Units.mediumSpacing
@@ -400,15 +400,6 @@ Kirigami.FormLayout {
         }
     }
 
-
-    CheckBox {
-        Kirigami.FormData.label: i18n("Lock screen mode:")
-        id: screenLockModeCheckbox
-        text: i18n("Disables windows and lock screen detection")
-        checked: cfg_LockScreenMode
-        visible: currentTab === 1
-    }
-
     ComboBox {
         Kirigami.FormData.label: i18n("Pause video:")
         id: pauseModeCombo
@@ -429,7 +420,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_PauseMode = currentIndex
         currentIndex: cfg_PauseMode
-        visible: !screenLockModeCheckbox.checked && currentTab === 1
+        visible: !root.isLockScreenSettings && currentTab === 1
     }
 
     ComboBox {
@@ -458,7 +449,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurMode = currentIndex
         currentIndex: cfg_BlurMode
-        visible: !screenLockModeCheckbox.checked && currentTab === 1
+        visible: !root.isLockScreenSettings && currentTab === 1
     }
 
     ComboBox {
@@ -478,7 +469,7 @@ Kirigami.FormLayout {
         textRole: "label"
         onCurrentIndexChanged: cfg_BlurModeLocked = currentIndex
         currentIndex: cfg_BlurModeLocked
-        visible: screenLockModeCheckbox.checked && currentTab === 1
+        visible: root.isLockScreenSettings && currentTab === 1
     }
 
     CheckBox {
@@ -489,12 +480,12 @@ Kirigami.FormLayout {
         onCheckedChanged: {
             cfg_CheckWindowsActiveScreen = checked
         }
-        visible: !screenLockModeCheckbox.checked && currentTab === 1
+        visible: !root.isLockScreenSettings && currentTab === 1
     }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")
-        visible: ((screenLockModeCheckbox.checked && cfg_BlurModeLocked !== 2) ||
+        visible: ((root.isLockScreenSettings && cfg_BlurModeLocked !== 2) ||
                         (blurModeCombo.visible && cfg_BlurMode !== 5)) && currentTab === 1
         SpinBox {
             id: blurRadiusSpinBox
@@ -669,6 +660,16 @@ Kirigami.FormLayout {
             }
             console.log(JSON.stringify(videosConfig))
             Utils.updateConfig()
+        }
+    }
+
+    Item {
+        onWindowChanged: (window) => {
+            if (!window) return
+            // https://github.com/KDE/plasma-desktop/tree/Plasma/6.3/containments
+            root.isLockScreenSettings = !("containmentPlugin" in window &&
+                ["org.kde.desktopcontainment", "org.kde.plasma.folder"].includes(window.containmentPlugin)
+            )
         }
     }
 }

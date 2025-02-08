@@ -44,7 +44,7 @@ WallpaperItem {
 
     property bool screenIsOff: screenModel.screenIsOff
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
-    property bool lockScreenMode: main.configuration.LockScreenMode
+    property bool lockScreenMode: false
     property bool debugEnabled : main.configuration.DebugEnabled
 
     property var activeEffects: effectsModel.activeEffects
@@ -405,6 +405,14 @@ WallpaperItem {
         target: Qt.application
         function onAboutToQuit() {
             main.save()
+        }
+    }
+    Item {
+        onWindowChanged: (window) => {
+            if (!window) return
+            // https://github.com/KDE/plasma-desktop/blob/Plasma/6.3/desktoppackage/contents/views/Desktop.qml
+            // https://github.com/KDE/plasma-desktop/blob/Plasma/6.3/desktoppackage/contents/lockscreen/LockScreen.qml
+            main.lockScreenMode = "source" in window && window.source.toString().endsWith("LockScreen.qml")
         }
     }
 }

@@ -71,10 +71,6 @@
       <label>Whether or not check for windows from all screens instead of just the active one.</label>
       <default>true</default>
     </entry>
-    <entry name="LockScreenMode" type="Bool">
-      <label>Disable windows and lock screen detection</label>
-      <default>false</default>
-    </entry>
     <entry name="DebugEnabled" type="Bool">
       <label>Print log to Journal</label>
       <default>false</default>
