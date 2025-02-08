@@ -1,5 +1,5 @@
 # Translation of reborn in LANGUAGE
-# Copyright (C) 2024
+# Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2024-07-30 08:52-0600\n"
+"POT-Creation-Date: 2025-02-08 10:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,22 @@ msgstr ""
 msgid "Wallpaper plugin to play videos on your desktop"
 msgstr ""
 
+#: ../contents/ui/components/Header.qml
+msgid "Version:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Videos"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Playback"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Desktop Effects"
+msgstr ""
+
 #: ../contents/ui/config.qml
 msgid "Add new videos"
 msgstr ""
@@ -34,11 +50,15 @@ msgid "Hide videos list"
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Show videos list"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Warning! Please read before applying (click to show)"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Videos are loaded in Memory, bigger files will use more Memory and system resources!"
+msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -48,7 +68,15 @@ msgid ""
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Qt Media backend instructions"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Learn how"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -73,6 +101,10 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Play in random order:"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -101,14 +133,6 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Lock screen mode:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Disables windows and lock screen detection"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -176,10 +200,6 @@ msgid "Disable blur"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Screen lock pauses video:"
-msgstr ""
-
-#: ../contents/ui/config.qml
 msgid "Screen Off pauses video:"
 msgstr ""
 
@@ -208,7 +228,7 @@ msgid "Print debug messages to the system log"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Desktop Effects"
+msgid "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -231,6 +251,14 @@ msgstr ""
 msgid "Pick a video file"
 msgstr ""
 
+#: ../contents/ui/config.qml
+msgid "Video files"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "All files"
+msgstr ""
+
 #: ../contents/ui/main.qml
-msgid "No video source"
+msgid "No video source \n"
 msgstr ""

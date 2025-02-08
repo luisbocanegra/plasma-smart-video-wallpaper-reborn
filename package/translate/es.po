@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2024-07-30 08:52-0600\n"
+"POT-Creation-Date: 2025-02-08 10:33+0000\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -27,6 +27,22 @@ msgstr "Smart Video Wallpaper Reborn"
 msgid "Wallpaper plugin to play videos on your desktop"
 msgstr ""
 
+#: ../contents/ui/components/Header.qml
+msgid "Version:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Videos"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Playback"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Desktop Effects"
+msgstr ""
+
 #: ../contents/ui/config.qml
 msgid "Add new videos"
 msgstr "Añadir nuevos vídeos"
@@ -36,16 +52,16 @@ msgid "Hide videos list"
 msgstr "Ocultar lista de videos"
 
 #: ../contents/ui/config.qml
+msgid "Show videos list"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Warning! Please read before applying (click to show)"
 msgstr "¡Advertencia! Lea antes de aplicar el fondo (haga clic para mostrar)"
 
 #: ../contents/ui/config.qml
-msgid ""
-"Videos are loaded in Memory, bigger files will use more Memory and system "
-"resources!"
+msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr ""
-"Los vídeos se cargan en la memoria, los archivos más grandes utilizarán más "
-"memoria y recursos del sistema."
 
 #: ../contents/ui/config.qml
 msgid ""
@@ -63,12 +79,20 @@ msgstr ""
 "code></strong>"
 
 #: ../contents/ui/config.qml
+msgid "Qt Media backend instructions"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid ""
 "Make sure to enable Hardware video acceleration in your system to reduce CPU/"
 "GPU usage when videos are playing."
 msgstr ""
 "Asegúrese de habilitar la aceleración de video por hardware en su sistema "
 "para reducir el uso de CPU/GPU cuando se reproducen videos."
+
+#: ../contents/ui/config.qml
+msgid "Learn how"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Fill mode:"
@@ -93,6 +117,10 @@ msgstr "Fondo:"
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
 msgstr "Selecciona color de fondo"
+
+#: ../contents/ui/config.qml
+msgid "Play in random order:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Playback speed:"
@@ -123,14 +151,6 @@ msgid ""
 "Adds a smooth transition between videos. <strong>Uses additional Memory and "
 "may cause playback isues when enabled.</strong>"
 msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Lock screen mode:"
-msgstr "Modo de pantalla de bloqueo:"
-
-#: ../contents/ui/config.qml
-msgid "Disables windows and lock screen detection"
-msgstr "Desactiva la detección de ventanas y pantalla de bloqueo"
 
 #: ../contents/ui/config.qml
 msgid "Pause video:"
@@ -201,10 +221,6 @@ msgid "Disable blur"
 msgstr "Deshabilitar el desenfoque"
 
 #: ../contents/ui/config.qml
-msgid "Screen lock pauses video:"
-msgstr "El bloqueo de pantalla pausa el video:"
-
-#: ../contents/ui/config.qml
 msgid "Screen Off pauses video:"
 msgstr "La pantalla apagada pausa el video:"
 
@@ -234,7 +250,9 @@ msgid "Print debug messages to the system log"
 msgstr "Muestra mensajes de depuración en el registro del sistema"
 
 #: ../contents/ui/config.qml
-msgid "Desktop Effects"
+msgid ""
+"Comma separated list of effects (e.g. overview,cube). To get the currently "
+"enabled effects run:"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -257,9 +275,36 @@ msgstr ""
 msgid "Pick a video file"
 msgstr "Elige un archivo de vídeo"
 
+#: ../contents/ui/config.qml
+msgid "Video files"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "All files"
+msgstr ""
+
 #: ../contents/ui/main.qml
-msgid "No video source"
-msgstr "Sin fuente de video"
+msgid "No video source \n"
+msgstr ""
+
+#~ msgid ""
+#~ "Videos are loaded in Memory, bigger files will use more Memory and system "
+#~ "resources!"
+#~ msgstr ""
+#~ "Los vídeos se cargan en la memoria, los archivos más grandes utilizarán "
+#~ "más memoria y recursos del sistema."
+
+#~ msgid "Lock screen mode:"
+#~ msgstr "Modo de pantalla de bloqueo:"
+
+#~ msgid "Disables windows and lock screen detection"
+#~ msgstr "Desactiva la detección de ventanas y pantalla de bloqueo"
+
+#~ msgid "Screen lock pauses video:"
+#~ msgstr "El bloqueo de pantalla pausa el video:"
+
+#~ msgid "No video source"
+#~ msgstr "Sin fuente de video"
 
 #~ msgid "Qdbus executable:"
 #~ msgstr "Ejecutable Qdbus:"
