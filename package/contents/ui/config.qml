@@ -82,13 +82,13 @@ Kirigami.FormLayout {
         actions: [
             Kirigami.Action {
                 icon.name: "folder-video-symbolic"
-                text: "Videos"
+                text: i18n("Videos")
                 checked: currentTab === 0
                 onTriggered: currentTab = 0
             },
             Kirigami.Action {
                 icon.name: "media-playback-start-symbolic"
-                text: "Playback"
+                text: i18n("Playback")
                 checked: currentTab === 1
                 onTriggered: currentTab = 1
             },
@@ -100,7 +100,7 @@ Kirigami.FormLayout {
             // },
             Kirigami.Action {
                 icon.name: "star-shape-symbolic"
-                text: "Effects"
+                text: i18n("Desktop Effects")
                 checked: currentTab === 3
                 onTriggered: currentTab = 3
             }
@@ -119,7 +119,7 @@ Kirigami.FormLayout {
         }
         Button {
             icon.name: "visibility-symbolic"
-            text: i18n(showVideosList ? "Hide videos list" : "Show videos list")
+            text: showVideosList ? i18n("Hide videos list") : i18n("Show videos list")
             checkable: true
             checked: showVideosList
             onClicked: {
@@ -219,7 +219,7 @@ Kirigami.FormLayout {
         id: warningResources
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: i18n("Videos are loaded in Memory, bigger files will use more Memory and system resources!")
+        text: i18n("Videos are loaded in RAM, bigger files will use more system resources!")
         visible: showWarningMessage && currentTab === 0
     }
     Kirigami.InlineMessage {
@@ -231,7 +231,7 @@ Kirigami.FormLayout {
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
-                text: "Qt Media backend instructions"
+                text: i18n("Qt Media backend instructions")
                 onTriggered: {
                     Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes")
                 }
@@ -246,7 +246,7 @@ Kirigami.FormLayout {
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
-                text: "Learn how"
+                text: i18n("Learn how")
                 onTriggered: {
                     Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration")
                 }
@@ -625,7 +625,7 @@ Kirigami.FormLayout {
         Layout.maximumWidth: 400
         readOnly: true
         textFormat: TextEdit.RichText
-        text: "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
+        text: i18n("Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor
@@ -666,7 +666,10 @@ Kirigami.FormLayout {
         id: fileDialog
         fileMode : FileDialog.OpenFiles
         title: i18n("Pick a video file")
-        nameFilters: [ "Video files (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", "All files (*)" ]
+        nameFilters: [
+            i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)",
+            i18n("All files") + " (*)"
+        ]
         onAccepted: {
             let currentFiles = cfg_VideoUrls.trim().split("\n")
             for (let file of fileDialog.selectedFiles) {
