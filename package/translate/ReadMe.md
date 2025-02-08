@@ -4,8 +4,8 @@
 
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
-| Template |      54 |       |
-| es       |   40/54 |   74% |
+| Template |      61 |       |
+| es       |   35/61 |   57% |
 
 
 ## New Translations
@@ -37,7 +37,7 @@ Since KDE Frameworks v5.37, translations can be bundled with the zipped `*.plasm
 The binary `.mo` translation files are placed in `package/contents/locale/` so you may want to add `*.mo` to your `.gitignore`.
 
 ```
-package/contents/locale/fr/LC_MESSAGES/plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn.mo
+package/contents/locale/fr/LC_MESSAGES/plasma_applet_luisbocanegra.smart.video.wallpaper.reborn.mo
 ```
 
 ## Links
