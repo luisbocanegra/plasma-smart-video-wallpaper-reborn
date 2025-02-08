@@ -44,7 +44,6 @@ Kirigami.FormLayout {
     property alias cfg_BlurModeLocked: blurModeLockedCombo.currentIndex
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
-    property alias cfg_ScreenLockedPausesVideo: screenLockPausesVideoCheckbox.checked
     property string cfg_VideoUrls
     property var videosConfig: Utils.parseCompat(cfg_VideoUrls)
     property bool isLoading: false
@@ -563,16 +562,6 @@ Kirigami.FormLayout {
             }
             visible: blurRadiusSpinBox.visible
         }
-    }
-
-    CheckBox {
-        Kirigami.FormData.label: i18n("Screen lock pauses video:")
-        id: screenLockPausesVideoCheckbox
-        checked: cfg_ScreenLockedPausesVideo
-        onCheckedChanged: {
-            cfg_ScreenLockedPausesVideo = checked
-        }
-        visible: !screenLockModeCheckbox.checked && currentTab === 1
     }
 
     CheckBox {

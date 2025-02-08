@@ -59,10 +59,6 @@
     <entry name="BlurRadius" type="Int">
       <default>32</default>
     </entry>
-    <entry name="ScreenLockedPausesVideo" type="Bool">
-      <label>Whether screen locked pauses video</label>
-      <default>true</default>
-    </entry>
     <entry name="ScreenOffPausesVideo" type="Bool">
       <label>Pause video when the screen is turned off based on ScreenStateCmd</label>
       <default>false</default>

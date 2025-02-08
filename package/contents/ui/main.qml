@@ -43,7 +43,6 @@ WallpaperItem {
     property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
 
     property bool screenIsOff: screenModel.screenIsOff
-    property bool screenLockedPausesVideo: main.configuration.ScreenLockedPausesVideo && !lockScreenMode
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
     property bool lockScreenMode: main.configuration.LockScreenMode
     property bool debugEnabled : main.configuration.DebugEnabled
@@ -128,7 +127,7 @@ WallpaperItem {
 
     ScreenModel {
         id: screenModel
-        checkScreenLock: screenLockedPausesVideo
+        checkScreenLock: !lockScreenMode
         checkScreenState: screenOffPausesVideo
     }
 
@@ -383,7 +382,6 @@ WallpaperItem {
             printLog("------------------------")
             printLog("Videos: '" + JSON.stringify(videosConfig)+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
-            printLog("Pause Locked: " + screenLockedPausesVideo + " Locked: " + screenLocked)
             printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
             printLog("Windows: " + windowModel.playVideoWallpaper + " Blur: " + windowModel.showBlur)
             printLog("Video playing: " + playing + " Blur: " + showBlur)
