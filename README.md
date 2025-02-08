@@ -1,8 +1,17 @@
+<div align="center">
+
 # Smart Video Wallpaper Reborn
 
-Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen.
+[![AUR version](https://img.shields.io/aur/version/plasma6-wallpapers-smart-video-wallpaper-reborn?logo=archlinux&labelColor=2d333b&color=1f425f)](https://aur.archlinux.org/packages/plasma6-wallpapers-smart-video-wallpaper-reborn)
+[![Store version](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fapi.opendesktop.org%2Focs%2Fv1%2Fcontent%2Fdata%2F2139746&query=%2Focs%2Fdata%2Fcontent%2Fversion%2Ftext()&color=1f425f&labelColor=2d333b&logo=kde&label=KDE%20Store)](https://store.kde.org/p/2139746)
+[![Matrix](https://img.shields.io/matrix/kde-plasma-smart-video-wallpaper-reborn%3Amatrix.org?logo=matrix&label=Matrix&labelColor=black)](https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org)
+[![Store downloads](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fapi.opendesktop.org%2Focs%2Fv1%2Fcontent%2Fdata%2F2139746&query=%2Focs%2Fdata%2Fcontent%2Fdownloads%2Ftext()&logo=kde&label=Downloads&labelColor=2d333b)](https://store.kde.org/p/2139746)
 
-https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/15076387/45f32fde-a1b4-406f-8aeb-221bb071a6b9
+Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen
+
+<https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/15076387/45f32fde-a1b4-406f-8aeb-221bb071a6b9>
+
+</div>
 
 ## Features
 
@@ -17,6 +26,7 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
   - Window is present
   - Never
   - Based on active Desktop Effect (e.g overview, show desktop)
+  - Screen is Off/Locked
 - Blur
   - Conditions
     - Maximized or fullscreen window
@@ -31,7 +41,6 @@ https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/assets/1507
 - Battery mode (threshold)
   - Pauses video
   - Disables Blur
-- Pause video when screen is Off/Locked
 
 ## Installing
 
@@ -51,8 +60,8 @@ Install these dependencies or the equivalents for your distribution, **they are 
 
 Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p/2139746)
 
-1. **Right click on the Desktop** > **Configure Desktop and Wallpaper...** > **Get New Plugins**
-2. **Search** for "**Smart Video Wallpaper Reborn**", install.
+1. Right click on the Desktop > **Desktop and Wallpaper** > **Get New Plugins**
+2. **Search** for "**Smart Video Wallpaper Reborn**", install and configure.
 
 ### Manually from source
 
@@ -70,7 +79,22 @@ cd plasma-smart-video-wallpaper-reborn
 ./install.sh
 ```
 
-To set as Lock Screen wallpaper go to **System settings** > **Screen Locking** > **Appearance: Configure...**
+## Usage
+
+### As Desktop Wallpaper
+
+1. Right click on the Desktop > **Desktop and Wallpaper**
+2. Change **Wallpaper type** to "Smart Video Wallpaper Reborn"
+3. Add your videos
+4. Apply
+
+### As Lock Screen wallpaper
+
+1. Go to **System settings** > **Screen Locking** > **Configure Appearance...**
+2. Change **Wallpaper type** to "Smart Video Wallpaper Reborn"
+3. Add your videos
+4. **IMPORTANT:** Enable **Lock screen mode** in **Playback** tab
+5. Apply
 
 ## This plugin requires correctly setup Media codecs
 
@@ -127,7 +151,7 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
     sudo pacman -S qt6-multimedia qt6-multimedia-gstreamer gst-libav --needed
     ```
 
-    If you need extra codecs see https://wiki.archlinux.org/title/GStreamer
+    If you need extra codecs see <https://wiki.archlinux.org/title/GStreamer>
 
     **PRs to expand this list are welcome :)**
 
@@ -149,7 +173,7 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 3. Then stop both commands
 4. If needed, remove the plugin configuration (`sed` command above)
 5. Get your system information from `kinfo > sysinfo.txt` command or from **System settings** > **About this System**
-6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QT_FFMPEG_DEBUG=1 QSG_INFO=1 QT_LOGGING_RULES="*.debug=true" qml6 test.qml 2> qml_video_test_log.txt `, (qml6 may be qml-qt6 or /usr/lib/qt6/bin/qml please confirm is qt6 one with --version) this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
+6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QT_FFMPEG_DEBUG=1 QSG_INFO=1 QT_LOGGING_RULES="*.debug=true" qml6 test.qml 2> qml_video_test_log.txt`, (qml6 may be qml-qt6 or /usr/lib/qt6/bin/qml please confirm is qt6 one with --version) this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
 7. Run `lspci -k | grep -EA3 'VGA|3D|Display' > lspci.txt`
 8. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) describing the problem and how to reproduce, and attach those files including wether running the **test.qml** also crashes or not.
 
