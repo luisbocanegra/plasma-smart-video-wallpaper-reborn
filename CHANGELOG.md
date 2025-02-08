@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.0.0...v1.1.0) (2025-02-08)
+
+
+### Features
+
+* always pause video for Desktop wallpaper when screen is locked ([f61d9ca](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/f61d9ca11418c467537823b439278fc9124e4f85))
+* automatically detect lock screen mode ([8942721](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/8942721c4d1d42769bd67911edbe3d0b8c26c019))
+* resume from last playing video on login/lock ([328bb48](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/328bb48a536acdbd1b7124a2c856331961573afb))
+
+
+### Bug Fixes
+
+* don't remove videos below when removing a single video ([5e53f9b](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5e53f9b7e53c2cd8fc741c988196992f87ae91f6))
+
 ## [1.0.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v0.4.1...v1.0.0) (2024-12-09)
 
 
