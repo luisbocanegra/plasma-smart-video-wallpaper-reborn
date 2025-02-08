@@ -1,0 +1,76 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+  
+  # private repos
+  # actions: read
+  # repository-projects: read
+
+name: action-merge-translations
+
+jobs:
+  action-merge-translations:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: action-merge-translations
+      TITLE: "ci: merge translations"
+      BODY: This PR was created by GitHub Actions
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install gettext
+      run: sudo apt-get install gettext
+
+    - name: Branch
+      run: |
+        git branch -D "${{ env.BRANCH }}" || true
+        git checkout -b "${{ env.BRANCH }}"
+
+    - name: Merge translations
+      run: python ./kpac i18n
+    
+    - name: Check if there are changes
+      id: check_changes
+      run: |
+        git add .
+        if git diff-index --quiet HEAD; then
+          echo "No changes detected."
+          echo "is_changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "Changes detected."
+          echo "is_changed=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit changes
+      if: steps.check_changes.outputs.is_changed == 'true'
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add .
+        git commit -m "${{ env.TITLE }}"
+        git push origin "${{ env.BRANCH }}" -f
+
+    - name: Create Pull Request
+      if: steps.check_changes.outputs.is_changed == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        PR_URL="$(gh pr list --head "${{ env.BRANCH }}" --state open --json url --jq .[].url)"
+        if [[ -n "${PR_URL}" ]]; then
+            echo "PR already exists -> ${PR_URL}"
+            gh pr edit "${{ env.BRANCH }}" -t "${{ env.TITLE }}" -b "${{ env.BODY }}"
+        else
+            gh pr create -B main -H "${{ env.BRANCH }}" -t "${{ env.TITLE }}" -b "${{ env.BODY }}"
+        fi

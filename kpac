@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-__version__ = '30'
+__version__ = '31'
 
 #--- User Configurable Defaults
 # You can use `kpac --dir=package --i18ndir=package/translate`
@@ -190,7 +190,7 @@ def jsonDumpTabbed(filepath, data):
 	with open(filepath, 'w') as fout:
 		json.dump(data, fout,
 			ensure_ascii=False,
-			indent='\t',
+			indent='    ',
 			sort_keys=True,
 		)
 		fout.write('\n') # Trailing newline at EOF
@@ -600,8 +600,8 @@ class KPackage:
 
 	@property
 	def translationDomain(self):
-		if self.packageServiceType == 'Plasma/Wallpaper':
-			return "plasma_wallpaper_{}".format(self.packageNamespace)
+		if self.packageServiceType == 'Plasma/Applet':
+			return "plasma_applet_{}".format(self.packageNamespace)
 		else:
 			echoError("[kpac-i18n] TODO: Map translationDomain for '{}' ServiceType".format(self.packageServiceType))
 			sys.exit(1)
@@ -1138,7 +1138,7 @@ Since KDE Frameworks v5.37, translations can be bundled with the zipped `*.plasm
 The binary `.mo` translation files are placed in `package/contents/locale/` so you may want to add `*.mo` to your `.gitignore`.
 
 ```
-package/contents/locale/fr/LC_MESSAGES/plasma_wallpaper_{self.packageNamespace}.mo
+package/contents/locale/fr/LC_MESSAGES/plasma_applet_{self.packageNamespace}.mo
 ```
 
 ## Links
@@ -1159,7 +1159,7 @@ package/contents/locale/fr/LC_MESSAGES/plasma_wallpaper_{self.packageNamespace}.
 	def i18nBuild(self):
 		# This script will convert the *.po files to *.mo files, rebuilding the package/contents/locale folder.
 		# Feature discussion: https://phabricator.kde.org/D5209
-		# Eg: contents/locale/fr_CA/LC_MESSAGES/plasma_wallpaper_org.kde.plasma.eventcalendar.mo
+		# Eg: contents/locale/fr_CA/LC_MESSAGES/plasma_applet_org.kde.plasma.eventcalendar.mo
 
 		self.checkI18nCommand('msgfmt')
 
@@ -1477,6 +1477,8 @@ package/contents/locale/fr/LC_MESSAGES/plasma_wallpaper_{self.packageNamespace}.
 
 				line = line.replace('KQuickAddons.IconDialog', 'KIconThemes.IconDialog')
 
+				line = line.replace('import org.kde.plasma.calendar', 'import org.kde.plasma.workspace.calendar')
+
 				#--- Qt
 				line = replaceNotComment(line, 'RegExpValidator', 'RegularExpressionValidator') # Also { regExp: // } => { regularExpression: // }
 
@@ -1507,6 +1509,7 @@ package/contents/locale/fr/LC_MESSAGES/plasma_wallpaper_{self.packageNamespace}.
 		checkImport('KItemModels', 'org.kde.kitemmodels')
 		checkImport('Kirigami', 'org.kde.kirigami')
 		checkImport('KConfig', 'org.kde.config')
+		# checkImport('Calendar', 'org.kde.plasma.workspace.calendar')
 
 		#--- Remove Unused Imports TODO
 		# import org.kde.kquickcontrolsaddons 2.0 // KCMShell
@@ -1756,5 +1759,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
-
