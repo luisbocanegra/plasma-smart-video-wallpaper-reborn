@@ -663,13 +663,14 @@ Kirigami.FormLayout {
         }
     }
 
-    Item {
-        onWindowChanged: (window) => {
-            if (!window) return
-            // https://github.com/KDE/plasma-desktop/tree/Plasma/6.3/containments
-            root.isLockScreenSettings = !("containmentPlugin" in window &&
-                ["org.kde.desktopcontainment", "org.kde.plasma.folder"].includes(window.containmentPlugin)
-            )
+    Component.onCompleted: {
+        let candidate = root.parent;
+        while (candidate) {
+            if (candidate && candidate.hasOwnProperty("configDialog")) {
+                root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm")
+                break
+            }
+            candidate = candidate.parent;
         }
     }
 }
