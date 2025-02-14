@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.0...v1.1.1) (2025-02-14)
+
+
+### Bug Fixes
+
+* lock screen mode detection for all wallpaper configuring methods ([4ff5627](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/4ff56278a9bdb0a2a2a97056d39ac2b663ff7698))
+
 ## [1.1.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.0.0...v1.1.0) (2025-02-08)
 
 
