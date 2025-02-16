@@ -35,7 +35,7 @@ msgstr "Vídeos"
 
 #: ../contents/ui/config.qml
 msgid "Playback"
-msgstr ""
+msgstr "Reprodução"
 
 #: ../contents/ui/config.qml
 msgid "Desktop Effects"
@@ -69,7 +69,7 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Qt Media backend instructions"
-msgstr ""
+msgstr "Instruções para o Qt Media Backend"
 
 #: ../contents/ui/config.qml
 msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
@@ -81,11 +81,11 @@ msgstr "Aprenda como"
 
 #: ../contents/ui/config.qml
 msgid "Fill mode:"
-msgstr ""
+msgstr "Modo de preenchimento:"
 
 #: ../contents/ui/config.qml
 msgid "Stretch"
-msgstr ""
+msgstr "Esticar"
 
 #: ../contents/ui/config.qml
 msgid "Keep Proportions"
@@ -97,7 +97,7 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Background:"
-msgstr ""
+msgstr "Fundo:"
 
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
@@ -105,11 +105,11 @@ msgstr "Selecione a Cor de Fundo"
 
 #: ../contents/ui/config.qml
 msgid "Play in random order:"
-msgstr ""
+msgstr "Iniciar em ordem aleatória"
 
 #: ../contents/ui/config.qml
 msgid "Playback speed:"
-msgstr ""
+msgstr "Velocidade de reprodução:"
 
 #: ../contents/ui/config.qml
 msgid "Reset to default"
@@ -185,11 +185,11 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Animation duration:"
-msgstr ""
+msgstr "Duração da animação:"
 
 #: ../contents/ui/config.qml
 msgid "On battery below:"
-msgstr ""
+msgstr "Quando a bateria abaixo:"
 
 #: ../contents/ui/config.qml
 msgid "Pause video"
@@ -201,7 +201,7 @@ msgstr "Desabilitar borrão"
 
 #: ../contents/ui/config.qml
 msgid "Screen Off pauses video:"
-msgstr ""
+msgstr "Desligar a tela pausa o vídeo:"
 
 #: ../contents/ui/config.qml
 msgid "Requires setting up command below!"
@@ -241,11 +241,11 @@ msgstr "Pausar em:"
 
 #: ../contents/ui/config.qml
 msgid "Show blur in:"
-msgstr ""
+msgstr "Mostrar borrão em:"
 
 #: ../contents/ui/config.qml
 msgid "Hide blur in:"
-msgstr ""
+msgstr "Ocultar borrão em:"
 
 #: ../contents/ui/config.qml
 msgid "Pick a video file"
