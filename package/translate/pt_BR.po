@@ -1,7 +1,7 @@
-# Translation of reborn in LANGUAGE
+# Translation of reborn in pt_BR
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Arthur Lobo <arthurciprianolobo@gmail.com>, 2025.
 #
 #, fuzzy
 msgid ""
@@ -10,9 +10,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
 "POT-Creation-Date: 2025-02-08 10:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
