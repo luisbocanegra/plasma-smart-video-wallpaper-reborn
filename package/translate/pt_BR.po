@@ -1,18 +1,18 @@
-# Translation of reborn in pt_BR
+# Translation of reborn in LANGUAGE
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
-# Arthur Lobo <arthurciprianolobo@gmail.com>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-26 11:47+0000\n"
+"POT-Creation-Date: 2025-02-08 10:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: pt_BR\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,24 +30,12 @@ msgid "Version:"
 msgstr "Versão:"
 
 #: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr "Janelas maximizadas ou em tela cheia"
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr "Janela ativa está presente"
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
-msgstr ""
-
-#: ../contents/ui/config.qml
 msgid "Videos"
 msgstr "Vídeos"
 
 #: ../contents/ui/config.qml
 msgid "Playback"
-msgstr "Reprodução"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Desktop Effects"
@@ -74,12 +62,14 @@ msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr "Os vídeos são carregados na RAM, arquivos maiores irão usar mais recursos do sistema"
 
 #: ../contents/ui/config.qml
-msgid "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgid ""
+"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:"
+"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Qt Media backend instructions"
-msgstr "Instruções para o Qt Media Backend"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
@@ -91,11 +81,11 @@ msgstr "Aprenda como"
 
 #: ../contents/ui/config.qml
 msgid "Fill mode:"
-msgstr "Modo de preenchimento:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Stretch"
-msgstr "Esticar"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Keep Proportions"
@@ -107,7 +97,7 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Background:"
-msgstr "Fundo:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
@@ -115,15 +105,23 @@ msgstr "Selecione a Cor de Fundo"
 
 #: ../contents/ui/config.qml
 msgid "Play in random order:"
-msgstr "Iniciar em ordem aleatória"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Playback speed:"
-msgstr "Velocidade de reprodução:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Reset to default"
 msgstr "Resetar para o padrão"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Mutar áudio:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr "Volume:"
 
 #: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
@@ -138,43 +136,47 @@ msgid "Adds a smooth transition between videos. <strong>Uses additional Memory a
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Filter windows:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "This screen only"
-msgstr ""
-
-#: ../contents/ui/config.qml
 msgid "Pause video:"
 msgstr "Pausar vídeo:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Janelas maximizadas ou em tela cheia"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Janela ativa está presente"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Never"
 msgstr "Nunca"
 
 #: ../contents/ui/config.qml
-msgid "Always"
-msgstr "Sempre"
-
-#: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr "Mutar áudio:"
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr "Volume:"
+msgid "Blur video:"
+msgstr "Borrar Vídeo:"
 
 #: ../contents/ui/config.qml
 msgid "Video is paused"
 msgstr "Vídeo está pausado"
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
-msgstr "Borrar Vídeo:"
+msgid "Always"
+msgstr "Sempre"
 
 #: ../contents/ui/config.qml
-msgid "Radius:"
+msgid "Filter:"
+msgstr "Filtro:"
+
+#: ../contents/ui/config.qml
+msgid "Only check for windows in active screen"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Blur radius:"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -183,11 +185,11 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Animation duration:"
-msgstr "Duração da animação:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "On battery below:"
-msgstr "Quando a bateria abaixo:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Pause video"
@@ -199,7 +201,7 @@ msgstr "Desabilitar borrão"
 
 #: ../contents/ui/config.qml
 msgid "Screen Off pauses video:"
-msgstr "Desligar a tela pausa o vídeo:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Requires setting up command below!"
@@ -239,11 +241,11 @@ msgstr "Pausar em:"
 
 #: ../contents/ui/config.qml
 msgid "Show blur in:"
-msgstr "Mostrar borrão em:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Hide blur in:"
-msgstr "Ocultar borrão em:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Pick a video file"
@@ -260,30 +262,3 @@ msgstr "Todos arquivos"
 #: ../contents/ui/main.qml
 msgid "No video source \n"
 msgstr "Nenhum arquivo de vídeo\n"
-
-#: ../contents/ui/main.qml
-msgid "Next Video"
-msgstr ""
-
-#: ../contents/ui/main.qml
-msgid "Pause"
-msgstr ""
-
-#: ../contents/ui/main.qml
-msgid "Default"
-msgstr ""
-
-#: ../contents/ui/main.qml
-msgid "Play"
-msgstr ""
-
-#: ../contents/ui/main.qml
-msgid "Unmute"
-msgstr ""
-
-#: ../contents/ui/main.qml
-msgid "Mute"
-msgstr ""
-
-#~ msgid "Filter:"
-#~ msgstr "Filtro:"
