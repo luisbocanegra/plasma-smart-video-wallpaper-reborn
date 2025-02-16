@@ -62,9 +62,7 @@ msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr "Os vídeos são carregados na RAM, arquivos maiores irão usar mais recursos do sistema"
 
 #: ../contents/ui/config.qml
-msgid ""
-"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgid "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
 
 #: ../contents/ui/config.qml
