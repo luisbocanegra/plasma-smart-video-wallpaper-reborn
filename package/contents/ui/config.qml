@@ -62,6 +62,7 @@ Kirigami.FormLayout {
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
+    property alias cfg_PlaybackDuration: playbackDurationSpinBox.value
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
@@ -296,6 +297,23 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Play in random order:")
         id: randomModeCheckbox
         visible: currentTab === 1
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: i18n("Playback duration:")
+        visible: currentTab === 1
+        SpinBox {
+            id: playbackDurationSpinBox
+            from: 0
+            to: 3600
+            value: cfg_PlaybackDuration
+            onValueChanged: {
+                cfg_PlaybackDuration = value
+            }
+        }
+        Label {
+            text: i18n("seconds (0 = disabled)")
+        }
     }
 
     RowLayout {
