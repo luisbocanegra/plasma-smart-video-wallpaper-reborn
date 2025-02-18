@@ -16,10 +16,12 @@
         "BugReportUrl": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues",
         "Category": "",
         "Description": "Wallpaper plugin to play videos on your desktop",
+        "Description[el_GR]": "Πρόσθετο ταπετσαρίας για αναπαραγωγή βίντεο στην επιφάνεια εργασίας σας",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "luisbocanegra.smart.video.wallpaper.reborn",
         "License": "GPLv2+",
         "Name": "Smart Video Wallpaper Reborn",
+        "Name[el_GR]": "Smart Video Wallpaper Reborn",
         "Name[es]": "Smart Video Wallpaper Reborn",
         "Version": "1.1.1",
         "Website": "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn"
