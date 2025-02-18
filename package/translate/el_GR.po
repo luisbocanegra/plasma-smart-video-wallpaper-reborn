@@ -1,4 +1,4 @@
-# Translation of reborn in LANGUAGE
+# Translation of reborn in el_GR
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
 #
@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
-"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wall"
-"paper-reborn\n"
+"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
+"wallpaper-reborn\n"
 "POT-Creation-Date: 2025-02-08 10:33+0000\n"
 "PO-Revision-Date: 2025-02-18 13:47+0200\n"
 "Last-Translator: omen <elahistos@yahoo.gr>\n"
@@ -59,29 +59,29 @@ msgstr "Εμφάνιση λίστας βίντεο"
 #: ../contents/ui/config.qml
 msgid "Warning! Please read before applying (click to show)"
 msgstr ""
-"Προειδοποίηση! Παρακαλώ διαβάστε πριν από την εφαρμογή (κάντε κλικ για να δείτ"
-"ε)"
+"Προειδοποίηση! Παρακαλώ διαβάστε πριν από την εφαρμογή (κάντε κλικ για να "
+"δείτε)"
 
 #: ../contents/ui/config.qml
 msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr ""
-"Τα βίντεο φορτώνονται στη RAM, μεγαλύτερα αρχεία θα χρησιμοποιούν περισσότερου"
-"ς πόρους συστήματος"
+"Τα βίντεο φορτώνονται στη RAM, μεγαλύτερα αρχεία θα χρησιμοποιούν "
+"περισσότερους πόρους συστήματος"
 
 #: ../contents/ui/config.qml
 msgid ""
-"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To re"
-"cover from crash remove the videos from the configuration using this command b"
-"elow in terminal/tty then reboot:"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-"
-"org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
+"recover from crash remove the videos from the configuration using this "
+"command below in terminal/tty then reboot:<br><strong><code>sed -i 's/"
+"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
+"appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
-"Ανατροπές/Μαύρη οθόνη; Δοκιμάστε να αλλάξετε το Qt Media Backend σε gstreamer."
-"<br>Για να ανακάμψετε από την πτώση, αφαιρέστε τα βίντεο από τη διαμόρφωση χρη"
-"σιμοποιώντας αυτήν την εντολή παρακάτω στο τερματικό/tty και, στη συνέχεια, επ"
-"ανεκκινήστε:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.co"
-"nfig/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</co"
-"de></strong>"
+"Ανατροπές/Μαύρη οθόνη; Δοκιμάστε να αλλάξετε το Qt Media Backend σε "
+"gstreamer.<br>Για να ανακάμψετε από την πτώση, αφαιρέστε τα βίντεο από τη "
+"διαμόρφωση χρησιμοποιώντας αυτήν την εντολή παρακάτω στο τερματικό/tty και, "
+"στη συνέχεια, επανεκκινήστε:<br><strong><code>sed -i 's/^VideoUrls=.*$/"
+"VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/."
+"config/kscreenlockerrc</code></strong>"
 
 #: ../contents/ui/config.qml
 msgid "Qt Media backend instructions"
@@ -89,11 +89,11 @@ msgstr "Οδηγίες για το Qt Media Backend"
 
 #: ../contents/ui/config.qml
 msgid ""
-"Make sure to enable Hardware video acceleration in your system to reduce CPU/G"
-"PU usage when videos are playing."
+"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
+"GPU usage when videos are playing."
 msgstr ""
-"Βεβαιωθείτε ότι έχετε ενεργοποιήσει την επιτάχυνση βίντεο υλικού στο σύστημά σ"
-"ας για να μειώσετε τη χρήση CPU/GPU όταν αναπαράγονται τα βίντεο."
+"Βεβαιωθείτε ότι έχετε ενεργοποιήσει την επιτάχυνση βίντεο υλικού στο σύστημά "
+"σας για να μειώσετε τη χρήση CPU/GPU όταν αναπαράγονται τα βίντεο."
 
 #: ../contents/ui/config.qml
 msgid "Learn how"
@@ -153,12 +153,12 @@ msgstr "Διάρκεια:"
 
 #: ../contents/ui/config.qml
 msgid ""
-"Adds a smooth transition between videos. <strong>Uses additional Memory and ma"
-"y cause playback isues when enabled.</strong>"
+"Adds a smooth transition between videos. <strong>Uses additional Memory and "
+"may cause playback isues when enabled.</strong>"
 msgstr ""
-"Προσθέτει μια ομαλή μετάβαση μεταξύ των βίντεο. <strong>Χρησιμοποιεί επιπλέον "
-"μνήμη και μπορεί να προκαλέσει προβλήματα αναπαραγωγής όταν είναι ενεργοποιημέ"
-"νο.</strong>"
+"Προσθέτει μια ομαλή μετάβαση μεταξύ των βίντεο. <strong>Χρησιμοποιεί "
+"επιπλέον μνήμη και μπορεί να προκαλέσει προβλήματα αναπαραγωγής όταν είναι "
+"ενεργοποιημένο.</strong>"
 
 #: ../contents/ui/config.qml
 msgid "Pause video:"
@@ -206,11 +206,11 @@ msgstr "Blur radius:"
 
 #: ../contents/ui/config.qml
 msgid ""
-"Quality of the blur is reduced if value exceeds 64. Higher values may cause th"
-"e blur to stop working!"
+"Quality of the blur is reduced if value exceeds 64. Higher values may cause "
+"the blur to stop working!"
 msgstr ""
-"Η ποιότητα του θολώματος μειώνεται εάν η τιμή ξεπεράσει το 64. Υψηλότερες τιμέ"
-"ς ενδέχεται να προκαλέσουν την αδυναμία λειτουργίας του θολώματος!"
+"Η ποιότητα του θολώματος μειώνεται εάν η τιμή ξεπεράσει το 64. Υψηλότερες "
+"τιμές ενδέχεται να προκαλέσουν την αδυναμία λειτουργίας του θολώματος!"
 
 #: ../contents/ui/config.qml
 msgid "Animation duration:"
@@ -247,8 +247,8 @@ msgstr "cat /sys/class/backlight/intel_backlight/actual_brightness"
 #: ../contents/ui/config.qml
 msgid "The command/script must return 0 (zero) when the screen is Off."
 msgstr ""
-"Η εντολή/σενάριο πρέπει να επιστρέφει 0 (μηδέν) όταν η οθόνη είναι απενεργοποι"
-"ημένη."
+"Η εντολή/σενάριο πρέπει να επιστρέφει 0 (μηδέν) όταν η οθόνη είναι "
+"απενεργοποιημένη."
 
 #: ../contents/ui/config.qml
 msgid "Enable debug:"
@@ -260,11 +260,11 @@ msgstr "Εκτύπωση μηνυμάτων αποσφαλμάτωσης στο 
 
 #: ../contents/ui/config.qml
 msgid ""
-"Comma separated list of effects (e.g. overview,cube). To get the currently ena"
-"bled effects run:"
+"Comma separated list of effects (e.g. overview,cube). To get the currently "
+"enabled effects run:"
 msgstr ""
-"Λίστα εφέ διαχωρισμένα με κόμμα (π.χ. επισκόπηση, κύβος). Για να δείτε τα ενερ"
-"γοποιημένα εφέ, εκτελέστε:"
+"Λίστα εφέ διαχωρισμένα με κόμμα (π.χ. επισκόπηση, κύβος). Για να δείτε τα "
+"ενεργοποιημένα εφέ, εκτελέστε:"
 
 #: ../contents/ui/config.qml
 msgid "Play in:"
