@@ -1,4 +1,4 @@
-# Translation of reborn in LANGUAGE
+# Translation of reborn in nl
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
