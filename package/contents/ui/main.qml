@@ -72,6 +72,8 @@ WallpaperItem {
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property bool restoreLastPosition: true
+    property int playbackDuration: main.configuration.PlaybackDuration * 1000 // convert to milliseconds
+    property bool shouldSwitchByDuration: playbackDuration > 0 && playing
 
     function getVideos() {
         let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
@@ -208,8 +210,15 @@ WallpaperItem {
             onPositionChanged: (position) => {
                 main.lastVideoPosition = position
                 if (!tick) return
+                // Check both duration-based switching and crossfade conditions
+                if (shouldSwitchByDuration && position >= playbackDuration) {
+                    nextVideo()
+                    tick = true
+                    source = currentSource
+                    play()
+                }
                 // BUG This doesn't seem to work the first time???
-                if (position > duration - crossfadeDuration) {
+                else if (position > duration - crossfadeDuration) {
                     if (crossfadeEnabled) {
                         nextVideo()
                         printLog("player1 fading out");
@@ -256,7 +265,14 @@ WallpaperItem {
             onPositionChanged: (position) => {
                 main.lastVideoPosition = position
                 if (tick) return
-                if (position > duration - crossfadeDuration) {
+                // Check both duration-based switching and crossfade
+                if (shouldSwitchByDuration && position >= playbackDuration) {
+                    nextVideo()
+                    tick = true
+                    player1.source = currentSource
+                    player1.play()
+                }
+                else if (position > duration - crossfadeDuration) {
                     printLog("player1 fading in");
                     videoOutput.opacity = 1
                     nextVideo()
@@ -312,6 +328,7 @@ WallpaperItem {
         pauseTimer.stop();
         playTimer.start();
     }
+    
     function pause(){
         if (playing) return
         playTimer.stop()
