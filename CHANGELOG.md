@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.1...v1.2.0) (2025-02-23)
+
+
+### Features
+
+* Add first transtations in pt_BR ([f901dc7](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/f901dc71da60508c97e9be3ee789d18d2458eec2))
+* Chance transtation package info ([fb6e131](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/fb6e1310edf23455c8c474e8a8ee09b406bd2f15))
+* more translations ([5a24045](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5a240454c92e10bf66392c831286214ee26685b0))
+
 ## [1.1.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.0...v1.1.1) (2025-02-14)
 
 
