@@ -36,8 +36,10 @@ WallpaperItem {
     property int currentVideoIndex: main.configuration.LastVideoIndex < videosConfig.length ? main.configuration.LastVideoIndex : 0
     property string currentSource: videosConfig[currentVideoIndex].filename
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
-    property bool playing: (windowModel.playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
-    property bool showBlur: (windowModel.showBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
+    property bool playVideoWallpaper: false
+    property bool playing: (playVideoWallpaper && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
+    property bool shouldBlur: false
+    property bool showBlur: (shouldBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
     property bool screenLocked: screenModel.screenIsLocked
     property bool batteryPausesVideo: pauseBattery && main.configuration.BatteryPausesVideo
     property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
@@ -80,6 +82,7 @@ WallpaperItem {
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause()
+        updateBlur()
     }
     onVideoUrlsChanged: {
         videosConfig = getVideos()
@@ -118,11 +121,70 @@ WallpaperItem {
         return result
     }
 
-    WindowModel {
+    TasksModel {
         id: windowModel
         screenGeometry: main.parent.screenGeometry
-        videoIsPlaying: main.playing
-        lockScreenMode: main.lockScreenMode
+        onUpdated: {
+            main.updateBlur()
+            main.updatePlay()
+        }
+    }
+
+    function updatePlay() {
+        if (lockScreenMode) {
+            playVideoWallpaper = true
+            return
+        }
+        let shouldPlay = true
+        switch(main.configuration.PauseMode) {
+            case 0:
+                shouldPlay = !windowModel.maximizedExists
+                break
+            case 1:
+                shouldPlay = !windowModel.activeExists
+                break
+            case 2:
+                shouldPlay = !windowModel.visibleExists
+                break
+            case 3:
+                shouldPlay = true
+        }
+        playVideoWallpaper = shouldPlay
+    }
+
+    function updateBlur() {
+        if (lockScreenMode) {
+            switch(main.configuration.BlurModeLocked) {
+                case 0:
+                    main.shouldBlur = !main.playing
+                    break
+                case 1:
+                    main.shouldBlur = true
+                    break
+                case 2:
+                    main.shouldBlur = false
+            }
+            return
+        }
+        switch(main.configuration.BlurMode) {
+            case 0:
+                main.shouldBlur = windowModel.maximizedExists
+                break
+            case 1:
+                main.shouldBlur = windowModel.activeExists
+                break
+            case 2:
+                main.shouldBlur = windowModel.visibleExists
+                break
+            case 3:
+                main.shouldBlur = !main.playing
+                break
+            case 4:
+                main.shouldBlur = true
+                break
+            case 5:
+                main.shouldBlur = false
+        }
     }
 
     ScreenModel {
@@ -383,7 +445,7 @@ WallpaperItem {
             printLog("Videos: '" + JSON.stringify(videosConfig)+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
             printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
-            printLog("Windows: " + windowModel.playVideoWallpaper + " Blur: " + windowModel.showBlur)
+            printLog("Windows: " + main.playVideoWallpaper + " Blur: " + main.showBlur)
             printLog("Video playing: " + playing + " Blur: " + showBlur)
         }
     }
