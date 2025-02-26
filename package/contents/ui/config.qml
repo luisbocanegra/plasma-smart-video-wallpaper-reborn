@@ -40,8 +40,7 @@ Kirigami.FormLayout {
     property alias cfg_BackgroundColor: colorButton.color
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
     property alias cfg_BatteryPausesVideo: batteryPausesVideoCheckBox.checked
-    property alias cfg_BlurMode: blurModeCombo.currentIndex
-    property alias cfg_BlurModeLocked: blurModeLockedCombo.currentIndex
+    property int cfg_BlurMode
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property string cfg_VideoUrls
@@ -400,6 +399,17 @@ Kirigami.FormLayout {
         }
     }
 
+    CheckBox {
+        id: activeScreenOnlyCheckbx
+        Kirigami.FormData.label: i18n("Filter windows:")
+        checked: cfg_CheckWindowsActiveScreen
+        text: i18n("This screen only")
+        onCheckedChanged: {
+            cfg_CheckWindowsActiveScreen = checked
+        }
+        visible: !root.isLockScreenSettings && currentTab === 1
+    }
+
     ComboBox {
         Kirigami.FormData.label: i18n("Pause video:")
         id: pauseModeCombo
@@ -423,70 +433,61 @@ Kirigami.FormLayout {
         visible: !root.isLockScreenSettings && currentTab === 1
     }
 
+    property var blurModeModel: {
+        // options for desktop and lock screen
+        let model = [
+            {
+                'label': i18n("Video is paused"),
+                'value': 3
+            },
+            {
+                'label': i18n("Always"),
+                'value': 4
+            },
+            {
+                'label': i18n("Never"),
+                'value': 5
+            }
+        ]
+        // options exclusive to desktop mode
+        const desktopOptions = [
+            {
+                'label': i18n("Maximized or full-screen windows"),
+                'value': 0
+            },
+            {
+                'label': i18n("Active window is present"),
+                'value': 1
+            },
+            {
+                'label': i18n("At least one window is shown"),
+                'value': 2
+            }
+        ]
+        if (!isLockScreenSettings) {
+            model.unshift(...desktopOptions)
+        }
+
+        return model
+    }
+
     ComboBox {
         Kirigami.FormData.label: i18n("Blur video:")
         id: blurModeCombo
-        model: [
-            {
-                'label': i18n("Maximized or full-screen windows")
-            },
-            {
-                'label': i18n("Active window is present")
-            },
-            {
-                'label': i18n("At least one window is shown")
-            },
-            {
-                'label': i18n("Video is paused")
-            },
-            {
-                'label': i18n("Always")
-            },
-            {
-                'label': i18n("Never")
-            }
-        ]
+        model: blurModeModel
         textRole: "label"
-        onCurrentIndexChanged: cfg_BlurMode = currentIndex
-        currentIndex: cfg_BlurMode
-        visible: !root.isLockScreenSettings && currentTab === 1
-    }
-
-    ComboBox {
-        Kirigami.FormData.label: i18n("Blur video:")
-        id: blurModeLockedCombo
-        model: [
-            {
-                'label': i18n("Video is paused")
-            },
-            {
-                'label': i18n("Always")
-            },
-            {
-                'label': i18n("Never")
-            }
-        ]
-        textRole: "label"
-        onCurrentIndexChanged: cfg_BlurModeLocked = currentIndex
-        currentIndex: cfg_BlurModeLocked
-        visible: root.isLockScreenSettings && currentTab === 1
-    }
-
-    CheckBox {
-        id: activeScreenOnlyCheckbx
-        Kirigami.FormData.label: i18n("Filter:")
-        checked: cfg_CheckWindowsActiveScreen
-        text: i18n("Only check for windows in active screen")
-        onCheckedChanged: {
-            cfg_CheckWindowsActiveScreen = checked
+        valueRole: "value"
+        visible: currentTab === 1
+        onActivated: {
+            cfg_BlurMode = currentValue
         }
-        visible: !root.isLockScreenSettings && currentTab === 1
+        Component.onCompleted: currentIndex = indexOfValue(cfg_BlurMode)
     }
 
     RowLayout {
         Kirigami.FormData.label: i18n("Blur radius:")
-        visible: ((root.isLockScreenSettings && cfg_BlurModeLocked !== 2) ||
-                        (blurModeCombo.visible && cfg_BlurMode !== 5)) && currentTab === 1
+        visible: currentTab === 1
+        enabled: cfg_BlurMode !== 5
         SpinBox {
             id: blurRadiusSpinBox
             from: 0
