@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.0.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.1...v2.0.0) (2025-02-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* if you had audio enabled you will have to re-enable it
+* due to changes in the configuration format you may need to reconfigure blur option
+
+### Features
+
+* Add first transtations in pt_BR ([f901dc7](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/f901dc71da60508c97e9be3ee789d18d2458eec2))
+* Chance transtation package info ([fb6e131](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/fb6e1310edf23455c8c474e8a8ee09b406bd2f15))
+* more translations ([5a24045](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5a240454c92e10bf66392c831286214ee26685b0))
+* mute audio based on window maximized/active/shown state ([5570235](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/557023577798464f463f65a8e7ea34842d4bf077))
+* right click on Desktop  to change/play/pause/mute video ([3fe6d77](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/3fe6d7728a45f95c2cad4583722e1ac6a93dcb44))
+
+
+### Code Refactoring
+
+* simplify blur and pause configuration logic ([5618e7d](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5618e7d08a5498e2f7e1841939182876c996400c))
+
 ## [1.1.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.0...v1.1.1) (2025-02-14)
 
 
