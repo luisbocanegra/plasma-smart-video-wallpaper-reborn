@@ -53,9 +53,6 @@
     <entry name="BlurMode" type="Int">
       <default>0</default>
     </entry>
-    <entry name="BlurModeLocked" type="Int">
-      <default>0</default>
-    </entry>
     <entry name="BlurRadius" type="Int">
       <default>32</default>
     </entry>
