@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-08 10:33+0000\n"
+"POT-Creation-Date: 2025-02-26 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,18 @@ msgstr ""
 
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -116,14 +128,6 @@ msgid "Reset to default"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr ""
-
-#: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
 msgstr ""
 
@@ -136,19 +140,15 @@ msgid "Adds a smooth transition between videos. <strong>Uses additional Memory a
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Pause video:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -156,7 +156,15 @@ msgid "Never"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
+msgid "Always"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -164,19 +172,11 @@ msgid "Video is paused"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Always"
+msgid "Blur video:"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Filter:"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Only check for windows in active screen"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Blur radius:"
+msgid "Radius:"
 msgstr ""
 
 #: ../contents/ui/config.qml

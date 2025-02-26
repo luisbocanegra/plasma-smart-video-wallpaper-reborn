@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-08 10:33+0000\n"
+"POT-Creation-Date: 2025-02-26 08:58+0000\n"
 "PO-Revision-Date: 2025-02-18 13:47+0200\n"
 "Last-Translator: omen <elahistos@yahoo.gr>\n"
 "Language-Team: Greek <kde-i18n-doc@kde.org>\n"
@@ -31,6 +31,18 @@ msgstr ""
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
 msgstr "Έκδοση:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Μεγιστοποιημένα ή παράθυρα πλήρους οθόνης"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Το ενεργό παράθυρο είναι παρόν"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "Δείχνεται τουλάχιστον ένα παράθυρο"
 
 #: ../contents/ui/config.qml
 msgid "Videos"
@@ -136,14 +148,6 @@ msgid "Reset to default"
 msgstr "Επαναφορά στην προεπιλογή"
 
 #: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr "Σίγαση ήχου:"
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr "Ένταση ήχου:"
-
-#: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
 msgstr "Crossfade (Beta):"
 
@@ -161,48 +165,44 @@ msgstr ""
 "ενεργοποιημένο.</strong>"
 
 #: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Pause video:"
 msgstr "Παύση βίντεο:"
-
-#: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr "Μεγιστοποιημένα ή παράθυρα πλήρους οθόνης"
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr "Το ενεργό παράθυρο είναι παρόν"
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
-msgstr "Δείχνεται τουλάχιστον ένα παράθυρο"
 
 #: ../contents/ui/config.qml
 msgid "Never"
 msgstr "Ποτέ"
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
-msgstr "Θόλωμα βίντεο:"
+msgid "Always"
+msgstr "Πάντα"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Σίγαση ήχου:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr "Ένταση ήχου:"
 
 #: ../contents/ui/config.qml
 msgid "Video is paused"
 msgstr "Το βίντεο είναι παγωμένο"
 
 #: ../contents/ui/config.qml
-msgid "Always"
-msgstr "Πάντα"
+msgid "Blur video:"
+msgstr "Θόλωμα βίντεο:"
 
 #: ../contents/ui/config.qml
-msgid "Filter:"
-msgstr "Φίλτρο:"
-
-#: ../contents/ui/config.qml
-msgid "Only check for windows in active screen"
-msgstr "Ελέγξτε μόνο για παράθυρα στην ενεργή οθόνη"
-
-#: ../contents/ui/config.qml
-msgid "Blur radius:"
-msgstr "Blur radius:"
+msgid "Radius:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid ""
@@ -297,3 +297,12 @@ msgstr "Όλα τα αρχεία"
 #: ../contents/ui/main.qml
 msgid "No video source \n"
 msgstr "Χωρίς πηγή βίντεο \n"
+
+#~ msgid "Filter:"
+#~ msgstr "Φίλτρο:"
+
+#~ msgid "Only check for windows in active screen"
+#~ msgstr "Ελέγξτε μόνο για παράθυρα στην ενεργή οθόνη"
+
+#~ msgid "Blur radius:"
+#~ msgstr "Blur radius:"
