@@ -35,7 +35,6 @@ Kirigami.FormLayout {
     twinFormLayouts: parentLayout // required by parent
     property alias formLayout: root // required by parent
     property alias cfg_FillMode: videoFillMode.currentIndex
-    property alias cfg_MuteAudio: muteRadio.checked
     property alias cfg_PauseMode: pauseModeCombo.currentIndex
     property alias cfg_BackgroundColor: colorButton.color
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
@@ -64,6 +63,21 @@ Kirigami.FormLayout {
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
+    property int cfg_MuteMode
+    property var desktopOptions: [
+        {
+            'label': i18n("Maximized or full-screen windows"),
+            'value': 0
+        },
+        {
+            'label': i18n("Active window is present"),
+            'value': 1
+        },
+        {
+            'label': i18n("At least one window is shown"),
+            'value': 2
+        }
+    ]
 
     Components.Header {
         Layout.leftMargin: Kirigami.Units.mediumSpacing
@@ -324,47 +338,6 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Mute audio:")
-        visible: currentTab === 1
-        CheckBox {
-            id: muteRadio
-            checked: cfg_MuteAudio
-            onCheckedChanged: {
-                cfg_MuteAudio = checked
-            }
-        }
-        RowLayout {
-            enabled: !muteRadio.checked
-            opacity: enabled ? 1 : 0
-            Label {
-                text: i18n("Volume:")
-            }
-            Slider {
-                id: volumeSlider
-                from: 0
-                value: cfg_Volume
-                to: 1
-                onValueChanged: {
-                    cfg_Volume = value
-                }
-            }
-            Label {
-                text: parseFloat(volumeSlider.value).toFixed(2)
-            }
-            Button {
-                icon.name: "edit-undo-symbolic"
-                flat: true
-                onClicked: {
-                    volumeSlider.value = 1.0
-                }
-                ToolTip.text: i18n("Reset to default")
-                ToolTip.visible: hovered
-            }
-        }
-    }
-
-
-    RowLayout {
         Kirigami.FormData.label: i18n("Crossfade (Beta):")
         visible: currentTab === 1
         CheckBox {
@@ -381,7 +354,7 @@ Kirigami.FormLayout {
             enabled: crossfadeEnabledCheckbox.checked
             id: crossfadeDurationSpinBox
             from: 0
-            to: 2000000000
+            to: 99999
             stepSize: 100
             value: cfg_CrossfadeDuration
             onValueChanged: {
@@ -433,6 +406,71 @@ Kirigami.FormLayout {
         visible: !root.isLockScreenSettings && currentTab === 1
     }
 
+    property var muteModeModel: {
+        // options for desktop and lock screen
+        let model = [
+            // TODO implement detection
+            // {
+            //     'label': i18n("Other application is playing audio"),
+            //     'value': 3
+            // },
+            {
+                'label': i18n("Never"),
+                'value': 4
+            },
+            {
+                'label': i18n("Always"),
+                'value': 5
+            },
+        ]
+        // options exclusive to desktop mode
+        if (!isLockScreenSettings) {
+            model.unshift(...desktopOptions)
+        }
+        return model
+    }
+
+    ComboBox {
+        Kirigami.FormData.label: i18n("Mute audio:")
+        id: muteModeCombo
+        model: muteModeModel
+        textRole: "label"
+        valueRole: "value"
+        visible: currentTab === 1
+        onActivated: {
+            cfg_MuteMode = currentValue
+        }
+        Component.onCompleted: currentIndex = indexOfValue(cfg_MuteMode)
+    }
+
+    RowLayout {
+        visible: currentTab === 1 && cfg_MuteMode !== 5
+        Label {
+            text: i18n("Volume:")
+        }
+        Slider {
+            id: volumeSlider
+            from: 0
+            value: cfg_Volume
+            to: 1
+            onValueChanged: {
+                cfg_Volume = value
+            }
+        }
+        Label {
+            text: parseFloat(volumeSlider.value).toFixed(2)
+        }
+        Button {
+            icon.name: "edit-undo-symbolic"
+            flat: true
+            onClicked: {
+                volumeSlider.value = 1.0
+            }
+            ToolTip.text: i18n("Reset to default")
+            ToolTip.visible: hovered
+        }
+    }
+
     property var blurModeModel: {
         // options for desktop and lock screen
         let model = [
@@ -450,20 +488,6 @@ Kirigami.FormLayout {
             }
         ]
         // options exclusive to desktop mode
-        const desktopOptions = [
-            {
-                'label': i18n("Maximized or full-screen windows"),
-                'value': 0
-            },
-            {
-                'label': i18n("Active window is present"),
-                'value': 1
-            },
-            {
-                'label': i18n("At least one window is shown"),
-                'value': 2
-            }
-        ]
         if (!isLockScreenSettings) {
             model.unshift(...desktopOptions)
         }
@@ -485,9 +509,10 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Blur radius:")
-        visible: currentTab === 1
-        enabled: cfg_BlurMode !== 5
+        visible: currentTab === 1 && cfg_BlurMode !== 5
+        Label {
+            text: i18n("Radius:")
+        }
         SpinBox {
             id: blurRadiusSpinBox
             from: 0
@@ -515,7 +540,7 @@ Kirigami.FormLayout {
         SpinBox {
             id: blurAnimationDurationSpinBox
             from: 0
-            to: 2000000000
+            to: 9999
             stepSize: 100
             value: cfg_BlurAnimationDuration
             onValueChanged: {

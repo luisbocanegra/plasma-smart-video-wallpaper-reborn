@@ -115,6 +115,29 @@ WallpaperItem {
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property bool restoreLastPosition: true
+    property bool muteAudio: {
+        let mute = false
+        switch(main.configuration.MuteMode) {
+            case 0:
+                mute = windowModel.maximizedExists
+                break
+            case 1:
+                mute = windowModel.activeExists
+                break
+            case 2:
+                mute = windowModel.visibleExists
+                break
+            // case 3:
+            //  TODO other application playing audio
+            //  break
+            case 4:
+                mute = false
+                break
+            case 5:
+                mute = true
+        }
+        return mute
+    }
 
     function getVideos() {
         let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
@@ -215,7 +238,7 @@ WallpaperItem {
 
         AudioOutput {
             id: audioOutput
-            muted: main.configuration.MuteAudio
+            muted: main.muteAudio
             volume: videoOutput.opacity * main.volume
         }
 
@@ -228,7 +251,7 @@ WallpaperItem {
 
         AudioOutput {
             id: audioOutput2
-            muted: main.configuration.MuteAudio
+            muted: main.muteAudio
             volume: volumeOutput2 * main.volume
             Behavior on volume {
                 NumberAnimation {
