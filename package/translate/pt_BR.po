@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-08 10:33+0000\n"
+"POT-Creation-Date: 2025-02-26 11:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,23 @@ msgstr ""
 
 #: ../metadata.json
 msgid "Wallpaper plugin to play videos on your desktop"
-msgstr ""
+msgstr "Plugin de papel de parede para reproduzir vídeos na sua área de trabalho"
 
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
 msgstr "Versão:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Janelas maximizadas ou em tela cheia"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Janela ativa está presente"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "Pelo menos uma janela é visível"
 
 #: ../contents/ui/config.qml
 msgid "Videos"
@@ -62,9 +74,7 @@ msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr "Os vídeos são carregados na RAM, arquivos maiores irão usar mais recursos do sistema"
 
 #: ../contents/ui/config.qml
-msgid ""
-"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgid "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
 
 #: ../contents/ui/config.qml
@@ -73,7 +83,7 @@ msgstr "Instruções para o Qt Media Backend"
 
 #: ../contents/ui/config.qml
 msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
-msgstr ""
+msgstr "Tenha certeza de habilitar a aceleração de vídeo do Hardware no sistema para reduzir o uso da CPU/GPU enquanto os vídeos estão sendo reproduzidos"
 
 #: ../contents/ui/config.qml
 msgid "Learn how"
@@ -93,7 +103,7 @@ msgstr "Manter Proporções"
 
 #: ../contents/ui/config.qml
 msgid "Scaled and Cropped"
-msgstr ""
+msgstr "Escalado e Cortado"
 
 #: ../contents/ui/config.qml
 msgid "Background:"
@@ -116,14 +126,6 @@ msgid "Reset to default"
 msgstr "Resetar para o padrão"
 
 #: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr "Mutar áudio:"
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr "Volume:"
-
-#: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
 msgstr ""
 
@@ -136,48 +138,44 @@ msgid "Adds a smooth transition between videos. <strong>Uses additional Memory a
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr "Filtrar janelas:"
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr "Apenas esta tela"
+
+#: ../contents/ui/config.qml
 msgid "Pause video:"
 msgstr "Pausar vídeo:"
-
-#: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr "Janelas maximizadas ou em tela cheia"
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr "Janela ativa está presente"
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
-msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Never"
 msgstr "Nunca"
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
-msgstr "Borrar Vídeo:"
+msgid "Always"
+msgstr "Sempre"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Mutar áudio:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr "Volume:"
 
 #: ../contents/ui/config.qml
 msgid "Video is paused"
 msgstr "Vídeo está pausado"
 
 #: ../contents/ui/config.qml
-msgid "Always"
-msgstr "Sempre"
+msgid "Blur video:"
+msgstr "Borrar Vídeo:"
 
 #: ../contents/ui/config.qml
-msgid "Filter:"
-msgstr "Filtro:"
-
-#: ../contents/ui/config.qml
-msgid "Only check for windows in active screen"
-msgstr ""
-
-#: ../contents/ui/config.qml
-msgid "Blur radius:"
-msgstr ""
+msgid "Radius:"
+msgstr "Raio:"
 
 #: ../contents/ui/config.qml
 msgid "Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!"
@@ -209,15 +207,15 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Screen state command:"
-msgstr ""
+msgstr "Comando do estado da tela:"
 
 #: ../contents/ui/config.qml
 msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"
-msgstr ""
+msgstr "cat /sys/class/backlight/intel_backlight/actual_brightness"
 
 #: ../contents/ui/config.qml
 msgid "The command/script must return 0 (zero) when the screen is Off."
-msgstr ""
+msgstr "O comando/script precisa retornar 0 (zero) quando a tela está desligada."
 
 #: ../contents/ui/config.qml
 msgid "Enable debug:"
@@ -225,7 +223,7 @@ msgstr "Habilitar debug:"
 
 #: ../contents/ui/config.qml
 msgid "Print debug messages to the system log"
-msgstr ""
+msgstr "Mostrar mensagems de debug no log do sistema"
 
 #: ../contents/ui/config.qml
 msgid "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:"
@@ -262,3 +260,30 @@ msgstr "Todos arquivos"
 #: ../contents/ui/main.qml
 msgid "No video source \n"
 msgstr "Nenhum arquivo de vídeo\n"
+
+#: ../contents/ui/main.qml
+msgid "Next Video"
+msgstr "Próximo Vídeo"
+
+#: ../contents/ui/main.qml
+msgid "Pause"
+msgstr "Pausar"
+
+#: ../contents/ui/main.qml
+msgid "Default"
+msgstr "Padrão"
+
+#: ../contents/ui/main.qml
+msgid "Play"
+msgstr "Reproduzir"
+
+#: ../contents/ui/main.qml
+msgid "Unmute"
+msgstr "Desmutar"
+
+#: ../contents/ui/main.qml
+msgid "Mute"
+msgstr "Mutar"
+
+#~ msgid "Filter:"
+#~ msgstr "Filtro:"
