@@ -20,12 +20,14 @@
 
 import QtQuick
 import QtMultimedia
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
 import Qt5Compat.GraphicalEffects
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.kirigami as Kirigami
 import "code/utils.js" as Utils
+import "code/enum.js" as Enum
 
 WallpaperItem {
     anchors.fill: parent
@@ -40,6 +42,13 @@ WallpaperItem {
         if (lockScreenMode) {
             return true
         }
+
+        if (playbackOverride === Enum.PlaybackOverride.Play) {
+            return true
+        } else if (playbackOverride === Enum.PlaybackOverride.Pause) {
+            return false
+        }
+
         let play = false
         switch(main.configuration.PauseMode) {
             case 0:
@@ -56,7 +65,9 @@ WallpaperItem {
         }
         return play
     }
-    property bool playing: (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
+    property bool playing: {
+        return (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
+    }
     property bool shouldBlur: {
         let blur = false
         switch(main.configuration.BlurMode) {
@@ -116,6 +127,13 @@ WallpaperItem {
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property bool restoreLastPosition: true
     property bool muteAudio: {
+
+        if (muteOverride === Enum.MuteOverride.Mute) {
+            return true
+        } else if (muteOverride === Enum.MuteOverride.Unmute) {
+            return false
+        }
+
         let mute = false
         switch(main.configuration.MuteMode) {
             case 0:
@@ -479,4 +497,48 @@ WallpaperItem {
             main.lockScreenMode = "source" in window && window.source.toString().endsWith("LockScreen.qml")
         }
     }
+
+    property int playbackOverride: Enum.PlaybackOverride.Default
+    property int muteOverride: Enum.MuteOverride.Default
+
+    contextualActions: [
+        PlasmaCore.Action {
+            text: i18n("Next Video")
+            icon.name: "media-skip-forward"
+            onTriggered: {
+                nextVideo()
+                tick = true
+                player2.pause()
+                videoOutput.opacity = 1
+                player1.source = currentSource
+                player1.play()
+            }
+        },
+        PlasmaCore.Action {
+            text: {
+                if (main.playbackOverride === Enum.PlaybackOverride.Play) {
+                    return i18n("Pause")
+                } else if (main.playbackOverride === Enum.PlaybackOverride.Pause) {
+                    return i18n("Default")
+                } else {
+                    return i18n("Play")
+                }
+            }
+            icon.name: main.playing ? "media-playback-start" : "media-playback-pause"
+            onTriggered: main.playbackOverride = (main.playbackOverride + 1) % 3
+        },
+        PlasmaCore.Action {
+            text: {
+                if (main.muteOverride === Enum.MuteOverride.Mute) {
+                    return i18n("Unmute")
+                } else if (main.muteOverride === Enum.MuteOverride.Unmute) {
+                    return i18n("Default")
+                } else {
+                    return i18n("Mute")
+                }
+            }
+            icon.name: main.muteAudio ? "audio-volume-muted" : "audio-volume-high"
+            onTriggered: main.muteOverride = (main.muteOverride + 1) % 3
+        }
+    ]
 }
