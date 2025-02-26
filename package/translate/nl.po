@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-08 10:33+0000\n"
+"POT-Creation-Date: 2025-02-26 08:58+0000\n"
 "PO-Revision-Date: 2025-02-23 20:26+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -30,6 +30,18 @@ msgstr "Een achtergrondplug-in voor het tonen van video's op je bureaublad"
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
 msgstr "Versie:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "als er gemaximaliseerde of schermvullende vensters zijn"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "als er een actief venster is"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "als er minimaal één venster wordt getoond"
 
 #: ../contents/ui/config.qml
 msgid "Videos"
@@ -133,14 +145,6 @@ msgid "Reset to default"
 msgstr "Standaardwaarden herstellen"
 
 #: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr "Geluid dempen:"
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr "Volumeniveau:"
-
-#: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
 msgstr "Vloeiende overgangen (bèta):"
 
@@ -157,48 +161,44 @@ msgstr ""
 "verhoogt het geheugengebruik en kan leiden tot afspeelproblemen.</strong>"
 
 #: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Pause video:"
 msgstr "Video pauzeren:"
-
-#: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr "als er gemaximaliseerde of schermvullende vensters zijn"
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr "als er een actief venster is"
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
-msgstr "als er minimaal één venster wordt getoond"
 
 #: ../contents/ui/config.qml
 msgid "Never"
 msgstr "Nooit"
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
-msgstr "Video blurren:"
+msgid "Always"
+msgstr "altijd"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Geluid dempen:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr "Volumeniveau:"
 
 #: ../contents/ui/config.qml
 msgid "Video is paused"
 msgstr "na pauzeren"
 
 #: ../contents/ui/config.qml
-msgid "Always"
-msgstr "altijd"
+msgid "Blur video:"
+msgstr "Video blurren:"
 
 #: ../contents/ui/config.qml
-msgid "Filter:"
-msgstr "Filter:"
-
-#: ../contents/ui/config.qml
-msgid "Only check for windows in active screen"
-msgstr "Alleen op actief scherm zoeken naar vensters"
-
-#: ../contents/ui/config.qml
-msgid "Blur radius:"
-msgstr "Vervaagstraal:"
+msgid "Radius:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid ""
@@ -293,3 +293,12 @@ msgstr "Alle bestanden"
 #: ../contents/ui/main.qml
 msgid "No video source \n"
 msgstr "Geen videobron \n"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "Only check for windows in active screen"
+#~ msgstr "Alleen op actief scherm zoeken naar vensters"
+
+#~ msgid "Blur radius:"
+#~ msgstr "Vervaagstraal:"

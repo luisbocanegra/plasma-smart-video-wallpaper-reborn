@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-08 10:33+0000\n"
+"POT-Creation-Date: 2025-02-26 08:58+0000\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -30,6 +30,18 @@ msgstr ""
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
 msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Ventanas maximizadas o en pantalla completa"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Ventana activa está presente"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "Se muestra al menos una ventana."
 
 #: ../contents/ui/config.qml
 msgid "Videos"
@@ -131,14 +143,6 @@ msgid "Reset to default"
 msgstr ""
 
 #: ../contents/ui/config.qml
-msgid "Mute audio:"
-msgstr "Silenciar audio:"
-
-#: ../contents/ui/config.qml
-msgid "Volume:"
-msgstr ""
-
-#: ../contents/ui/config.qml
 msgid "Crossfade (Beta):"
 msgstr ""
 
@@ -153,48 +157,44 @@ msgid ""
 msgstr ""
 
 #: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr ""
+
+#: ../contents/ui/config.qml
 msgid "Pause video:"
 msgstr "Pausa video:"
-
-#: ../contents/ui/config.qml
-msgid "Maximized or full-screen windows"
-msgstr "Ventanas maximizadas o en pantalla completa"
-
-#: ../contents/ui/config.qml
-msgid "Active window is present"
-msgstr "Ventana activa está presente"
-
-#: ../contents/ui/config.qml
-msgid "At least one window is shown"
-msgstr "Se muestra al menos una ventana."
 
 #: ../contents/ui/config.qml
 msgid "Never"
 msgstr "Nunca"
 
 #: ../contents/ui/config.qml
-msgid "Blur video:"
-msgstr "Desenfoca video:"
+msgid "Always"
+msgstr "Siempre"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Silenciar audio:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Video is paused"
 msgstr "El video está en pausa"
 
 #: ../contents/ui/config.qml
-msgid "Always"
-msgstr "Siempre"
+msgid "Blur video:"
+msgstr "Desenfoca video:"
 
 #: ../contents/ui/config.qml
-msgid "Filter:"
-msgstr "Filtrar:"
-
-#: ../contents/ui/config.qml
-msgid "Only check for windows in active screen"
-msgstr "Verifique solo las ventanas en la pantalla activa"
-
-#: ../contents/ui/config.qml
-msgid "Blur radius:"
-msgstr "Radio de desenfoque:"
+msgid "Radius:"
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid ""
@@ -286,6 +286,15 @@ msgstr ""
 #: ../contents/ui/main.qml
 msgid "No video source \n"
 msgstr ""
+
+#~ msgid "Filter:"
+#~ msgstr "Filtrar:"
+
+#~ msgid "Only check for windows in active screen"
+#~ msgstr "Verifique solo las ventanas en la pantalla activa"
+
+#~ msgid "Blur radius:"
+#~ msgstr "Radio de desenfoque:"
 
 #~ msgid ""
 #~ "Videos are loaded in Memory, bigger files will use more Memory and system "
