@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-26 08:58+0000\n"
+"POT-Creation-Date: 2025-02-26 11:47+0000\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -285,6 +285,30 @@ msgstr ""
 
 #: ../contents/ui/main.qml
 msgid "No video source \n"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Next Video"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Pause"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Default"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Play"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Unmute"
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Mute"
 msgstr ""
 
 #~ msgid "Filter:"
