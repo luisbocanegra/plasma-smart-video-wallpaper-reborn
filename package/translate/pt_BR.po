@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../metadata.json
 msgid "Wallpaper plugin to play videos on your desktop"
-msgstr ""
+msgstr "Plugin de papel de parede para reproduzir vídeos na sua área de trabalho"
 
 #: ../contents/ui/components/Header.qml
 msgid "Version:"
@@ -39,7 +39,7 @@ msgstr "Janela ativa está presente"
 
 #: ../contents/ui/config.qml
 msgid "At least one window is shown"
-msgstr ""
+msgstr "Pelo menos uma janela é visível"
 
 #: ../contents/ui/config.qml
 msgid "Videos"
@@ -83,7 +83,7 @@ msgstr "Instruções para o Qt Media Backend"
 
 #: ../contents/ui/config.qml
 msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
-msgstr ""
+msgstr "Tenha certeza de habilitar a aceleração de vídeo do Hardware no sistema para reduzir o uso da CPU/GPU enquanto os vídeos estão sendo reproduzidos"
 
 #: ../contents/ui/config.qml
 msgid "Learn how"
@@ -103,7 +103,7 @@ msgstr "Manter Proporções"
 
 #: ../contents/ui/config.qml
 msgid "Scaled and Cropped"
-msgstr ""
+msgstr "Escalado e Cortado"
 
 #: ../contents/ui/config.qml
 msgid "Background:"
@@ -139,11 +139,11 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Filter windows:"
-msgstr ""
+msgstr "Filtrar janelas:"
 
 #: ../contents/ui/config.qml
 msgid "This screen only"
-msgstr ""
+msgstr "Apenas esta tela"
 
 #: ../contents/ui/config.qml
 msgid "Pause video:"
@@ -175,7 +175,7 @@ msgstr "Borrar Vídeo:"
 
 #: ../contents/ui/config.qml
 msgid "Radius:"
-msgstr ""
+msgstr "Raio:"
 
 #: ../contents/ui/config.qml
 msgid "Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!"
@@ -207,15 +207,15 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Screen state command:"
-msgstr ""
+msgstr "Comando do estado da tela:"
 
 #: ../contents/ui/config.qml
 msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"
-msgstr ""
+msgstr "cat /sys/class/backlight/intel_backlight/actual_brightness"
 
 #: ../contents/ui/config.qml
 msgid "The command/script must return 0 (zero) when the screen is Off."
-msgstr ""
+msgstr "O comando/script precisa retornar 0 (zero) quando a tela está desligada."
 
 #: ../contents/ui/config.qml
 msgid "Enable debug:"
@@ -223,7 +223,7 @@ msgstr "Habilitar debug:"
 
 #: ../contents/ui/config.qml
 msgid "Print debug messages to the system log"
-msgstr ""
+msgstr "Mostrar mensagems de debug no log do sistema"
 
 #: ../contents/ui/config.qml
 msgid "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:"
@@ -263,27 +263,27 @@ msgstr "Nenhum arquivo de vídeo\n"
 
 #: ../contents/ui/main.qml
 msgid "Next Video"
-msgstr ""
+msgstr "Próximo Vídeo"
 
 #: ../contents/ui/main.qml
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: ../contents/ui/main.qml
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 #: ../contents/ui/main.qml
 msgid "Play"
-msgstr ""
+msgstr "Reproduzir"
 
 #: ../contents/ui/main.qml
 msgid "Unmute"
-msgstr ""
+msgstr "Desmutar"
 
 #: ../contents/ui/main.qml
 msgid "Mute"
-msgstr ""
+msgstr "Mutar"
 
 #~ msgid "Filter:"
 #~ msgstr "Filtro:"
