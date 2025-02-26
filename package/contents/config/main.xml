@@ -27,10 +27,6 @@
     <entry name="PauseMode" type="Int">
       <default>0</default>
     </entry>
-    <entry name="MuteAudio" type="Bool">
-      <label>Mute audio</label>
-      <default>true</default>
-    </entry>
     <entry name="PauseBatteryLevel" type="Int">
       <default>10</default>
     </entry>
@@ -51,7 +47,7 @@
         5: never
     -->
     <entry name="BlurMode" type="Int">
-      <default>0</default>
+      <default>5</default>
     </entry>
     <entry name="BlurRadius" type="Int">
       <default>32</default>
@@ -108,6 +104,17 @@
     </entry>
     <entry name="LastVideoPosition" type="Int">
       <default>0</default>
+    </entry>
+    <!-- Mute audio
+        0: when maximized or full-screen windows
+        1: when a visible window is active
+        2: when a window is visible
+        3: TODO application playing audio
+        4: never
+        5: always
+    -->
+    <entry name="MuteMode" type="Int">
+      <default>5</default>
     </entry>
   </group>
 </kcfg>
