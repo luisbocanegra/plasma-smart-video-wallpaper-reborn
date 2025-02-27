@@ -199,6 +199,14 @@ Kirigami.FormLayout {
                             Utils.updateConfig()
                         }
                     }
+                    Button {
+                        icon.name: "preferences-other"
+                        enabled: true
+                        onClicked: {
+                            videoConfig.speed = 1
+                            videoConfig.open()
+                        }
+                    }
                 }
                 Button{
                     icon.name: "edit-delete-remove"
@@ -686,6 +694,57 @@ Kirigami.FormLayout {
             }
             console.log(JSON.stringify(videosConfig))
             Utils.updateConfig()
+        }
+    }
+
+    Dialog {
+        id: videoConfig
+
+        //anchors.horizontalCenter: parent.horizontalCenter
+        y: (parent.height - height) / 2 - 50
+        x: (parent.width - width) / 2
+
+        modal: true
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        title: "Configurações de Vídeo"
+
+        property int speed: 1
+
+        Column {
+            spacing: 10
+            anchors.fill: parent
+
+            Row {
+                spacing: 10
+                Label { text: "URL do Vídeo:" }
+                Slider {
+                    id: playbackRateSpeed
+                    from: 0
+                    value: videoConfig.speed
+                    to: 2
+                    onValueChanged: {
+                        videoConfig.speed = value
+                    }
+                }
+                Label {
+                    text: parseFloat(playbackRateSpeed.value).toFixed(2)
+                }
+            }
+                
+            Button {
+                icon.name: "edit-undo-symbolic"
+                flat: true
+                onClicked: {
+                    playbackRateSpeed.value = 1.0
+                }
+                ToolTip.text: i18n("Reset to default")
+                ToolTip.visible: hovered
+            }
+        }
+
+        onAccepted: {
+            settingsDialog.close()
         }
     }
 

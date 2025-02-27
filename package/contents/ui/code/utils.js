@@ -3,7 +3,7 @@ function parseCompat(cfgStr) {
     return videosConfig = JSON.parse(cfgStr)
   } catch (e) {
     console.log("Possibly old config, parsing as multi-line string", e)
-    const lines = cfgStr.trim().split("\n");
+    const lines = cfgStr.trim().split("\n")
     let videos = []
     for (const line of lines) [
       videos.push(new createVideo(line))
@@ -18,10 +18,10 @@ function updateConfig() {
 }
 
 function createVideo(filename) {
-  this.filename = filename;
-  this.enabled = true;
-  this.duration = 0;
-  this.customDuration = 0;
+  this.filename = filename
+  this.enabled = true
+  this.duration = 0
+  this.customDuration = 0
   return {
     "filename": this.filename,
     "enabled": this.enabled,
@@ -31,7 +31,7 @@ function createVideo(filename) {
 }
 
 function dumpProps(obj) {
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
   for (var k of Object.keys(obj)) {
     const val = obj[k]
     if (typeof val === 'function') continue
