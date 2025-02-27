@@ -204,6 +204,7 @@ Kirigami.FormLayout {
                         enabled: true
                         onClicked: {
                             videoConfig.speed = 1
+                            videoConfig.filename = videosConfig[modelData].filename
                             videoConfig.open()
                         }
                     }
@@ -710,6 +711,7 @@ Kirigami.FormLayout {
         title: "Configurações de Vídeo"
 
         property int speed: 1
+        property string filename : ""
 
         Column {
             spacing: 10
@@ -717,33 +719,38 @@ Kirigami.FormLayout {
 
             Row {
                 spacing: 10
-                Label { text: "URL do Vídeo:" }
-                Slider {
-                    id: playbackRateSpeed
-                    from: 0
-                    value: videoConfig.speed
-                    to: 2
-                    onValueChanged: {
-                        videoConfig.speed = value
+                
+                RowLayout {
+                    Label { text: i18n("Playback speed:") }
+                    Slider {
+                        id: playbackRateSpeed
+                        from: 0
+                        value: videoConfig.speed
+                        to: 2
+                        onValueChanged: {
+                            videoConfig.speed = value
+                        }
+                    }
+                    Label {
+                        text: parseFloat(playbackRateSpeed.value).toFixed(2)
+                    }
+                    Button {
+                        icon.name: "edit-undo-symbolic"
+                        flat: true
+                        onClicked: {
+                            playbackRateSpeed.value = 1.0
+                        }
+                        ToolTip.text: i18n("Reset to default")
+                        ToolTip.visible: hovered
                     }
                 }
-                Label {
-                    text: parseFloat(playbackRateSpeed.value).toFixed(2)
-                }
-            }
-                
-            Button {
-                icon.name: "edit-undo-symbolic"
-                flat: true
-                onClicked: {
-                    playbackRateSpeed.value = 1.0
-                }
-                ToolTip.text: i18n("Reset to default")
-                ToolTip.visible: hovered
-            }
+            }            
         }
 
         onAccepted: {
+            const index = videosConfig.findIndex(el => el.filename = filename)
+            videosConfig[index].playbackRate = speed
+            Utils.updateConfig()
             settingsDialog.close()
         }
     }
