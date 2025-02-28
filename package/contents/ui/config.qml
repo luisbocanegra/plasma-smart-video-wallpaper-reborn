@@ -126,7 +126,7 @@ Kirigami.FormLayout {
             icon.name: "folder-videos-symbolic"
             text: i18n("Add new videos")
             onClicked: {
-                fileDialog.open()
+                fileDialog.open();
             }
         }
         Button {
@@ -136,9 +136,9 @@ Kirigami.FormLayout {
             checked: showVideosList
             onClicked: {
                 if (currentTab !== 0) {
-                    showVideosList = false
+                    showVideosList = false;
                 } else {
-                    showVideosList = !showVideosList
+                    showVideosList = !showVideosList;
                 }
             }
         }
@@ -148,22 +148,23 @@ Kirigami.FormLayout {
         id: videosList
         visible: showVideosList && currentTab === 0
         Repeater {
+            id: videosListRepeater
             model: Object.keys(videosConfig)
             RowLayout {
                 CheckBox {
                     id: vidEnabled
                     checked: videosConfig[modelData].enabled
-                    onCheckedChanged:{
-                        videosConfig[modelData].enabled = checked
-                        Utils.updateConfig()
+                    onCheckedChanged: {
+                        videosConfig[modelData].enabled = checked;
+                        Utils.updateConfig();
                     }
                 }
                 TextField {
                     text: videosConfig[modelData].filename
                     Layout.preferredWidth: 300
                     onTextChanged: {
-                        videosConfig[modelData].filename = text
-                        Utils.updateConfig()
+                        videosConfig[modelData].filename = text;
+                        Utils.updateConfig();
                     }
                 }
                 RowLayout {
@@ -177,43 +178,44 @@ Kirigami.FormLayout {
                     //         Utils.updateConfig()
                     //     }
                     // }
-                    Button{
+                    Button {
                         icon.name: "go-up-symbolic"
                         enabled: index > 0
                         onClicked: {
-                            const swapIndex = index - 1
-                            const swapItem = videosConfig[swapIndex]
-                            videosConfig[swapIndex] = videosConfig[index]
-                            videosConfig[index] = swapItem
-                            Utils.updateConfig()
+                            const swapIndex = index - 1;
+                            const swapItem = videosConfig[swapIndex];
+                            videosConfig[swapIndex] = videosConfig[index];
+                            videosConfig[index] = swapItem;
+                            Utils.updateConfig();
                         }
                     }
-                    Button{
+                    Button {
                         icon.name: "go-down-symbolic"
                         enabled: index < videosConfig.length - 1
                         onClicked: {
-                            const swapIndex = index + 1
-                            const swapItem = videosConfig[swapIndex]
-                            videosConfig[swapIndex] = videosConfig[index]
-                            videosConfig[index] = swapItem
-                            Utils.updateConfig()
+                            const swapIndex = index + 1;
+                            const swapItem = videosConfig[swapIndex];
+                            videosConfig[swapIndex] = videosConfig[index];
+                            videosConfig[index] = swapItem;
+                            Utils.updateConfig();
                         }
                     }
                     Button {
                         icon.name: "preferences-other"
                         enabled: true
                         onClicked: {
-                            videoConfig.speed = 1
-                            videoConfig.filename = videosConfig[modelData].filename
-                            videoConfig.open()
+                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate;
+                            videoConfig.filename = videosConfig[modelData].filename;
+                            videoConfig.index = index
+                            videoConfig.open();
                         }
                     }
                 }
-                Button{
+                Button {
                     icon.name: "edit-delete-remove"
                     onClicked: {
-                        videosConfig.splice(index,1)
-                        Utils.updateConfig()
+                        videosConfig.splice(index, 1);
+                        Utils.updateConfig();
                     }
                 }
             }
@@ -227,7 +229,7 @@ Kirigami.FormLayout {
         checkable: true
         checked: showWarningMessage
         onClicked: {
-            showWarningMessage = !showWarningMessage
+            showWarningMessage = !showWarningMessage;
         }
         highlighted: true
         Kirigami.Theme.inherit: false
@@ -254,7 +256,7 @@ Kirigami.FormLayout {
                 icon.name: "view-readermode-symbolic"
                 text: i18n("Qt Media backend instructions")
                 onTriggered: {
-                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes")
+                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes");
                 }
             }
         ]
@@ -269,16 +271,15 @@ Kirigami.FormLayout {
                 icon.name: "view-readermode-symbolic"
                 text: i18n("Learn how")
                 onTriggered: {
-                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration")
+                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration");
                 }
             }
         ]
     }
 
-
     ComboBox {
-        Kirigami.FormData.label: i18n("Fill mode:")
         id: videoFillMode
+        Kirigami.FormData.label: i18n("Fill mode:")
         model: [
             {
                 'label': i18n("Stretch"),
@@ -295,7 +296,7 @@ Kirigami.FormLayout {
         ]
         textRole: "label"
         onCurrentIndexChanged: cfg_FillMode = model[currentIndex]["fillMode"]
-        Component.onCompleted: setMethod();
+        Component.onCompleted: setMethod()
         visible: currentTab === 0
 
         function setMethod() {
@@ -315,8 +316,8 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18n("Play in random order:")
         id: randomModeCheckbox
+        Kirigami.FormData.label: i18n("Play in random order:")
         visible: currentTab === 1
     }
 
@@ -329,7 +330,7 @@ Kirigami.FormLayout {
             value: cfg_PlaybackRate
             to: 2
             onValueChanged: {
-                cfg_PlaybackRate = value
+                cfg_PlaybackRate = value;
             }
         }
         Label {
@@ -339,7 +340,7 @@ Kirigami.FormLayout {
             icon.name: "edit-undo-symbolic"
             flat: true
             onClicked: {
-                playbackRateSlider.value = 1.0
+                playbackRateSlider.value = 1.0;
             }
             ToolTip.text: i18n("Reset to default")
             ToolTip.visible: hovered
@@ -353,21 +354,21 @@ Kirigami.FormLayout {
             id: crossfadeEnabledCheckbox
             checked: cfg_CrossfadeEnabled
             onCheckedChanged: {
-                cfg_CrossfadeEnabled = checked
+                cfg_CrossfadeEnabled = checked;
             }
         }
         Label {
             text: i18n("Duration:")
         }
         SpinBox {
-            enabled: crossfadeEnabledCheckbox.checked
             id: crossfadeDurationSpinBox
+            enabled: crossfadeEnabledCheckbox.checked
             from: 0
             to: 99999
             stepSize: 100
             value: cfg_CrossfadeDuration
             onValueChanged: {
-                cfg_CrossfadeDuration = value
+                cfg_CrossfadeDuration = value;
             }
         }
         Button {
@@ -387,14 +388,14 @@ Kirigami.FormLayout {
         checked: cfg_CheckWindowsActiveScreen
         text: i18n("This screen only")
         onCheckedChanged: {
-            cfg_CheckWindowsActiveScreen = checked
+            cfg_CheckWindowsActiveScreen = checked;
         }
         visible: !root.isLockScreenSettings && currentTab === 1
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Pause video:")
         id: pauseModeCombo
+        Kirigami.FormData.label: i18n("Pause video:")
         model: [
             {
                 'label': i18n("Maximized or full-screen windows")
@@ -431,23 +432,23 @@ Kirigami.FormLayout {
                 'label': i18n("Always"),
                 'value': 5
             },
-        ]
+        ];
         // options exclusive to desktop mode
         if (!isLockScreenSettings) {
-            model.unshift(...desktopOptions)
+            model.unshift(...desktopOptions);
         }
-        return model
+        return model;
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Mute audio:")
         id: muteModeCombo
+        Kirigami.FormData.label: i18n("Mute audio:")
         model: muteModeModel
         textRole: "label"
         valueRole: "value"
         visible: currentTab === 1
         onActivated: {
-            cfg_MuteMode = currentValue
+            cfg_MuteMode = currentValue;
         }
         Component.onCompleted: currentIndex = indexOfValue(cfg_MuteMode)
     }
@@ -463,7 +464,7 @@ Kirigami.FormLayout {
             value: cfg_Volume
             to: 1
             onValueChanged: {
-                cfg_Volume = value
+                cfg_Volume = value;
             }
         }
         Label {
@@ -473,7 +474,7 @@ Kirigami.FormLayout {
             icon.name: "edit-undo-symbolic"
             flat: true
             onClicked: {
-                volumeSlider.value = 1.0
+                volumeSlider.value = 1.0;
             }
             ToolTip.text: i18n("Reset to default")
             ToolTip.visible: hovered
@@ -495,24 +496,24 @@ Kirigami.FormLayout {
                 'label': i18n("Never"),
                 'value': 5
             }
-        ]
+        ];
         // options exclusive to desktop mode
         if (!isLockScreenSettings) {
-            model.unshift(...desktopOptions)
+            model.unshift(...desktopOptions);
         }
 
-        return model
+        return model;
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Blur video:")
         id: blurModeCombo
+        Kirigami.FormData.label: i18n("Blur video:")
         model: blurModeModel
         textRole: "label"
         valueRole: "value"
         visible: currentTab === 1
         onActivated: {
-            cfg_BlurMode = currentValue
+            cfg_BlurMode = currentValue;
         }
         Component.onCompleted: currentIndex = indexOfValue(cfg_BlurMode)
     }
@@ -528,7 +529,7 @@ Kirigami.FormLayout {
             to: 145
             value: cfg_BlurRadius
             onValueChanged: {
-                cfg_BlurRadius = value
+                cfg_BlurRadius = value;
             }
         }
         Button {
@@ -553,7 +554,7 @@ Kirigami.FormLayout {
             stepSize: 100
             value: cfg_BlurAnimationDuration
             onValueChanged: {
-                cfg_BlurAnimationDuration = value
+                cfg_BlurAnimationDuration = value;
             }
         }
     }
@@ -567,7 +568,7 @@ Kirigami.FormLayout {
             to: 100
             value: cfg_PauseBatteryLevel
             onValueChanged: {
-                cfg_PauseBatteryLevel = value
+                cfg_PauseBatteryLevel = value;
             }
         }
         CheckBox {
@@ -575,7 +576,7 @@ Kirigami.FormLayout {
             text: i18n("Pause video")
             checked: cfg_BatteryPausesVideo
             onCheckedChanged: {
-                cfg_BatteryPausesVideo = checked
+                cfg_BatteryPausesVideo = checked;
             }
         }
 
@@ -584,19 +585,19 @@ Kirigami.FormLayout {
             text: i18n("Disable blur")
             checked: cfg_BatteryDisablesBlur
             onCheckedChanged: {
-                cfg_BatteryDisablesBlur = checked
+                cfg_BatteryDisablesBlur = checked;
             }
             visible: blurRadiusSpinBox.visible
         }
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18n("Screen Off pauses video:")
         id: screenOffPausesVideoCheckbox
+        Kirigami.FormData.label: i18n("Screen Off pauses video:")
         text: i18n("Requires setting up command below!")
         checked: cfg_ScreenOffPausesVideo
         onCheckedChanged: {
-            cfg_ScreenOffPausesVideo = checked
+            cfg_ScreenOffPausesVideo = checked;
         }
         visible: currentTab === 1
     }
@@ -625,12 +626,12 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
+        id: debugEnabledCheckbox
         Kirigami.FormData.label: i18n("Enable debug:")
         text: i18n("Print debug messages to the system log")
-        id: debugEnabledCheckbox
         checked: cfg_DebugEnabled
         onCheckedChanged: {
-            cfg_DebugEnabled = checked
+            cfg_DebugEnabled = checked;
         }
         visible: currentTab === 0
     }
@@ -650,51 +651,48 @@ Kirigami.FormLayout {
     // TODO select from loaded effects instead of typing them
 
     TextField {
-        Kirigami.FormData.label: i18n("Play in:")
         id: effectsPlayVideoInput
+        Kirigami.FormData.label: i18n("Play in:")
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Pause in:")
         id: effectsPauseVideoInput
+        Kirigami.FormData.label: i18n("Pause in:")
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Show blur in:")
         id: effectsShowBlurInput
+        Kirigami.FormData.label: i18n("Show blur in:")
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Hide blur in:")
         id: effectsHideBlurInput
+        Kirigami.FormData.label: i18n("Hide blur in:")
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     FileDialog {
         id: fileDialog
-        fileMode : FileDialog.OpenFiles
+        fileMode: FileDialog.OpenFiles
         title: i18n("Pick a video file")
-        nameFilters: [
-            i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)",
-            i18n("All files") + " (*)"
-        ]
+        nameFilters: [i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", i18n("All files") + " (*)"]
         onAccepted: {
-            let currentFiles = cfg_VideoUrls.trim().split("\n")
+            let currentFiles = cfg_VideoUrls.trim().split("\n");
             for (let file of fileDialog.selectedFiles) {
-                console.log(file)
-                if (videosConfig.filter(video => video.filename === file ).length === 0) {
-                    videosConfig.push(new Utils.createVideo(file))
+                console.log(file);
+                if (videosConfig.filter(video => video.filename === file).length === 0) {
+                    videosConfig.push(new Utils.createVideo(file));
                 }
             }
-            console.log(JSON.stringify(videosConfig))
-            Utils.updateConfig()
+            console.log(JSON.stringify(videosConfig));
+            Utils.updateConfig();
         }
     }
 
@@ -710,8 +708,9 @@ Kirigami.FormLayout {
 
         title: "Configurações de Vídeo"
 
-        property int speed: 1
-        property string filename : ""
+        property int index
+        property real speed
+        property string filename: ""
 
         Column {
             spacing: 10
@@ -719,39 +718,40 @@ Kirigami.FormLayout {
 
             Row {
                 spacing: 10
-                
+
                 RowLayout {
-                    Label { text: i18n("Playback speed:") }
+                    Label {
+                        text: i18n("Playback speed:")
+                    }
                     Slider {
-                        id: playbackRateSpeed
+                        id: dialogPlaybackRateSpeed
                         from: 0
-                        value: videoConfig.speed
                         to: 2
+                        value: videoConfig.speed
                         onValueChanged: {
-                            videoConfig.speed = value
+                            videoConfig.speed = value;
                         }
                     }
                     Label {
-                        text: parseFloat(playbackRateSpeed.value).toFixed(2)
+                        text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
                     }
                     Button {
                         icon.name: "edit-undo-symbolic"
                         flat: true
                         onClicked: {
-                            playbackRateSpeed.value = 1.0
+                            dialogPlaybackRateSpeed.value = 1.0;
                         }
                         ToolTip.text: i18n("Reset to default")
                         ToolTip.visible: hovered
                     }
                 }
-            }            
+            }
         }
 
         onAccepted: {
-            const index = videosConfig.findIndex(el => el.filename = filename)
-            videosConfig[index].playbackRate = speed
-            Utils.updateConfig()
-            settingsDialog.close()
+            videosConfig[index].playbackRate = speed;
+            Utils.updateConfig();
+            settingsDialog.close();
         }
     }
 
@@ -759,8 +759,8 @@ Kirigami.FormLayout {
         let candidate = root.parent;
         while (candidate) {
             if (candidate && candidate.hasOwnProperty("configDialog")) {
-                root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm")
-                break
+                root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm");
+                break;
             }
             candidate = candidate.parent;
         }
