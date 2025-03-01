@@ -706,7 +706,7 @@ Kirigami.FormLayout {
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
 
-        title: "Configurações de Vídeo"
+        title: i18n("Video Settings")
 
         property int index
         property real speed
