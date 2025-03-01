@@ -155,16 +155,16 @@ Kirigami.FormLayout {
                     id: vidEnabled
                     checked: videosConfig[modelData].enabled
                     onCheckedChanged: {
-                        videosConfig[modelData].enabled = checked;
-                        Utils.updateConfig();
+                        videosConfig[modelData].enabled = checked
+                        Utils.updateConfig()
                     }
                 }
                 TextField {
                     text: videosConfig[modelData].filename
                     Layout.preferredWidth: 300
                     onTextChanged: {
-                        videosConfig[modelData].filename = text;
-                        Utils.updateConfig();
+                        videosConfig[modelData].filename = text
+                        Utils.updateConfig()
                     }
                 }
                 RowLayout {
@@ -182,40 +182,40 @@ Kirigami.FormLayout {
                         icon.name: "go-up-symbolic"
                         enabled: index > 0
                         onClicked: {
-                            const swapIndex = index - 1;
-                            const swapItem = videosConfig[swapIndex];
-                            videosConfig[swapIndex] = videosConfig[index];
-                            videosConfig[index] = swapItem;
-                            Utils.updateConfig();
+                            const swapIndex = index - 1
+                            const swapItem = videosConfig[swapIndex]
+                            videosConfig[swapIndex] = videosConfig[index]
+                            videosConfig[index] = swapItem
+                            Utils.updateConfig()
                         }
                     }
                     Button {
                         icon.name: "go-down-symbolic"
                         enabled: index < videosConfig.length - 1
                         onClicked: {
-                            const swapIndex = index + 1;
-                            const swapItem = videosConfig[swapIndex];
-                            videosConfig[swapIndex] = videosConfig[index];
-                            videosConfig[index] = swapItem;
-                            Utils.updateConfig();
+                            const swapIndex = index + 1
+                            const swapItem = videosConfig[swapIndex]
+                            videosConfig[swapIndex] = videosConfig[index]
+                            videosConfig[index] = swapItem
+                            Utils.updateConfig()
                         }
                     }
                     Button {
                         icon.name: "preferences-other"
                         enabled: true
                         onClicked: {
-                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate;
-                            videoConfig.filename = videosConfig[modelData].filename;
+                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate
+                            videoConfig.filename = videosConfig[modelData].filename
                             videoConfig.index = index
-                            videoConfig.open();
+                            videoConfig.open()
                         }
                     }
                 }
                 Button {
                     icon.name: "edit-delete-remove"
                     onClicked: {
-                        videosConfig.splice(index, 1);
-                        Utils.updateConfig();
+                        videosConfig.splice(index, 1)
+                        Utils.updateConfig()
                     }
                 }
             }
@@ -729,7 +729,7 @@ Kirigami.FormLayout {
                         to: 2
                         value: videoConfig.speed
                         onValueChanged: {
-                            videoConfig.speed = value;
+                            videoConfig.speed = value
                         }
                     }
                     Label {
@@ -739,7 +739,7 @@ Kirigami.FormLayout {
                         icon.name: "edit-undo-symbolic"
                         flat: true
                         onClicked: {
-                            dialogPlaybackRateSpeed.value = 1.0;
+                            dialogPlaybackRateSpeed.value = 1.0
                         }
                         ToolTip.text: i18n("Reset to default")
                         ToolTip.visible: hovered
@@ -749,9 +749,9 @@ Kirigami.FormLayout {
         }
 
         onAccepted: {
-            videosConfig[index].playbackRate = speed;
-            Utils.updateConfig();
-            settingsDialog.close();
+            videosConfig[index].playbackRate = speed
+            Utils.updateConfig()
+            settingsDialog.close()
         }
     }
 
@@ -759,7 +759,7 @@ Kirigami.FormLayout {
         let candidate = root.parent;
         while (candidate) {
             if (candidate && candidate.hasOwnProperty("configDialog")) {
-                root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm");
+                root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm")
                 break;
             }
             candidate = candidate.parent;
