@@ -709,36 +709,61 @@ Kirigami.FormLayout {
         property real speed
         property string filename: ""
 
-        Kirigami.FormLayout {
-            RowLayout {
-                Kirigami.FormData.label: i18n("Playback speed:")
-                Slider {
-                    id: dialogPlaybackRateSpeed
-                    from: 0
-                    to: 2
-                    value: videoConfig.speed
-                    onValueChanged: {
-                        videoConfig.speed = value
-                    }
-                }
-                Label {
-                    text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
-                    font.features: { "tnum": 1 }
-                }
-                Button {
-                    icon.name: "edit-undo-symbolic"
-                    flat: true
-                    onClicked: {
-                        dialogPlaybackRateSpeed.value = 0.0
-                    }
-                    ToolTip.text: i18n("Reset to default")
-                    ToolTip.visible: hovered
-                }
-                Kirigami.ContextualHelpButton {
-                    toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
+        onFilenameChanged: {
+            videoPlayer.pause()
+            videoPlayer.source = filename
+            videoPlayer.position = 0
+            videoPlayer.play()
+        }
+
+        Column {
+            Rectangle {
+                //Mini 16/9
+                width: 400
+                height: 236
+                color: "transparent"
+
+                Video {
+                    id: videoPlayer
+                    anchors.fill: parent
+                    source: videoConfig.filename
+                    autoPlay: true
+                    loops: MediaPlayer.Infinite
+                    playbackRate: videoConfig.speed
                 }
             }
-        }
+
+            Kirigami.FormLayout {
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Playback speed:")
+                    Slider {
+                        id: dialogPlaybackRateSpeed
+                        from: 0
+                        to: 2
+                        value: videoConfig.speed
+                        onValueChanged: {
+                            videoConfig.speed = value
+                        }
+                    }
+                    Label {
+                        text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
+                        font.features: { "tnum": 1 }
+                    }
+                    Button {
+                        icon.name: "edit-undo-symbolic"
+                        flat: true
+                        onClicked: {
+                            dialogPlaybackRateSpeed.value = 0.0
+                        }
+                        ToolTip.text: i18n("Reset to default")
+                        ToolTip.visible: hovered
+                    }
+                    Kirigami.ContextualHelpButton {
+                        toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
+                    }
+                }
+            }
+        }        
 
         onAccepted: {
             videosConfig[index].playbackRate = speed
