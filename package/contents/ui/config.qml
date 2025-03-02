@@ -726,10 +726,13 @@ Kirigami.FormLayout {
                     icon.name: "edit-undo-symbolic"
                     flat: true
                     onClicked: {
-                        dialogPlaybackRateSpeed.value = 1.0
+                        dialogPlaybackRateSpeed.value = 0.0
                     }
                     ToolTip.text: i18n("Reset to default")
                     ToolTip.visible: hovered
+                }
+                Kirigami.ContextualHelpButton {
+                    toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
                 }
             }
         }
@@ -737,7 +740,6 @@ Kirigami.FormLayout {
         onAccepted: {
             videosConfig[index].playbackRate = speed
             Utils.updateConfig()
-            settingsDialog.close()
         }
     }
 
