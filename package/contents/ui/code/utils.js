@@ -1,10 +1,9 @@
 function parseCompat(cfgStr) {
   try {
-    return videosConfig = JSON.parse(cfgStr).map((data) => {
-      data.playbackRate = data.playbackRate ?? 1
-
-      return data
-    })
+    return (videosConfig = JSON.parse(cfgStr).map((video) => {
+      video.playbackRate = video.playbackRate ?? 1
+      return video
+    }))
   } catch (e) {
     console.log("Possibly old config, parsing as multi-line string", e)
     const lines = cfgStr.trim().split("\n")
@@ -32,7 +31,7 @@ function createVideo(filename) {
     "enabled": this.enabled,
     "duration": this.duration,
     "customDuration": this.customDuration,
-    "playbackRate": this.playbackRate
+    "playbackRate": this.playbackRate,
   }
 }
 
