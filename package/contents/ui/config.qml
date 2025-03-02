@@ -696,54 +696,40 @@ Kirigami.FormLayout {
         }
     }
 
-    Dialog {
+    Kirigami.Dialog {
         id: videoConfig
-
-        //anchors.horizontalCenter: parent.horizontalCenter
-        y: (parent.height - height) / 2 - 50
-        x: (parent.width - width) / 2
-
-        modal: true
-        standardButtons: Dialog.Ok | Dialog.Cancel
-
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
         title: i18n("Video Settings")
+        padding: Kirigami.Units.largeSpacing
 
         property int index
         property real speed
         property string filename: ""
 
-        Column {
-            spacing: 10
-            anchors.fill: parent
-
-            Row {
-                spacing: 10
-
-                RowLayout {
-                    Label {
-                        text: i18n("Playback speed:")
+        Kirigami.FormLayout {
+            RowLayout {
+                Kirigami.FormData.label: i18n("Playback speed:")
+                Slider {
+                    id: dialogPlaybackRateSpeed
+                    from: 0
+                    to: 2
+                    value: videoConfig.speed
+                    onValueChanged: {
+                        videoConfig.speed = value
                     }
-                    Slider {
-                        id: dialogPlaybackRateSpeed
-                        from: 0
-                        to: 2
-                        value: videoConfig.speed
-                        onValueChanged: {
-                            videoConfig.speed = value
-                        }
+                }
+                Label {
+                    text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
+                    font.features: { "tnum": 1 }
+                }
+                Button {
+                    icon.name: "edit-undo-symbolic"
+                    flat: true
+                    onClicked: {
+                        dialogPlaybackRateSpeed.value = 1.0
                     }
-                    Label {
-                        text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
-                    }
-                    Button {
-                        icon.name: "edit-undo-symbolic"
-                        flat: true
-                        onClicked: {
-                            dialogPlaybackRateSpeed.value = 1.0
-                        }
-                        ToolTip.text: i18n("Reset to default")
-                        ToolTip.visible: hovered
-                    }
+                    ToolTip.text: i18n("Reset to default")
+                    ToolTip.visible: hovered
                 }
             }
         }
