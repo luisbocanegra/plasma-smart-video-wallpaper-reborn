@@ -87,9 +87,9 @@ Kirigami.FormLayout {
     Kirigami.NavigationTabBar {
         Layout.preferredWidth: 400
         maximumContentWidth: {
-            const minDelegateWidth = Kirigami.Units.gridUnit * 6
+            const minDelegateWidth = Kirigami.Units.gridUnit * 6;
             // Always have at least the width of 5 items, so that small amounts of actions look natural.
-            return minDelegateWidth * Math.max(visibleActions.length, 5)
+            return minDelegateWidth * Math.max(visibleActions.length, 5);
         }
         actions: [
             Kirigami.Action {
@@ -148,13 +148,12 @@ Kirigami.FormLayout {
         id: videosList
         visible: showVideosList && currentTab === 0
         Repeater {
-            id: videosListRepeater
             model: Object.keys(videosConfig)
             RowLayout {
                 CheckBox {
                     id: vidEnabled
                     checked: videosConfig[modelData].enabled
-                    onCheckedChanged: {
+                    onCheckedChanged:{
                         videosConfig[modelData].enabled = checked
                         Utils.updateConfig()
                     }
@@ -178,7 +177,7 @@ Kirigami.FormLayout {
                     //         Utils.updateConfig()
                     //     }
                     // }
-                    Button {
+                    Button{
                         icon.name: "go-up-symbolic"
                         enabled: index > 0
                         onClicked: {
@@ -189,7 +188,7 @@ Kirigami.FormLayout {
                             Utils.updateConfig()
                         }
                     }
-                    Button {
+                    Button{
                         icon.name: "go-down-symbolic"
                         enabled: index < videosConfig.length - 1
                         onClicked: {
@@ -211,10 +210,10 @@ Kirigami.FormLayout {
                         }
                     }
                 }
-                Button {
+                Button{
                     icon.name: "edit-delete-remove"
                     onClicked: {
-                        videosConfig.splice(index, 1)
+                        videosConfig.splice(index,1)
                         Utils.updateConfig()
                     }
                 }
@@ -277,9 +276,10 @@ Kirigami.FormLayout {
         ]
     }
 
+
     ComboBox {
-        id: videoFillMode
         Kirigami.FormData.label: i18n("Fill mode:")
+        id: videoFillMode
         model: [
             {
                 'label': i18n("Stretch"),
@@ -296,13 +296,13 @@ Kirigami.FormLayout {
         ]
         textRole: "label"
         onCurrentIndexChanged: cfg_FillMode = model[currentIndex]["fillMode"]
-        Component.onCompleted: setMethod()
+        Component.onCompleted: setMethod();
         visible: currentTab === 0
 
         function setMethod() {
             for (var i = 0; i < model.length; i++) {
                 if (model[i]["fillMode"] == wallpaper.configuration.FillMode) {
-                    videoFillMode.currentIndex = i
+                    videoFillMode.currentIndex = i;
                 }
             }
         }
@@ -316,8 +316,8 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        id: randomModeCheckbox
         Kirigami.FormData.label: i18n("Play in random order:")
+        id: randomModeCheckbox
         visible: currentTab === 1
     }
 
@@ -361,8 +361,8 @@ Kirigami.FormLayout {
             text: i18n("Duration:")
         }
         SpinBox {
-            id: crossfadeDurationSpinBox
             enabled: crossfadeEnabledCheckbox.checked
+            id: crossfadeDurationSpinBox
             from: 0
             to: 99999
             stepSize: 100
@@ -394,8 +394,8 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        id: pauseModeCombo
         Kirigami.FormData.label: i18n("Pause video:")
+        id: pauseModeCombo
         model: [
             {
                 'label': i18n("Maximized or full-screen windows")
@@ -441,8 +441,8 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        id: muteModeCombo
         Kirigami.FormData.label: i18n("Mute audio:")
+        id: muteModeCombo
         model: muteModeModel
         textRole: "label"
         valueRole: "value"
@@ -506,8 +506,8 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        id: blurModeCombo
         Kirigami.FormData.label: i18n("Blur video:")
+        id: blurModeCombo
         model: blurModeModel
         textRole: "label"
         valueRole: "value"
@@ -592,8 +592,8 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        id: screenOffPausesVideoCheckbox
         Kirigami.FormData.label: i18n("Screen Off pauses video:")
+        id: screenOffPausesVideoCheckbox
         text: i18n("Requires setting up command below!")
         checked: cfg_ScreenOffPausesVideo
         onCheckedChanged: {
@@ -626,9 +626,9 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        id: debugEnabledCheckbox
         Kirigami.FormData.label: i18n("Enable debug:")
         text: i18n("Print debug messages to the system log")
+        id: debugEnabledCheckbox
         checked: cfg_DebugEnabled
         onCheckedChanged: {
             cfg_DebugEnabled = checked
@@ -651,43 +651,46 @@ Kirigami.FormLayout {
     // TODO select from loaded effects instead of typing them
 
     TextField {
-        id: effectsPlayVideoInput
         Kirigami.FormData.label: i18n("Play in:")
+        id: effectsPlayVideoInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        id: effectsPauseVideoInput
         Kirigami.FormData.label: i18n("Pause in:")
+        id: effectsPauseVideoInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        id: effectsShowBlurInput
         Kirigami.FormData.label: i18n("Show blur in:")
+        id: effectsShowBlurInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        id: effectsHideBlurInput
         Kirigami.FormData.label: i18n("Hide blur in:")
+        id: effectsHideBlurInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     FileDialog {
         id: fileDialog
-        fileMode: FileDialog.OpenFiles
+        fileMode : FileDialog.OpenFiles
         title: i18n("Pick a video file")
-        nameFilters: [i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", i18n("All files") + " (*)"]
+        nameFilters: [
+            i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)",
+            i18n("All files") + " (*)"
+        ]
         onAccepted: {
             let currentFiles = cfg_VideoUrls.trim().split("\n")
             for (let file of fileDialog.selectedFiles) {
                 console.log(file)
-                if (videosConfig.filter(video => video.filename === file).length === 0) {
+                if (videosConfig.filter(video => video.filename === file ).length === 0) {
                     videosConfig.push(new Utils.createVideo(file))
                 }
             }
@@ -696,54 +699,43 @@ Kirigami.FormLayout {
         }
     }
 
-    Dialog {
+    Kirigami.Dialog {
         id: videoConfig
-
-        //anchors.horizontalCenter: parent.horizontalCenter
-        y: (parent.height - height) / 2 - 50
-        x: (parent.width - width) / 2
-
-        modal: true
-        standardButtons: Dialog.Ok | Dialog.Cancel
-
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
         title: i18n("Video Settings")
+        padding: Kirigami.Units.largeSpacing
 
         property int index
         property real speed
         property string filename: ""
 
-        Column {
-            spacing: 10
-            anchors.fill: parent
-
-            Row {
-                spacing: 10
-
-                RowLayout {
-                    Label {
-                        text: i18n("Playback speed:")
+        Kirigami.FormLayout {
+            RowLayout {
+                Kirigami.FormData.label: i18n("Playback speed:")
+                Slider {
+                    id: dialogPlaybackRateSpeed
+                    from: 0
+                    to: 2
+                    value: videoConfig.speed
+                    onValueChanged: {
+                        videoConfig.speed = value
                     }
-                    Slider {
-                        id: dialogPlaybackRateSpeed
-                        from: 0
-                        to: 2
-                        value: videoConfig.speed
-                        onValueChanged: {
-                            videoConfig.speed = value
-                        }
+                }
+                Label {
+                    text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
+                    font.features: { "tnum": 1 }
+                }
+                Button {
+                    icon.name: "edit-undo-symbolic"
+                    flat: true
+                    onClicked: {
+                        dialogPlaybackRateSpeed.value = 0.0
                     }
-                    Label {
-                        text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
-                    }
-                    Button {
-                        icon.name: "edit-undo-symbolic"
-                        flat: true
-                        onClicked: {
-                            dialogPlaybackRateSpeed.value = 1.0
-                        }
-                        ToolTip.text: i18n("Reset to default")
-                        ToolTip.visible: hovered
-                    }
+                    ToolTip.text: i18n("Reset to default")
+                    ToolTip.visible: hovered
+                }
+                Kirigami.ContextualHelpButton {
+                    toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
                 }
             }
         }
@@ -751,18 +743,17 @@ Kirigami.FormLayout {
         onAccepted: {
             videosConfig[index].playbackRate = speed
             Utils.updateConfig()
-            settingsDialog.close()
         }
     }
 
     Component.onCompleted: {
-        let candidate = root.parent
+        let candidate = root.parent;
         while (candidate) {
             if (candidate && candidate.hasOwnProperty("configDialog")) {
                 root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm")
                 break
             }
-            candidate = candidate.parent
+            candidate = candidate.parent;
         }
     }
 }

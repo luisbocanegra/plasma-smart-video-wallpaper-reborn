@@ -1,13 +1,12 @@
 function parseCompat(cfgStr) {
   try {
-    return videosConfig = JSON.parse(cfgStr).map((data) => {
-      data.playbackRate = data.playbackRate ?? 1
-
-      return data
-    })
+    return (videosConfig = JSON.parse(cfgStr).map((video) => {
+      video.playbackRate = video.playbackRate ?? 0.0;
+      return video;
+    }));
   } catch (e) {
     console.log("Possibly old config, parsing as multi-line string", e)
-    const lines = cfgStr.trim().split("\n")
+    const lines = cfgStr.trim().split("\n");
     let videos = []
     for (const line of lines) [
       videos.push(new createVideo(line))
@@ -22,22 +21,22 @@ function updateConfig() {
 }
 
 function createVideo(filename) {
-  this.filename = filename
-  this.enabled = true
-  this.duration = 0
-  this.customDuration = 0
-  this.playbackRate = 1
+  this.filename = filename;
+  this.enabled = true;
+  this.duration = 0;
+  this.customDuration = 0;
+  this.playbackRate = 0.0;
   return {
     "filename": this.filename,
     "enabled": this.enabled,
     "duration": this.duration,
     "customDuration": this.customDuration,
-    "playbackRate": this.playbackRate
+    "playbackRate": this.playbackRate,
   }
 }
 
 function dumpProps(obj) {
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
   for (var k of Object.keys(obj)) {
     const val = obj[k]
     if (typeof val === 'function') continue
