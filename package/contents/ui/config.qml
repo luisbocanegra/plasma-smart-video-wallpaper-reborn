@@ -200,17 +200,19 @@ Kirigami.FormLayout {
                             Utils.updateConfig()
                         }
                     }
-                    Button {
-                        icon.name: "preferences-other"
-                        enabled: true
-                        onClicked: {
-                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate
-                            videoConfig.filename = videosConfig[modelData].filename
-                            videoConfig.index = index
-                            videoConfig.open()
-                        }
+                }
+                
+                Button {
+                    icon.name: "preferences-other"
+                    enabled: true
+                    onClicked: {
+                        dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate
+                        videoConfig.filename = videosConfig[modelData].filename
+                        videoConfig.index = index
+                        videoConfig.open()
                     }
                 }
+
                 Button {
                     icon.name: "edit-delete-remove"
                     onClicked: {
