@@ -18,6 +18,7 @@
         "Description": "Wallpaper plugin to play videos on your desktop",
         "Description[el_GR]": "Πρόσθετο ταπετσαρίας για αναπαραγωγή βίντεο στην επιφάνεια εργασίας σας",
         "Description[nl]": "Een achtergrondplug-in voor het tonen van video's op je bureaublad",
+        "Description[pt_BR]": "Plugin de papel de parede para reproduzir vídeos na sua área de trabalho",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "luisbocanegra.smart.video.wallpaper.reborn",
         "License": "GPLv2+",

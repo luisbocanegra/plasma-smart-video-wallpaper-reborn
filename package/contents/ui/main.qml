@@ -116,7 +116,7 @@ WallpaperItem {
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
     // will decrease below the configured duration if needed as videos get played
-    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.duration, player2.duration) / 3, 1) )
+    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.actualDuration, player2.actualDuration) / 3, 1) )
     property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
     property bool crossfadeEnabled: main.configuration.CrossfadeEnabled
     property bool tick: true
@@ -282,6 +282,7 @@ WallpaperItem {
         MediaPlayer {
             id: player1
             property var playerSource: main.currentSource
+            property int actualDuration: duration / playbackRate
             source: playerSource.filename ?? ""
             videoOutput: videoOutput
             audioOutput: audioOutput
@@ -293,7 +294,7 @@ WallpaperItem {
                 main.lastVideoPosition = position
                 if (!tick) return
                 // BUG This doesn't seem to work the first time???
-                if (position > duration - crossfadeDuration) {
+                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
                     if (crossfadeEnabled) {
                         nextVideo()
                         printLog("player1 fading out");
@@ -334,6 +335,7 @@ WallpaperItem {
         MediaPlayer {
             id: player2
             property var playerSource: main.currentSource
+            property int actualDuration: duration / playbackRate
             source: playerSource.filename ?? ""
             videoOutput: videoOutput2
             audioOutput: audioOutput2
@@ -342,7 +344,7 @@ WallpaperItem {
             onPositionChanged: (position) => {
                 main.lastVideoPosition = position
                 if (tick) return
-                if (position > duration - crossfadeDuration) {
+                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
                     printLog("player1 fading in");
                     videoOutput.opacity = 1
                     nextVideo()
