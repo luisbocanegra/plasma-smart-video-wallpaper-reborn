@@ -729,7 +729,7 @@ Kirigami.FormLayout {
                     source: videoConfig.filename
                     autoPlay: true
                     loops: MediaPlayer.Infinite
-                    playbackRate: videoConfig.speed
+                    playbackRate: videoConfig.speed || cfg_PlaybackRate
                 }
             }
 
