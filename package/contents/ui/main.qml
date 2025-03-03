@@ -36,7 +36,7 @@ WallpaperItem {
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: Utils.parseCompat(videoUrls)
     property int currentVideoIndex: main.configuration.LastVideoIndex < videosConfig.length ? main.configuration.LastVideoIndex : 0
-    property string currentSource: videosConfig[currentVideoIndex].filename
+    property var currentSource: videosConfig.length > 0 ? videosConfig[currentVideoIndex] : Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -116,7 +116,7 @@ WallpaperItem {
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
     // will decrease below the configured duration if needed as videos get played
-    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.duration, player2.duration) / 3, 1) )
+    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.actualDuration, player2.actualDuration) / 3, 1) )
     property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
     property bool crossfadeEnabled: main.configuration.CrossfadeEnabled
     property bool tick: true
@@ -171,12 +171,13 @@ WallpaperItem {
         // console.error(videoUrls);
         if (videosConfig.length == 0) {
             main.stop()
+            main.currentSource.filename = ""
         } else {
             nextVideo()
             tick = true
             player2.pause()
             videoOutput.opacity = 1
-            player1.source = currentSource
+            player1.playerSource = currentSource
             player1.play()
         }
     }
@@ -224,15 +225,15 @@ WallpaperItem {
     }
 
     function nextVideo() {
-        printLog("- Video ended " + currentVideoIndex + ": " + currentSource)
+        printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename)
         currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length
         if (randomMode && currentVideoIndex === 0) {
             const shuffledVideos = Utils.shuffleArray(videosConfig)
-            currentSource = shuffledVideos[currentVideoIndex].filename || ''
+            currentSource = shuffledVideos[currentVideoIndex]
         } else {
-            currentSource = videosConfig[currentVideoIndex].filename || ''
+            currentSource = videosConfig[currentVideoIndex]
         }
-        printLog("- Next " + currentVideoIndex + ": " + currentSource)
+        printLog("- Next " + currentVideoIndex + ": " + currentSource.filename)
     }
 
     Rectangle {
@@ -280,10 +281,12 @@ WallpaperItem {
 
         MediaPlayer {
             id: player1
-            source: currentSource
+            property var playerSource: main.currentSource
+            property int actualDuration: duration / playbackRate
+            source: playerSource.filename ?? ""
             videoOutput: videoOutput
             audioOutput: audioOutput
-            playbackRate: main.playbackRate
+            playbackRate: playerSource.playbackRate || main.playbackRate
             loops: (videosConfig.length > 1) ?
                 1 : crossfadeEnabled ?
                     1 : MediaPlayer.Infinite
@@ -291,13 +294,13 @@ WallpaperItem {
                 main.lastVideoPosition = position
                 if (!tick) return
                 // BUG This doesn't seem to work the first time???
-                if (position > duration - crossfadeDuration) {
+                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
                     if (crossfadeEnabled) {
                         nextVideo()
                         printLog("player1 fading out");
                         videoOutput.opacity = 0
                         tick = false
-                        player2.source = currentSource
+                        player2.playerSource = currentSource
                         volumeOutput2 = 1
                         player2.play()
                     }
@@ -307,7 +310,7 @@ WallpaperItem {
                 if (status == MediaPlayer.EndOfMedia) {
                     if (crossfadeEnabled) return
                     nextVideo()
-                    source = currentSource
+                    playerSource = currentSource
                     play()
                 }
                 if (status == MediaPlayer.LoadedMedia && player1.seekable) {
@@ -331,20 +334,23 @@ WallpaperItem {
 
         MediaPlayer {
             id: player2
+            property var playerSource: main.currentSource
+            property int actualDuration: duration / playbackRate
+            source: playerSource.filename ?? ""
             videoOutput: videoOutput2
             audioOutput: audioOutput2
-            playbackRate: main.playbackRate
+            playbackRate: playerSource.playbackRate || main.playbackRate
             loops: 1
             onPositionChanged: (position) => {
                 main.lastVideoPosition = position
                 if (tick) return
-                if (position > duration - crossfadeDuration) {
+                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
                     printLog("player1 fading in");
                     videoOutput.opacity = 1
                     nextVideo()
                     tick = true
                     volumeOutput2 = 0
-                    player1.source = currentSource
+                    player1.playerSource = currentSource
                     player1.play()
                 }
             }
@@ -402,8 +408,6 @@ WallpaperItem {
     function stop() {
         player1.stop()
         player2.stop()
-        player1.source = ""
-        player2.source = ""
     }
 
     function updateState() {
@@ -510,7 +514,7 @@ WallpaperItem {
                 tick = true
                 player2.pause()
                 videoOutput.opacity = 1
-                player1.source = currentSource
+                player1.playerSource = currentSource
                 player1.play()
             }
         },

@@ -199,6 +199,16 @@ Kirigami.FormLayout {
                             Utils.updateConfig()
                         }
                     }
+                    Button {
+                        icon.name: "preferences-other"
+                        enabled: true
+                        onClicked: {
+                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate
+                            videoConfig.filename = videosConfig[modelData].filename
+                            videoConfig.index = index
+                            videoConfig.open()
+                        }
+                    }
                 }
                 Button{
                     icon.name: "edit-delete-remove"
@@ -685,6 +695,53 @@ Kirigami.FormLayout {
                 }
             }
             console.log(JSON.stringify(videosConfig))
+            Utils.updateConfig()
+        }
+    }
+
+    Kirigami.Dialog {
+        id: videoConfig
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        title: i18n("Video Settings")
+        padding: Kirigami.Units.largeSpacing
+
+        property int index
+        property real speed
+        property string filename: ""
+
+        Kirigami.FormLayout {
+            RowLayout {
+                Kirigami.FormData.label: i18n("Playback speed:")
+                Slider {
+                    id: dialogPlaybackRateSpeed
+                    from: 0
+                    to: 2
+                    value: videoConfig.speed
+                    onValueChanged: {
+                        videoConfig.speed = value
+                    }
+                }
+                Label {
+                    text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
+                    font.features: { "tnum": 1 }
+                }
+                Button {
+                    icon.name: "edit-undo-symbolic"
+                    flat: true
+                    onClicked: {
+                        dialogPlaybackRateSpeed.value = 0.0
+                    }
+                    ToolTip.text: i18n("Reset to default")
+                    ToolTip.visible: hovered
+                }
+                Kirigami.ContextualHelpButton {
+                    toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
+                }
+            }
+        }
+
+        onAccepted: {
+            videosConfig[index].playbackRate = speed
             Utils.updateConfig()
         }
     }
