@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-02-26 11:47+0000\n"
+"POT-Creation-Date: 2025-03-03 07:39+0000\n"
 "PO-Revision-Date: 2024-06-28 21:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -281,6 +281,15 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "All files"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Video Settings"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid ""
+"A value other than 0.0 overrides the global Playback speed for this video."
 msgstr ""
 
 #: ../contents/ui/main.qml
