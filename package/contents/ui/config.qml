@@ -731,12 +731,10 @@ Kirigami.FormLayout {
                     autoPlay: true
                     loops: MediaPlayer.Infinite
                     playbackRate: videoConfig.speed || cfg_PlaybackRate
-                    Component.onCompleted: {
-                        videoConfig.aboutToHide.connect( function release() {
-                            videoPlayer.stop()
-                            videoPlayer.source = ""
-                            videoConfig.aboutToHide.disconnect(release)
-                        })
+                    onVisibleChanged: {
+                        if (visible) return
+                        videoPlayer.stop()
+                        videoPlayer.source = ""
                     }
                 }
             }
