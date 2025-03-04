@@ -712,9 +712,26 @@ Kirigami.FormLayout {
         property string filename: ""
 
         onOpened: {
-            videoPlayer.source = filename
-            videoPlayer.position = 0
-            videoPlayer.play()
+            videoPlayer.player = Qt.createQmlObject(`
+                import QtMultimedia
+
+                Video {
+                    id: videoPlayer
+                    anchors.fill: parent
+                    loops: MediaPlayer.Infinite
+                    source: ""
+                    autoPlay: true
+                }`, 
+                videoPlayer, 
+                "dynamicVideo"
+            )
+
+            videoPlayer.player.source = videoConfig.filename
+            videoPlayer.player.playbackRate = videoConfig.speed || cfg_PlaybackRate
+        }
+
+        onSpeedChanged: {
+            videoPlayer.player.playbackRate = videoConfig.speed || cfg_PlaybackRate
         }
 
         Column {
@@ -724,19 +741,9 @@ Kirigami.FormLayout {
                 height: 236
                 color: "transparent"
 
-                Video {
-                    id: videoPlayer
-                    anchors.fill: parent
-                    source: videoConfig.filename
-                    autoPlay: true
-                    loops: MediaPlayer.Infinite
-                    playbackRate: videoConfig.speed || cfg_PlaybackRate
-                    onVisibleChanged: {
-                        if (visible) return
-                        videoPlayer.stop()
-                        videoPlayer.source = ""
-                    }
-                }
+                id: videoPlayer
+
+                property var player
             }
 
             Kirigami.FormLayout {
@@ -769,11 +776,21 @@ Kirigami.FormLayout {
                     }
                 }
             }
-        }        
+        }
+
+        function destroyVideoPlayer(){
+            videoPlayer.player.destroy()
+            videoPlayer.player = null
+        } 
 
         onAccepted: {
             videosConfig[index].playbackRate = speed
+            destroyVideoPlayer()
             Utils.updateConfig()
+        }
+
+        onRejected: {
+            destroyVideoPlayer()
         }
     }
 
