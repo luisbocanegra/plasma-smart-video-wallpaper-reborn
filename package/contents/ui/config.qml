@@ -722,8 +722,7 @@ Kirigami.FormLayout {
                     source: ""
                     autoPlay: true
                 }`, 
-                videoPlayer, 
-                "dynamicVideo"
+                videoPlayer
             )
 
             videoPlayer.player.source = videoConfig.filename
@@ -781,6 +780,7 @@ Kirigami.FormLayout {
         function destroyVideoPlayer(){
             videoPlayer.player.destroy()
             videoPlayer.player = null
+            gc()
         } 
 
         onAccepted: {
