@@ -711,8 +711,7 @@ Kirigami.FormLayout {
         property real speed
         property string filename: ""
 
-        onFilenameChanged: {
-            videoPlayer.pause()
+        onOpened: {
             videoPlayer.source = filename
             videoPlayer.position = 0
             videoPlayer.play()
@@ -732,6 +731,11 @@ Kirigami.FormLayout {
                     autoPlay: true
                     loops: MediaPlayer.Infinite
                     playbackRate: videoConfig.speed || cfg_PlaybackRate
+                    onVisibleChanged: {
+                        if (visible) return
+                        videoPlayer.stop()
+                        videoPlayer.source = ""
+                    }
                 }
             }
 
