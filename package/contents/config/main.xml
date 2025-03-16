@@ -7,8 +7,8 @@
 
   <group name="General">
     <entry name="VideoUrls" type="String">
-      <label>List of video urls separated by newlines</label>
-      <default></default>
+      <label>List of video urls</label>
+      <default>[]</default>
     </entry>
     <entry name="BackgroundColor" type="String">
       <label>Last folder used</label>
