@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.0.0...v2.1.0) (2025-03-16)
+
+
+### Features
+
+* allow setting custom playback speed per video ([6e2e649](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/6e2e649e7788767d4e04471a0e13ae3fb92facf4))
+
+
+### Bug Fixes
+
+* black media player on fresh install ([8a524e4](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/8a524e4c75d7dbdf47ffbf273a72da52dc8ef0f5))
+
 ## [2.0.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v1.1.1...v2.0.0) (2025-02-26)
 
 
