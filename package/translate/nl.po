@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
 "POT-Creation-Date: 2025-03-03 07:39+0000\n"
-"PO-Revision-Date: 2025-02-23 20:26+0100\n"
+"PO-Revision-Date: 2025-03-17 16:05+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -162,11 +162,11 @@ msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Filter windows:"
-msgstr ""
+msgstr "Vensters filteren:"
 
 #: ../contents/ui/config.qml
 msgid "This screen only"
-msgstr ""
+msgstr "Alleen op dit scherm"
 
 #: ../contents/ui/config.qml
 msgid "Pause video:"
@@ -198,7 +198,7 @@ msgstr "Video blurren:"
 
 #: ../contents/ui/config.qml
 msgid "Radius:"
-msgstr ""
+msgstr "Straal:"
 
 #: ../contents/ui/config.qml
 msgid ""
@@ -292,12 +292,14 @@ msgstr "Alle bestanden"
 
 #: ../contents/ui/config.qml
 msgid "Video Settings"
-msgstr ""
+msgstr "Video-instellingen"
 
 #: ../contents/ui/config.qml
 msgid ""
 "A value other than 0.0 overrides the global Playback speed for this video."
 msgstr ""
+"Voer een andere waarde dan 0.0 in om de afspeelsnelheid van deze video aan "
+"te passen."
 
 #: ../contents/ui/main.qml
 msgid "No video source \n"
@@ -305,27 +307,27 @@ msgstr "Geen videobron \n"
 
 #: ../contents/ui/main.qml
 msgid "Next Video"
-msgstr ""
+msgstr "Volgende video"
 
 #: ../contents/ui/main.qml
 msgid "Pause"
-msgstr ""
+msgstr "Pauzeren"
 
 #: ../contents/ui/main.qml
 msgid "Default"
-msgstr ""
+msgstr "Standaard"
 
 #: ../contents/ui/main.qml
 msgid "Play"
-msgstr ""
+msgstr "Afspelen"
 
 #: ../contents/ui/main.qml
 msgid "Unmute"
-msgstr ""
+msgstr "Ontdempen"
 
 #: ../contents/ui/main.qml
 msgid "Mute"
-msgstr ""
+msgstr "Dempen"
 
 #~ msgid "Filter:"
 #~ msgstr "Filter:"
