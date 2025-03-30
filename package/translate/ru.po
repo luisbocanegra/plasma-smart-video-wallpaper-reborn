@@ -1,0 +1,329 @@
+# Translation of reborn in LANGUAGE
+# Copyright (C) 2025
+# This file is distributed under the same license as the reborn package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: reborn\n"
+"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
+"wallpaper-reborn\n"
+"POT-Creation-Date: 2025-03-30 14:46+1100\n"
+"PO-Revision-Date: 2025-03-30 15:06+1100\n"
+"Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
+"Language-Team: shad@altlinux.org\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+
+#: ../metadata.json
+msgid "Smart Video Wallpaper Reborn"
+msgstr "Смарт Видео Обои"
+
+#: ../metadata.json
+msgid "Wallpaper plugin to play videos on your desktop"
+msgstr "Плагин обоев для воспроизведения видео на рабочем столе"
+
+#: ../contents/ui/components/Header.qml
+msgid "Version:"
+msgstr "Версия:"
+
+#: ../contents/ui/config.qml
+msgid "Maximized or full-screen windows"
+msgstr "Развернутые или полноэкранные окна"
+
+#: ../contents/ui/config.qml
+msgid "Active window is present"
+msgstr "Активное окно присутствует"
+
+#: ../contents/ui/config.qml
+msgid "At least one window is shown"
+msgstr "Показано как минимум одно окно"
+
+#: ../contents/ui/config.qml
+msgid "Videos"
+msgstr "Видео"
+
+#: ../contents/ui/config.qml
+msgid "Playback"
+msgstr "Воспроизведение"
+
+#: ../contents/ui/config.qml
+msgid "Desktop Effects"
+msgstr "Эффекты рабочего стола"
+
+#: ../contents/ui/config.qml
+msgid "Add new videos"
+msgstr "Добавить новые видео"
+
+#: ../contents/ui/config.qml
+msgid "Hide videos list"
+msgstr "Скрыть список видео"
+
+#: ../contents/ui/config.qml
+msgid "Show videos list"
+msgstr "Показать список видео"
+
+#: ../contents/ui/config.qml
+msgid "Warning! Please read before applying (click to show)"
+msgstr ""
+"Внимание! Пожалуйста, прочтите перед применением (нажмите, чтобы показать)"
+
+#: ../contents/ui/config.qml
+msgid "Videos are loaded in RAM, bigger files will use more system resources!"
+msgstr ""
+"Видео загружаются в оперативную память, большие файлы будут использовать "
+"больше системных ресурсов!"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
+"recover from crash remove the videos from the configuration using this "
+"command below in terminal/tty then reboot:<br><strong><code>sed -i 's/"
+"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
+"appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgstr ""
+"Сбои/черный экран? Попробуйте изменить Qt Media Backend на gstreamer."
+"<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью "
+"следующей команды в терминале/tty, а затем перезагрузите систему:"
+"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
+"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
+"code></strong>"
+
+#: ../contents/ui/config.qml
+msgid "Qt Media backend instructions"
+msgstr "Инструкции по бэкэнду Qt Media"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
+"GPU usage when videos are playing."
+msgstr ""
+"Обязательно включите аппаратное ускорение видео в вашей системе, чтобы "
+"снизить нагрузку на ЦП/ГП при воспроизведении видео."
+
+#: ../contents/ui/config.qml
+msgid "Learn how"
+msgstr "Узнайте как"
+
+#: ../contents/ui/config.qml
+msgid "Fill mode:"
+msgstr "Режим заполнения:"
+
+#: ../contents/ui/config.qml
+msgid "Stretch"
+msgstr "Растянуть"
+
+#: ../contents/ui/config.qml
+msgid "Keep Proportions"
+msgstr "Соблюдать пропорции"
+
+#: ../contents/ui/config.qml
+msgid "Scaled and Cropped"
+msgstr "Масштабировать и обрезать"
+
+#: ../contents/ui/config.qml
+msgid "Background:"
+msgstr "Фон:"
+
+#: ../contents/ui/config.qml
+msgid "Select Background Color"
+msgstr "Выберите цвет фона"
+
+#: ../contents/ui/config.qml
+msgid "Play in random order:"
+msgstr "Воспроизвести в случайном порядке:"
+
+#: ../contents/ui/config.qml
+msgid "Playback speed:"
+msgstr "Скорость воспроизведения:"
+
+#: ../contents/ui/config.qml
+msgid "Reset to default"
+msgstr "Сбросить до умолчаний"
+
+#: ../contents/ui/config.qml
+msgid "Crossfade (Beta):"
+msgstr "Кроссфейд (бета-версия):"
+
+#: ../contents/ui/config.qml
+msgid "Duration:"
+msgstr "Продолжительность:"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Adds a smooth transition between videos. <strong>Uses additional Memory and "
+"may cause playback isues when enabled.</strong>"
+msgstr ""
+"Добавлять плавный переход между видео. <strong>Использует дополнительную "
+"память и может вызвать проблемы с воспроизведением при включении.</strong>"
+
+#: ../contents/ui/config.qml
+msgid "Filter windows:"
+msgstr "Фильтр окон:"
+
+#: ../contents/ui/config.qml
+msgid "This screen only"
+msgstr "Только этот экран"
+
+#: ../contents/ui/config.qml
+msgid "Pause video:"
+msgstr "Пауза видео:"
+
+#: ../contents/ui/config.qml
+msgid "Never"
+msgstr "Никогда"
+
+#: ../contents/ui/config.qml
+msgid "Always"
+msgstr "Всегда"
+
+#: ../contents/ui/config.qml
+msgid "Mute audio:"
+msgstr "Отключить звук:"
+
+#: ../contents/ui/config.qml
+msgid "Volume:"
+msgstr "Громкость:"
+
+#: ../contents/ui/config.qml
+msgid "Video is paused"
+msgstr "Видео приостановлено"
+
+#: ../contents/ui/config.qml
+msgid "Blur video:"
+msgstr "Размытие видео:"
+
+#: ../contents/ui/config.qml
+msgid "Radius:"
+msgstr "Радиус:"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Quality of the blur is reduced if value exceeds 64. Higher values may cause "
+"the blur to stop working!"
+msgstr ""
+"Качество размытия ухудшается, если значение превышает 64. Более высокие "
+"значения могут привести к тому, что размытие перестанет работать!"
+
+#: ../contents/ui/config.qml
+msgid "Animation duration:"
+msgstr "Продолжительность анимации:"
+
+#: ../contents/ui/config.qml
+msgid "On battery below:"
+msgstr "При значении батареи"
+
+#: ../contents/ui/config.qml
+msgid "Pause video"
+msgstr "Пауза видео"
+
+#: ../contents/ui/config.qml
+msgid "Disable blur"
+msgstr "Отключить размытие"
+
+#: ../contents/ui/config.qml
+msgid "Screen Off pauses video:"
+msgstr "Выключения экрана приостанавливает видео:"
+
+#: ../contents/ui/config.qml
+msgid "Requires setting up command below!"
+msgstr "Требуется настройка команды ниже!"
+
+#: ../contents/ui/config.qml
+msgid "Screen state command:"
+msgstr "Команда состояния экрана:"
+
+#: ../contents/ui/config.qml
+msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"
+msgstr "cat /sys/class/backlight/intel_backlight/actual_brightness"
+
+#: ../contents/ui/config.qml
+msgid "The command/script must return 0 (zero) when the screen is Off."
+msgstr "Команда/скрипт должны возвращать 0 (ноль), когда экран выключен."
+
+#: ../contents/ui/config.qml
+msgid "Enable debug:"
+msgstr "Включить отладку:"
+
+#: ../contents/ui/config.qml
+msgid "Print debug messages to the system log"
+msgstr "Выводить отладочные сообщения в системный журнал"
+
+#: ../contents/ui/config.qml
+msgid ""
+"Comma separated list of effects (e.g. overview,cube). To get the currently "
+"enabled effects run:"
+msgstr ""
+"Список эффектов, разделенных запятыми (например, Overview,Cube). Чтобы "
+"получить текущие включенные эффекты, выполните:"
+
+#: ../contents/ui/config.qml
+msgid "Play in:"
+msgstr "Play in:"
+
+#: ../contents/ui/config.qml
+msgid "Pause in:"
+msgstr "Pause in:"
+
+#: ../contents/ui/config.qml
+msgid "Show blur in:"
+msgstr "Show blur in:"
+
+#: ../contents/ui/config.qml
+msgid "Hide blur in:"
+msgstr "Hide blur in:"
+
+#: ../contents/ui/config.qml
+msgid "Pick a video file"
+msgstr "Выберите видеофайл"
+
+#: ../contents/ui/config.qml
+msgid "Video files"
+msgstr "Видео файлы"
+
+#: ../contents/ui/config.qml
+msgid "All files"
+msgstr "Все файлы"
+
+#: ../contents/ui/config.qml
+msgid "Video Settings"
+msgstr "Настройки видео"
+
+#: ../contents/ui/config.qml
+msgid ""
+"A value other than 0.0 overrides the global Playback speed for this video."
+msgstr ""
+"Значение, отличное от 0,0, переопределяет глобальную скорость "
+"воспроизведения для этого видео."
+
+#: ../contents/ui/main.qml
+msgid "No video source \n"
+msgstr "Нет источника видео\n"
+
+#: ../contents/ui/main.qml
+msgid "Next Video"
+msgstr "Следующее видео"
+
+#: ../contents/ui/main.qml
+msgid "Pause"
+msgstr "Пауза"
+
+#: ../contents/ui/main.qml
+msgid "Default"
+msgstr "По умолчанию"
+
+#: ../contents/ui/main.qml
+msgid "Play"
+msgstr "Играть"
+
+#: ../contents/ui/main.qml
+msgid "Unmute"
+msgstr "Включить звук"
+
+#: ../contents/ui/main.qml
+msgid "Mute"
+msgstr "Выключить звук"
