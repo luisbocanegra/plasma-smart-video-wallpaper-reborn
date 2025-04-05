@@ -271,27 +271,27 @@ msgstr "Выводить отладочные сообщения в систем
 #: contents/ui/config.qml:644
 #, kde-format
 msgid "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:"
-msgstr "Список эффектов, разделенных запятыми (например, Overview,Cube). Чтобы получить текущие включенные эффекты, выполните:"
+msgstr "Список эффектов, разделённых запятыми (например, Overview,Cube). Чтобы получить текущие включённые эффекты, выполните команду:"
 
 #: contents/ui/config.qml:654
 #, kde-format
 msgid "Play in:"
-msgstr "Play in:"
+msgstr "При воспроизведении:"
 
 #: contents/ui/config.qml:661
 #, kde-format
 msgid "Pause in:"
-msgstr "Pause in:"
+msgstr "При паузе:"
 
 #: contents/ui/config.qml:668
 #, kde-format
 msgid "Show blur in:"
-msgstr "Show blur in:"
+msgstr "При отображении размытия:"
 
 #: contents/ui/config.qml:675
 #, kde-format
 msgid "Hide blur in:"
-msgstr "Hide blur in:"
+msgstr "При скрытии размытия:"
 
 #: contents/ui/config.qml:684
 #, kde-format
@@ -316,12 +316,12 @@ msgstr "Настройки видео"
 #: contents/ui/config.qml:738
 #, kde-format
 msgid "A value other than 0.0 overrides the global Playback speed for this video."
-msgstr "Значение, отличное от 0,0, переопределяет глобальную скорость воспроизведения для этого видео."
+msgstr "Значение, отличное от 0.0, переопределяет глобальную скорость воспроизведения для этого видео."
 
 #: contents/ui/main.qml:367
 #, kde-format
 msgid "No video source \n"
-msgstr "Нет источника видео\n"
+msgstr "Нет источника видео \n"
 
 #: contents/ui/main.qml:510
 #, kde-format
