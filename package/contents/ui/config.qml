@@ -66,15 +66,15 @@ Kirigami.FormLayout {
     property int cfg_MuteMode
     property var desktopOptions: [
         {
-            'label': i18n("Maximized or full-screen windows"),
+            'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Maximized or full-screen windows"),
             'value': 0
         },
         {
-            'label': i18n("Active window is present"),
+            'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Active window is present"),
             'value': 1
         },
         {
-            'label': i18n("At least one window is shown"),
+            'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","At least one window is shown"),
             'value': 2
         }
     ]
@@ -94,13 +94,13 @@ Kirigami.FormLayout {
         actions: [
             Kirigami.Action {
                 icon.name: "folder-video-symbolic"
-                text: i18n("Videos")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Videos")
                 checked: currentTab === 0
                 onTriggered: currentTab = 0
             },
             Kirigami.Action {
                 icon.name: "media-playback-start-symbolic"
-                text: i18n("Playback")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Playback")
                 checked: currentTab === 1
                 onTriggered: currentTab = 1
             },
@@ -112,7 +112,7 @@ Kirigami.FormLayout {
             // },
             Kirigami.Action {
                 icon.name: "star-shape-symbolic"
-                text: i18n("Desktop Effects")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Desktop Effects")
                 checked: currentTab === 3
                 onTriggered: currentTab = 3
             }
@@ -124,14 +124,14 @@ Kirigami.FormLayout {
         Button {
             id: imageButton
             icon.name: "folder-videos-symbolic"
-            text: i18n("Add new videos")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Add new videos")
             onClicked: {
                 fileDialog.open()
             }
         }
         Button {
             icon.name: "visibility-symbolic"
-            text: showVideosList ? i18n("Hide videos list") : i18n("Show videos list")
+            text: showVideosList ? i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Hide videos list") : i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Show videos list")
             checkable: true
             checked: showVideosList
             onClicked: {
@@ -224,7 +224,7 @@ Kirigami.FormLayout {
     Button {
         visible: currentTab === 0
         icon.name: "dialog-warning-symbolic"
-        text: i18n("Warning! Please read before applying (click to show)")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Warning! Please read before applying (click to show)")
         checkable: true
         checked: showWarningMessage
         onClicked: {
@@ -241,19 +241,19 @@ Kirigami.FormLayout {
         id: warningResources
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: i18n("Videos are loaded in RAM, bigger files will use more system resources!")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Videos are loaded in RAM, bigger files will use more system resources!")
         visible: showWarningMessage && currentTab === 0
     }
     Kirigami.InlineMessage {
         id: warningCrashes
         Layout.fillWidth: true
         type: Kirigami.MessageType.Warning
-        text: i18n("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
         visible: showWarningMessage && currentTab === 0
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
-                text: i18n("Qt Media backend instructions")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Qt Media backend instructions")
                 onTriggered: {
                     Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#black-video-or-plasma-crashes")
                 }
@@ -263,12 +263,12 @@ Kirigami.FormLayout {
     Kirigami.InlineMessage {
         id: warningHwAccel
         Layout.fillWidth: true
-        text: i18n("Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing.")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing.")
         visible: showWarningMessage && currentTab === 0
         actions: [
             Kirigami.Action {
                 icon.name: "view-readermode-symbolic"
-                text: i18n("Learn how")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Learn how")
                 onTriggered: {
                     Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration")
                 }
@@ -278,19 +278,19 @@ Kirigami.FormLayout {
 
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Fill mode:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Fill mode:")
         id: videoFillMode
         model: [
             {
-                'label': i18n("Stretch"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Stretch"),
                 'fillMode': VideoOutput.Stretch
             },
             {
-                'label': i18n("Keep Proportions"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Keep Proportions"),
                 'fillMode': VideoOutput.PreserveAspectFit
             },
             {
-                'label': i18n("Scaled and Cropped"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Scaled and Cropped"),
                 'fillMode': VideoOutput.PreserveAspectCrop
             }
         ]
@@ -310,19 +310,19 @@ Kirigami.FormLayout {
 
     KQuickControls.ColorButton {
         id: colorButton
-        Kirigami.FormData.label: i18n("Background:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Background:")
         visible: cfg_FillMode === VideoOutput.PreserveAspectFit && currentTab === 0
-        dialogTitle: i18n("Select Background Color")
+        dialogTitle: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Select Background Color")
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18n("Play in random order:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Play in random order:")
         id: randomModeCheckbox
         visible: currentTab === 1
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Playback speed:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Playback speed:")
         visible: currentTab === 1
         Slider {
             id: playbackRateSlider
@@ -342,13 +342,13 @@ Kirigami.FormLayout {
             onClicked: {
                 playbackRateSlider.value = 1.0
             }
-            ToolTip.text: i18n("Reset to default")
+            ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Reset to default")
             ToolTip.visible: hovered
         }
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Crossfade (Beta):")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Crossfade (Beta):")
         visible: currentTab === 1
         CheckBox {
             id: crossfadeEnabledCheckbox
@@ -358,7 +358,7 @@ Kirigami.FormLayout {
             }
         }
         Label {
-            text: i18n("Duration:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Duration:")
         }
         SpinBox {
             enabled: crossfadeEnabledCheckbox.checked
@@ -373,7 +373,7 @@ Kirigami.FormLayout {
         }
         Button {
             icon.name: "dialog-information-symbolic"
-            ToolTip.text: i18n("Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>")
+            ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>")
             highlighted: true
             hoverEnabled: true
             ToolTip.visible: hovered
@@ -384,9 +384,9 @@ Kirigami.FormLayout {
 
     CheckBox {
         id: activeScreenOnlyCheckbx
-        Kirigami.FormData.label: i18n("Filter windows:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Filter windows:")
         checked: cfg_CheckWindowsActiveScreen
-        text: i18n("This screen only")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","This screen only")
         onCheckedChanged: {
             cfg_CheckWindowsActiveScreen = checked
         }
@@ -394,20 +394,20 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Pause video:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Pause video:")
         id: pauseModeCombo
         model: [
             {
-                'label': i18n("Maximized or full-screen windows")
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Maximized or full-screen windows")
             },
             {
-                'label': i18n("Active window is present")
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Active window is present")
             },
             {
-                'label': i18n("At least one window is shown")
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","At least one window is shown")
             },
             {
-                'label': i18n("Never")
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Never")
             }
         ]
         textRole: "label"
@@ -425,11 +425,11 @@ Kirigami.FormLayout {
             //     'value': 3
             // },
             {
-                'label': i18n("Never"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Never"),
                 'value': 4
             },
             {
-                'label': i18n("Always"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Always"),
                 'value': 5
             },
         ]
@@ -441,7 +441,7 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Mute audio:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Mute audio:")
         id: muteModeCombo
         model: muteModeModel
         textRole: "label"
@@ -456,7 +456,7 @@ Kirigami.FormLayout {
     RowLayout {
         visible: currentTab === 1 && cfg_MuteMode !== 5
         Label {
-            text: i18n("Volume:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Volume:")
         }
         Slider {
             id: volumeSlider
@@ -476,7 +476,7 @@ Kirigami.FormLayout {
             onClicked: {
                 volumeSlider.value = 1.0
             }
-            ToolTip.text: i18n("Reset to default")
+            ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Reset to default")
             ToolTip.visible: hovered
         }
     }
@@ -485,15 +485,15 @@ Kirigami.FormLayout {
         // options for desktop and lock screen
         let model = [
             {
-                'label': i18n("Video is paused"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Video is paused"),
                 'value': 3
             },
             {
-                'label': i18n("Always"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Always"),
                 'value': 4
             },
             {
-                'label': i18n("Never"),
+                'label': i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Never"),
                 'value': 5
             }
         ]
@@ -506,7 +506,7 @@ Kirigami.FormLayout {
     }
 
     ComboBox {
-        Kirigami.FormData.label: i18n("Blur video:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Blur video:")
         id: blurModeCombo
         model: blurModeModel
         textRole: "label"
@@ -521,7 +521,7 @@ Kirigami.FormLayout {
     RowLayout {
         visible: currentTab === 1 && cfg_BlurMode !== 5
         Label {
-            text: i18n("Radius:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Radius:")
         }
         SpinBox {
             id: blurRadiusSpinBox
@@ -535,7 +535,7 @@ Kirigami.FormLayout {
         Button {
             visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
             icon.name: "dialog-information-symbolic"
-            ToolTip.text: i18n("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
+            ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
             hoverEnabled: true
             flat: true
             ToolTip.visible: hovered
@@ -545,7 +545,7 @@ Kirigami.FormLayout {
             icon.color: Kirigami.Theme.neutralTextColor
         }
         Label {
-            text: i18n("Animation duration:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Animation duration:")
         }
         SpinBox {
             id: blurAnimationDurationSpinBox
@@ -560,7 +560,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("On battery below:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","On battery below:")
         visible: currentTab === 1
         SpinBox {
             id: pauseBatteryLevel
@@ -573,7 +573,7 @@ Kirigami.FormLayout {
         }
         CheckBox {
             id: batteryPausesVideoCheckBox
-            text: i18n("Pause video")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Pause video")
             checked: cfg_BatteryPausesVideo
             onCheckedChanged: {
                 cfg_BatteryPausesVideo = checked
@@ -582,7 +582,7 @@ Kirigami.FormLayout {
 
         CheckBox {
             id: batteryDisablesBlurCheckBox
-            text: i18n("Disable blur")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Disable blur")
             checked: cfg_BatteryDisablesBlur
             onCheckedChanged: {
                 cfg_BatteryDisablesBlur = checked
@@ -592,9 +592,9 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18n("Screen Off pauses video:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Screen Off pauses video:")
         id: screenOffPausesVideoCheckbox
-        text: i18n("Requires setting up command below!")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Requires setting up command below!")
         checked: cfg_ScreenOffPausesVideo
         onCheckedChanged: {
             cfg_ScreenOffPausesVideo = checked
@@ -603,17 +603,17 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Screen state command:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Screen state command:")
         visible: screenOffPausesVideoCheckbox.checked && currentTab === 1
         TextField {
             id: screenStateCmdTextField
-            placeholderText: i18n("cat /sys/class/backlight/intel_backlight/actual_brightness")
+            placeholderText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","cat /sys/class/backlight/intel_backlight/actual_brightness")
             text: cfg_ScreenStateCmd
             Layout.maximumWidth: 300
         }
         Button {
             icon.name: "dialog-information-symbolic"
-            ToolTip.text: i18n("The command/script must return 0 (zero) when the screen is Off.")
+            ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","The command/script must return 0 (zero) when the screen is Off.")
             highlighted: true
             hoverEnabled: true
             flat: true
@@ -626,8 +626,8 @@ Kirigami.FormLayout {
     }
 
     CheckBox {
-        Kirigami.FormData.label: i18n("Enable debug:")
-        text: i18n("Print debug messages to the system log")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Enable debug:")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Print debug messages to the system log")
         id: debugEnabledCheckbox
         checked: cfg_DebugEnabled
         onCheckedChanged: {
@@ -641,7 +641,7 @@ Kirigami.FormLayout {
         Layout.maximumWidth: 400
         readOnly: true
         textFormat: TextEdit.RichText
-        text: i18n("Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor
@@ -651,28 +651,28 @@ Kirigami.FormLayout {
     // TODO select from loaded effects instead of typing them
 
     TextField {
-        Kirigami.FormData.label: i18n("Play in:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Play in:")
         id: effectsPlayVideoInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Pause in:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Pause in:")
         id: effectsPauseVideoInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Show blur in:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Show blur in:")
         id: effectsShowBlurInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
     }
 
     TextField {
-        Kirigami.FormData.label: i18n("Hide blur in:")
+        Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Hide blur in:")
         id: effectsHideBlurInput
         Layout.maximumWidth: 300
         visible: currentTab === 3
@@ -681,10 +681,10 @@ Kirigami.FormLayout {
     FileDialog {
         id: fileDialog
         fileMode : FileDialog.OpenFiles
-        title: i18n("Pick a video file")
+        title: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Pick a video file")
         nameFilters: [
-            i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)",
-            i18n("All files") + " (*)"
+            i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)",
+            i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","All files") + " (*)"
         ]
         onAccepted: {
             let currentFiles = cfg_VideoUrls.trim().split("\n")
@@ -702,7 +702,7 @@ Kirigami.FormLayout {
     Kirigami.Dialog {
         id: videoConfig
         standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
-        title: i18n("Video Settings")
+        title: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Video Settings")
         padding: Kirigami.Units.largeSpacing
 
         property int index
@@ -711,7 +711,7 @@ Kirigami.FormLayout {
 
         Kirigami.FormLayout {
             RowLayout {
-                Kirigami.FormData.label: i18n("Playback speed:")
+                Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Playback speed:")
                 Slider {
                     id: dialogPlaybackRateSpeed
                     from: 0
@@ -731,11 +731,11 @@ Kirigami.FormLayout {
                     onClicked: {
                         dialogPlaybackRateSpeed.value = 0.0
                     }
-                    ToolTip.text: i18n("Reset to default")
+                    ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Reset to default")
                     ToolTip.visible: hovered
                 }
                 Kirigami.ContextualHelpButton {
-                    toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
+                    toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","A value other than 0.0 overrides the global Playback speed for this video.")
                 }
             }
         }
