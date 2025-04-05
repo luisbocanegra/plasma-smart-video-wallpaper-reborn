@@ -1,7 +1,7 @@
 # Translation of reborn in LANGUAGE
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Aleksandr Shamaraev <shad@altlinux.org>, 2025.
 #
 #, fuzzy
 msgid ""
@@ -26,7 +26,7 @@ msgstr "Версия:"
 #: contents/ui/config.qml:67
 #, kde-format
 msgid "Maximized or full-screen windows"
-msgstr "Развернутые или полноэкранные окна"
+msgstr "Развёрнутые или полноэкранные окна"
 
 #: contents/ui/config.qml:67
 #, kde-format
@@ -81,7 +81,7 @@ msgstr "Видео загружаются в оперативную память
 #: contents/ui/config.qml:251
 #, kde-format
 msgid "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
-msgstr "Сбои/черный экран? Попробуйте изменить Qt Media Backend на gstreamer.<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью следующей команды в терминале/tty, а затем перезагрузите систему:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgstr "Сбои/чёрный экран? Попробуйте изменить Qt Media Backend на gstreamer.<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью следующей команды в терминале/tty, а затем перезагрузите систему:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 
 #: contents/ui/config.qml:256
 #, kde-format
