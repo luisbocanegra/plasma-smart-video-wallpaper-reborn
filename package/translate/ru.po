@@ -31,12 +31,12 @@ msgstr "Развёрнутые или полноэкранные окна"
 #: contents/ui/config.qml:67
 #, kde-format
 msgid "Active window is present"
-msgstr "Активное окно присутствует"
+msgstr "Наличие активного окна"
 
 #: contents/ui/config.qml:67
 #, kde-format
 msgid "At least one window is shown"
-msgstr "Показано как минимум одно окно"
+msgstr "Отображается как минимум одно окно"
 
 #: contents/ui/config.qml:97
 #, kde-format
@@ -131,7 +131,7 @@ msgstr "Выберите цвет фона"
 #: contents/ui/config.qml:319
 #, kde-format
 msgid "Play in random order:"
-msgstr "Воспроизвести в случайном порядке:"
+msgstr "Воспроизводить в случайном порядке:"
 
 #: contents/ui/config.qml:325
 #, kde-format
@@ -141,12 +141,12 @@ msgstr "Скорость воспроизведения:"
 #: contents/ui/config.qml:345
 #, kde-format
 msgid "Reset to default"
-msgstr "Сбросить до умолчаний"
+msgstr "Сбросить по умолчанию"
 
 #: contents/ui/config.qml:351
 #, kde-format
 msgid "Crossfade (Beta):"
-msgstr "Кроссфейд (бета-версия):"
+msgstr "Плавный переход (бета-версия):"
 
 #: contents/ui/config.qml:360
 #, kde-format
@@ -236,7 +236,7 @@ msgstr "Отключить размытие"
 #: contents/ui/config.qml:595
 #, kde-format
 msgid "Screen Off pauses video:"
-msgstr "Выключения экрана приостанавливает видео:"
+msgstr "Выключение экрана приостанавливает видео:"
 
 #: contents/ui/config.qml:597
 #, kde-format
@@ -301,7 +301,7 @@ msgstr "Выберите видеофайл"
 #: contents/ui/config.qml:686
 #, kde-format
 msgid "Video files"
-msgstr "Видео файлы"
+msgstr "Видеофайлы"
 
 #: contents/ui/config.qml:687
 #, kde-format
