@@ -18,16 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: ../metadata.json:26
-#, kde-format
-msgid "Smart Video Wallpaper Reborn"
-msgstr "Умные Видеообои - Переиздание"
-
-#: ../metadata.json:18
-#, kde-format
-msgid "Wallpaper plugin to play videos on your desktop"
-msgstr "Плагин для воспроизведения видео на вашем рабочем столе"
-
 #: contents/ui/components/Header.qml:70
 #, kde-format
 msgid "Version:"
