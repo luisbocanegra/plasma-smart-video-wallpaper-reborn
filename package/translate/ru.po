@@ -6,324 +6,349 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: reborn\n"
-"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
-"wallpaper-reborn\n"
+"Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn 2.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
 "POT-Creation-Date: 2025-03-30 14:46+1100\n"
-"PO-Revision-Date: 2025-03-30 15:06+1100\n"
+"PO-Revision-Date: 2025-04-05 22:34+1100\n"
 "Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
 "Language-Team: shad@altlinux.org\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
-#: ../metadata.json
-msgid "Smart Video Wallpaper Reborn"
-msgstr "Смарт Видео Обои"
-
-#: ../metadata.json
-msgid "Wallpaper plugin to play videos on your desktop"
-msgstr "Плагин обоев для воспроизведения видео на рабочем столе"
-
-#: ../contents/ui/components/Header.qml
+#: contents/ui/components/Header.qml:70
+#, kde-format
 msgid "Version:"
 msgstr "Версия:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:67
+#, kde-format
 msgid "Maximized or full-screen windows"
 msgstr "Развернутые или полноэкранные окна"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:67
+#, kde-format
 msgid "Active window is present"
 msgstr "Активное окно присутствует"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:67
+#, kde-format
 msgid "At least one window is shown"
 msgstr "Показано как минимум одно окно"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:97
+#, kde-format
 msgid "Videos"
 msgstr "Видео"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:103
+#, kde-format
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:115
+#, kde-format
 msgid "Desktop Effects"
 msgstr "Эффекты рабочего стола"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:127
+#, kde-format
 msgid "Add new videos"
 msgstr "Добавить новые видео"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:134
+#, kde-format
 msgid "Hide videos list"
 msgstr "Скрыть список видео"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:134
+#, kde-format
 msgid "Show videos list"
 msgstr "Показать список видео"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:227
+#, kde-format
 msgid "Warning! Please read before applying (click to show)"
-msgstr ""
-"Внимание! Пожалуйста, прочтите перед применением (нажмите, чтобы показать)"
+msgstr "Внимание! Пожалуйста, прочтите перед применением (нажмите, чтобы показать)"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:244
+#, kde-format
 msgid "Videos are loaded in RAM, bigger files will use more system resources!"
-msgstr ""
-"Видео загружаются в оперативную память, большие файлы будут использовать "
-"больше системных ресурсов!"
+msgstr "Видео загружаются в оперативную память, большие файлы будут использовать больше системных ресурсов!"
 
-#: ../contents/ui/config.qml
-msgid ""
-"Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
-"recover from crash remove the videos from the configuration using this "
-"command below in terminal/tty then reboot:<br><strong><code>sed -i 's/"
-"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
-"appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
-msgstr ""
-"Сбои/черный экран? Попробуйте изменить Qt Media Backend на gstreamer."
-"<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью "
-"следующей команды в терминале/tty, а затем перезагрузите систему:"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
-"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
-"code></strong>"
+#: contents/ui/config.qml:251
+#, kde-format
+msgid "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this command below in terminal/tty then reboot:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgstr "Сбои/черный экран? Попробуйте изменить Qt Media Backend на gstreamer.<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью следующей команды в терминале/tty, а затем перезагрузите систему:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:256
+#, kde-format
 msgid "Qt Media backend instructions"
 msgstr "Инструкции по бэкэнду Qt Media"
 
-#: ../contents/ui/config.qml
-msgid ""
-"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
-"GPU usage when videos are playing."
-msgstr ""
-"Обязательно включите аппаратное ускорение видео в вашей системе, чтобы "
-"снизить нагрузку на ЦП/ГП при воспроизведении видео."
+#: contents/ui/config.qml:266
+#, kde-format
+msgid "Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing."
+msgstr "Обязательно включите аппаратное ускорение видео в вашей системе, чтобы снизить нагрузку на ЦП/ГП при воспроизведении видео."
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:271
+#, kde-format
 msgid "Learn how"
 msgstr "Узнайте как"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:281
+#, kde-format
 msgid "Fill mode:"
 msgstr "Режим заполнения:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:283
+#, kde-format
 msgid "Stretch"
 msgstr "Растянуть"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:283
+#, kde-format
 msgid "Keep Proportions"
 msgstr "Соблюдать пропорции"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:283
+#, kde-format
 msgid "Scaled and Cropped"
 msgstr "Масштабировать и обрезать"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:313
+#, kde-format
 msgid "Background:"
 msgstr "Фон:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:315
+#, kde-format
 msgid "Select Background Color"
 msgstr "Выберите цвет фона"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:319
+#, kde-format
 msgid "Play in random order:"
 msgstr "Воспроизвести в случайном порядке:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:325
+#, kde-format
 msgid "Playback speed:"
 msgstr "Скорость воспроизведения:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:345
+#, kde-format
 msgid "Reset to default"
 msgstr "Сбросить до умолчаний"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:351
+#, kde-format
 msgid "Crossfade (Beta):"
 msgstr "Кроссфейд (бета-версия):"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:360
+#, kde-format
 msgid "Duration:"
 msgstr "Продолжительность:"
 
-#: ../contents/ui/config.qml
-msgid ""
-"Adds a smooth transition between videos. <strong>Uses additional Memory and "
-"may cause playback isues when enabled.</strong>"
-msgstr ""
-"Добавлять плавный переход между видео. <strong>Использует дополнительную "
-"память и может вызвать проблемы с воспроизведением при включении.</strong>"
+#: contents/ui/config.qml:376
+#, kde-format
+msgid "Adds a smooth transition between videos. <strong>Uses additional Memory and may cause playback isues when enabled.</strong>"
+msgstr "Добавлять плавный переход между видео. <strong>Использует дополнительную память и может вызвать проблемы с воспроизведением при включении.</strong>"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:387
+#, kde-format
 msgid "Filter windows:"
 msgstr "Фильтр окон:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:389
+#, kde-format
 msgid "This screen only"
 msgstr "Только этот экран"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:397
+#, kde-format
 msgid "Pause video:"
 msgstr "Пауза видео:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:399
+#, kde-format
 msgid "Never"
 msgstr "Никогда"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:421
+#, kde-format
 msgid "Always"
 msgstr "Всегда"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:444
+#, kde-format
 msgid "Mute audio:"
 msgstr "Отключить звук:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:458
+#, kde-format
 msgid "Volume:"
 msgstr "Громкость:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:488
+#, kde-format
 msgid "Video is paused"
 msgstr "Видео приостановлено"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:509
+#, kde-format
 msgid "Blur video:"
 msgstr "Размытие видео:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:524
+#, kde-format
 msgid "Radius:"
 msgstr "Радиус:"
 
-#: ../contents/ui/config.qml
-msgid ""
-"Quality of the blur is reduced if value exceeds 64. Higher values may cause "
-"the blur to stop working!"
-msgstr ""
-"Качество размытия ухудшается, если значение превышает 64. Более высокие "
-"значения могут привести к тому, что размытие перестанет работать!"
+#: contents/ui/config.qml:538
+#, kde-format
+msgid "Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!"
+msgstr "Качество размытия ухудшается, если значение превышает 64. Более высокие значения могут привести к тому, что размытие перестанет работать!"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:547
+#, kde-format
 msgid "Animation duration:"
 msgstr "Продолжительность анимации:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:563
+#, kde-format
 msgid "On battery below:"
-msgstr "При значении батареи"
+msgstr "При значении батареи:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:576
+#, kde-format
 msgid "Pause video"
 msgstr "Пауза видео"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:585
+#, kde-format
 msgid "Disable blur"
 msgstr "Отключить размытие"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:595
+#, kde-format
 msgid "Screen Off pauses video:"
 msgstr "Выключения экрана приостанавливает видео:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:597
+#, kde-format
 msgid "Requires setting up command below!"
 msgstr "Требуется настройка команды ниже!"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:606
+#, kde-format
 msgid "Screen state command:"
 msgstr "Команда состояния экрана:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:610
+#, kde-format
 msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"
 msgstr "cat /sys/class/backlight/intel_backlight/actual_brightness"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:616
+#, kde-format
 msgid "The command/script must return 0 (zero) when the screen is Off."
 msgstr "Команда/скрипт должны возвращать 0 (ноль), когда экран выключен."
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:629
+#, kde-format
 msgid "Enable debug:"
 msgstr "Включить отладку:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:630
+#, kde-format
 msgid "Print debug messages to the system log"
 msgstr "Выводить отладочные сообщения в системный журнал"
 
-#: ../contents/ui/config.qml
-msgid ""
-"Comma separated list of effects (e.g. overview,cube). To get the currently "
-"enabled effects run:"
-msgstr ""
-"Список эффектов, разделенных запятыми (например, Overview,Cube). Чтобы "
-"получить текущие включенные эффекты, выполните:"
+#: contents/ui/config.qml:644
+#, kde-format
+msgid "Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:"
+msgstr "Список эффектов, разделенных запятыми (например, Overview,Cube). Чтобы получить текущие включенные эффекты, выполните:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:654
+#, kde-format
 msgid "Play in:"
 msgstr "Play in:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:661
+#, kde-format
 msgid "Pause in:"
 msgstr "Pause in:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:668
+#, kde-format
 msgid "Show blur in:"
 msgstr "Show blur in:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:675
+#, kde-format
 msgid "Hide blur in:"
 msgstr "Hide blur in:"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:684
+#, kde-format
 msgid "Pick a video file"
 msgstr "Выберите видеофайл"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:686
+#, kde-format
 msgid "Video files"
 msgstr "Видео файлы"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:687
+#, kde-format
 msgid "All files"
 msgstr "Все файлы"
 
-#: ../contents/ui/config.qml
+#: contents/ui/config.qml:705
+#, kde-format
 msgid "Video Settings"
 msgstr "Настройки видео"
 
-#: ../contents/ui/config.qml
-msgid ""
-"A value other than 0.0 overrides the global Playback speed for this video."
-msgstr ""
-"Значение, отличное от 0,0, переопределяет глобальную скорость "
-"воспроизведения для этого видео."
+#: contents/ui/config.qml:738
+#, kde-format
+msgid "A value other than 0.0 overrides the global Playback speed for this video."
+msgstr "Значение, отличное от 0,0, переопределяет глобальную скорость воспроизведения для этого видео."
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:367
+#, kde-format
 msgid "No video source \n"
 msgstr "Нет источника видео\n"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:510
+#, kde-format
 msgid "Next Video"
 msgstr "Следующее видео"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:524
+#, kde-format
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:526
+#, kde-format
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:528
+#, kde-format
 msgid "Play"
 msgstr "Играть"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:537
+#, kde-format
 msgid "Unmute"
 msgstr "Включить звук"
 
-#: ../contents/ui/main.qml
+#: contents/ui/main.qml:541
+#, kde-format
 msgid "Mute"
 msgstr "Выключить звук"

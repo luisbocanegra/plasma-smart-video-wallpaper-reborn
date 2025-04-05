@@ -68,7 +68,7 @@ RowLayout {
     RowLayout {
         Layout.alignment: Qt.AlignRight
         Label {
-            text: i18n("Version:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Version:")
         }
         Label {
             text: wallpaperVersion
