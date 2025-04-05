@@ -1,4 +1,4 @@
-# Translation of reborn in LANGUAGE
+# Translation of reborn in ru
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-03-30 14:46+1100\n"
+"POT-Creation-Date: 2025-03-03 07:39+0000\n"
 "PO-Revision-Date: 2025-03-30 15:06+1100\n"
 "Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
 "Language-Team: shad@altlinux.org\n"
