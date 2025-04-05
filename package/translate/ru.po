@@ -111,12 +111,12 @@ msgstr "Растянуть"
 #: contents/ui/config.qml:283
 #, kde-format
 msgid "Keep Proportions"
-msgstr "Соблюдать пропорции"
+msgstr "По центру пропорционально"
 
 #: contents/ui/config.qml:283
 #, kde-format
 msgid "Scaled and Cropped"
-msgstr "Масштабировать и обрезать"
+msgstr "Масштабирование с кадрированием"
 
 #: contents/ui/config.qml:313
 #, kde-format
