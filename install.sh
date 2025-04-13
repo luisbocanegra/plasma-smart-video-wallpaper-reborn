@@ -4,6 +4,6 @@ if [ -d "build" ]; then
 fi
 
 # install plasmoid only
-cmake -B build -S . -DCMAKE_INSTALL_PREFIX=~/.local
+cmake -B build -S . -DCMAKE_INSTALL_PREFIX="$HOME/.local"
 cmake --build build
 cmake --install build
