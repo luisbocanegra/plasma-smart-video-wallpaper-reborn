@@ -121,6 +121,7 @@ WallpaperItem {
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property bool restoreLastPosition: true
+    property bool slideshowEnabled: main.configuration.SlideshowEnabled
     property bool muteAudio: {
 
         if (muteOverride === Enum.MuteOverride.Mute) {
@@ -246,6 +247,7 @@ WallpaperItem {
             multipleVideos: main.videosConfig.length > 1
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
+            slideshowEnabled: main.slideshowEnabled
         }
 
         PlasmaExtras.PlaceholderMessage {
@@ -331,8 +333,6 @@ WallpaperItem {
         repeat: true
         interval: 2000
         onTriggered: {
-            printLog("Crossfade max duration: " + crossfadeMinDuration);
-            printLog("Crossfade actual duration: " + crossfadeDuration);
             printLog("------------------------")
             printLog("Videos: '" + JSON.stringify(videosConfig)+"'")
             printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
