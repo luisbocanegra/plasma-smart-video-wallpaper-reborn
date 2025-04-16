@@ -113,11 +113,6 @@ WallpaperItem {
     property bool effectPlayVideo: effectsPlayVideo.some(item => activeEffects.includes(item))
 
     property int blurAnimationDuration: main.configuration.BlurAnimationDuration
-    // Crossfade must not be longer than the shortest video or the fade becomes glitchy
-    // we don't know the length until a video gets played, so the crossfade duration
-    // will decrease below the configured duration if needed as videos get played
-    property int crossfadeMinDuration: parseInt(Math.max(Math.min(player1.actualDuration, player2.actualDuration) / 3, 1) )
-    property int crossfadeDuration: Math.min(main.configuration.CrossfadeDuration, crossfadeMinDuration)
     property bool crossfadeEnabled: main.configuration.CrossfadeEnabled
     property bool tick: true
     property real playbackRate: main.configuration.PlaybackRate
@@ -173,12 +168,7 @@ WallpaperItem {
             main.stop()
             main.currentSource.filename = ""
         } else {
-            nextVideo()
-            tick = true
-            player2.pause()
-            videoOutput.opacity = 1
-            player1.playerSource = currentSource
-            player1.play()
+            player.play()
         }
     }
 
@@ -242,121 +232,20 @@ WallpaperItem {
         color: videosConfig.length == 0 ?
             Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
 
-        VideoOutput {
-            id: videoOutput
-            fillMode: main.configuration.FillMode
+        FadePlayer {
+            id: player
             anchors.fill: parent
-            z: 2
-            opacity: 1
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: crossfadeDuration
-                }
+            currentSource: main.currentSource
+            muted: main.muteAudio;
+            lastVideoPosition: main.lastVideoPosition
+            restoreLastPosition: main.restoreLastPosition
+            onSetNextSource: {
+                main.nextVideo();
             }
-        }
-
-        AudioOutput {
-            id: audioOutput
-            muted: main.muteAudio
-            volume: videoOutput.opacity * main.volume
-        }
-
-        VideoOutput {
-            id: videoOutput2
-            fillMode: main.configuration.FillMode
-            anchors.fill: parent
-            z: 1
-        }
-
-        AudioOutput {
-            id: audioOutput2
-            muted: main.muteAudio
-            volume: volumeOutput2 * main.volume
-            Behavior on volume {
-                NumberAnimation {
-                    duration: crossfadeDuration
-                }
-            }
-        }
-
-        MediaPlayer {
-            id: player1
-            property var playerSource: main.currentSource
-            property int actualDuration: duration / playbackRate
-            source: playerSource.filename ?? ""
-            videoOutput: videoOutput
-            audioOutput: audioOutput
-            playbackRate: playerSource.playbackRate || main.playbackRate
-            loops: (videosConfig.length > 1) ?
-                1 : crossfadeEnabled ?
-                    1 : MediaPlayer.Infinite
-            onPositionChanged: (position) => {
-                main.lastVideoPosition = position
-                if (!tick) return
-                // BUG This doesn't seem to work the first time???
-                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
-                    if (crossfadeEnabled) {
-                        nextVideo()
-                        printLog("player1 fading out");
-                        videoOutput.opacity = 0
-                        tick = false
-                        player2.playerSource = currentSource
-                        volumeOutput2 = 1
-                        player2.play()
-                    }
-                }
-            }
-            onMediaStatusChanged: (status) => {
-                if (status == MediaPlayer.EndOfMedia) {
-                    if (crossfadeEnabled) return
-                    nextVideo()
-                    playerSource = currentSource
-                    play()
-                }
-                if (status == MediaPlayer.LoadedMedia && player1.seekable) {
-                    if (!main.restoreLastPosition) return
-                    if (main.lastVideoPosition < player1.duration) {
-                        player1.position = main.lastVideoPosition
-                    }
-                    main.restoreLastPosition = false
-                }
-            }
-            onPlayingChanged: (playing) => {
-                if(playing) {
-                    if (videoOutput.opacity === 0) {
-                        printLog("player1 fading in");
-                        videoOutput.opacity = 1
-                    }
-                    printLog("player1 playing");
-                }
-            }
-        }
-
-        MediaPlayer {
-            id: player2
-            property var playerSource: main.currentSource
-            property int actualDuration: duration / playbackRate
-            source: playerSource.filename ?? ""
-            videoOutput: videoOutput2
-            audioOutput: audioOutput2
-            playbackRate: playerSource.playbackRate || main.playbackRate
-            loops: 1
-            onPositionChanged: (position) => {
-                main.lastVideoPosition = position
-                if (tick) return
-                if ((position / playbackRate) > actualDuration - crossfadeDuration) {
-                    printLog("player1 fading in");
-                    videoOutput.opacity = 1
-                    nextVideo()
-                    tick = true
-                    volumeOutput2 = 0
-                    player1.playerSource = currentSource
-                    player1.play()
-                }
-            }
-            onPlayingChanged: (playing) => {
-                if(playing) printLog("player2 playing");
-            }
+            crossfadeEnabled: main.crossfadeEnabled
+            multipleVideos: main.videosConfig.length > 1
+            targetCrossfadeDuration: main.configuration.CrossfadeDuration
+            debugEnabled: main.debugEnabled
         }
 
         PlasmaExtras.PlaceholderMessage {
@@ -369,25 +258,9 @@ WallpaperItem {
     }
 
     FastBlur {
-        source: videoOutput
+        source: player
         radius: showBlur ? main.configuration.BlurRadius : 0
         visible: radius !== 0
-        opacity: videoOutput.opacity
-        z: videoOutput.z
-        anchors.fill: parent
-        Behavior on radius {
-            NumberAnimation {
-                duration: blurAnimationDuration
-            }
-        }
-    }
-
-    FastBlur {
-        source: videoOutput2
-        radius: showBlur ? main.configuration.BlurRadius : 0
-        visible: radius !== 0
-        opacity: videoOutput2.opacity
-        z: videoOutput2.z
         anchors.fill: parent
         Behavior on radius {
             NumberAnimation {
@@ -406,8 +279,7 @@ WallpaperItem {
         pauseTimer.start();
     }
     function stop() {
-        player1.stop()
-        player2.stop()
+        player.stop();
     }
 
     function updateState() {
@@ -424,8 +296,7 @@ WallpaperItem {
         id: pauseTimer
         interval: showBlur ? blurAnimationDuration : 10
         onTriggered: {
-            player1.pause()
-            player2.pause()
+            player.pause();
         }
     }
 
@@ -434,8 +305,7 @@ WallpaperItem {
         id: playTimer
         interval: 10
         onTriggered: {
-            player1.play()
-            player2.play()
+            player.play();
         }
     }
 
@@ -461,8 +331,6 @@ WallpaperItem {
         repeat: true
         interval: 2000
         onTriggered: {
-            printLog("Player1 duration: " + player1.duration);
-            printLog("Player2 duration: " + player2.duration);
             printLog("Crossfade max duration: " + crossfadeMinDuration);
             printLog("Crossfade actual duration: " + crossfadeDuration);
             printLog("------------------------")
@@ -510,12 +378,7 @@ WallpaperItem {
             text: i18n("Next Video")
             icon.name: "media-skip-forward"
             onTriggered: {
-                nextVideo()
-                tick = true
-                player2.pause()
-                videoOutput.opacity = 1
-                player1.playerSource = currentSource
-                player1.play()
+                player.next();
             }
         },
         PlasmaCore.Action {
