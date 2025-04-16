@@ -19,6 +19,7 @@ Item {
     property int lastVideoPosition: 0
     property bool restoreLastPosition: true
     property bool debugEnabled: false
+    property bool slideshowEnabled: true
 
     property int position
 
@@ -57,7 +58,15 @@ Item {
         property int actualDuration: duration / playbackRate
         playbackRate: playerSource.playbackRate || root.playbackRate
         source: playerSource.filename ?? ""
-        loops: (root.multipleVideos) ? 1 : root.crossfadeEnabled ? 1 : MediaPlayer.Infinite
+        loops: {
+            if (!root.slideshowEnabled) {
+                return MediaPlayer.Infinite;
+            }
+            if (root.multipleVideos || root.crossfadeEnabled) {
+                return 1;
+            }
+            return MediaPlayer.Infinite;
+        }
         muted: root.muted
         z: 2
         opacity: 1
@@ -70,7 +79,9 @@ Item {
 
             if ((position / playbackRate) > actualDuration - root.crossfadeDuration) {
                 if (root.crossfadeEnabled) {
-                    root.setNextSource();
+                    if (root.slideshowEnabled) {
+                        root.setNextSource();
+                    }
                     if (root.debugEnabled) {
                         console.log("player1 fading out");
                     }
@@ -85,8 +96,10 @@ Item {
             if (mediaStatus == MediaPlayer.EndOfMedia) {
                 if (root.crossfadeEnabled)
                     return;
-                root.setNextSource();
-                source = playerSource.filename ?? "";
+                if (root.slideshowEnabled) {
+                    root.setNextSource();
+                }
+                videoPlayer1.playerSource = root.currentSource;
                 videoPlayer1.play();
             }
 
@@ -138,7 +151,9 @@ Item {
                     console.log("player1 fading in");
                 }
                 videoPlayer1.opacity = 1;
-                root.setNextSource();
+                if (root.slideshowEnabled) {
+                    root.setNextSource();
+                }
                 root.primaryPlayer = true;
                 videoPlayer1.playerSource = root.currentSource;
                 videoPlayer1.play();
@@ -166,7 +181,16 @@ Item {
                     text: root.player.source
                 }
                 PlasmaComponents.Label {
-                    text: "id " + root.player.playerId
+                    text: "slideshow " + root.slideshowEnabled
+                }
+                PlasmaComponents.Label {
+                    text: "crossfade " + root.crossfadeEnabled
+                }
+                PlasmaComponents.Label {
+                    text: "multipleVideos " + root.multipleVideos
+                }
+                PlasmaComponents.Label {
+                    text: "player " + root.player.playerId
                 }
                 PlasmaComponents.Label {
                     text: "media status " + root.player.mediaStatus

@@ -60,6 +60,7 @@ Kirigami.FormLayout {
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
+    property alias cfg_SlideshowEnabled: slideshowEnabledCheckbox.checked
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
@@ -313,6 +314,17 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Background:")
         visible: cfg_FillMode === VideoOutput.PreserveAspectFit && currentTab === 0
         dialogTitle: i18n("Select Background Color")
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: i18n("Slideshow:")
+        CheckBox {
+            id: slideshowEnabledCheckbox
+            visible: currentTab === 1
+        }
+        Kirigami.ContextualHelpButton {
+            toolTipText: i18n("Automatically play next video when the current one ends. Disable to do it manually using <strong>Next Video</strong> from the Desktop right click menu.")
+        }
     }
 
     CheckBox {

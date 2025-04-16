@@ -116,5 +116,8 @@
     <entry name="MuteMode" type="Int">
       <default>5</default>
     </entry>
+    <entry name="SlideshowEnabled" type="Bool">
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>
