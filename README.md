@@ -13,6 +13,9 @@ Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen
 
 </div>
 
+> [!IMPORTANT]
+> **Translations are currently not loading, see [issue #84](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/84) if you want to help.**
+
 ## Features
 
 - Play a single video or slideshow of videos
