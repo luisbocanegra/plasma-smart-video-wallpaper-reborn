@@ -10,9 +10,8 @@ Item {
     property var currentSource
     property real volume: 1.0
     property bool muted: true
-    property int playbackRate: 1
-    property int fillMode: VideoOutput.PreserveAspectCrop
-    property int loops: MediaPlayer.Infinite
+    property real playbackRate: 1
+    property int fillMode
     property bool crossfadeEnabled: false
     property int targetCrossfadeDuration: 1000
     property bool multipleVideos: false
@@ -53,11 +52,17 @@ Item {
 
     VideoPlayer {
         id: videoPlayer1
+        objectName: "1"
         anchors.fill: parent
         property var playerSource: root.currentSource
         property int actualDuration: duration / playbackRate
         playbackRate: playerSource.playbackRate || root.playbackRate
         source: playerSource.filename ?? ""
+        volume: root.volume
+        muted: root.muted
+        z: 2
+        opacity: 1
+        fillMode: root.fillMode
         loops: {
             if (!root.slideshowEnabled) {
                 return MediaPlayer.Infinite;
@@ -67,15 +72,13 @@ Item {
             }
             return MediaPlayer.Infinite;
         }
-        muted: root.muted
-        z: 2
-        opacity: 1
-        playerId: 1
         onPositionChanged: {
             if (!root.primaryPlayer) {
                 return;
             }
-            root.position = position;
+            if (!root.restoreLastPosition) {
+                root.lastVideoPosition = position;
+            }
 
             if ((position / playbackRate) > actualDuration - root.crossfadeDuration) {
                 if (root.crossfadeEnabled) {
@@ -104,10 +107,11 @@ Item {
             }
 
             if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
-                if (!root.position)
+                if (!root.restoreLastPosition)
                     return;
-                if (root.position < duration) {
-                    position = root.lastVideoPosition;
+                if (root.lastVideoPosition < duration) {
+                    console.error("RESTORE LAST POSITION:", root.lastVideoPosition);
+                    videoPlayer1.position = root.lastVideoPosition;
                 }
                 root.restoreLastPosition = false;
             }
@@ -131,20 +135,22 @@ Item {
 
     VideoPlayer {
         id: videoPlayer2
-        loops: 1
+        objectName: "2"
+        anchors.fill: parent
         property var playerSource: Utils.createVideo("")
         property int actualDuration: duration / playbackRate
         playbackRate: playerSource.playbackRate || root.playbackRate
         source: playerSource.filename ?? ""
-        anchors.fill: parent
+        volume: root.volume
         muted: root.muted
         z: 1
-        playerId: 2
+        fillMode: root.fillMode
+        loops: 1
         onPositionChanged: {
             if (root.primaryPlayer) {
                 return;
             }
-            root.position = position;
+            root.lastVideoPosition = position;
 
             if ((position / playbackRate) > actualDuration - root.crossfadeDuration) {
                 if (root.debugEnabled) {
@@ -190,7 +196,7 @@ Item {
                     text: "multipleVideos " + root.multipleVideos
                 }
                 PlasmaComponents.Label {
-                    text: "player " + root.player.playerId
+                    text: "player " + root.player.objectName
                 }
                 PlasmaComponents.Label {
                     text: "media status " + root.player.mediaStatus
