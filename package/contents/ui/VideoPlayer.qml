@@ -3,16 +3,14 @@ import QtMultimedia
 
 Item {
     id: root
-    property url source
     property real volume: 1.0
-    property bool muted: true
-    property int playbackRate: 1
-    property int fillMode: VideoOutput.PreserveAspectCrop
-    property int loops: MediaPlayer.Infinite
-    property int position: 0
     property int actualDuration: player.duration / playbackRate
-    property int playerId: 0
-
+    property alias source: player.source
+    property alias muted: audioOutput.muted
+    property alias playbackRate: player.playbackRate
+    property alias fillMode: videoOutput.fillMode
+    property alias loops: player.loops
+    property alias position: player.position
     readonly property alias mediaStatus: player.mediaStatus
     readonly property alias playing: player.playing
     readonly property alias seekable: player.seekable
@@ -30,25 +28,19 @@ Item {
 
     VideoOutput {
         id: videoOutput
-        fillMode: root.fillMode
+        fillMode: VideoOutput.PreserveAspectCrop
         anchors.fill: parent
     }
 
     AudioOutput {
         id: audioOutput
-        muted: root.muted
         volume: root.opacity * root.volume
     }
 
     MediaPlayer {
         id: player
-        source: root.source
         videoOutput: videoOutput
         audioOutput: audioOutput
-        playbackRate: root.playbackRate
         loops: root.loops
-        onPositionChanged: position => {
-            root.position = position;
-        }
     }
 }

@@ -238,8 +238,7 @@ WallpaperItem {
             anchors.fill: parent
             currentSource: main.currentSource
             muted: main.muteAudio;
-            lastVideoPosition: main.lastVideoPosition
-            restoreLastPosition: main.restoreLastPosition
+            lastVideoPosition: main.configuration.LastVideoPosition
             onSetNextSource: {
                 main.nextVideo();
             }
@@ -248,6 +247,9 @@ WallpaperItem {
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
             slideshowEnabled: main.slideshowEnabled
+            fillMode: main.configuration.FillMode
+            volume: main.volume
+            playbackRate: main.playbackRate
         }
 
         PlasmaExtras.PlaceholderMessage {
@@ -350,7 +352,7 @@ WallpaperItem {
     function save() {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideoIndex = main.currentVideoIndex
-        main.configuration.LastVideoPosition = main.lastVideoPosition
+        main.configuration.LastVideoPosition = player.lastVideoPosition
         main.configuration.writeConfig()
         printLog("Bye!")
     }

@@ -317,10 +317,10 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
+        visible: currentTab === 1
         Kirigami.FormData.label: i18n("Slideshow:")
         CheckBox {
             id: slideshowEnabledCheckbox
-            visible: currentTab === 1
         }
         Kirigami.ContextualHelpButton {
             toolTipText: i18n("Automatically play next video when the current one ends. Disable to do it manually using <strong>Next Video</strong> from the Desktop right click menu.")
