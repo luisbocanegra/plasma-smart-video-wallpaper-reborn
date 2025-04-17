@@ -257,7 +257,7 @@ WallpaperItem {
             anchors.centerIn: parent
             width: parent.width - Kirigami.Units.gridUnit * 2
             iconName: "video-symbolic"
-            text: i18n("No video source \n" + main.configuration.VideoUrls);
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","No video source \n" + main.configuration.VideoUrls);
         }
     }
 
@@ -377,7 +377,7 @@ WallpaperItem {
 
     contextualActions: [
         PlasmaCore.Action {
-            text: i18n("Next Video")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Next Video")
             icon.name: "media-skip-forward"
             onTriggered: {
                 player.next();
@@ -387,11 +387,11 @@ WallpaperItem {
         PlasmaCore.Action {
             text: {
                 if (main.playbackOverride === Enum.PlaybackOverride.Play) {
-                    return i18n("Pause")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Pause")
                 } else if (main.playbackOverride === Enum.PlaybackOverride.Pause) {
-                    return i18n("Default")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Default")
                 } else {
-                    return i18n("Play")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Play")
                 }
             }
             icon.name: main.playing ? "media-playback-start" : "media-playback-pause"
@@ -400,11 +400,11 @@ WallpaperItem {
         PlasmaCore.Action {
             text: {
                 if (main.muteOverride === Enum.MuteOverride.Mute) {
-                    return i18n("Unmute")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Unmute")
                 } else if (main.muteOverride === Enum.MuteOverride.Unmute) {
-                    return i18n("Default")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Default")
                 } else {
-                    return i18n("Mute")
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn","Mute")
                 }
             }
             icon.name: main.muteAudio ? "audio-volume-muted" : "audio-volume-high"
