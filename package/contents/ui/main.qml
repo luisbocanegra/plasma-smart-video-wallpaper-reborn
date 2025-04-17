@@ -382,6 +382,7 @@ WallpaperItem {
             onTriggered: {
                 player.next();
             }
+            visible: player.multipleVideos
         },
         PlasmaCore.Action {
             text: {
