@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.1.0...v2.2.0) (2025-04-17)
+
+
+### Features
+
+* add option to disable automatic switch to next video ([4bab06d](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/4bab06d889d442d1bb730399de07a5f3fbb39188))
+
+
+### Bug Fixes
+
+* add missing bits from refactor ([edc1f0c](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/edc1f0c23bbaf5352261871b04602cc9a8e09773))
+* hide next video action when there is only one video ([9b1f0bb](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9b1f0bb2e1fc844b765669fed079947c777482d3))
+
 ## [2.1.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.0.0...v2.1.0) (2025-03-16)
 
 
