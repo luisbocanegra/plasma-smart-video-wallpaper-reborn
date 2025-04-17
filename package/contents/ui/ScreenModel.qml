@@ -39,19 +39,21 @@ Item {
         connectedSources: []
 
         onNewData: function (source, data) {
-            var exitCode = data["exit code"]
-            var exitStatus = data["exit status"]
-            var stdout = data["stdout"]
-            var stderr = data["stderr"]
-            exited(source, exitCode, exitStatus, stdout, stderr)
-            disconnectSource(source) // cmd finished
-            sourceConnected(source)
+            var exitCode = data["exit code"];
+            var exitStatus = data["exit status"];
+            var stdout = data["stdout"];
+            var stderr = data["stderr"];
+            exited(source, exitCode, exitStatus, stdout, stderr);
+            disconnectSource(source); // cmd finished
+            sourceConnected(source);
         }
 
         function exec(cmd) {
-            if (cmd === getScreenLockCmd) getScreenLockCmdRunning = true
-            if (cmd === screenStateCmd) screenStateCmdRunning = true
-            runCommand.connectSource(cmd)
+            if (cmd === getScreenLockCmd)
+                getScreenLockCmdRunning = true;
+            if (cmd === screenStateCmd)
+                screenStateCmdRunning = true;
+            runCommand.connectSource(cmd);
         }
 
         signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
@@ -60,27 +62,29 @@ Item {
     function dumpProps(obj) {
         console.error("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         for (var k of Object.keys(obj)) {
-            print(k + "=" + obj[k]+"\n")
+            print(k + "=" + obj[k] + "\n");
         }
     }
-
 
     Connections {
         target: runCommand
         function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if (cmd === getScreenLockCmd) getScreenLockCmdRunning = false
-            if (cmd === screenStateCmd) screenStateCmdRunning = false
-            if (exitCode!==0) return
-            if(cmd === getScreenLockCmd) {
+            if (cmd === getScreenLockCmd)
+                getScreenLockCmdRunning = false;
+            if (cmd === screenStateCmd)
+                screenStateCmdRunning = false;
+            if (exitCode !== 0)
+                return;
+            if (cmd === getScreenLockCmd) {
                 if (stdout.length > 0) {
-                    screenIsLocked = stdout.trim() === "true"
+                    screenIsLocked = stdout.trim() === "true";
                     // console.log("SCREEN LOCKED:", screenIsLocked, getScreenLockCmd);
                 }
             }
-            if(cmd === screenStateCmd) {
+            if (cmd === screenStateCmd) {
                 if (stdout.length > 0) {
-                    stdout = stdout.trim().toLowerCase()
-                    screenIsOff = stdout === "0" || stdout.includes("off")
+                    stdout = stdout.trim().toLowerCase();
+                    screenIsOff = stdout === "0" || stdout.includes("off");
                     // console.log("SCREEN OFF:", screenIsOff, screenStateCmd);
                 }
             }
@@ -94,10 +98,12 @@ Item {
         interval: 200
         onTriggered: {
             if (checkScreenLock) {
-                if (!getScreenLockCmdRunning) runCommand.exec(getScreenLockCmd)
+                if (!getScreenLockCmdRunning)
+                    runCommand.exec(getScreenLockCmd);
             }
             if (checkScreenState) {
-                if (!screenStateCmdRunning) runCommand.exec(screenStateCmd)
+                if (!screenStateCmdRunning)
+                    runCommand.exec(screenStateCmd);
             }
         }
     }

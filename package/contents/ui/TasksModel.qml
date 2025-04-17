@@ -38,11 +38,11 @@ Item {
     Connections {
         target: main.configuration
         function onValueChanged() {
-            updateWindowsinfo()
+            updateWindowsinfo();
         }
     }
 
-    signal updated()
+    signal updated
 
     TaskManager.VirtualDesktopInfo {
         id: virtualDesktopInfo
@@ -67,34 +67,36 @@ Item {
 
         onDataChanged: {
             Qt.callLater(() => {
-                root.updateWindowsinfo()
-            })
+                root.updateWindowsinfo();
+            });
         }
         onCountChanged: {
             Qt.callLater(() => {
-                root.updateWindowsinfo()
-            })
+                root.updateWindowsinfo();
+            });
         }
     }
 
     function updateWindowsinfo() {
-        let activeCount = 0
-        let visibleCount = 0
-        let maximizedCount = 0
+        let activeCount = 0;
+        let visibleCount = 0;
+        let maximizedCount = 0;
         for (var i = 0; i < model.count; i++) {
-            const currentTask = model.index(i, 0)
-            if (currentTask === undefined) continue
+            const currentTask = model.index(i, 0);
+            if (currentTask === undefined)
+                continue;
             if (model.data(currentTask, isWindow) && !model.data(currentTask, isMinimized)) {
-                visibleCount+=1
-                if (model.data(currentTask, isMaximized) || model.data(currentTask, isFullScreen)) maximizedCount+=1
-                if (model.data(currentTask, isActive)) activeCount+=1
+                visibleCount += 1;
+                if (model.data(currentTask, isMaximized) || model.data(currentTask, isFullScreen))
+                    maximizedCount += 1;
+                if (model.data(currentTask, isActive))
+                    activeCount += 1;
             }
         }
 
-        visibleExists = visibleCount > 0
-        maximizedExists = maximizedCount > 0
-        activeExists = activeCount > 0
-        root.updated()
+        visibleExists = visibleCount > 0;
+        maximizedExists = maximizedCount > 0;
+        activeExists = activeCount > 0;
+        root.updated();
     }
 }
-

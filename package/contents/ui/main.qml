@@ -19,7 +19,6 @@
  */
 
 import QtQuick
-import QtMultimedia
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
@@ -30,8 +29,8 @@ import "code/utils.js" as Utils
 import "code/enum.js" as Enum
 
 WallpaperItem {
-    anchors.fill: parent
     id: main
+    anchors.fill: parent
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: Utils.parseCompat(videoUrls)
@@ -40,56 +39,56 @@ WallpaperItem {
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
-            return true
+            return true;
         }
 
         if (playbackOverride === Enum.PlaybackOverride.Play) {
-            return true
+            return true;
         } else if (playbackOverride === Enum.PlaybackOverride.Pause) {
-            return false
+            return false;
         }
 
-        let play = false
-        switch(main.configuration.PauseMode) {
-            case 0:
-                play = !windowModel.maximizedExists
-                break
-            case 1:
-                play = !windowModel.activeExists
-                break
-            case 2:
-                play = !windowModel.visibleExists
-                break
-            case 3:
-                play = true
+        let play = false;
+        switch (main.configuration.PauseMode) {
+        case 0:
+            play = !windowModel.maximizedExists;
+            break;
+        case 1:
+            play = !windowModel.activeExists;
+            break;
+        case 2:
+            play = !windowModel.visibleExists;
+            break;
+        case 3:
+            play = true;
         }
-        return play
+        return play;
     }
     property bool playing: {
-        return (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo
+        return (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo;
     }
     property bool shouldBlur: {
-        let blur = false
-        switch(main.configuration.BlurMode) {
-            case 0:
-                blur = windowModel.maximizedExists
-                break
-            case 1:
-                blur = windowModel.activeExists
-                break
-            case 2:
-                blur = windowModel.visibleExists
-                break
-            case 3:
-                blur = !main.playing
-                break
-            case 4:
-                blur = true
-                break
-            case 5:
-                blur = false
+        let blur = false;
+        switch (main.configuration.BlurMode) {
+        case 0:
+            blur = windowModel.maximizedExists;
+            break;
+        case 1:
+            blur = windowModel.activeExists;
+            break;
+        case 2:
+            blur = windowModel.visibleExists;
+            break;
+        case 3:
+            blur = !main.playing;
+            break;
+        case 4:
+            blur = true;
+            break;
+        case 5:
+            blur = false;
         }
-        return blur
+        return blur;
     }
     property bool showBlur: (shouldBlur && !batteryDisablesBlur && !effectHideBlur) || effectShowBlur
     property bool screenLocked: screenModel.screenIsLocked
@@ -99,7 +98,7 @@ WallpaperItem {
     property bool screenIsOff: screenModel.screenIsOff
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
     property bool lockScreenMode: false
-    property bool debugEnabled : main.configuration.DebugEnabled
+    property bool debugEnabled: main.configuration.DebugEnabled
 
     property var activeEffects: effectsModel.activeEffects
     property var effectsHideBlur: main.configuration.EffectsHideBlur.split(",").filter(Boolean)
@@ -123,53 +122,53 @@ WallpaperItem {
     property bool restoreLastPosition: true
     property bool slideshowEnabled: main.configuration.SlideshowEnabled
     property bool muteAudio: {
-
         if (muteOverride === Enum.MuteOverride.Mute) {
-            return true
+            return true;
         } else if (muteOverride === Enum.MuteOverride.Unmute) {
-            return false
+            return false;
         }
 
-        let mute = false
-        switch(main.configuration.MuteMode) {
-            case 0:
-                mute = windowModel.maximizedExists
-                break
-            case 1:
-                mute = windowModel.activeExists
-                break
-            case 2:
-                mute = windowModel.visibleExists
-                break
-            // case 3:
-            //  TODO other application playing audio
-            //  break
-            case 4:
-                mute = false
-                break
-            case 5:
-                mute = true
+        let mute = false;
+        switch (main.configuration.MuteMode) {
+        case 0:
+            mute = windowModel.maximizedExists;
+            break;
+        case 1:
+            mute = windowModel.activeExists;
+            break;
+        case 2:
+            mute = windowModel.visibleExists;
+            break;
+        // case 3:
+        //  TODO other application playing audio
+        //  break
+        case 4:
+            mute = false;
+            break;
+        case 5:
+            mute = true;
         }
-        return mute
+        return mute;
     }
 
     function getVideos() {
-        let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled)
-        return videos
+        let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled);
+        return videos;
     }
 
     onPlayingChanged: {
-        playing && !isLoading ? main.play() : main.pause()
+        playing && !isLoading ? main.play() : main.pause();
     }
     onVideoUrlsChanged: {
-        videosConfig = getVideos()
-        if (isLoading) return
+        videosConfig = getVideos();
+        if (isLoading)
+            return;
         // console.error(videoUrls);
         if (videosConfig.length == 0) {
-            main.stop()
-            main.currentSource.filename = ""
+            main.stop();
+            main.currentSource.filename = "";
         } else {
-            player.play()
+            player.play();
         }
     }
 
@@ -187,11 +186,11 @@ WallpaperItem {
     }
 
     property bool pauseBattery: {
-        let result = false
+        let result = false;
         if (pmSource.data.Battery["Has Cumulative"] && pmSource.data["Battery"]["State"] === "Discharging") {
-            result = pauseBatteryLevel > pmSource.data.Battery.Percent
+            result = pauseBatteryLevel > pmSource.data.Battery.Percent;
         }
-        return result
+        return result;
     }
 
     TasksModel {
@@ -208,36 +207,32 @@ WallpaperItem {
     EffectsModel {
         id: effectsModel
         active: {
-            return [
-                effectsPlayVideo, effectsPauseVideo,
-                effectsShowBlur, effectsHideBlur
-            ].some(arr => arr.length > 0)
+            return [effectsPlayVideo, effectsPauseVideo, effectsShowBlur, effectsHideBlur].some(arr => arr.length > 0);
         }
     }
 
     function nextVideo() {
-        printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename)
-        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length
+        printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
+        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
         if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig)
-            currentSource = shuffledVideos[currentVideoIndex]
+            const shuffledVideos = Utils.shuffleArray(videosConfig);
+            currentSource = shuffledVideos[currentVideoIndex];
         } else {
-            currentSource = videosConfig[currentVideoIndex]
+            currentSource = videosConfig[currentVideoIndex];
         }
-        printLog("- Next " + currentVideoIndex + ": " + currentSource.filename)
+        printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
     }
 
     Rectangle {
         id: background
         anchors.fill: parent
-        color: videosConfig.length == 0 ?
-            Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
+        color: videosConfig.length == 0 ? Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
 
         FadePlayer {
             id: player
             anchors.fill: parent
             currentSource: main.currentSource
-            muted: main.muteAudio;
+            muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
             onSetNextSource: {
                 main.nextVideo();
@@ -257,7 +252,7 @@ WallpaperItem {
             anchors.centerIn: parent
             width: parent.width - Kirigami.Units.gridUnit * 2
             iconName: "video-symbolic"
-            text: i18n("No video source \n" + main.configuration.VideoUrls);
+            text: i18n("No video source \n" + main.configuration.VideoUrls)
         }
     }
 
@@ -273,13 +268,14 @@ WallpaperItem {
         }
     }
 
-    function play(){
+    function play() {
         pauseTimer.stop();
         playTimer.start();
     }
-    function pause(){
-        if (playing) return
-        playTimer.stop()
+    function pause() {
+        if (playing)
+            return;
+        playTimer.stop();
         pauseTimer.start();
     }
     function stop() {
@@ -288,11 +284,11 @@ WallpaperItem {
 
     function updateState() {
         if (playing) {
-            main.pause()
-            main.play()
+            main.pause();
+            main.play();
         } else {
-            main.play()
-            main.pause()
+            main.play();
+            main.pause();
         }
     }
 
@@ -317,9 +313,10 @@ WallpaperItem {
         id: startTimer
         interval: 100
         onTriggered: {
-            isLoading = false
-            if (debugEnabled) Utils.dumpProps(main.configuration)
-            updateState()
+            isLoading = false;
+            if (debugEnabled)
+                Utils.dumpProps(main.configuration);
+            updateState();
         }
     }
 
@@ -335,40 +332,41 @@ WallpaperItem {
         repeat: true
         interval: 2000
         onTriggered: {
-            printLog("------------------------")
-            printLog("Videos: '" + JSON.stringify(videosConfig)+"'")
-            printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery)
-            printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff)
-            printLog("Windows: " + main.shouldPlay + " Blur: " + main.showBlur)
-            printLog("Video playing: " + playing + " Blur: " + showBlur)
+            printLog("------------------------");
+            printLog("Videos: '" + JSON.stringify(videosConfig) + "'");
+            printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery);
+            printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff);
+            printLog("Windows: " + main.shouldPlay + " Blur: " + main.showBlur);
+            printLog("Video playing: " + playing + " Blur: " + showBlur);
         }
     }
 
     Component.onCompleted: {
-        videosConfig = getVideos()
-        startTimer.start()
+        videosConfig = getVideos();
+        startTimer.start();
     }
 
     function save() {
         // Save last video and position to resume from it on next login/lock
-        main.configuration.LastVideoIndex = main.currentVideoIndex
-        main.configuration.LastVideoPosition = player.lastVideoPosition
-        main.configuration.writeConfig()
-        printLog("Bye!")
+        main.configuration.LastVideoIndex = main.currentVideoIndex;
+        main.configuration.LastVideoPosition = player.lastVideoPosition;
+        main.configuration.writeConfig();
+        printLog("Bye!");
     }
 
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.save()
+            main.save();
         }
     }
     Item {
-        onWindowChanged: (window) => {
-            if (!window) return
+        onWindowChanged: window => {
+            if (!window)
+                return;
             // https://github.com/KDE/plasma-desktop/blob/Plasma/6.3/desktoppackage/contents/views/Desktop.qml
             // https://github.com/KDE/plasma-desktop/blob/Plasma/6.3/desktoppackage/contents/lockscreen/LockScreen.qml
-            main.lockScreenMode = "source" in window && window.source.toString().endsWith("LockScreen.qml")
+            main.lockScreenMode = "source" in window && window.source.toString().endsWith("LockScreen.qml");
         }
     }
 
@@ -387,11 +385,11 @@ WallpaperItem {
         PlasmaCore.Action {
             text: {
                 if (main.playbackOverride === Enum.PlaybackOverride.Play) {
-                    return i18n("Pause")
+                    return i18n("Pause");
                 } else if (main.playbackOverride === Enum.PlaybackOverride.Pause) {
-                    return i18n("Default")
+                    return i18n("Default");
                 } else {
-                    return i18n("Play")
+                    return i18n("Play");
                 }
             }
             icon.name: main.playing ? "media-playback-start" : "media-playback-pause"
@@ -400,11 +398,11 @@ WallpaperItem {
         PlasmaCore.Action {
             text: {
                 if (main.muteOverride === Enum.MuteOverride.Mute) {
-                    return i18n("Unmute")
+                    return i18n("Unmute");
                 } else if (main.muteOverride === Enum.MuteOverride.Unmute) {
-                    return i18n("Default")
+                    return i18n("Default");
                 } else {
-                    return i18n("Mute")
+                    return i18n("Mute");
                 }
             }
             icon.name: main.muteAudio ? "audio-volume-muted" : "audio-volume-high"
