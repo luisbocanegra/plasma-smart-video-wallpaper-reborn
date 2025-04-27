@@ -20,13 +20,14 @@ Item {
     property bool debugEnabled: false
     property bool slideshowEnabled: true
 
+    property bool disableCrossfade: false
     property int position
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
     // will decrease below the configured duration if needed as videos get played
     property int crossfadeMinDuration: parseInt(Math.max(Math.min(videoPlayer1.actualDuration, videoPlayer2.actualDuration) / 3, 1))
-    property int crossfadeDuration: Math.min(root.targetCrossfadeDuration, crossfadeMinDuration)
+    property int crossfadeDuration: disableCrossfade ? 0 : Math.min(root.targetCrossfadeDuration, crossfadeMinDuration)
 
     property bool primaryPlayer: true
     property VideoPlayer player: primaryPlayer ? videoPlayer1 : videoPlayer2
@@ -40,13 +41,32 @@ Item {
     function stop() {
         player.stop();
     }
-    function next() {
-        setNextSource();
-        primaryPlayer = true;
-        videoPlayer2.pause();
-        videoPlayer1.opacity = 1;
-        videoPlayer1.playerSource = root.currentSource;
-        videoPlayer1.play();
+    function next(switchSource, fade) {
+        if (switchSource) {
+            setNextSource();
+        }
+        if (fade) {
+            if (primaryPlayer) {
+                videoPlayer1.opacity = 0;
+                videoPlayer2.playerSource = root.currentSource;
+                videoPlayer2.play();
+                root.primaryPlayer = false;
+            } else {
+                videoPlayer1.opacity = 1;
+                videoPlayer1.playerSource = root.currentSource;
+                videoPlayer1.play();
+                root.primaryPlayer = true;
+            }
+        } else {
+            primaryPlayer = true;
+            root.disableCrossfade = true;
+            videoPlayer2.stop();
+            videoPlayer1.stop();
+            videoPlayer1.playerSource = root.currentSource;
+            videoPlayer1.opacity = 1;
+            videoPlayer1.play();
+            root.disableCrossfade = false;
+        }
     }
     signal setNextSource
 
@@ -80,7 +100,7 @@ Item {
                 root.lastVideoPosition = position;
             }
 
-            if ((position / playbackRate) > actualDuration - root.crossfadeDuration) {
+            if ((position / playbackRate) > (actualDuration - root.crossfadeDuration)) {
                 if (root.crossfadeEnabled) {
                     if (root.slideshowEnabled) {
                         root.setNextSource();
@@ -88,10 +108,7 @@ Item {
                     if (root.debugEnabled) {
                         console.log("player1 fading out");
                     }
-                    opacity = 0;
-                    root.primaryPlayer = false;
-                    videoPlayer2.playerSource = root.currentSource;
-                    videoPlayer2.play();
+                    root.next(false, true);
                 }
             }
         }
@@ -129,6 +146,7 @@ Item {
         Behavior on opacity {
             NumberAnimation {
                 duration: root.crossfadeDuration
+                easing.type: Easing.OutQuint
             }
         }
     }
@@ -152,17 +170,14 @@ Item {
             }
             root.lastVideoPosition = position;
 
-            if ((position / playbackRate) > actualDuration - root.crossfadeDuration) {
+            if ((position / playbackRate) > (actualDuration - root.crossfadeDuration)) {
                 if (root.debugEnabled) {
                     console.log("player1 fading in");
                 }
-                videoPlayer1.opacity = 1;
                 if (root.slideshowEnabled) {
                     root.setNextSource();
                 }
-                root.primaryPlayer = true;
-                videoPlayer1.playerSource = root.currentSource;
-                videoPlayer1.play();
+                root.next(false, true);
             }
         }
         onPlayingChanged: {
