@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn\n"
-"POT-Creation-Date: 2025-03-03 07:39+0000\n"
+"POT-Creation-Date: 2025-04-28 07:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,6 +112,14 @@ msgstr "Fundo:"
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
 msgstr "Selecione a Cor de Fundo"
+
+#: ../contents/ui/config.qml
+msgid "Slideshow:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid "Automatically play next video when the current one ends. Disable to do it manually using <strong>Next Video</strong> from the Desktop right click menu."
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Play in random order:"

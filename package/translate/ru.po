@@ -1,4 +1,4 @@
-# Translation of reborn in LANGUAGE
+# Translation of reborn in ru
 # Copyright (C) 2025
 # This file is distributed under the same license as the reborn package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: https://github.com/luisbocanegra/plasma-smart-video-"
 "wallpaper-reborn\n"
-"POT-Creation-Date: 2025-03-30 14:46+1100\n"
+"POT-Creation-Date: 2025-04-28 07:17+0000\n"
 "PO-Revision-Date: 2025-03-30 15:06+1100\n"
 "Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
 "Language-Team: shad@altlinux.org\n"
@@ -132,6 +132,16 @@ msgstr "Фон:"
 #: ../contents/ui/config.qml
 msgid "Select Background Color"
 msgstr "Выберите цвет фона"
+
+#: ../contents/ui/config.qml
+msgid "Slideshow:"
+msgstr ""
+
+#: ../contents/ui/config.qml
+msgid ""
+"Automatically play next video when the current one ends. Disable to do it "
+"manually using <strong>Next Video</strong> from the Desktop right click menu."
+msgstr ""
 
 #: ../contents/ui/config.qml
 msgid "Play in random order:"
