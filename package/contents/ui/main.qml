@@ -200,14 +200,15 @@ WallpaperItem {
 
     ScreenModel {
         id: screenModel
-        checkScreenLock: !lockScreenMode
-        checkScreenState: screenOffPausesVideo
+        checkScreenLock: !main.lockScreenMode
+        checkScreenState: main.screenOffPausesVideo && screenStateCmd !== ""
+        screenStateCmd: main.configuration.ScreenStateCmd
     }
 
     EffectsModel {
         id: effectsModel
-        active: {
-            return [effectsPlayVideo, effectsPauseVideo, effectsShowBlur, effectsHideBlur].some(arr => arr.length > 0);
+        monitorActive: {
+            return [main.effectsPlayVideo, main.effectsPauseVideo, main.effectsShowBlur, main.effectsHideBlur].some(arr => arr.length > 0);
         }
     }
 
