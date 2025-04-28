@@ -20,43 +20,28 @@ import QtQuick
 import org.kde.plasma.plasma5support as P5Support
 
 Item {
-    id: screenModel
+    id: root
     property bool screenIsLocked: false
-    // sed -e "s|^(\(.*\),)$|\1|;s|^<\(.*\)>$|\1|;s|'|\"|g"
-    property string sed: "sed -e \"s|^(\\(.*\\),)$|\\1|;s|^<\\(.*\\)>$|\\1|;s|'|\\\"|g\""
-    property string getScreenLockCmd: "gdbus call --session --dest org.kde.screensaver --object-path /ScreenSaver --method org.freedesktop.ScreenSaver.GetActive | " + sed
-    property bool getScreenLockCmdRunning: false
     property bool checkScreenLock: false
-
     property bool screenIsOff: false
-    property string screenStateCmd: main.configuration.ScreenStateCmd
+    property string screenStateCmd
     property bool screenStateCmdRunning: false
     property bool checkScreenState: false
 
-    P5Support.DataSource {
+    RunCommand {
         id: runCommand
-        engine: "executable"
-        connectedSources: []
-
-        onNewData: function (source, data) {
-            var exitCode = data["exit code"];
-            var exitStatus = data["exit status"];
-            var stdout = data["stdout"];
-            var stderr = data["stderr"];
-            exited(source, exitCode, exitStatus, stdout, stderr);
-            disconnectSource(source); // cmd finished
-            sourceConnected(source);
+        onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
+            if (cmd === root.screenStateCmd)
+                root.screenStateCmdRunning = false;
+            if (exitCode !== 0)
+                return;
+            if (cmd === root.screenStateCmd) {
+                if (stdout.length > 0) {
+                    stdout = stdout.trim().toLowerCase();
+                    root.screenIsOff = stdout === "0" || stdout.includes("off");
+                }
+            }
         }
-
-        function exec(cmd) {
-            if (cmd === getScreenLockCmd)
-                getScreenLockCmdRunning = true;
-            if (cmd === screenStateCmd)
-                screenStateCmdRunning = true;
-            runCommand.connectSource(cmd);
-        }
-
-        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
     }
 
     function dumpProps(obj) {
@@ -66,44 +51,27 @@ Item {
         }
     }
 
-    Connections {
-        target: runCommand
-        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if (cmd === getScreenLockCmd)
-                getScreenLockCmdRunning = false;
-            if (cmd === screenStateCmd)
-                screenStateCmdRunning = false;
-            if (exitCode !== 0)
-                return;
-            if (cmd === getScreenLockCmd) {
-                if (stdout.length > 0) {
-                    screenIsLocked = stdout.trim() === "true";
-                    // console.log("SCREEN LOCKED:", screenIsLocked, getScreenLockCmd);
-                }
-            }
-            if (cmd === screenStateCmd) {
-                if (stdout.length > 0) {
-                    stdout = stdout.trim().toLowerCase();
-                    screenIsOff = stdout === "0" || stdout.includes("off");
-                    // console.log("SCREEN OFF:", screenIsOff, screenStateCmd);
-                }
+    DBusSignalMonitor {
+        enabled: root.checkScreenLock
+        service: "org.freedesktop.ScreenSaver"
+        path: "/ScreenSaver"
+        method: "ActiveChanged"
+        onSignalReceived: message => {
+            if (message) {
+                root.screenIsLocked = message.trim() === "true";
             }
         }
     }
 
     Timer {
         id: screenTimer
-        running: checkScreenState || checkScreenLock
+        running: root.checkScreenState
         repeat: true
         interval: 200
         onTriggered: {
-            if (checkScreenLock) {
-                if (!getScreenLockCmdRunning)
-                    runCommand.exec(getScreenLockCmd);
-            }
-            if (checkScreenState) {
-                if (!screenStateCmdRunning)
-                    runCommand.exec(screenStateCmd);
+            if (root.checkScreenState && !root.screenStateCmdRunning) {
+                root.screenStateCmdRunning = true;
+                runCommand.run(root.screenStateCmd);
             }
         }
     }

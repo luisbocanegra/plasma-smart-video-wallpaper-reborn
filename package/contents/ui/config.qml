@@ -651,7 +651,7 @@ Kirigami.FormLayout {
         Layout.maximumWidth: 400
         readOnly: true
         textFormat: TextEdit.RichText
-        text: i18n("Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin.Effect.WindowView1 --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects loadedEffects</code></strong>"
+        text: i18n("Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects activeEffects</code></strong>"
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor

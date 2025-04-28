@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.plasma.plasma5support as P5Support
+import "../" as Root
 
 RowLayout {
     id: root
@@ -15,40 +15,18 @@ RowLayout {
     readonly property string kdeStore: "https://store.kde.org/p/2139746"
     property string wallpaperVersion
 
-    P5Support.DataSource {
+    Root.RunCommand {
         id: runCommand
-        engine: "executable"
-        connectedSources: []
-
-        onNewData: function (source, data) {
-            var exitCode = data["exit code"];
-            var exitStatus = data["exit status"];
-            var stdout = data["stdout"];
-            var stderr = data["stderr"];
-            exited(source, exitCode, exitStatus, stdout, stderr);
-            disconnectSource(source); // cmd finished
-            sourceConnected(source);
-        }
-
-        function exec(cmd) {
-            runCommand.connectSource(cmd);
-        }
-
-        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
-    }
-
-    Connections {
-        target: runCommand
-        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
+        onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
             if (exitCode !== 0) {
-                wallpaperVersion = stderr;
-                console.log(cmd, stder);
+                root.wallpaperVersion = stderr;
+                console.log(cmd, stderr);
             } else {
                 try {
-                    wallpaperVersion = JSON.parse(stdout).KPlugin.Version;
+                    root.wallpaperVersion = JSON.parse(stdout).KPlugin.Version;
                 } catch (e) {
                     console.log(e);
-                    wallpaperVersion = e;
+                    root.wallpaperVersion = e;
                 }
             }
         }
@@ -57,7 +35,7 @@ RowLayout {
     Component.onCompleted: {
         const metaDataFile = Qt.resolvedUrl("../../../").toString().substring(7) + "metadata.json";
         console.log(metaDataFile);
-        runCommand.exec(`cat "${metaDataFile}"`);
+        runCommand.run(`cat "${metaDataFile}"`);
     }
 
     Item {
