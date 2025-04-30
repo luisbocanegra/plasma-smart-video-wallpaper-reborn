@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.2.0...v2.3.0) (2025-04-30)
+
+
+### Features
+
+* improve settings UI/UX ([9b76ca4](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9b76ca417c40653ca405765e72a2493b50b5cf97))
+* skip crossfade on manual switch and use a smoother easing type ([a41977a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/a41977a94cc870cb51f01361553ff3fc62efa5a9))
+
 ## [2.2.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.1.0...v2.2.0) (2025-04-17)
 
 
