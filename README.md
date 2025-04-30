@@ -5,7 +5,6 @@
 [![AUR version](https://img.shields.io/aur/version/plasma6-wallpapers-smart-video-wallpaper-reborn?logo=archlinux&labelColor=2d333b&color=1f425f)](https://aur.archlinux.org/packages/plasma6-wallpapers-smart-video-wallpaper-reborn)
 [![Store version](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fapi.opendesktop.org%2Focs%2Fv1%2Fcontent%2Fdata%2F2139746&query=%2Focs%2Fdata%2Fcontent%2Fversion%2Ftext()&color=1f425f&labelColor=2d333b&logo=kde&label=KDE%20Store)](https://store.kde.org/p/2139746)
 [![Matrix](https://img.shields.io/matrix/kde-plasma-smart-video-wallpaper-reborn%3Amatrix.org?logo=matrix&label=Matrix&labelColor=black)](https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org)
-[![Store downloads](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fapi.opendesktop.org%2Focs%2Fv1%2Fcontent%2Fdata%2F2139746&query=%2Focs%2Fdata%2Fcontent%2Fdownloads%2Ftext()&logo=kde&label=Downloads&labelColor=2d333b)](https://store.kde.org/p/2139746)
 
 Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen
 
@@ -179,6 +178,15 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 6. Save the file from [here](https://gist.github.com/luisbocanegra/cb758ee5f57a9e7c2838b1db349b635a) as **test.qml**. Run the test qml with from terminal `QT_FFMPEG_DEBUG=1 QSG_INFO=1 QT_LOGGING_RULES="*.debug=true" qml6 test.qml 2> qml_video_test_log.txt`, (qml6 may be qml-qt6 or /usr/lib/qt6/bin/qml please confirm is qt6 one with --version) this file will play some public test videos from internet in fullscreen. If it doesn't crash immediately, try clicking the pause/next buttons a bunch of times.
 7. Run `lspci -k | grep -EA3 'VGA|3D|Display' > lspci.txt`
 8. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) describing the problem and how to reproduce, and attach those files including wether running the **test.qml** also crashes or not.
+
+## Support the development
+
+- If you like the project please consider donating/sponsoring this and [my other open source work](https://github.com/luisbocanegra?tab=repositories&q=&type=source&language=&sort=stargazers)
+
+  [![GitHub Sponsors](https://img.shields.io/badge/GitHub_Sponsors-supporter?logo=githubsponsors&color=%2329313C)](https://github.com/sponsors/luisbocanegra) [![Ko-fi](https://img.shields.io/badge/Ko--fi-supporter?logo=ko-fi&logoColor=%23ffffff&color=%23467BEB)](https://ko-fi.com/luisbocanegra) [!["Buy Me A Coffee"](https://img.shields.io/badge/Buy%20me%20a%20coffe-supporter?logo=buymeacoffee&logoColor=%23282828&color=%23FF803F)](https://www.buymeacoffee.com/luisbocanegra) [![Liberapay](https://img.shields.io/badge/Liberapay-supporter?logo=liberapay&logoColor=%23282828&color=%23F6C814)](https://liberapay.com/luisbocanegra/) [![PayPal](https://img.shields.io/badge/PayPal-supporter?logo=paypal&logoColor=%23ffffff&color=%23003087)](https://www.paypal.com/donate/?hosted_button_id=Y5TMH3Z4YZRDA)
+
+- [Give it a star on GitHub](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn)
+- Rate / leave review in the [KDE Store](https://store.kde.org/p/2139746)
 
 ## Acknowledgements
 
