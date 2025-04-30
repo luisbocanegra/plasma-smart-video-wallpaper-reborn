@@ -4,10 +4,16 @@ Item {
     id: root
     property var activeEffects: []
     property var loadedEffects: []
+    property var installedEffects: []
     property bool activeEffectsCallRunning: false
     property bool loadedEffectsCallRunning: false
+    property bool installedEffectsCallRunning: false
     property bool monitorActive: false
     property bool monitorLoaded: false
+    property bool monitorInstalled: false
+    property int monitorActiveInterval: 100
+    property int monitorLoadedInterval: 1000
+    property int monitorInstalledInterval: 1000
 
     function isEffectActive(effectId) {
         return activeEffects.includes(effectId);
@@ -31,6 +37,15 @@ Item {
         arguments: ["org.kde.kwin.Effects", "loadedEffects"]
     }
 
+    DBusMethodCall {
+        id: dbusKWinInstalledEffects
+        service: "org.kde.KWin"
+        objectPath: "/Effects"
+        iface: "org.freedesktop.DBus.Properties"
+        method: "Get"
+        arguments: ["org.kde.kwin.Effects", "listOfEffects"]
+    }
+
     function updateActiveEffects() {
         if (!activeEffectsCallRunning) {
             activeEffectsCallRunning = true;
@@ -46,7 +61,7 @@ Item {
     function updateLoadedEffects() {
         if (!loadedEffectsCallRunning) {
             loadedEffectsCallRunning = true;
-            dbusKWinActiveEffects.call(reply => {
+            dbusKWinLoadedEffects.call(reply => {
                 loadedEffectsCallRunning = false;
                 if (reply?.value) {
                     loadedEffects = reply.value;
@@ -55,10 +70,31 @@ Item {
         }
     }
 
+    function updateInstalledEffects() {
+        if (!installedEffectsCallRunning) {
+            installedEffectsCallRunning = true;
+            dbusKWinInstalledEffects.call(reply => {
+                installedEffectsCallRunning = false;
+                if (reply?.value) {
+                    installedEffects = reply.value;
+                }
+            });
+        }
+    }
+
+    Timer {
+        running: root.monitorInstalled
+        repeat: true
+        interval: root.monitorInstalledInterval
+        onTriggered: {
+            root.updateInstalledEffects();
+        }
+    }
+
     Timer {
         running: root.monitorLoaded
         repeat: true
-        interval: 1000
+        interval: root.monitorLoadedInterval
         onTriggered: {
             root.updateLoadedEffects();
         }
@@ -67,7 +103,7 @@ Item {
     Timer {
         running: root.monitorActive
         repeat: true
-        interval: 100
+        interval: root.monitorActiveInterval
         onTriggered: {
             root.updateActiveEffects();
         }

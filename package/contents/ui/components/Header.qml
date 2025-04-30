@@ -13,6 +13,7 @@ RowLayout {
     readonly property string email: "mailto:luisbocanegra17b@gmail.com"
     readonly property string projects: "https://github.com/" + ghUser + "?tab=repositories&q=&type=source&language=&sort=stargazers"
     readonly property string kdeStore: "https://store.kde.org/p/2139746"
+    readonly property string matrixRoom: "https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org"
     property string wallpaperVersion
 
     Root.RunCommand {
@@ -65,6 +66,12 @@ RowLayout {
             text: "Releases"
             onTriggered: Qt.openUrlExternally(ghRepo + "/releases")
             icon.name: "update-none-symbolic"
+        }
+
+        Action {
+            text: "Matrix chat"
+            icon.name: Qt.resolvedUrl("../../icons/matrix_logo.svg").toString().replace("file://", "")
+            onTriggered: Qt.openUrlExternally(matrixRoom)
         }
 
         MenuSeparator {}

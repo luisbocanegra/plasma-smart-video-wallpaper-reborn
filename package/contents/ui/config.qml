@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
  */
-
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -50,6 +50,7 @@ Kirigami.FormLayout {
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
     property alias cfg_EffectsPlayVideo: effectsPlayVideoInput.text
+    // property string cfg_EffectsPlayVideo
     property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
     property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
     property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
@@ -150,6 +151,8 @@ Kirigami.FormLayout {
         Repeater {
             model: Object.keys(videosConfig)
             RowLayout {
+                required property var modelData
+                required property int index
                 CheckBox {
                     id: vidEnabled
                     checked: videosConfig[modelData].enabled
@@ -278,7 +281,7 @@ Kirigami.FormLayout {
 
     ComboBox {
         id: videoFillMode
-        Kirigami.FormData.label: i18n("Fill mode:")
+        Kirigami.FormData.label: i18n("Positioning:")
         model: [
             {
                 'label': i18n("Stretch"),
@@ -327,21 +330,24 @@ Kirigami.FormLayout {
 
     CheckBox {
         id: randomModeCheckbox
-        Kirigami.FormData.label: i18n("Play in random order:")
+        Kirigami.FormData.label: i18n("Random order:")
         visible: currentTab === 1
     }
 
     RowLayout {
-        Kirigami.FormData.label: i18n("Playback speed:")
+        Kirigami.FormData.label: i18n("Speed:")
         visible: currentTab === 1
+        Layout.preferredWidth: 300
         Slider {
             id: playbackRateSlider
             from: 0
             value: cfg_PlaybackRate
             to: 2
+            stepSize: 0.05
             onValueChanged: {
                 cfg_PlaybackRate = value;
             }
+            Layout.fillWidth: true
         }
         Label {
             text: parseFloat(playbackRateSlider.value).toFixed(2)
@@ -405,7 +411,7 @@ Kirigami.FormLayout {
 
     ComboBox {
         id: pauseModeCombo
-        Kirigami.FormData.label: i18n("Pause video:")
+        Kirigami.FormData.label: i18n("Pause:")
         model: [
             {
                 'label': i18n("Maximized or full-screen windows")
@@ -452,7 +458,7 @@ Kirigami.FormLayout {
 
     ComboBox {
         id: muteModeCombo
-        Kirigami.FormData.label: i18n("Mute audio:")
+        Kirigami.FormData.label: i18n("Mute:")
         model: muteModeModel
         textRole: "label"
         valueRole: "value"
@@ -517,7 +523,7 @@ Kirigami.FormLayout {
 
     ComboBox {
         id: blurModeCombo
-        Kirigami.FormData.label: i18n("Blur video:")
+        Kirigami.FormData.label: i18n("Blur:")
         model: blurModeModel
         textRole: "label"
         valueRole: "value"
@@ -603,7 +609,7 @@ Kirigami.FormLayout {
 
     CheckBox {
         id: screenOffPausesVideoCheckbox
-        Kirigami.FormData.label: i18n("Screen Off pauses video:")
+        Kirigami.FormData.label: i18n("Pause on screen off:")
         text: i18n("Requires setting up command below!")
         checked: cfg_ScreenOffPausesVideo
         onCheckedChanged: {
@@ -628,9 +634,6 @@ Kirigami.FormLayout {
             hoverEnabled: true
             flat: true
             ToolTip.visible: hovered
-            Kirigami.Theme.inherit: false
-            Kirigami.Theme.textColor: root.Kirigami.Theme.highlightColor
-            icon.color: Kirigami.Theme.highlightColor
             display: AbstractButton.IconOnly
         }
     }
@@ -646,46 +649,91 @@ Kirigami.FormLayout {
         visible: currentTab === 0
     }
 
+    EffectsModel {
+        id: effects
+        monitorActive: true
+        monitorLoaded: true
+        monitorActiveInterval: 500
+    }
+
     TextEdit {
         wrapMode: Text.Wrap
         Layout.maximumWidth: 400
         readOnly: true
         textFormat: TextEdit.RichText
-        text: i18n("Comma separated list of effects (e.g. overview,cube). To get the currently enabled effects run:") + "<br><strong><code>gdbus call --session --dest org.kde.KWin --object-path /Effects --method org.freedesktop.DBus.Properties.Get org.kde.kwin.Effects activeEffects</code></strong>"
+        text: i18n("Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the wallpaper when they become active. Comma separated names.")
         color: Kirigami.Theme.textColor
         selectedTextColor: Kirigami.Theme.highlightedTextColor
         selectionColor: Kirigami.Theme.highlightColor
-        visible: currentTab === 3
+        visible: root.currentTab === 3
     }
 
-    // TODO select from loaded effects instead of typing them
-
-    TextField {
+    Components.CheckableValueListView {
         id: effectsPlayVideoInput
         Kirigami.FormData.label: i18n("Play in:")
-        Layout.maximumWidth: 300
-        visible: currentTab === 3
+        visible: root.currentTab === 3
+        model: effects.loadedEffects
     }
 
-    TextField {
+    Components.CheckableValueListView {
         id: effectsPauseVideoInput
+        Layout.preferredWidth: 400
         Kirigami.FormData.label: i18n("Pause in:")
-        Layout.maximumWidth: 300
-        visible: currentTab === 3
+        visible: root.currentTab === 3
+        model: effects.loadedEffects
     }
 
-    TextField {
+    Components.CheckableValueListView {
         id: effectsShowBlurInput
+        Layout.preferredWidth: 400
         Kirigami.FormData.label: i18n("Show blur in:")
-        Layout.maximumWidth: 300
-        visible: currentTab === 3
+        visible: root.currentTab === 3
+        model: effects.loadedEffects
     }
 
-    TextField {
+    Components.CheckableValueListView {
         id: effectsHideBlurInput
+        Layout.preferredWidth: 400
         Kirigami.FormData.label: i18n("Hide blur in:")
-        Layout.maximumWidth: 300
-        visible: currentTab === 3
+        visible: root.currentTab === 3
+        model: effects.loadedEffects
+    }
+
+    Label {
+        text: i18n("Currently enabled and <u><strong><font color='%1'>active</font></strong></u> Desktop Effects:", Kirigami.Theme.positiveTextColor)
+        visible: root.currentTab === 3
+    }
+
+    Kirigami.AbstractCard {
+        visible: root.currentTab === 3
+        Layout.maximumWidth: 400
+        Layout.preferredWidth: 400
+        contentItem: ColumnLayout {
+            Label {
+                text: i18n("Select to copy")
+                font.pointSize: Kirigami.Theme.smallFont.pointSize
+                color: Kirigami.Theme.disabledTextColor
+            }
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                Repeater {
+                    model: effects.loadedEffects.sort()
+                    Kirigami.SelectableLabel {
+                        required property int index
+                        required property string modelData
+                        text: modelData
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.weight: effects.activeEffects.includes(modelData) ? Font.Bold : Font.Normal
+                        font.underline: effects.activeEffects.includes(modelData)
+                        color: effects.activeEffects.includes(modelData) ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.textColor
+                        selectedTextColor: Kirigami.Theme.highlightedTextColor
+                        selectionColor: Kirigami.Theme.highlightColor
+                        rightPadding: Kirigami.Units.smallSpacing
+                    }
+                }
+            }
+        }
     }
 
     FileDialog {
@@ -723,10 +771,12 @@ Kirigami.FormLayout {
                     id: dialogPlaybackRateSpeed
                     from: 0
                     to: 2
+                    stepSize: 0.05
                     value: videoConfig.speed
                     onValueChanged: {
                         videoConfig.speed = value;
                     }
+                    Layout.preferredWidth: 200
                 }
                 Label {
                     text: parseFloat(dialogPlaybackRateSpeed.value).toFixed(2)
