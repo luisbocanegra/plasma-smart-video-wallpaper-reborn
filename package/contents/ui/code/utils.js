@@ -21,17 +21,12 @@ function updateConfig() {
 }
 
 function createVideo(filename) {
-  this.filename = filename;
-  this.enabled = true;
-  this.duration = 0;
-  this.customDuration = 0;
-  this.playbackRate = 0.0;
   return {
-    "filename": this.filename,
-    "enabled": this.enabled,
-    "duration": this.duration,
-    "customDuration": this.customDuration,
-    "playbackRate": this.playbackRate,
+    "filename": filename,
+    "enabled": true,
+    "duration": 0,
+    "customDuration": 0,
+    "playbackRate": 0.0,
   }
 }
 

@@ -195,7 +195,7 @@ WallpaperItem {
 
     TasksModel {
         id: windowModel
-        screenGeometry: main.parent.screenGeometry
+        screenGeometry: main.parent?.screenGeometry ?? null
     }
 
     ScreenModel {
