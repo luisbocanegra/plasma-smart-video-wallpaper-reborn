@@ -47,6 +47,8 @@ Kirigami.FormLayout {
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
     property bool showWarningMessage: false
+    property bool showBackendSwitchNotice: false
+    property var mpvItem: null
     property bool cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
     property alias cfg_EffectsPlayVideo: effectsPlayVideoInput.text
@@ -61,6 +63,7 @@ Kirigami.FormLayout {
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_SlideshowEnabled: slideshowEnabledCheckbox.checked
+    property alias cfg_UseMpvQt: useMpvQtCheckbox.checked
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
@@ -315,6 +318,41 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Background:")
         visible: cfg_FillMode === VideoOutput.PreserveAspectFit && currentTab === 0
         dialogTitle: i18n("Select Background Color")
+    }
+
+    RowLayout {
+        visible: currentTab === 1
+        Kirigami.FormData.label: i18n("Use MpvQt (Experimental):")
+        CheckBox {
+            id: useMpvQtCheckbox
+            onClicked: root.showBackendSwitchNotice = true
+            enabled: root.mpvItem !== null
+        }
+        Kirigami.ContextualHelpButton {
+            toolTipText: i18n("Use MpvQt instead of Qt Multimedia to play videos")
+        }
+    }
+    Kirigami.InlineMessage {
+        Layout.fillWidth: true
+        type: Kirigami.MessageType.Warning
+        text: i18n("A logout or plasmashell restart is needed for this change to apply correctly!")
+        visible: root.showBackendSwitchNotice && currentTab === 1
+    }
+
+    Kirigami.InlineMessage {
+        Layout.fillWidth: true
+        text: i18n("C++ plugin not installed, <b>MpvQt</b> will not work. Check the repository README on GitHub for details.")
+        visible: root.mpvItem === null && currentTab === 1
+        type: Kirigami.MessageType.Warning
+        actions: [
+            Kirigami.Action {
+                icon.name: "view-readermode-symbolic"
+                text: "Plugin install instructions"
+                onTriggered: {
+                    Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#manually-from-source");
+                }
+            }
+        ]
     }
 
     RowLayout {
@@ -814,5 +852,14 @@ Kirigami.FormLayout {
             }
             candidate = candidate.parent;
         }
+
+        Qt.callLater(() => {
+            try {
+                mpvItem = Qt.createQmlObject("import com.github.luisbocanegra.mpvitem 1.0; MpvItem {}", root);
+                console.error("QML Plugin com.github.luisbocanegra.mpvitem loaded");
+            } catch (err) {
+                console.error("QML Plugin com.github.luisbocanegra.mpvitem not found");
+            }
+        });
     }
 }
