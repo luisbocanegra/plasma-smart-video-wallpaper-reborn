@@ -3,5 +3,6 @@ build/
 # package
 *.zip
 
-playground
+playground/
+.cache/
 *.mo

@@ -19,9 +19,9 @@ Item {
     property bool restoreLastPosition: true
     property bool debugEnabled: false
     property bool slideshowEnabled: true
-
     property bool disableCrossfade: false
     property int position
+    property bool useMpvQt: false
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
@@ -83,6 +83,7 @@ Item {
         z: 2
         opacity: 1
         fillMode: root.fillMode
+        useMpvQt: root.useMpvQt
         loops: {
             if (!root.slideshowEnabled) {
                 return MediaPlayer.Infinite;
@@ -128,7 +129,7 @@ Item {
                     return;
                 if (root.lastVideoPosition < duration) {
                     console.error("RESTORE LAST POSITION:", root.lastVideoPosition);
-                    videoPlayer1.position = root.lastVideoPosition;
+                    videoPlayer1.setPosition(root.lastVideoPosition);
                 }
                 root.restoreLastPosition = false;
             }
@@ -164,6 +165,7 @@ Item {
         z: 1
         fillMode: root.fillMode
         loops: 1
+        useMpvQt: root.useMpvQt
         onPositionChanged: {
             if (root.primaryPlayer) {
                 return;
