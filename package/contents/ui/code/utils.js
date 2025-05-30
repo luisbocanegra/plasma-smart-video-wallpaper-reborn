@@ -1,18 +1,20 @@
 function parseCompat(cfgStr) {
+  let videos = []
   try {
-    return (videosConfig = JSON.parse(cfgStr).map((video) => {
+    JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
-      return video;
-    }));
+      videos.push(video);
+    });
   } catch (e) {
     console.log("Possibly old config, parsing as multi-line string", e)
     const lines = cfgStr.trim().split("\n");
-    let videos = []
-    for (const line of lines) [
-      videos.push(new createVideo(line))
-    ]
-    return videos
+    for (const line of lines) {
+      if (line.length > 0) {
+        videos.push(new createVideo(line));
+      }
+    }
   }
+  return videos
 }
 
 function updateConfig() {

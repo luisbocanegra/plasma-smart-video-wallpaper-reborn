@@ -33,7 +33,7 @@ WallpaperItem {
     anchors.fill: parent
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
-    property var videosConfig: Utils.parseCompat(videoUrls)
+    property var videosConfig: getVideos()
     property int currentVideoIndex: main.configuration.LastVideoIndex < videosConfig.length ? main.configuration.LastVideoIndex : 0
     property var currentSource: videosConfig.length > 0 ? videosConfig[currentVideoIndex] : Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
@@ -152,17 +152,16 @@ WallpaperItem {
     }
 
     function getVideos() {
-        let videos = Utils.parseCompat(videoUrls).filter(video => video.enabled);
-        return videos;
+        return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
 
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause();
     }
     onVideoUrlsChanged: {
-        videosConfig = getVideos();
         if (isLoading)
             return;
+        videosConfig = getVideos();
         // console.error(videoUrls);
         if (videosConfig.length == 0) {
             main.stop();
@@ -253,7 +252,7 @@ WallpaperItem {
             anchors.centerIn: parent
             width: parent.width - Kirigami.Units.gridUnit * 2
             iconName: "video-symbolic"
-            text: i18n("No video source \n" + main.configuration.VideoUrls)
+            text: i18n("No video source \n" + main.videoUrls)
         }
     }
 
@@ -343,7 +342,6 @@ WallpaperItem {
     }
 
     Component.onCompleted: {
-        videosConfig = getVideos();
         startTimer.start();
     }
 
