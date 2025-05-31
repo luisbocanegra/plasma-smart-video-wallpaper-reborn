@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.0...v2.3.1) (2025-05-30)
+
+
+### Bug Fixes
+
+* undefined and invalid global property errors ([1108dc0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/1108dc0a995695f2507681827834472317136de8))
+* unfiltered video config on startup ([eda0786](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/eda07864bfa1a817d3fe345f134c57f08976e143))
+
 ## [2.3.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.2.0...v2.3.0) (2025-04-30)
 
 
