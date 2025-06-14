@@ -51,7 +51,7 @@ Item {
             activeEffectsCallRunning = true;
             dbusKWinActiveEffects.call(reply => {
                 activeEffectsCallRunning = false;
-                if (reply?.value) {
+                if (reply.isValid && reply?.value) {
                     activeEffects = reply.value;
                 }
             });
@@ -63,7 +63,7 @@ Item {
             loadedEffectsCallRunning = true;
             dbusKWinLoadedEffects.call(reply => {
                 loadedEffectsCallRunning = false;
-                if (reply?.value) {
+                if (reply.isValid && reply?.value) {
                     loadedEffects = reply.value;
                 }
             });
@@ -75,7 +75,7 @@ Item {
             installedEffectsCallRunning = true;
             dbusKWinInstalledEffects.call(reply => {
                 installedEffectsCallRunning = false;
-                if (reply?.value) {
+                if (reply.isValid && reply?.value) {
                     installedEffects = reply.value;
                 }
             });
