@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.0...v2.3.1) (2025-06-15)
+
+
+### Bug Fixes
+
+* make gdbus fallback actually work ([7154ff4](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7154ff4a23b70f56696d23cb9f9a4b9cff905c26))
+* undefined and invalid global property errors ([1108dc0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/1108dc0a995695f2507681827834472317136de8))
+* unfiltered video config on startup ([eda0786](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/eda07864bfa1a817d3fe345f134c57f08976e143))
+
 ## [2.3.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.2.0...v2.3.0) (2025-04-30)
 
 
