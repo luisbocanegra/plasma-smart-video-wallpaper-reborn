@@ -245,6 +245,7 @@ WallpaperItem {
             fillMode: main.configuration.FillMode
             volume: main.volume
             playbackRate: main.playbackRate
+            useMpvQt: main.configuration.UseMpvQt
         }
 
         PlasmaExtras.PlaceholderMessage {
