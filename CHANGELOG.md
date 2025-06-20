@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.1...v2.3.2) (2025-06-20)
+
+
+### Bug Fixes
+
+* check empty callback in DBusFallBack ([07ef926](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/07ef926b6d65ffd859799bc8d30cd498c8472bb5))
+
 ## [2.3.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.0...v2.3.1) (2025-06-15)
 
 
