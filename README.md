@@ -73,7 +73,7 @@ Install the plugin from the KDE Store [Plasma 6 version](https://store.kde.org/p
 Install these dependencies or the equivalents for your distribution
 
 ```txt
-git gcc cmake extra-cmake-modules libplasma qt6-multimedia qt6-multimedia-ffmpeg
+git gcc cmake extra-cmake-modules libplasma qt6-multimedia qt6-multimedia-ffmpeg mpvqt
 ```
 
 Clone and install
