@@ -43,6 +43,7 @@ Item {
             } else {
                 mpv.setPropertyAsync(MpvProperties.Loops, "0");
             }
+            root.applyFillMode();
         }
         property int mediaStatus
         onFileLoaded: {
@@ -76,6 +77,28 @@ Item {
             mpv.setPropertyAsync(MpvProperties.Loops, "inf");
         } else {
             mpv.setPropertyAsync(MpvProperties.Loops, "0");
+        }
+    }
+
+    onFillModeChanged: {
+        console.error("VideoPlayerMpvQt -> fillMode:", root.fillMode);
+        applyFillMode();
+    }
+
+    function applyFillMode() {
+        if (root.fillMode === VideoOutput.Stretch) {
+            // Stretch: Force aspect ratio to match window
+            const aspectRatio = root.width / root.height;
+            mpv.setPropertyAsync(MpvProperties.VideoAspect, aspectRatio.toString());
+            mpv.setPropertyAsync(MpvProperties.Panscan, 0);
+        } else if (root.fillMode === VideoOutput.PreserveAspectFit) {
+            // Keep Proportions: Letterbox/pillarbox to fit
+            mpv.setPropertyAsync(MpvProperties.VideoAspect, "-1");
+            mpv.setPropertyAsync(MpvProperties.Panscan, 0);
+        } else if (root.fillMode === VideoOutput.PreserveAspectCrop) {
+            // Scaled and Cropped: Fill window by cropping
+            mpv.setPropertyAsync(MpvProperties.VideoAspect, "-1");
+            mpv.setPropertyAsync(MpvProperties.Panscan, 1.0);
         }
     }
 }
