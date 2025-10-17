@@ -52,6 +52,12 @@ public:
     Q_PROPERTY(QString Loops MEMBER Loops CONSTANT)
     const QString Loops{QStringLiteral("loop-file")};
 
+    Q_PROPERTY(QString Panscan MEMBER Panscan CONSTANT)
+    const QString Panscan{QStringLiteral("panscan")};
+
+    Q_PROPERTY(QString VideoAspect MEMBER VideoAspect CONSTANT)
+    const QString VideoAspect{QStringLiteral("video-aspect-override")};
+
 private:
     Q_DISABLE_COPY_MOVE(MpvProperties)
 };
