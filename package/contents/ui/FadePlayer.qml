@@ -182,6 +182,17 @@ Item {
                 root.next(false, true);
             }
         }
+        onMediaStatusChanged: {
+            if (mediaStatus == MediaPlayer.EndOfMedia) {
+                if (root.crossfadeEnabled)
+                    return;
+                if (root.slideshowEnabled) {
+                    root.setNextSource();
+                }
+                videoPlayer2.playerSource = root.currentSource;
+                videoPlayer2.play();
+            }
+        }
         onPlayingChanged: {
             if (playing && root.debugEnabled) {
                 console.log("player2 playing");
