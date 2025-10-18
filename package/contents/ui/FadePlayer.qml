@@ -85,6 +85,7 @@ Item {
         opacity: 1
         fillMode: root.fillMode
         useMpvQt: root.useMpvQt
+        randomPosition: root.randomPosition
         loops: {
             if (!root.slideshowEnabled) {
                 return MediaPlayer.Infinite;
@@ -114,6 +115,7 @@ Item {
                 }
             }
         }
+        property bool needsRandomSeek: false
         onMediaStatusChanged: {
             if (mediaStatus == MediaPlayer.EndOfMedia) {
                 if (root.crossfadeEnabled)
@@ -128,9 +130,15 @@ Item {
             if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
                 // Handle random position
                 if (root.randomPosition) {
-                    const randomPos = Math.floor(Math.random() * duration);
-                    videoPlayer1.setPosition(randomPos);
-                    return;
+                    if (duration > 0) {
+                        const randomPos = Math.floor(Math.random() * duration);
+                        videoPlayer1.setPosition(randomPos);
+                        return;
+                    } else {
+                        // Duration not available yet (MpvQt), wait for onDurationChanged
+                        needsRandomSeek = true;
+                        return;
+                    }
                 }
 
                 // Handle restore last position
@@ -141,6 +149,13 @@ Item {
                     videoPlayer1.setPosition(root.lastVideoPosition);
                 }
                 root.restoreLastPosition = false;
+            }
+        }
+        onDurationChanged: {
+            if (needsRandomSeek && duration > 0) {
+                needsRandomSeek = false;
+                const randomPos = Math.floor(Math.random() * duration);
+                videoPlayer1.setPosition(randomPos);
             }
         }
         onPlayingChanged: {
@@ -175,6 +190,7 @@ Item {
         fillMode: root.fillMode
         loops: 1
         useMpvQt: root.useMpvQt
+        randomPosition: root.randomPosition
         onPositionChanged: {
             if (root.primaryPlayer) {
                 return;
@@ -189,6 +205,28 @@ Item {
                     root.setNextSource();
                 }
                 root.next(false, true);
+            }
+        }
+        property bool needsRandomSeek: false
+        onMediaStatusChanged: {
+            if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
+                // Handle random position
+                if (root.randomPosition) {
+                    if (duration > 0) {
+                        const randomPos = Math.floor(Math.random() * duration);
+                        videoPlayer2.setPosition(randomPos);
+                    } else {
+                        // Duration not available yet (MpvQt), wait for onDurationChanged
+                        needsRandomSeek = true;
+                    }
+                }
+            }
+        }
+        onDurationChanged: {
+            if (needsRandomSeek && duration > 0) {
+                needsRandomSeek = false;
+                const randomPos = Math.floor(Math.random() * duration);
+                videoPlayer2.setPosition(randomPos);
             }
         }
         onPlayingChanged: {
@@ -211,6 +249,9 @@ Item {
                 id: content
                 PlasmaComponents.Label {
                     text: root.player.source
+                }
+                PlasmaComponents.Label {
+                    text: "backend: " + (root.useMpvQt ? "MpvQt" : "Qt Multimedia")
                 }
                 PlasmaComponents.Label {
                     text: "slideshow " + root.slideshowEnabled

@@ -11,6 +11,7 @@ Item {
     property real playbackRate: 1
     property int fillMode: VideoOutput.PreserveAspectCrop
     property int loops: 1
+    property bool randomPosition: false
 
     property alias position: mpv.positionMs
     readonly property int mediaStatus: mpv.mediaStatus
@@ -30,6 +31,7 @@ Item {
     }
 
     property int pendingStartPosition: -1  // -1 means no pending position
+    property bool hasPendingPosition: false
 
     Timer {
         id: seekTimer
@@ -58,14 +60,33 @@ Item {
             root.applyFillMode();
         }
         property int mediaStatus
+        property bool needsInitialSeek: false
         onFileLoaded: {
             mediaStatus = MediaPlayer.LoadedMedia;
+            // Mark that we need to seek once duration is available
+            if (root.randomPosition || root.pendingStartPosition >= 0) {
+                needsInitialSeek = true;
+            }
+        }
+        onDurationChanged: {
+            // Apply position once duration is known
+            if (needsInitialSeek && duration > 0) {
+                needsInitialSeek = false;
 
-            // Apply pending position when file is loaded
-            if (root.pendingStartPosition >= 0) {
-                const posSeconds = root.pendingStartPosition / 1000.0;
-                root.pendingStartPosition = -1;
-                // Small delay to ensure MPV is ready to accept position changes
+                let posSeconds = 0;
+
+                // Priority 1: explicit position set via setPosition()
+                if (root.pendingStartPosition >= 0) {
+                    posSeconds = root.pendingStartPosition / 1000.0;
+                    root.pendingStartPosition = -1;
+                    root.hasPendingPosition = false;
+                }
+                // Priority 2: random position mode
+                else if (root.randomPosition) {
+                    posSeconds = Math.random() * duration;
+                }
+
+                // Apply the seek
                 seekTimer.positionToSeek = posSeconds;
                 seekTimer.start();
             }
@@ -81,8 +102,9 @@ Item {
 
     // Function to set position (needed for FadePlayer to restore/set position)
     function setPosition(newPositionMs) {
-        // Store as pending - will be applied in onFileLoaded after a small delay
+        // Store as pending - will be applied when duration becomes available
         root.pendingStartPosition = newPositionMs;
+        root.hasPendingPosition = true;
     }
 
     onSourceChanged: {

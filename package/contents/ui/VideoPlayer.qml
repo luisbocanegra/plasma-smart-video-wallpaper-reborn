@@ -16,6 +16,7 @@ Item {
     readonly property bool seekable: playerLoader.item ? playerLoader.item.seekable : true
     readonly property int duration: playerLoader.item ? playerLoader.item.duration : 0
     property bool useMpvQt: false
+    property bool randomPosition: false
 
     function play() {
         if (playerLoader.item)
@@ -53,6 +54,9 @@ Item {
                 playerLoader.item.loops = root.loops;
                 playerLoader.item.fillMode = root.fillMode;
                 playerLoader.item.playbackRate = root.playbackRate;
+                if ('randomPosition' in playerLoader.item) {
+                    playerLoader.item.randomPosition = root.randomPosition;
+                }
                 playerLoader.item.mediaStatusChanged.connect(() => {
                     root.mediaStatus = playerLoader.item.mediaStatus;
                 });
@@ -88,5 +92,9 @@ Item {
     onLoopsChanged: {
         if (playerLoader.item)
             playerLoader.item.loops = root.loops;
+    }
+    onRandomPositionChanged: {
+        if (playerLoader.item && 'randomPosition' in playerLoader.item)
+            playerLoader.item.randomPosition = root.randomPosition;
     }
 }
