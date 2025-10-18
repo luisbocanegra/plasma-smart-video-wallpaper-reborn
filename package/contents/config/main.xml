@@ -119,6 +119,10 @@
     <entry name="SlideshowEnabled" type="Bool">
       <default>true</default>
     </entry>
+    <entry name="RandomPosition" type="Bool">
+      <label>Start video from random position</label>
+      <default>false</default>
+    </entry>
     <!-- use MpvQt -->
     <entry name="UseMpvQt" type="Bool">
       <label>Use MpvQt instead of Qt Multimedia</label>

@@ -29,11 +29,23 @@ Item {
         mpv.pause = true;
     }
 
+    property int pendingStartPosition: -1  // -1 means no pending position
+
+    Timer {
+        id: seekTimer
+        interval: 100
+        repeat: false
+        property real positionToSeek: 0
+        onTriggered: {
+            mpv.setProperty(MpvProperties.Position, positionToSeek);
+        }
+    }
+
     MpvItem {
         id: mpv
         anchors.fill: parent
-        property int positionMs: position * 1000
-        property int durationMs: duration * 1000
+        readonly property int positionMs: position * 1000
+        readonly property int durationMs: duration * 1000
         onReady: {
             loadFile([root.source]);
             mpv.pause = true;
@@ -48,10 +60,29 @@ Item {
         property int mediaStatus
         onFileLoaded: {
             mediaStatus = MediaPlayer.LoadedMedia;
+
+            // Apply pending position when file is loaded
+            if (root.pendingStartPosition >= 0) {
+                const posSeconds = root.pendingStartPosition / 1000.0;
+                root.pendingStartPosition = -1;
+                // Small delay to ensure MPV is ready to accept position changes
+                seekTimer.positionToSeek = posSeconds;
+                seekTimer.start();
+            }
         }
-        onEndFile: {
-            mediaStatus = MediaPlayer.EndOfMedia;
+        onEndFile: (reason) => {
+            // Only treat as EndOfMedia if the video actually reached the end
+            // MPV fires endFile for other reasons like 'stop', 'error', 'quit', etc.
+            if (reason === "eof") {
+                mediaStatus = MediaPlayer.EndOfMedia;
+            }
         }
+    }
+
+    // Function to set position (needed for FadePlayer to restore/set position)
+    function setPosition(newPositionMs) {
+        // Store as pending - will be applied in onFileLoaded after a small delay
+        root.pendingStartPosition = newPositionMs;
     }
 
     onSourceChanged: {

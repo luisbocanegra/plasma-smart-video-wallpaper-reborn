@@ -63,6 +63,7 @@ Kirigami.FormLayout {
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_SlideshowEnabled: slideshowEnabledCheckbox.checked
+    property alias cfg_RandomPosition: randomPositionCheckbox.checked
     property alias cfg_UseMpvQt: useMpvQtCheckbox.checked
     property int currentTab
     property bool showVideosList: false
@@ -370,6 +371,17 @@ Kirigami.FormLayout {
         id: randomModeCheckbox
         Kirigami.FormData.label: i18n("Random order:")
         visible: currentTab === 1
+    }
+
+    RowLayout {
+        visible: currentTab === 1
+        Kirigami.FormData.label: i18n("Random position:")
+        CheckBox {
+            id: randomPositionCheckbox
+        }
+        Kirigami.ContextualHelpButton {
+            toolTipText: i18n("Start playing videos from a random position instead of from the beginning")
+        }
     }
 
     RowLayout {

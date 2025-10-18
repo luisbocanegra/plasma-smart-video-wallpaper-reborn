@@ -17,6 +17,7 @@ Item {
     property bool multipleVideos: false
     property int lastVideoPosition: 0
     property bool restoreLastPosition: true
+    property bool randomPosition: false
     property bool debugEnabled: false
     property bool slideshowEnabled: true
     property bool disableCrossfade: false
@@ -125,6 +126,14 @@ Item {
             }
 
             if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
+                // Handle random position
+                if (root.randomPosition) {
+                    const randomPos = Math.floor(Math.random() * duration);
+                    videoPlayer1.setPosition(randomPos);
+                    return;
+                }
+
+                // Handle restore last position
                 if (!root.restoreLastPosition)
                     return;
                 if (root.lastVideoPosition < duration) {

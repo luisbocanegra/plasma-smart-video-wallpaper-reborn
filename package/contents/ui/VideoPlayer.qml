@@ -32,7 +32,12 @@ Item {
 
     function setPosition(newPosition) {
         if (playerLoader.item) {
-            playerLoader.item.position = newPosition;
+            // MpvQt has a setPosition() function, Qt player has writable position property
+            if (typeof playerLoader.item.setPosition === 'function') {
+                playerLoader.item.setPosition(newPosition);
+            } else {
+                playerLoader.item.position = newPosition;
+            }
         }
     }
 

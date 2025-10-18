@@ -234,6 +234,7 @@ WallpaperItem {
             currentSource: main.currentSource
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
+            randomPosition: main.configuration.RandomPosition
             onSetNextSource: {
                 main.nextVideo();
             }
@@ -343,6 +344,17 @@ WallpaperItem {
     }
 
     Component.onCompleted: {
+        // If random mode is enabled, select a random video on startup
+        if (main.configuration.RandomMode && videosConfig.length > 1) {
+            currentVideoIndex = Math.floor(Math.random() * videosConfig.length);
+            currentSource = videosConfig[currentVideoIndex];
+        }
+
+        // If random position is enabled, don't restore saved position
+        if (main.configuration.RandomPosition) {
+            restoreLastPosition = false;
+        }
+
         startTimer.start();
     }
 
