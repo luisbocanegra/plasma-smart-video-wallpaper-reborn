@@ -120,7 +120,9 @@ WallpaperItem {
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property bool restoreLastPosition: true
-    property bool slideshowEnabled: main.configuration.SlideshowEnabled
+    property int changeWallpaperMode: main.configuration.ChangeWallpaperMode
+    property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
+    property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -241,7 +243,9 @@ WallpaperItem {
             multipleVideos: main.videosConfig.length > 1
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
-            slideshowEnabled: main.slideshowEnabled
+            changeWallpaperMode: main.changeWallpaperMode
+            changeWallpaperTimerMinutes: main.changeWallpaperTimerMinutes
+            changeWallpaperTimerHours: main.changeWallpaperTimerHours
             fillMode: main.configuration.FillMode
             volume: main.volume
             playbackRate: main.playbackRate
@@ -377,7 +381,7 @@ WallpaperItem {
             text: i18n("Next Video")
             icon.name: "media-skip-forward"
             onTriggered: {
-                player.next(true, false);
+                player.next(true);
             }
             visible: player.multipleVideos
         },
