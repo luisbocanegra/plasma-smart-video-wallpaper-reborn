@@ -116,8 +116,14 @@
     <entry name="MuteMode" type="Int">
       <default>5</default>
     </entry>
-    <entry name="SlideshowEnabled" type="Bool">
-      <default>true</default>
+    <entry name="ChangeWallpaperMode" type="Int">
+      <default>1</default>
+    </entry>
+    <entry name="ChangeWallpaperTimerMinutes" type="Int">
+      <default>10</default>
+    </entry>
+    <entry name="ChangeWallpaperTimerHours" type="Int">
+      <default>0</default>
     </entry>
   </group>
 </kcfg>

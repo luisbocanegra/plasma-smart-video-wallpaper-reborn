@@ -27,6 +27,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import org.kde.kirigami as Kirigami
 import "code/utils.js" as Utils
+import "code/enum.js" as Enum
 import "components" as Components
 
 Kirigami.FormLayout {
@@ -60,7 +61,9 @@ Kirigami.FormLayout {
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
-    property alias cfg_SlideshowEnabled: slideshowEnabledCheckbox.checked
+    property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentIndex
+    property alias cfg_ChangeWallpaperTimerMinutes: changeWallpaperTimerMinutesSpinBox.value
+    property alias cfg_ChangeWallpaperTimerHours: changeWallpaperTimerHoursSpinBox.value
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
@@ -319,12 +322,51 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible: currentTab === 1
-        Kirigami.FormData.label: i18n("Slideshow:")
-        CheckBox {
-            id: slideshowEnabledCheckbox
+        Kirigami.FormData.label: i18n("Change Wallpaper:")
+        ComboBox{
+            id: changeWallpaperModeComboBox
+            // Keep this list in sync with enum.js          
+            model: [
+                {
+                'label': i18n("Never")
+                },
+                {
+                'label': i18n("Slideshow")
+                },
+                {
+                'label': i18n("On a Timer")
+                }
+            ]
+            textRole: "label"
+            onCurrentIndexChanged: {
+                cfg_ChangeWallpaperMode = currentIndex;
+            }
+            currentIndex: cfg_ChangeWallpaperMode
         }
         Kirigami.ContextualHelpButton {
-            toolTipText: i18n("Automatically play next video when the current one ends. Disable to do it manually using <strong>Next Video</strong> from the Desktop right click menu.")
+            toolTipText: i18n("Automatically play the next video using the selected strategy. You can also change the wallpaper manually using <strong>Next Video</strong> from the Desktop right click menu.")
+        }
+    }
+
+    RowLayout {
+        visible: currentTab === 1 && changeWallpaperModeComboBox.currentIndex === Enum.ChangeWallpaperMode.OnATimer
+        Label {
+            text: i18n("Hours:")
+        }
+        SpinBox{
+            id: changeWallpaperTimerHoursSpinBox
+            from: 0
+            to: 12
+            stepSize: 1
+        }
+        Label {
+            text: i18n("Minutes:")
+        }
+        SpinBox{
+            id: changeWallpaperTimerMinutesSpinBox
+            from: changeWallpaperTimerHoursSpinBox.value > 0 ? 0 : 1
+            to: 59
+            stepSize: 1
         }
     }
 

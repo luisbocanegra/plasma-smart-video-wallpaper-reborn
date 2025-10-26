@@ -9,3 +9,10 @@ const MuteOverride = {
   Unmute: 1,
   Default: 2,
 };
+
+// Keep this list in sync with config.qml 
+const ChangeWallpaperMode = {
+  Never: 0,
+  Slideshow: 1,
+  OnATimer: 2,
+};
