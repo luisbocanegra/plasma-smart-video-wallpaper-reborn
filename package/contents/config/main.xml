@@ -125,5 +125,9 @@
     <entry name="ChangeWallpaperTimerHours" type="Int">
       <default>0</default>
     </entry>
+    <entry name="ResumeLastVideo" type="Bool">
+      <label>Whether or not resume last playing video on startup</label>
+      <default>True</default>
+    </entry>
   </group>
 </kcfg>
