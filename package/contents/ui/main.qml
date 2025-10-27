@@ -119,7 +119,6 @@ WallpaperItem {
     property real volumeOutput2: 0
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
-    property bool restoreLastPosition: true
     property int changeWallpaperMode: main.configuration.ChangeWallpaperMode
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
@@ -249,6 +248,7 @@ WallpaperItem {
             fillMode: main.configuration.FillMode
             volume: main.volume
             playbackRate: main.playbackRate
+            resumeLastVideo: main.configuration.ResumeLastVideo
         }
 
         PlasmaExtras.PlaceholderMessage {

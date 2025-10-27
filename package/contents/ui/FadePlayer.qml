@@ -23,6 +23,7 @@ Item {
     property int changeWallpaperTimerMinutes: 10
     property int changeWallpaperTimerHours: 0
     property int changeWallpaperTimerTime: (changeWallpaperTimerHours*60+changeWallpaperTimerMinutes)*60*1000
+    property bool resumeLastVideo: true
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
@@ -149,11 +150,11 @@ Item {
             }
 
             if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
-                if (!root.restoreLastPosition)
-                    return;
-                if (root.lastVideoPosition < duration) {
-                    console.error("RESTORE LAST POSITION:", root.lastVideoPosition);
-                    videoPlayer1.position = root.lastVideoPosition;
+                if (root.restoreLastPosition && root.resumeLastVideo) {
+                    if (root.lastVideoPosition < duration) {
+                        console.error("RESTORE LAST POSITION:", root.lastVideoPosition);
+                        videoPlayer1.position = root.lastVideoPosition;
+                    }
                 }
                 root.restoreLastPosition = false;
             }
@@ -293,6 +294,9 @@ Item {
                 }
                 PlasmaComponents.Label {
                     text: "duration " + root.player.duration
+                }
+                PlasmaComponents.Label {
+                    text: "resumeLastVideo" + root.resumeLastVideo
                 }
             }
         }

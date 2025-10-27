@@ -61,6 +61,7 @@ Kirigami.FormLayout {
     property alias cfg_PlaybackRate: playbackRateSlider.value
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
+    property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
     property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentIndex
     property alias cfg_ChangeWallpaperTimerMinutes: changeWallpaperTimerMinutesSpinBox.value
     property alias cfg_ChangeWallpaperTimerHours: changeWallpaperTimerHoursSpinBox.value
@@ -373,6 +374,12 @@ Kirigami.FormLayout {
     CheckBox {
         id: randomModeCheckbox
         Kirigami.FormData.label: i18n("Random order:")
+        visible: currentTab === 1
+    }
+
+    CheckBox {
+        id: resumeLastVideoCheckbox
+        Kirigami.FormData.label: i18n("Resume last video on startup:")
         visible: currentTab === 1
     }
 
