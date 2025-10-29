@@ -387,7 +387,7 @@ WallpaperItem {
             text: i18n("Next Video")
             icon.name: "media-skip-forward"
             onTriggered: {
-                player.next(true);
+                player.next(true, true);
             }
             visible: player.multipleVideos
         },

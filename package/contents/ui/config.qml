@@ -210,10 +210,10 @@ Kirigami.FormLayout {
                         icon.name: "preferences-other"
                         enabled: true
                         onClicked: {
-                            dialogPlaybackRateSpeed.value = videosConfig[modelData].playbackRate;
-                            videoConfig.filename = videosConfig[modelData].filename;
-                            videoConfig.index = index;
-                            videoConfig.open();
+                            videoConfigDialog.playbackRate = videosConfig[modelData].playbackRate;
+                            videoConfigDialog.loop = videosConfig[modelData].loop ?? false;
+                            videoConfigDialog.index = index;
+                            videoConfigDialog.open();
                         }
                     }
                 }
@@ -804,16 +804,20 @@ Kirigami.FormLayout {
     }
 
     Kirigami.Dialog {
-        id: videoConfig
+        id: videoConfigDialog
         standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
         title: i18n("Video Settings")
         padding: Kirigami.Units.largeSpacing
 
         property int index
-        property real speed
+        property real playbackRate
+        property bool loop
         property string filename: ""
 
         Kirigami.FormLayout {
+            Label {
+                text: videoConfigDialog.filename
+            }
             RowLayout {
                 Kirigami.FormData.label: i18n("Playback speed:")
                 Slider {
@@ -821,9 +825,9 @@ Kirigami.FormLayout {
                     from: 0
                     to: 2
                     stepSize: 0.05
-                    value: videoConfig.speed
+                    value: videoConfigDialog.playbackRate
                     onValueChanged: {
-                        videoConfig.speed = value;
+                        videoConfigDialog.playbackRate = value;
                     }
                     Layout.preferredWidth: 200
                 }
@@ -846,10 +850,21 @@ Kirigami.FormLayout {
                     toolTipText: i18n("A value other than 0.0 overrides the global Playback speed for this video.")
                 }
             }
+            RowLayout {
+                Kirigami.FormData.label: i18n("Loop:")
+                CheckBox {
+                    checked: videoConfigDialog.loop
+                    onCheckedChanged: videoConfigDialog.loop = checked
+                }
+                Kirigami.ContextualHelpButton {
+                    toolTipText: i18n("If enabled the video will loop continuously instead of playing the next one.<br>Use the <strong>Next Video</strong> option to play the next video in the list.")
+                }
+            }
         }
 
         onAccepted: {
-            videosConfig[index].playbackRate = speed;
+            root.videosConfig[index].playbackRate = playbackRate;
+            root.videosConfig[index].loop = loop;
             Utils.updateConfig();
         }
     }
