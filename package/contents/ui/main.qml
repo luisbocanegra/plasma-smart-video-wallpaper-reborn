@@ -33,7 +33,10 @@ WallpaperItem {
     anchors.fill: parent
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
-    property var videosConfig: getVideos()
+    property var videosConfig: {
+        const videos = getVideos();
+        return randomMode ? Utils.shuffleArray(videos) : videos;
+    }
     property int currentVideoIndex: 0
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
     property var currentSource: {
