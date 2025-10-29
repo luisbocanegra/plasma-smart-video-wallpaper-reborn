@@ -789,7 +789,7 @@ Kirigami.FormLayout {
         id: fileDialog
         fileMode: FileDialog.OpenFiles
         title: i18n("Pick a video file")
-        nameFilters: [i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv)", i18n("All files") + " (*)"]
+        nameFilters: [i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv *.gif)", i18n("All files") + " (*)"]
         onAccepted: {
             let currentFiles = cfg_VideoUrls.trim().split("\n");
             for (let file of fileDialog.selectedFiles) {
