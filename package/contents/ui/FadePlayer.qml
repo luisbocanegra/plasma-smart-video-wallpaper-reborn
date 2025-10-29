@@ -55,8 +55,8 @@ Item {
     function stop() {
         player.stop();
     }
-    function next(switchSource) {
-        if (switchSource) {
+    function next(switchSource, forceSwitch) {
+        if ((switchSource && !currentSource.loop) || forceSwitch) {
             setNextSource();
         }
         if (primaryPlayer) {
@@ -113,7 +113,7 @@ Item {
         opacity: 1
         fillMode: root.fillMode
         loops: {
-            if(!root.multipleVideos)
+            if(!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
                 return MediaPlayer.Infinite;
             else if(root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
                 return 1;
@@ -202,7 +202,7 @@ Item {
         z: 1
         fillMode: root.fillMode
         loops: {
-            if(!root.multipleVideos)
+            if(!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
                 return MediaPlayer.Infinite;
             else if(root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
                 return 1;
@@ -269,7 +269,7 @@ Item {
                     text: root.player.source
                 }
                 PlasmaComponents.Label {
-                    text: main.currentVideoIndex
+                    text: "currentVideoIndex " + main.currentVideoIndex
                 }
                 PlasmaComponents.Label {
                     text: "changeWallpaperMode " + root.changeWallpaperMode
@@ -290,7 +290,10 @@ Item {
                     text: "media status " + root.player.mediaStatus
                 }
                 PlasmaComponents.Label {
-                    text: "playing " + root.player.playing
+                    text: "player1 playing " + videoPlayer1.playing
+                }
+                PlasmaComponents.Label {
+                    text: "player2 playing " + videoPlayer2.playing
                 }
                 PlasmaComponents.Label {
                     text: "position " + root.player.position

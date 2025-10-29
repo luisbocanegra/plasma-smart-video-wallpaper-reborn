@@ -29,6 +29,7 @@ function createVideo(filename) {
     "duration": 0,
     "customDuration": 0,
     "playbackRate": 0.0,
+    "loop": false
   };
 }
 
