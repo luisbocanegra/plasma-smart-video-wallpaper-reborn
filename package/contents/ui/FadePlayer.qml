@@ -269,6 +269,9 @@ Item {
                     text: root.player.source
                 }
                 PlasmaComponents.Label {
+                    text: main.currentVideoIndex
+                }
+                PlasmaComponents.Label {
                     text: "changeWallpaperMode " + root.changeWallpaperMode
                 }
                 PlasmaComponents.Label {
