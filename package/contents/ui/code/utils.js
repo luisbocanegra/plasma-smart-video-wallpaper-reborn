@@ -32,6 +32,27 @@ function createVideo(filename) {
   };
 }
 
+/**
+ * 
+ * @param {String} filename File path
+ * @param {Array} videosConfig Videos config
+ * @returns {Object} Video properties
+ */
+function getVideoByFile(filename, videosConfig) {
+  const video = videosConfig.find((video) => video.filename === filename);
+  return video ?? createVideo("");
+}
+
+/**
+ * 
+ * @param {int} index Video index
+ * @param {Array} videosConfig Videos config
+ * @returns {Object} Video properties
+ */
+function getVideoByIndex(index, videosConfig) {
+  return videosConfig.length > 0 ? videosConfig[index] : createVideo("");
+}
+
 function dumpProps(obj) {
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
   for (var k of Object.keys(obj)) {

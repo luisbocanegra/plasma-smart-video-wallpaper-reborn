@@ -99,8 +99,8 @@
     <entry name="RandomMode" type="Bool">
       <default>False</default>
     </entry>
-    <entry name="LastVideoIndex" type="Int">
-      <default>0</default>
+    <entry name="LastVideo" type="String">
+      <default></default>
     </entry>
     <entry name="LastVideoPosition" type="Int">
       <default>0</default>
@@ -126,7 +126,7 @@
       <default>0</default>
     </entry>
     <entry name="ResumeLastVideo" type="Bool">
-      <label>Whether or not resume last playing video on startup</label>
+      <label>Whether or not to resume last playing video on startup</label>
       <default>True</default>
     </entry>
   </group>

@@ -34,8 +34,14 @@ WallpaperItem {
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: getVideos()
-    property int currentVideoIndex: main.configuration.LastVideoIndex < videosConfig.length ? main.configuration.LastVideoIndex : 0
-    property var currentSource: videosConfig.length > 0 ? videosConfig[currentVideoIndex] : Utils.createVideo("")
+    property int currentVideoIndex: 0
+    property bool resumeLastVideo: main.configuration.ResumeLastVideo
+    property var currentSource: {
+        if (resumeLastVideo && main.configuration.LastVideo !== "") {
+            return Utils.getVideoByFile(main.configuration.LastVideo, videosConfig);
+        }
+        return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
+    }
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -351,7 +357,7 @@ WallpaperItem {
 
     function save() {
         // Save last video and position to resume from it on next login/lock
-        main.configuration.LastVideoIndex = main.currentVideoIndex;
+        main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
         main.configuration.writeConfig();
         printLog("Bye!");
