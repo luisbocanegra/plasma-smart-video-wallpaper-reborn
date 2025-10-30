@@ -53,6 +53,9 @@ Plasma 6 Wallpaper plugin to play videos on your Desktop/Lock Screen
 ### Fedora
 Use dnf to install plasma-smart-video-wallpaper-reborn: `sudo dnf in plasma-smart-video-wallpaper-reborn`. The package will, by default, install ffmpeg-free if it isn't installed which should work for most videos. In case of issues, follow the instructions to install additional codecs from RPMfusion.
 
+### Debian
+Use apt to install needed depends for building plasma-smart-video-wallpaper-reborn: `sudo apt install git gcc cmake extra-cmake-modules build-essential libplasma-dev libqt6multimedia6 qt6-multimedia-dev`
+
 ### KDE Store
 
 Install these dependencies or the equivalents for your distribution, **they are required for video playback**
@@ -195,4 +198,5 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 
 - This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
 - [Zren's kpac](https://github.com/Zren/plasma-applet-lib) to manage translations
+
 
