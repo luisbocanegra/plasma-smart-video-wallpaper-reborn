@@ -22,7 +22,7 @@ Item {
     property int changeWallpaperMode: Enum.ChangeWallpaperMode.Slideshow
     property int changeWallpaperTimerMinutes: 10
     property int changeWallpaperTimerHours: 0
-    property int changeWallpaperTimerTime: (changeWallpaperTimerHours*60+changeWallpaperTimerMinutes)*60*1000
+    property int changeWallpaperTimerTime: (changeWallpaperTimerHours * 60 + changeWallpaperTimerMinutes) * 60 * 1000
     property bool resumeLastVideo: true
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
@@ -30,13 +30,13 @@ Item {
     // will decrease below the configured duration if needed as videos get played
     // Split the crossfade duration between the two videos. If either video is too short,
     // reduce only it's part of the crossfade duration accordingly
-    property int crossfadeMinDurationLast: Math.min(root.targetCrossfadeDuration/2, otherPlayer.actualDuration/3);
-    property int crossfadeMinDurationCurrent: Math.min(root.targetCrossfadeDuration/2, player.actualDuration/3);
+    property int crossfadeMinDurationLast: Math.min(root.targetCrossfadeDuration / 2, otherPlayer.actualDuration / 3)
+    property int crossfadeMinDurationCurrent: Math.min(root.targetCrossfadeDuration / 2, player.actualDuration / 3)
     property int crossfadeDuration: {
-        if(!root.crossfadeEnabled){
+        if (!root.crossfadeEnabled) {
             return 0;
-        }else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer){
-            return Math.min(root.targetCrossfadeDuration, changeWallpaperTimerTime/3*2);
+        } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer) {
+            return Math.min(root.targetCrossfadeDuration, changeWallpaperTimerTime / 3 * 2);
         } else {
             return crossfadeMinDurationLast + crossfadeMinDurationCurrent;
         }
@@ -64,7 +64,6 @@ Item {
             videoPlayer2.play();
             root.primaryPlayer = false;
             videoPlayer1.opacity = 0;
-
         } else {
             videoPlayer1.playerSource = root.currentSource;
             videoPlayer1.play();
@@ -72,26 +71,26 @@ Item {
             videoPlayer1.opacity = 1;
         }
 
-        if(root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer){
+        if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer) {
             changeTimer.restart();
         }
     }
     signal setNextSource
 
-    Timer{
+    Timer {
         id: changeTimer
         running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer
         interval: !running ? 0 : changeWallpaperTimerTime - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
         repeat: true
         onTriggered: {
-            if(root.debugEnabled){
+            if (root.debugEnabled) {
                 console.log("Timer triggered, changing wallpaper");
             }
             root.next(true);
         }
         onIntervalChanged: {
-            if(running){
-                if(root.debugEnabled){
+            if (running) {
+                if (root.debugEnabled) {
                     console.log("Timer started. Interval:", interval);
                 }
                 changeTimer.restart();
@@ -113,11 +112,11 @@ Item {
         opacity: 1
         fillMode: root.fillMode
         loops: {
-            if(!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
+            if (!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
                 return MediaPlayer.Infinite;
-            else if(root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
+            else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
                 return 1;
-            else // all other (future) modes
+            else
                 return MediaPlayer.Infinite;
         }
         onPositionChanged: {
@@ -132,8 +131,7 @@ Item {
                 if ((position / playbackRate) > (actualDuration - root.crossfadeMinDurationCurrent)) {
                     if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
                         root.next(true);
-                    }
-                    else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
+                    } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
                         root.next(false);
                     }
                 }
@@ -143,8 +141,7 @@ Item {
             if (mediaStatus == MediaPlayer.EndOfMedia) {
                 if (root.crossfadeEnabled) {
                     return;
-                }
-                else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
+                } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
                     root.next(true);
                 }
             }
@@ -159,8 +156,8 @@ Item {
                 root.restoreLastPosition = false;
             }
         }
-        onLoopsChanged:{
-            if(primaryPlayer){
+        onLoopsChanged: {
+            if (primaryPlayer) {
                 // needed to correctly update player with new loops value
                 let pos = videoPlayer1.position;
                 videoPlayer1.stop();
@@ -176,7 +173,7 @@ Item {
             }
         }
         onOpacityChanged: {
-            if(opacity === 0 || opacity === 1) {
+            if (opacity === 0 || opacity === 1) {
                 // Reset other player source to empty to free resources
                 otherPlayer.playerSource = Utils.createVideo("");
             }
@@ -202,11 +199,11 @@ Item {
         z: 1
         fillMode: root.fillMode
         loops: {
-            if(!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
+            if (!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
                 return MediaPlayer.Infinite;
-            else if(root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
+            else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
                 return 1;
-            else // all other (future) modes
+            else
                 return MediaPlayer.Infinite;
         }
         onPositionChanged: {
@@ -215,12 +212,11 @@ Item {
             }
             root.lastVideoPosition = position;
 
-           if (root.crossfadeEnabled) {
+            if (root.crossfadeEnabled) {
                 if ((position / playbackRate) > (actualDuration - root.crossfadeMinDurationCurrent)) {
                     if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
                         root.next(true);
-                    }
-                    else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
+                    } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
                         root.next(false);
                     }
                 }
@@ -230,14 +226,13 @@ Item {
             if (mediaStatus == MediaPlayer.EndOfMedia) {
                 if (root.crossfadeEnabled) {
                     return;
-                }
-                else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
+                } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
                     root.next(true);
                 }
             }
         }
-        onLoopsChanged:{
-            if(!primaryPlayer){
+        onLoopsChanged: {
+            if (!primaryPlayer) {
                 // needed to correctly update player with new loops value
                 let pos = videoPlayer2.position;
                 videoPlayer2.stop();
@@ -278,7 +273,7 @@ Item {
                     text: "crossfade " + root.crossfadeEnabled
                 }
                 PlasmaComponents.Label {
-                    text: "crossfadeDuration " + root.crossfadeDuration+ " ("+root.crossfadeMinDurationLast+", "+root.crossfadeMinDurationCurrent+")"
+                    text: "crossfadeDuration " + root.crossfadeDuration + " (" + root.crossfadeMinDurationLast + ", " + root.crossfadeMinDurationCurrent + ")"
                 }
                 PlasmaComponents.Label {
                     text: "multipleVideos " + root.multipleVideos
