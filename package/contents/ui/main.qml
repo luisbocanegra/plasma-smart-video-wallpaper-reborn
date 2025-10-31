@@ -59,16 +59,16 @@ WallpaperItem {
 
         let play = false;
         switch (main.configuration.PauseMode) {
-        case 0:
+        case Enum.PauseMode.MaximizedOrFullScreen:
             play = !windowModel.maximizedExists;
             break;
-        case 1:
+        case Enum.PauseMode.ActiveWindowPresent:
             play = !windowModel.activeExists;
             break;
-        case 2:
+        case Enum.PauseMode.WindowVisible:
             play = !windowModel.visibleExists;
             break;
-        case 3:
+        case Enum.PauseMode.Never:
             play = true;
         }
         return play;
@@ -79,22 +79,22 @@ WallpaperItem {
     property bool shouldBlur: {
         let blur = false;
         switch (main.configuration.BlurMode) {
-        case 0:
+        case Enum.BlurMode.MaximizedOrFullScreen:
             blur = windowModel.maximizedExists;
             break;
-        case 1:
+        case Enum.BlurMode.ActiveWindowPresent:
             blur = windowModel.activeExists;
             break;
-        case 2:
+        case Enum.BlurMode.WindowVisible:
             blur = windowModel.visibleExists;
             break;
-        case 3:
+        case Enum.BlurMode.VideoPaused:
             blur = !main.playing;
             break;
-        case 4:
+        case Enum.BlurMode.Always:
             blur = true;
             break;
-        case 5:
+        case Enum.BlurMode.Never:
             blur = false;
         }
         return blur;
@@ -140,22 +140,22 @@ WallpaperItem {
 
         let mute = false;
         switch (main.configuration.MuteMode) {
-        case 0:
+        case Enum.MuteMode.MaximizedOrFullScreen:
             mute = windowModel.maximizedExists;
             break;
-        case 1:
+        case Enum.MuteMode.ActiveWindowPresent:
             mute = windowModel.activeExists;
             break;
-        case 2:
+        case Enum.MuteMode.WindowVisible:
             mute = windowModel.visibleExists;
             break;
-        // case 3:
         //  TODO other application playing audio
+        // case Enum.MuteMode.AnotherAppPlayingAudio:
         //  break
-        case 4:
+        case Enum.MuteMode.Never:
             mute = false;
             break;
-        case 5:
+        case Enum.MuteMode.Always:
             mute = true;
         }
         return mute;
