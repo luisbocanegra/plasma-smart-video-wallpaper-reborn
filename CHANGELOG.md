@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.4.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.2...v2.4.0) (2025-10-31)
+
+
+### Features
+
+* add GIF format to the file picker ([8f0fa92](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/8f0fa92112548ce20f5093d39038ebf5c73a5877))
+* allow to disable resuming last playing video on startup ([9d30331](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9d30331ac804859f0635f2383642ce46e33c3032))
+* allow to loop specific videos until manual skip ([dde9a80](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/dde9a80930ddad600865313475c2ff304b3fe066))
+* switch videos only after a global fixed duration  ([#163](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/163)) ([9706d35](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9706d35d537c58f9d2fea2c5ba66eddaaccf49eb))
+
+
+### Bug Fixes
+
+* first video not random ([824aa46](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/824aa46683bf9156583064f8c60827d5915470d9))
+
 ## [2.3.2](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.1...v2.3.2) (2025-06-20)
 
 
