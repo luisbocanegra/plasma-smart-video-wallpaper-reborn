@@ -102,7 +102,7 @@ Item {
         id: videoPlayer1
         objectName: "1"
         anchors.fill: parent
-        property var playerSource: root.currentSource
+        property var playerSource: Utils.createVideo("")
         property int actualDuration: duration / playbackRate
         playbackRate: playerSource.playbackRate || root.playbackRate
         source: playerSource.filename ?? ""

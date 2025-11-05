@@ -356,6 +356,7 @@ WallpaperItem {
 
     Component.onCompleted: {
         startTimer.start();
+        Qt.callLater(() => player.next(false));
     }
 
     function save() {
