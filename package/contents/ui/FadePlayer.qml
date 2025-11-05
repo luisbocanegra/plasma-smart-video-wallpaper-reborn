@@ -8,7 +8,7 @@ import "code/enum.js" as Enum
 
 Item {
     id: root
-    property var currentSource
+    property var currentSource: Utils.createVideo("")
     property real volume: 1.0
     property bool muted: true
     property real playbackRate: 1
@@ -102,7 +102,7 @@ Item {
         id: videoPlayer1
         objectName: "1"
         anchors.fill: parent
-        property var playerSource: Utils.createVideo("")
+        property var playerSource: root.currentSource
         property int actualDuration: duration / playbackRate
         playbackRate: playerSource.playbackRate || root.playbackRate
         source: playerSource.filename ?? ""

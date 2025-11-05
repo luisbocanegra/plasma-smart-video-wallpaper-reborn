@@ -241,7 +241,6 @@ WallpaperItem {
         FadePlayer {
             id: player
             anchors.fill: parent
-            currentSource: main.currentSource
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
             onSetNextSource: {
@@ -356,7 +355,11 @@ WallpaperItem {
 
     Component.onCompleted: {
         startTimer.start();
-        Qt.callLater(() => player.next(false));
+        Qt.callLater(() => {
+            player.currentSource = Qt.binding(() => {
+                return main.currentSource;
+            });
+        });
     }
 
     function save() {
