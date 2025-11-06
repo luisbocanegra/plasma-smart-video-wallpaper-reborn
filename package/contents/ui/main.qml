@@ -19,12 +19,14 @@
  */
 
 import QtQuick
+import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
 import Qt5Compat.GraphicalEffects
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents
 import "code/utils.js" as Utils
 import "code/enum.js" as Enum
 
@@ -77,6 +79,9 @@ WallpaperItem {
         return (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo;
     }
     property bool shouldBlur: {
+        if (videosConfig.length == 0) {
+            return false;
+        }
         let blur = false;
         switch (main.configuration.BlurMode) {
         case Enum.BlurMode.MaximizedOrFullScreen:
@@ -259,23 +264,76 @@ WallpaperItem {
             resumeLastVideo: main.configuration.ResumeLastVideo
         }
 
+        FastBlur {
+            source: player
+            radius: main.showBlur ? main.configuration.BlurRadius : 0
+            visible: radius !== 0
+            anchors.fill: parent
+            Behavior on radius {
+                NumberAnimation {
+                    duration: main.blurAnimationDuration
+                }
+            }
+        }
+
         PlasmaExtras.PlaceholderMessage {
-            visible: videosConfig.length == 0
+            visible: main.videosConfig.length == 0
             anchors.centerIn: parent
             width: parent.width - Kirigami.Units.gridUnit * 2
             iconName: "video-symbolic"
             text: i18n("No video source \n" + main.videoUrls)
         }
-    }
 
-    FastBlur {
-        source: player
-        radius: showBlur ? main.configuration.BlurRadius : 0
-        visible: radius !== 0
-        anchors.fill: parent
-        Behavior on radius {
-            NumberAnimation {
-                duration: blurAnimationDuration
+        ColumnLayout {
+            id: root
+            Item {
+                Layout.preferredWidth: 1
+                Layout.preferredHeight: 100
+            }
+            Kirigami.AbstractCard {
+                Layout.margins: Kirigami.Units.largeSpacing
+                contentItem: ColumnLayout {
+                    id: content
+                    PlasmaComponents.Label {
+                        text: main.currentSource.filename
+                    }
+                    PlasmaComponents.Label {
+                        text: "currentVideoIndex " + main.currentVideoIndex
+                    }
+                    PlasmaComponents.Label {
+                        text: "changeWallpaperMode " + main.changeWallpaperMode
+                    }
+                    PlasmaComponents.Label {
+                        text: "crossfade " + main.crossfadeEnabled
+                    }
+                    PlasmaComponents.Label {
+                        text: "crossfadeDuration " + player.crossfadeDuration + " (" + player.crossfadeMinDurationLast + ", " + player.crossfadeMinDurationCurrent + ")"
+                    }
+                    PlasmaComponents.Label {
+                        text: "multipleVideos " + player.multipleVideos
+                    }
+                    PlasmaComponents.Label {
+                        text: "player " + player.player.objectName
+                    }
+                    PlasmaComponents.Label {
+                        text: "media status " + player.player.mediaStatus
+                    }
+                    PlasmaComponents.Label {
+                        text: "player1 playing " + player.player1.playing
+                    }
+                    PlasmaComponents.Label {
+                        text: "player2 playing " + player.player2.playing
+                    }
+                    PlasmaComponents.Label {
+                        text: "position " + player.player.position
+                    }
+                    PlasmaComponents.Label {
+                        text: "duration " + player.player.duration
+                    }
+                    PlasmaComponents.Label {
+                        text: "resumeLastVideo" + player.resumeLastVideo
+                    }
+                }
             }
         }
     }
