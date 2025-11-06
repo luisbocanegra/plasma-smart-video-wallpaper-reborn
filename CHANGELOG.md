@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.4.0...v2.5.0) (2025-11-06)
+
+
+### Features
+
+* allow to replace videos in the list ([af49f21](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/af49f2171eae62a2f478481a35c9924f0a6e530a))
+
+
+### Bug Fixes
+
+* blur stacking order and disable when there are no videos ([00c78f3](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/00c78f39faea5ebad7d5afc41b0b61e10e25d7bf))
+* Lockscreen crash when using gstreamer ([#172](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/172)) ([20a8469](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/20a8469cdc1e3199b9f0aadc300206bfb78dbff6))
+
 ## [2.4.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.3.2...v2.4.0) (2025-10-31)
 
 
