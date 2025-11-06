@@ -68,6 +68,7 @@ Kirigami.FormLayout {
     property bool showVideosList: false
     property var isLockScreenSettings: null
     property alias cfg_MuteMode: muteModeCombo.currentValue
+    property int editingIndex: -1
 
     Components.Header {
         Layout.leftMargin: Kirigami.Units.mediumSpacing
@@ -116,6 +117,7 @@ Kirigami.FormLayout {
             icon.name: "folder-videos-symbolic"
             text: i18n("Add new videos")
             onClicked: {
+                root.editingIndex = -1;
                 fileDialog.open();
             }
         }
@@ -156,6 +158,16 @@ Kirigami.FormLayout {
                     onTextChanged: {
                         videosConfig[modelData].filename = text;
                         Utils.updateConfig();
+                    }
+                }
+                Button {
+                    icon.name: "document-open"
+                    ToolTip.delay: 1000
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Pick a file"
+                    onClicked: {
+                        editingIndex = index;
+                        fileDialog.open();
                     }
                 }
                 RowLayout {
@@ -738,18 +750,23 @@ Kirigami.FormLayout {
 
     FileDialog {
         id: fileDialog
-        fileMode: FileDialog.OpenFiles
+        fileMode: root.editingIndex === -1 ? FileDialog.OpenFiles : FileDialog.OpenFile
         title: i18n("Pick a video file")
         nameFilters: [i18n("Video files") + " (*.mp4 *.mpg *.ogg *.mov *.webm *.flv *.matroska *.avi *wmv *.gif)", i18n("All files") + " (*)"]
         onAccepted: {
-            let currentFiles = cfg_VideoUrls.trim().split("\n");
+            let currentFiles = root.cfg_VideoUrls.trim().split("\n");
             for (let file of fileDialog.selectedFiles) {
                 console.log(file);
-                if (videosConfig.filter(video => video.filename === file).length === 0) {
-                    videosConfig.push(new Utils.createVideo(file));
+                if (root.videosConfig.filter(video => video.filename === file).length === 0) {
+                    if (root.editingIndex !== -1) {
+                        root.videosConfig[root.editingIndex] = Utils.createVideo(file);
+                        root.editingIndex = -1;
+                    } else {
+                        root.videosConfig.push(Utils.createVideo(file));
+                    }
                 }
             }
-            console.log(JSON.stringify(videosConfig));
+            console.log(JSON.stringify(root.videosConfig));
             Utils.updateConfig();
         }
     }
