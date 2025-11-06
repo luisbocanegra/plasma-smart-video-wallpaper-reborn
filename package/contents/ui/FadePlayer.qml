@@ -8,7 +8,7 @@ import "code/enum.js" as Enum
 
 Item {
     id: root
-    property var currentSource
+    property var currentSource: Utils.createVideo("")
     property real volume: 1.0
     property bool muted: true
     property real playbackRate: 1
