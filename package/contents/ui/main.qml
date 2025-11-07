@@ -286,6 +286,7 @@ WallpaperItem {
 
         ColumnLayout {
             id: root
+            visible: main.debugEnabled
             Item {
                 Layout.preferredWidth: 1
                 Layout.preferredHeight: 100
