@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.5.0...v2.5.1) (2025-11-07)
+
+
+### Bug Fixes
+
+* debug info always visible ([51365b3](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/51365b3ede4f881b33e577cc93a34625b0ebc569))
+
 ## [2.5.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.4.0...v2.5.0) (2025-11-06)
 
 
