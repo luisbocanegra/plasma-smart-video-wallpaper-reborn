@@ -177,12 +177,16 @@ WallpaperItem {
         if (isLoading)
             return;
         videosConfig = getVideos();
+        const wasPlaying = player.player.playing;
         // console.error(videoUrls);
         if (videosConfig.length == 0) {
             main.stop();
             main.currentSource.filename = "";
-        } else {
-            player.play();
+        } else if (videosConfig.length == 1) {
+            player.next(true, true);
+            if (!wasPlaying) {
+                main.pause();
+            }
         }
     }
 
