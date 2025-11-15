@@ -57,7 +57,7 @@ Kirigami.Dialog {
                 onCheckedChanged: root.loop = checked
             }
             Kirigami.ContextualHelpButton {
-                toolTipText: i18n("If enabled the video will loop continuously instead of playing the next one.<br>Use the <strong>Next Video</strong> option to play the next video in the list.")
+                toolTipText: i18n("If enabled the video will loop continuously instead of playing the next one.<br>Use <strong>Next Video</strong> from the Desktop right click menu to play the next video in the list.")
             }
         }
     }
