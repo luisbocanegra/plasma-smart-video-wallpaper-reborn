@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.5.1...v2.6.0) (2025-11-15)
+
+
+### Features
+
+* clarify how to use 'Next video' option in video settings dialog ([e566f03](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e566f034c3f507e0e0565cbd2fb96e7a85710950))
+
+
+### Bug Fixes
+
+* old video keeps playing when switching to another single video ([74b1c0e](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/74b1c0e6c5ee1f0ff44fd550add83282002853d9))
+
 ## [2.5.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.5.0...v2.5.1) (2025-11-07)
 
 
