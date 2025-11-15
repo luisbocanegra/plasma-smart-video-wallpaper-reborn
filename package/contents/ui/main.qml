@@ -293,46 +293,23 @@ WallpaperItem {
             }
             Kirigami.AbstractCard {
                 Layout.margins: Kirigami.Units.largeSpacing
-                contentItem: ColumnLayout {
-                    id: content
-                    PlasmaComponents.Label {
-                        text: main.currentSource.filename
-                    }
-                    PlasmaComponents.Label {
-                        text: "currentVideoIndex " + main.currentVideoIndex
-                    }
-                    PlasmaComponents.Label {
-                        text: "changeWallpaperMode " + main.changeWallpaperMode
-                    }
-                    PlasmaComponents.Label {
-                        text: "crossfade " + main.crossfadeEnabled
-                    }
-                    PlasmaComponents.Label {
-                        text: "crossfadeDuration " + player.crossfadeDuration + " (" + player.crossfadeMinDurationLast + ", " + player.crossfadeMinDurationCurrent + ")"
-                    }
-                    PlasmaComponents.Label {
-                        text: "multipleVideos " + player.multipleVideos
-                    }
-                    PlasmaComponents.Label {
-                        text: "player " + player.player.objectName
-                    }
-                    PlasmaComponents.Label {
-                        text: "media status " + player.player.mediaStatus
-                    }
-                    PlasmaComponents.Label {
-                        text: "player1 playing " + player.player1.playing
-                    }
-                    PlasmaComponents.Label {
-                        text: "player2 playing " + player.player2.playing
-                    }
-                    PlasmaComponents.Label {
-                        text: "position " + player.player.position
-                    }
-                    PlasmaComponents.Label {
-                        text: "duration " + player.player.duration
-                    }
-                    PlasmaComponents.Label {
-                        text: "resumeLastVideo" + player.resumeLastVideo
+                contentItem: PlasmaComponents.Label {
+                    text: {
+                        let text = `filename: ${main.currentSource.filename}\n`;
+                        text += `loops: ${main.currentSource.loop ?? false}\n`;
+                        text += `currentVideoIndex ${main.currentVideoIndex}\n`;
+                        text += `changeWallpaperMode ${main.changeWallpaperMode}\n`;
+                        text += `crossfade ${main.crossfadeEnabled}\n`;
+                        text += `crossfadeDuration ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
+                        text += `multipleVideos ${player.multipleVideos}\n`;
+                        text += `player ${player.player.objectName}\n`;
+                        text += `media status ${player.player.mediaStatus}\n`;
+                        text += `player1 playing ${player.player1.playing}\n`;
+                        text += `player2 playing ${player.player2.playing}\n`;
+                        text += `position ${player.player.position}\n`;
+                        text += `duration ${player.player.duration}\n`;
+                        text += `resumeLastVideo ${player.resumeLastVideo}`;
+                        return text;
                     }
                 }
             }
