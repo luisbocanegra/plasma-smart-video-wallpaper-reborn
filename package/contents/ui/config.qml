@@ -70,6 +70,7 @@ ColumnLayout {
     property var isLockScreenSettings: null
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
+    property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
 
     property var muteModeModel: {
         // options for desktop and lock screen
@@ -686,7 +687,51 @@ ColumnLayout {
         visible: root.currentTab === 0
     }
 
-    Item {
+    Component {
+        id: inlineMessageComponent
+        Kirigami.InlineMessage {
+            visible: true
+            width: dropArea.width
+            type: Kirigami.MessageType.Information
+            showCloseButton: true
+            Timer {
+                running: true
+                interval: 5000
+                onTriggered: parent.destroy()
+            }
+        }
+    }
+
+    DropArea {
+        id: dropArea
+        onEntered: drag => {
+            if (drag.hasUrls) {
+                drag.accept();
+            }
+        }
+        onDropped: drop => {
+            const validUrls = drop.urls.filter(url => {
+                url = url.toString();
+                const isValid = validDropExtensions.some(ext => url.endsWith(ext));
+                if (!isValid) {
+                    inlineMessageComponent.createObject(messagesList, {
+                        text: `${url.toString()} invalid extension`,
+                        type: Kirigami.MessageType.Warning
+                    });
+                }
+                return isValid;
+            });
+            validUrls.forEach(function (url) {
+                url = url.toString();
+                if (videosModel.fileExists(url)) {
+                    inlineMessageComponent.createObject(messagesList, {
+                        text: `${url.toString()} already exists`
+                    });
+                } else {
+                    videosModel.addItem(url);
+                }
+            });
+        }
         Layout.fillWidth: true
         Layout.fillHeight: true
         visible: root.currentTab === 0
@@ -695,6 +740,19 @@ ColumnLayout {
             Kirigami.Theme.inherit: false
             Kirigami.Theme.colorSet: Kirigami.Theme.View
             color: Kirigami.Theme.backgroundColor
+        }
+        Kirigami.PlaceholderMessage {
+            visible: videosModel.model.count === 0
+            anchors.centerIn: parent
+            width: parent.width - Kirigami.Units.gridUnit * 2
+            icon.name: "edit-none"
+            text: i18n("No items found \n add or drop some files")
+        }
+        ColumnLayout {
+            id: messagesList
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            z: 2
         }
         ScrollView {
             anchors.fill: parent
