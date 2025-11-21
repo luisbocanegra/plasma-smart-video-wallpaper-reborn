@@ -62,4 +62,28 @@ Item {
         }
         return false;
     }
+
+    function disableAll() {
+        for (let i = 0; i < model.count; i++) {
+            const item = model.get(i);
+            item.enabled = false;
+        }
+        updated();
+    }
+
+    function enableAll() {
+        for (let i = 0; i < model.count; i++) {
+            const item = model.get(i);
+            item.enabled = true;
+        }
+        updated();
+    }
+
+    function toggleAll() {
+        for (let i = 0; i < model.count; i++) {
+            const item = model.get(i);
+            item.enabled = !item.enabled;
+        }
+        updated();
+    }
 }

@@ -710,6 +710,41 @@ ColumnLayout {
                     width: list.width
                     text: i18n("Videos")
                     ToolButton {
+                        icon.name: "view-list-details-symbolic"
+                        text: i18n("Actions…")
+                        onPressed: actionsMenu.opened ? actionsMenu.close() : actionsMenu.open()
+                        Menu {
+                            id: actionsMenu
+                            y: parent.height
+                            MenuItem {
+                                text: i18n("Disable all")
+                                icon.name: "window-close-symbolic"
+                                onClicked: videosModel.disableAll()
+                            }
+                            MenuItem {
+                                text: i18n("Enable all")
+                                icon.name: "checkmark-symbolic"
+                                onClicked: videosModel.enableAll()
+                            }
+                            MenuItem {
+                                text: i18n("Swap enabled state")
+                                icon.name: "media-playlist-shuffle-symbolic"
+                                onClicked: videosModel.toggleAll()
+                            }
+                            MenuItem {
+                                text: i18n("Remove all")
+                                icon.name: "list-remove-all-symbolic"
+                                onClicked: {
+                                    confirmationDialog.title = i18n("Remove all media?");
+                                    confirmationDialog.callback = () => {
+                                        videosModel.clear();
+                                    };
+                                    confirmationDialog.open();
+                                }
+                            }
+                        }
+                    }
+                    ToolButton {
                         icon.name: "list-add-symbolic"
                         text: i18n("Add new…")
                         onPressed: addNewMenu.opened ? addNewMenu.close() : addNewMenu.open()
