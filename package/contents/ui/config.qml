@@ -745,23 +745,14 @@ ColumnLayout {
                         }
                     }
                     ToolButton {
-                        icon.name: "list-add-symbolic"
-                        text: i18n("Add new…")
-                        onPressed: addNewMenu.opened ? addNewMenu.close() : addNewMenu.open()
-                        Menu {
-                            id: addNewMenu
-                            y: parent.height
-                            MenuItem {
-                                text: i18n("Pick a file…")
-                                icon.name: "document-open"
-                                onClicked: fileDialog.open()
-                            }
-                            MenuItem {
-                                text: i18n("Enter path or url")
-                                icon.name: "document-import-symbolic"
-                                onClicked: videosModel.addItem()
-                            }
-                        }
+                        text: i18n("Pick a file…")
+                        icon.name: "document-open"
+                        onClicked: fileDialog.open()
+                    }
+                    ToolButton {
+                        text: i18n("Enter path or url")
+                        icon.name: "document-import-symbolic"
+                        onClicked: videosModel.addItem()
                     }
                 }
                 delegate: Item {
