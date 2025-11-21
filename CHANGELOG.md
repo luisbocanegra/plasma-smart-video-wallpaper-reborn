@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.7.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.6.0...v2.7.0) (2025-11-21)
+
+
+### Features
+
+* drag and drop to add files ([c84397f](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/c84397f15bfecd3fb6ae12053c64090c41ef0f64))
+* open containing folder from videos list ([d023f6a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/d023f6ad6c97f81589c12d9eb77e0a10191f5751))
+* play single file only (disable all others) ([d4ef482](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/d4ef48285d00384a20b1e3058066dfdcec1e8796))
+* preview files in default application ([a563319](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/a56331936b12fdbd940e34041447d4281d780ebe))
+* quick actions to disable/enable/remove/toggle videos ([f68e593](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/f68e59313fcdf853659804ed72d13898582b2e09))
+* use a list view to manage the videos ([6cc1105](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/6cc11053a481e72e6043c957ccef357a9d5432e9))
+
 ## [2.6.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.5.1...v2.6.0) (2025-11-15)
 
 
