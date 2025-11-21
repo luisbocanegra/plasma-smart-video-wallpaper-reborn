@@ -889,6 +889,27 @@ ColumnLayout {
                                 ToolTip.text: "Pick a file"
                             }
                             Button {
+                                icon.name: "overflow-menu-symbolic"
+                                onPressed: mediaMenu.opened ? mediaMenu.close() : mediaMenu.open()
+                                Layout.fillHeight: true
+                                Layout.preferredWidth: height
+                                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                ToolTip.delay: 1000
+                                ToolTip.visible: hovered
+                                ToolTip.text: "More actions"
+                                Menu {
+                                    id: mediaMenu
+                                    y: parent.height
+                                    MenuItem {
+                                        text: i18n("Preview…")
+                                        icon.name: "document-preview-symbolic"
+                                        onClicked: {
+                                            Qt.openUrlExternally(itemDelegate.filename);
+                                        }
+                                    }
+                                }
+                            }
+                            Button {
                                 icon.name: "list-remove-symbolic"
                                 icon.color: Kirigami.Theme.negativeTextColor
                                 onClicked: {
