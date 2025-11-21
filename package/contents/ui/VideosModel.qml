@@ -86,4 +86,16 @@ Item {
         }
         updated();
     }
+
+    function disableAllOthers(index) {
+        for (let i = 0; i < model.count; i++) {
+            const item = model.get(i);
+            if (i === index) {
+                item.enabled = true;
+            } else {
+                item.enabled = false;
+            }
+        }
+        updated();
+    }
 }

@@ -915,6 +915,11 @@ ColumnLayout {
                                             dbusOpenContainingFolder.call();
                                         }
                                     }
+                                    MenuItem {
+                                        text: i18n("Play this file only (disable all others)")
+                                        icon.name: "media-playback-start-symbolic"
+                                        onClicked: videosModel.disableAllOthers(itemDelegate.index)
+                                    }
                                 }
                             }
                             Button {
