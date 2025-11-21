@@ -17,14 +17,9 @@ function parseCompat(cfgStr) {
   return videos;
 }
 
-function updateConfig() {
-  cfg_VideoUrls = JSON.stringify(videosConfig);
-  videosConfig = Utils.parseCompat(cfg_VideoUrls);
-}
-
 function createVideo(filename) {
   return {
-    "filename": filename,
+    "filename": filename ?? "",
     "enabled": true,
     "duration": 0,
     "customDuration": 0,
