@@ -907,6 +907,14 @@ ColumnLayout {
                                             Qt.openUrlExternally(itemDelegate.filename);
                                         }
                                     }
+                                    MenuItem {
+                                        text: i18n("Open containing folder")
+                                        icon.name: "document-open-folder-symbolic"
+                                        onClicked: {
+                                            dbusOpenContainingFolder.arguments = [itemDelegate.filename, ""];
+                                            dbusOpenContainingFolder.call();
+                                        }
+                                    }
                                 }
                             }
                             Button {
@@ -963,5 +971,13 @@ ColumnLayout {
         onAccepted: {
             callback();
         }
+    }
+
+    DBusMethodCall {
+        id: dbusOpenContainingFolder
+        service: "org.freedesktop.FileManager1"
+        iface: "org.freedesktop.FileManager1"
+        objectPath: "/org/freedesktop/FileManager1"
+        method: "ShowItems"
     }
 }
