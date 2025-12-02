@@ -76,7 +76,7 @@ WallpaperItem {
         return play;
     }
     property bool playing: {
-        return (shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo;
+        return ((shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo) && videosConfig.length !== 0;
     }
     property bool shouldBlur: {
         if (videosConfig.length == 0) {
