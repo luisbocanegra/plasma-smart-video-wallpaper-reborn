@@ -80,7 +80,7 @@ Item {
 
     Timer {
         id: changeTimer
-        running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer
+        running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer && root.player.playing
         interval: !running ? 0 : changeWallpaperTimerTime - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
         repeat: true
         onTriggered: {
