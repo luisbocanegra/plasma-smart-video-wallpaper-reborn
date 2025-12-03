@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.7.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.7.0...v2.7.1) (2025-12-03)
+
+
+### Bug Fixes
+
+* disabled videos continue playing after pause/play event ([76d7373](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/76d737351981fab5953ca2e4451575b80134b45c))
+* video incorretly unpauses when timer ends ([7edfbd4](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7edfbd46f8ed699b2f8b9aeed9b30748f54a2180))
+
 ## [2.7.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.6.0...v2.7.0) (2025-11-21)
 
 
