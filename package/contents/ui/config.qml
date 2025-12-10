@@ -63,6 +63,7 @@ ColumnLayout {
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
     property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentValue
+    property alias cfg_ChangeWallpaperTimerSeconds: changeWallpaperTimerSecondsSpinBox.value
     property alias cfg_ChangeWallpaperTimerMinutes: changeWallpaperTimerMinutesSpinBox.value
     property alias cfg_ChangeWallpaperTimerHours: changeWallpaperTimerHoursSpinBox.value
     property int currentTab
@@ -71,6 +72,8 @@ ColumnLayout {
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
+
+    readonly property int seconds: (changeWallpaperTimerHoursSpinBox.value * 60 * 60) + (changeWallpaperTimerMinutesSpinBox.value * 60) + changeWallpaperTimerSecondsSpinBox.value
 
     property var muteModeModel: {
         // options for desktop and lock screen
@@ -333,23 +336,41 @@ ColumnLayout {
 
         RowLayout {
             visible: currentTab === 1 && changeWallpaperModeComboBox.currentIndex === Enum.ChangeWallpaperMode.OnATimer
-            Label {
-                text: i18n("Hours:")
-            }
             SpinBox {
                 id: changeWallpaperTimerHoursSpinBox
                 from: 0
                 to: 12
                 stepSize: 1
-            }
-            Label {
-                text: i18n("Minutes:")
+                textFromValue: function (value, locale) {
+                    return i18np("%1 hour", "%1 hours", value);
+                }
+                valueFromText: function (text, locale) {
+                    return parseInt(text);
+                }
             }
             SpinBox {
                 id: changeWallpaperTimerMinutesSpinBox
-                from: changeWallpaperTimerHoursSpinBox.value > 0 ? 0 : 1
+                from: 0
                 to: 59
                 stepSize: 1
+                textFromValue: function (value, locale) {
+                    return i18np("%1 minute", "%1 minutes", value);
+                }
+                valueFromText: function (text, locale) {
+                    return parseInt(text);
+                }
+            }
+            SpinBox {
+                id: changeWallpaperTimerSecondsSpinBox
+                from: root.seconds > 0 ? 0 : 1
+                to: 59
+                stepSize: 1
+                textFromValue: function (value, locale) {
+                    return i18np("%1 second", "%1 seconds", value);
+                }
+                valueFromText: function (text, locale) {
+                    return parseInt(text);
+                }
             }
         }
 

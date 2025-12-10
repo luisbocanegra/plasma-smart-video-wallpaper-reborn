@@ -134,6 +134,7 @@ WallpaperItem {
     property bool randomMode: main.configuration.RandomMode
     property int lastVideoPosition: main.configuration.LastVideoPosition
     property int changeWallpaperMode: main.configuration.ChangeWallpaperMode
+    property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
     property bool muteAudio: {
@@ -260,6 +261,7 @@ WallpaperItem {
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
             changeWallpaperMode: main.changeWallpaperMode
+            changeWallpaperTimerSeconds: main.changeWallpaperTimerSeconds
             changeWallpaperTimerMinutes: main.changeWallpaperTimerMinutes
             changeWallpaperTimerHours: main.changeWallpaperTimerHours
             fillMode: main.configuration.FillMode

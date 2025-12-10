@@ -119,6 +119,9 @@
     <entry name="ChangeWallpaperMode" type="Int">
       <default>1</default>
     </entry>
+    <entry name="ChangeWallpaperTimerSeconds" type="Int">
+      <default>0</default>
+    </entry>
     <entry name="ChangeWallpaperTimerMinutes" type="Int">
       <default>10</default>
     </entry>
