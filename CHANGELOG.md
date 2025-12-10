@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.8.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.7.1...v2.8.0) (2025-12-10)
+
+
+### Features
+
+* add seconds picker to timed wallpaper change ([528fe0a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/528fe0afeb397a813b808f538bb980cf36b91b17))
+
+
+### Bug Fixes
+
+* timer restarts on video pause ([552e4ab](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/552e4ab10719d976cfe87acd9362460a197f4c68))
+
 ## [2.7.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.7.0...v2.7.1) (2025-12-03)
 
 
