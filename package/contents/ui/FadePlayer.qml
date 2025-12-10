@@ -19,9 +19,10 @@ Item {
     property bool restoreLastPosition: true
     property bool debugEnabled: false
     property int changeWallpaperMode: Enum.ChangeWallpaperMode.Slideshow
+    property int changeWallpaperTimerSeconds: 0
     property int changeWallpaperTimerMinutes: 10
     property int changeWallpaperTimerHours: 0
-    property int changeWallpaperTimerTime: (changeWallpaperTimerHours * 60 + changeWallpaperTimerMinutes) * 60 * 1000
+    property int changeWallpaperTimerMs: ((changeWallpaperTimerHours * 60 * 60) + (changeWallpaperTimerMinutes * 60) + changeWallpaperTimerSeconds) * 1000
     property bool resumeLastVideo: true
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
@@ -35,7 +36,7 @@ Item {
         if (!root.crossfadeEnabled) {
             return 0;
         } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer) {
-            return Math.min(root.targetCrossfadeDuration, changeWallpaperTimerTime / 3 * 2);
+            return Math.min(root.targetCrossfadeDuration, changeWallpaperTimerMs / 3 * 2);
         } else {
             return crossfadeMinDurationLast + crossfadeMinDurationCurrent;
         }
@@ -71,17 +72,13 @@ Item {
             root.primaryPlayer = true;
             videoPlayer1.opacity = 1;
         }
-
-        if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer) {
-            changeTimer.restart();
-        }
     }
     signal setNextSource
 
     Timer {
         id: changeTimer
         running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer && root.player.playing
-        interval: !running ? 0 : changeWallpaperTimerTime - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
+        interval: !running ? 0 : root.changeWallpaperTimerMs - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
         repeat: true
         onTriggered: {
             if (root.debugEnabled) {
