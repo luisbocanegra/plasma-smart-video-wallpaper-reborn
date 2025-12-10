@@ -1,7 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
 import QtMultimedia
-import org.kde.kirigami as Kirigami
 import "code/utils.js" as Utils
 import "code/enum.js" as Enum
 
@@ -75,11 +73,12 @@ Item {
     }
     signal setNextSource
 
-    Timer {
+    PausableTimer {
         id: changeTimer
         running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer && root.player.playing
-        interval: !running ? 0 : root.changeWallpaperTimerMs - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
+        interval: root.changeWallpaperTimerMs - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
         repeat: true
+        useNewIntervalImmediately: true
         onTriggered: {
             if (root.debugEnabled) {
                 console.log("Timer triggered, changing wallpaper");
@@ -87,11 +86,8 @@ Item {
             root.next(true);
         }
         onIntervalChanged: {
-            if (running) {
-                if (root.debugEnabled) {
-                    console.log("Timer started. Interval:", interval);
-                }
-                changeTimer.restart();
+            if (root.debugEnabled) {
+                console.log("Timer changed:", interval);
             }
         }
     }
