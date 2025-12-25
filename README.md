@@ -110,8 +110,7 @@ cd plasma-smart-video-wallpaper-reborn
 1. Go to **System settings** > **Screen Locking** > **Configure Appearance...**
 2. Change **Wallpaper type** to "Smart Video Wallpaper Reborn"
 3. Add your videos
-4. **IMPORTANT:** Enable **Lock screen mode** in **Playback** tab
-5. Apply
+4. Apply
 
 ## This plugin requires correctly setup Media codecs
 
