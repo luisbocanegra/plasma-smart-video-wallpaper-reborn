@@ -6,12 +6,11 @@ import org.kde.kirigami as Kirigami
 
 ColumnLayout {
     id: root
-    Layout.preferredWidth: 400
+    Layout.minimumWidth: 300
     property var model: []
-    property var selectedValues: []
-    property string text
+    property var selectedValues: selectedValues = text !== "" ? text.split(",") : []
+    property alias text: field.text
     property bool showList: false
-    Component.onCompleted: selectedValues = text.split(",")
     function update() {
         text = selectedValues.join(",");
     }
@@ -19,19 +18,17 @@ ColumnLayout {
     RowLayout {
         TextField {
             id: field
-            text: root.text
             Layout.fillWidth: true
             color: field.text !== "" ? (isValid ? Kirigami.Theme.textColor : Kirigami.Theme.negativeTextColor) : Kirigami.Theme.disabledTextColor
             property bool isValid: true
             onTextChanged: {
                 checkValid();
                 if (isValid) {
-                    root.selectedValues = text.split(",");
-                    root.update();
+                    root.selectedValues = text !== "" ? text.split(",") : [];
                 }
             }
             function checkValid() {
-                isValid = field.text === "" || field.text.split(",").every(item => model.includes(item));
+                isValid = field.text === "" || field.text.split(",").every(item => root.model.includes(item));
             }
             Component.onCompleted: {
                 root.modelChanged.connect(() => {
@@ -76,15 +73,13 @@ ColumnLayout {
                         Layout.fillWidth: true
                         text: delegateItem.modelData
                         onClicked: {
-                            if (!root.selectedValues.includes(delegateItem.modelData)) {
-                                root.selectedValues.push(delegateItem.modelData);
-                            } else {
-                                root.selectedValues = root.selectedValues.filter(p => p !== delegateItem.modelData);
-                            }
-                            root.update();
+                            delegateItem.updateSelected();
                         }
                     }
                     onClicked: {
+                        delegateItem.updateSelected();
+                    }
+                    function updateSelected() {
                         if (!root.selectedValues.includes(delegateItem.modelData)) {
                             root.selectedValues.push(delegateItem.modelData);
                         } else {
