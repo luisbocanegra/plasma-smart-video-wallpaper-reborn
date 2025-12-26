@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.0...v2.8.1) (2025-12-26)
+
+
+### Bug Fixes
+
+* extra comma in desktop effects text field ([7a510ce](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7a510cec0e67d4dea667b1a66a12d3fdb4ef2c78))
+
 ## [2.8.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.7.1...v2.8.0) (2025-12-10)
 
 
