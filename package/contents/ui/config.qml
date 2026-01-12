@@ -47,7 +47,7 @@ ColumnLayout {
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
-    property bool showWarningMessage: false
+    property alias showWarningMessage: showWarning.checked
     property alias cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
     property alias cfg_EffectsPlayVideo: effectsPlayVideoInput.text
@@ -68,7 +68,7 @@ ColumnLayout {
     property alias cfg_ChangeWallpaperTimerHours: changeWallpaperTimerHoursSpinBox.value
     property alias cfg_FillBlur: blurRadioButton.checked
     property alias cfg_FillBlurRadius: fillBlurRadius.value
-    property int currentTab
+    property int currentTab: tabCombo.currentIndex !== -1 ? tabCombo.currentIndex : 0
     property bool showVideosList: false
     property var isLockScreenSettings: null
     property alias cfg_MuteMode: muteModeCombo.currentValue
@@ -193,50 +193,24 @@ ColumnLayout {
     Kirigami.FormLayout {
         id: formLayout // required by parent
 
-        Components.Header {
-            Layout.leftMargin: Kirigami.Units.mediumSpacing
-            Layout.rightMargin: Kirigami.Units.mediumSpacing
-        }
-
-        Kirigami.NavigationTabBar {
-            Layout.preferredWidth: 550
-            maximumContentWidth: {
-                const minDelegateWidth = Kirigami.Units.gridUnit * 6;
-                // Always have at least the width of 5 items, so that small amounts of actions look natural.
-                return minDelegateWidth * Math.max(visibleActions.length, 5);
+        RowLayout {
+            Kirigami.FormData.label: i18n("Version:")
+            Components.Header {
+                Layout.fillHeight: true
             }
-            actions: [
-                Kirigami.Action {
-                    icon.name: "folder-video-symbolic"
-                    text: i18n("Videos")
-                    checked: currentTab === 0
-                    onTriggered: currentTab = 0
-                },
-                Kirigami.Action {
-                    icon.name: "media-playback-start-symbolic"
-                    text: i18n("Playback")
-                    checked: currentTab === 1
-                    onTriggered: currentTab = 1
-                },
-                // Kirigami.Action {
-                //     icon.name: "battery-low-symbolic"
-                //     text: "Power"
-                //     checked: currentTab === 2
-                //     onTriggered: currentTab = 2
-                // },
-                Kirigami.Action {
-                    icon.name: "star-shape-symbolic"
-                    text: i18n("Desktop Effects")
-                    checked: currentTab === 3
-                    onTriggered: currentTab = 3
-                },
-                Kirigami.Action {
-                    icon.name: "dialog-warning-symbolic"
-                    text: i18n("Warning!")
-                    checked: currentTab === 4
-                    onTriggered: currentTab = 4
-                }
-            ]
+            Button {
+                id: showWarning
+                text: i18n("Warning")
+                icon.name: "dialog-warning"
+                hoverEnabled: true
+                ToolTip.text: i18n("Click to show")
+                ToolTip.visible: hovered
+                Kirigami.Theme.inherit: false
+                Kirigami.Theme.textColor: root.Kirigami.Theme.neutralTextColor
+                Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
+                icon.color: Kirigami.Theme.neutralTextColor
+                checkable: true
+            }
         }
 
         Kirigami.InlineMessage {
@@ -244,14 +218,14 @@ ColumnLayout {
             Layout.fillWidth: true
             type: Kirigami.MessageType.Warning
             text: i18n("Videos are loaded in RAM, bigger files will use more system resources!")
-            visible: currentTab === 4
+            visible: root.showWarningMessage
         }
         Kirigami.InlineMessage {
             id: warningCrashes
             Layout.fillWidth: true
             type: Kirigami.MessageType.Warning
             text: i18n("Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To recover from crash remove the videos from the configuration using this enabled below in terminal/tty then reboot:<br><strong><code>duration -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>")
-            visible: currentTab === 4
+            visible: root.showWarningMessage
             actions: [
                 Kirigami.Action {
                     icon.name: "view-readermode-symbolic"
@@ -266,7 +240,7 @@ ColumnLayout {
             id: warningHwAccel
             Layout.fillWidth: true
             text: i18n("Make sure to enable Hardware video acceleration in your system to reduce CPU/GPU usage when videos are playing.")
-            visible: currentTab === 4
+            visible: root.showWarningMessage
             actions: [
                 Kirigami.Action {
                     icon.name: "view-readermode-symbolic"
@@ -276,6 +250,33 @@ ColumnLayout {
                     }
                 }
             ]
+        }
+
+        Components.ComboBoxWithIcons {
+            id: tabCombo
+            textRole: "name"
+            Kirigami.FormData.label: i18n("Configure:")
+            model: ListModel {}
+            Component.onCompleted: {
+                const options = [
+                    {
+                        name: i18n("Videos"),
+                        icon: "folder-video-symbolic"
+                    },
+                    {
+                        name: i18n("Playback"),
+                        icon: "media-playback-start-symbolic"
+                    },
+                    {
+                        name: i18n("Desktop Effects"),
+                        icon: "star-shape-symbolic"
+                    }
+                ];
+                for (const option of options) {
+                    tabCombo.model.append(option);
+                }
+                tabCombo.currentIndex = 0;
+            }
         }
 
         RowLayout {
@@ -301,25 +302,29 @@ ColumnLayout {
                 valueRole: "value"
             }
         }
+        // RowLayout {
+        ButtonGroup {
+            id: backgroundGroup
+        }
+
         RowLayout {
-            visible: root.currentTab === 0
+            visible: root.currentTab === 0 && root.cfg_FillMode === VideoOutput.PreserveAspectFit
             Kirigami.FormData.label: i18n("Background:")
-            ButtonGroup {
-                id: backgroundGroup
-            }
             RadioButton {
                 id: blurRadioButton
-                text: i18n("Blur:")
+                text: i18n("Blur")
                 ButtonGroup.group: backgroundGroup
-                visible: currentTab === 0
-            }
-            Label {
-                text: i18n("radius")
             }
             SpinBox {
                 id: fillBlurRadius
                 from: 0
                 to: 145
+                textFromValue: function (value, locale) {
+                    return i18n("radius: %1", value);
+                }
+                valueFromText: function (text, locale) {
+                    return parseInt(text);
+                }
             }
             Button {
                 visible: root.cfg_FillBlurRadius > 64
@@ -333,6 +338,9 @@ ColumnLayout {
                 Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
                 icon.color: Kirigami.Theme.neutralTextColor
             }
+        }
+        RowLayout {
+            visible: root.currentTab === 0 && root.cfg_FillMode === VideoOutput.PreserveAspectFit
             RadioButton {
                 id: colorRadioButton
                 text: i18n("Solid color")
@@ -345,6 +353,7 @@ ColumnLayout {
                 ButtonGroup.group: backgroundGroup
             }
         }
+        // }
 
         RowLayout {
             visible: currentTab === 1
@@ -428,14 +437,13 @@ ColumnLayout {
         RowLayout {
             Kirigami.FormData.label: i18n("Speed:")
             visible: currentTab === 1
-            Layout.preferredWidth: 300
             Slider {
                 id: playbackRateSlider
                 from: 0
                 value: cfg_PlaybackRate
                 to: 2
                 stepSize: 0.05
-                Layout.fillWidth: true
+                Layout.preferredWidth: 300
             }
             Label {
                 text: parseFloat(playbackRateSlider.value).toFixed(2) + "x"
@@ -648,47 +656,48 @@ ColumnLayout {
             color: Kirigami.Theme.textColor
             selectedTextColor: Kirigami.Theme.highlightedTextColor
             selectionColor: Kirigami.Theme.highlightColor
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
         }
 
         Components.CheckableValueListView {
             id: effectsPlayVideoInput
+            Layout.maximumWidth: 400
             Kirigami.FormData.label: i18n("Play in:")
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
             model: effects.loadedEffects
         }
 
         Components.CheckableValueListView {
             id: effectsPauseVideoInput
-            Layout.preferredWidth: 400
+            Layout.maximumWidth: 400
             Kirigami.FormData.label: i18n("Pause in:")
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
             model: effects.loadedEffects
         }
 
         Components.CheckableValueListView {
             id: effectsShowBlurInput
-            Layout.preferredWidth: 400
+            Layout.maximumWidth: 400
             Kirigami.FormData.label: i18n("Show blur in:")
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
             model: effects.loadedEffects
         }
 
         Components.CheckableValueListView {
             id: effectsHideBlurInput
-            Layout.preferredWidth: 400
+            Layout.maximumWidth: 400
             Kirigami.FormData.label: i18n("Hide blur in:")
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
             model: effects.loadedEffects
         }
 
         Label {
             text: i18n("Currently enabled and <u><strong><font color='%1'>active</font></strong></u> Desktop Effects:", Kirigami.Theme.positiveTextColor)
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
         }
 
         Kirigami.AbstractCard {
-            visible: root.currentTab === 3
+            visible: root.currentTab === 2
             Layout.maximumWidth: 400
             Layout.preferredWidth: 400
             contentItem: ColumnLayout {
