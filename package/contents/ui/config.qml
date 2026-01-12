@@ -66,6 +66,8 @@ ColumnLayout {
     property alias cfg_ChangeWallpaperTimerSeconds: changeWallpaperTimerSecondsSpinBox.value
     property alias cfg_ChangeWallpaperTimerMinutes: changeWallpaperTimerMinutesSpinBox.value
     property alias cfg_ChangeWallpaperTimerHours: changeWallpaperTimerHoursSpinBox.value
+    property alias cfg_FillBlur: blurRadioButton.checked
+    property alias cfg_FillBlurRadius: fillBlurRadius.value
     property int currentTab
     property bool showVideosList: false
     property var isLockScreenSettings: null
@@ -298,12 +300,49 @@ ColumnLayout {
                 textRole: "text"
                 valueRole: "value"
             }
+        }
+        RowLayout {
+            visible: root.currentTab === 0
+            Kirigami.FormData.label: i18n("Background:")
+            ButtonGroup {
+                id: backgroundGroup
+            }
+            RadioButton {
+                id: blurRadioButton
+                text: i18n("Blur:")
+                ButtonGroup.group: backgroundGroup
+                visible: currentTab === 0
+            }
             Label {
-                text: i18n("Background:")
+                text: i18n("radius")
+            }
+            SpinBox {
+                id: fillBlurRadius
+                from: 0
+                to: 145
+            }
+            Button {
+                visible: root.cfg_FillBlurRadius > 64
+                icon.name: "dialog-warning"
+                ToolTip.text: i18n("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
+                hoverEnabled: true
+                flat: true
+                ToolTip.visible: hovered
+                Kirigami.Theme.inherit: false
+                Kirigami.Theme.textColor: root.Kirigami.Theme.neutralTextColor
+                Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
+                icon.color: Kirigami.Theme.neutralTextColor
+            }
+            RadioButton {
+                id: colorRadioButton
+                text: i18n("Solid color")
+                ButtonGroup.group: backgroundGroup
+                checked: !root.cfg_FillBlur
             }
             KQuickControls.ColorButton {
                 id: colorButton
                 dialogTitle: i18n("Select Background Color")
+                ButtonGroup.group: backgroundGroup
             }
         }
 
@@ -526,7 +565,7 @@ ColumnLayout {
             }
             Button {
                 visible: blurRadiusSpinBox.visible && cfg_BlurRadius > 64
-                icon.name: "dialog-information-symbolic"
+                icon.name: "dialog-warning"
                 ToolTip.text: i18n("Quality of the blur is reduced if value exceeds 64. Higher values may cause the blur to stop working!")
                 hoverEnabled: true
                 flat: true
@@ -563,7 +602,6 @@ ColumnLayout {
             CheckBox {
                 id: batteryDisablesBlurCheckBox
                 text: i18n("Disable blur")
-                visible: blurRadiusSpinBox.visible
             }
         }
 

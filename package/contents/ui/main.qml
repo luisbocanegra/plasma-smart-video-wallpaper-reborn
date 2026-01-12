@@ -21,6 +21,7 @@
 import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
+import org.kde.ksvg as KSvg
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
 import Qt5Compat.GraphicalEffects
@@ -253,6 +254,7 @@ WallpaperItem {
             anchors.fill: parent
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
+            visible: main.videosConfig.length !== 0
             onSetNextSource: {
                 main.nextVideo();
             }
@@ -265,58 +267,72 @@ WallpaperItem {
             changeWallpaperTimerMinutes: main.changeWallpaperTimerMinutes
             changeWallpaperTimerHours: main.changeWallpaperTimerHours
             fillMode: main.configuration.FillMode
+            fillBlur: main.configuration.FillBlur && !main.batteryDisablesBlur
+            fillBlurRadius: main.configuration.FillBlurRadius
             volume: main.volume
             playbackRate: main.playbackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
         }
+    }
+    FastBlur {
+        id: mainBlur
+        source: background
+        radius: main.showBlur ? main.configuration.BlurRadius : 0
+        visible: radius !== 0
+        anchors.fill: background
+        Behavior on radius {
+            NumberAnimation {
+                duration: main.blurAnimationDuration
+            }
+        }
+    }
 
-        FastBlur {
-            source: player
-            radius: main.showBlur ? main.configuration.BlurRadius : 0
-            visible: radius !== 0
+    PlasmaExtras.PlaceholderMessage {
+        visible: main.videosConfig.length == 0
+        anchors.centerIn: parent
+        width: parent.width - Kirigami.Units.gridUnit * 2
+        iconName: "video-symbolic"
+        text: i18n("No video source \n" + main.videoUrls)
+    }
+
+    Item {
+        visible: main.debugEnabled
+        implicitWidth: debugArea.implicitWidth + debugArea.anchors.leftMargin + debugArea.anchors.rightMargin
+        implicitHeight: debugArea.implicitHeight + debugArea.anchors.topMargin + debugArea.anchors.bottomMargin
+        x: 40
+        y: 100
+        KSvg.FrameSvgItem {
+            id: frameSvg
+            imagePath: "widgets/background"
             anchors.fill: parent
-            Behavior on radius {
-                NumberAnimation {
-                    duration: main.blurAnimationDuration
-                }
-            }
         }
-
-        PlasmaExtras.PlaceholderMessage {
-            visible: main.videosConfig.length == 0
-            anchors.centerIn: parent
-            width: parent.width - Kirigami.Units.gridUnit * 2
-            iconName: "video-symbolic"
-            text: i18n("No video source \n" + main.videoUrls)
-        }
-
         ColumnLayout {
-            id: root
-            visible: main.debugEnabled
-            Item {
-                Layout.preferredWidth: 1
-                Layout.preferredHeight: 100
+            id: debugArea
+            anchors {
+                fill: parent
+                leftMargin: frameSvg.fixedMargins.left
+                rightMargin: frameSvg.fixedMargins.right
+                topMargin: frameSvg.fixedMargins.top
+                bottomMargin: frameSvg.fixedMargins.bottom
             }
-            Kirigami.AbstractCard {
+            PlasmaComponents.Label {
                 Layout.margins: Kirigami.Units.largeSpacing
-                contentItem: PlasmaComponents.Label {
-                    text: {
-                        let text = `filename: ${main.currentSource.filename}\n`;
-                        text += `loops: ${main.currentSource.loop ?? false}\n`;
-                        text += `currentVideoIndex ${main.currentVideoIndex}\n`;
-                        text += `changeWallpaperMode ${main.changeWallpaperMode}\n`;
-                        text += `crossfade ${main.crossfadeEnabled}\n`;
-                        text += `crossfadeDuration ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
-                        text += `multipleVideos ${player.multipleVideos}\n`;
-                        text += `player ${player.player.objectName}\n`;
-                        text += `media status ${player.player.mediaStatus}\n`;
-                        text += `player1 playing ${player.player1.playing}\n`;
-                        text += `player2 playing ${player.player2.playing}\n`;
-                        text += `position ${player.player.position}\n`;
-                        text += `duration ${player.player.duration}\n`;
-                        text += `resumeLastVideo ${player.resumeLastVideo}`;
-                        return text;
-                    }
+                text: {
+                    let text = `filename: ${main.currentSource.filename}\n`;
+                    text += `loops: ${main.currentSource.loop ?? false}\n`;
+                    text += `currentVideoIndex ${main.currentVideoIndex}\n`;
+                    text += `changeWallpaperMode ${main.changeWallpaperMode}\n`;
+                    text += `crossfade ${main.crossfadeEnabled}\n`;
+                    text += `crossfadeDuration ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
+                    text += `multipleVideos ${player.multipleVideos}\n`;
+                    text += `player ${player.player.objectName}\n`;
+                    text += `media status ${player.player.mediaStatus}\n`;
+                    text += `player1 playing ${player.player1.playing}\n`;
+                    text += `player2 playing ${player.player2.playing}\n`;
+                    text += `position ${player.player.position}\n`;
+                    text += `duration ${player.player.duration}\n`;
+                    text += `resumeLastVideo ${player.resumeLastVideo}`;
+                    return text;
                 }
             }
         }
