@@ -132,5 +132,12 @@
       <label>Whether or not to resume last playing video on startup</label>
       <default>True</default>
     </entry>
+    <entry name="FillBlur" type="Bool">
+      <label>Blur background filling</label>
+      <default>true</default>
+    </entry>
+    <entry name="FillBlurRadius" type="Int">
+      <default>64</default>
+    </entry>
   </group>
 </kcfg>
