@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.plasma.plasmoid
 import "../" as Root
 
 RowLayout {
@@ -15,16 +14,30 @@ RowLayout {
     readonly property string projects: "https://github.com/" + ghUser + "?tab=repositories&q=&type=source&language=&sort=stargazers"
     readonly property string kdeStore: "https://store.kde.org/p/2139746"
     readonly property string matrixRoom: "https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org"
-    property string wallpaperVersion: Plasmoid.metaData.version
+    property string wallpaperVersion // Plasmoid.metaData.version doesn't work in wallpaper plugin settings
 
     Component.onCompleted: {
         const metaDataFile = Qt.resolvedUrl("../../../").toString().substring(7) + "metadata.json";
-        console.log(metaDataFile);
+        runCommand.run(`cat "${metaDataFile}"`);
     }
 
-    // RowLayout {
-    // }
-    Layout.alignment: Qt.AlignRight
+    Root.RunCommand {
+        id: runCommand
+        onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
+            if (exitCode !== 0) {
+                root.wallpaperVersion = stderr;
+                console.log(cmd, stderr);
+            } else {
+                try {
+                    root.wallpaperVersion = JSON.parse(stdout).KPlugin.Version;
+                } catch (e) {
+                    console.log(e);
+                    root.wallpaperVersion = e;
+                }
+            }
+        }
+    }
+
     Label {
         text: wallpaperVersion
         font.weight: Font.DemiBold
