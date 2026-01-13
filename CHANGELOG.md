@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.9.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.1...v2.9.0) (2026-01-13)
+
+
+### Features
+
+* fill background with blur when using Keep Proportions positioning ([7e952c9](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7e952c91098592a3c5fc4529c62f86d184a1f3a1))
+* misc settings UI adjustments ([1fb5146](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/1fb5146a74add9c389c4804832418f63f7d60fdd))
+
+
+### Bug Fixes
+
+* version fetching in wallpaper settings ([5059bd8](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5059bd8857c8d81a23eed128275fb6e1cf751733))
+
 ## [2.8.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.0...v2.8.1) (2025-12-26)
 
 
