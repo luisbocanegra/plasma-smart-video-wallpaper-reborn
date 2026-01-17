@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.9.0...v2.9.1) (2026-01-17)
+
+
+### Bug Fixes
+
+* recover command ([06923ba](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/06923ba7bedc6e02461d7c65b67d4a96b49f72a4))
+
 ## [2.9.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.1...v2.9.0) (2026-01-13)
 
 
