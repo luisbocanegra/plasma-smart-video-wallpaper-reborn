@@ -58,7 +58,7 @@ ColumnLayout {
     property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
     property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
-    property alias cfg_PlaybackRate: playbackRateSlider.value
+    property real cfg_PlaybackRate
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
@@ -487,25 +487,24 @@ ColumnLayout {
         RowLayout {
             Kirigami.FormData.label: i18n("Speed:")
             visible: root.currentTab === 1
-            Slider {
+            Components.DoubleSpinBox {
                 id: playbackRateSlider
-                from: 0
-                value: root.cfg_PlaybackRate
-                to: 2
-                stepSize: 0.05
-                Layout.preferredWidth: 300
-            }
-            Label {
-                text: parseFloat(playbackRateSlider.value).toFixed(2) + "x"
+                from: 0.01 * multiplier
+                to: 2 * multiplier
+                value: root.cfg_PlaybackRate * multiplier
+                stepSize: 0.01 * multiplier
                 font.features: {
                     "tnum": 1
+                }
+                onValueModified: {
+                    root.cfg_PlaybackRate = value / playbackRateSlider.multiplier;
                 }
             }
             Button {
                 icon.name: "edit-undo-symbolic"
                 flat: true
                 onClicked: {
-                    playbackRateSlider.value = 1.0;
+                    root.cfg_PlaybackRate = 1.0;
                 }
                 ToolTip.text: i18n("Reset to default")
                 ToolTip.visible: hovered
@@ -1048,10 +1047,10 @@ ColumnLayout {
 
                             Components.DoubleSpinBox {
                                 id: playbackRate
-                                from: 0 * multiplier
+                                from: 0
                                 to: 2 * multiplier
                                 value: itemDelegate.playbackRate * multiplier
-                                stepSize: 0.1 * multiplier
+                                stepSize: 0.01 * multiplier
                                 enabled: itemDelegate.enabled
                                 font.features: {
                                     "tnum": 1
@@ -1061,7 +1060,7 @@ ColumnLayout {
                                 }
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
-                                ToolTip.text: i18n("Playback speed for this video. Set 0.0 to disable")
+                                ToolTip.text: i18n("Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore this setting.")
                             }
                             Button {
                                 icon.name: "media-repeat-single-symbolic"

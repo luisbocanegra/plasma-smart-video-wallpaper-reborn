@@ -10,7 +10,7 @@ Item {
     property bool fillBlur: true
     property alias source: player.source
     property alias muted: audioOutput.muted
-    property alias playbackRate: player.playbackRate
+    property real playbackRate
     property alias fillMode: videoOutput.fillMode
     property alias loops: player.loops
     property alias position: player.position
@@ -58,6 +58,10 @@ Item {
         videoOutput: videoOutput
         audioOutput: audioOutput
         loops: root.loops
+        // Ignore very small values as it makes the video go crazy fast, stops
+        // responding to this property and needs to be stopped to recover
+        // TODO: Check if this has been reported to Qt
+        playbackRate: Math.max(root.playbackRate, 0.01)
     }
 
     ShaderEffectSource {
