@@ -894,7 +894,7 @@ ColumnLayout {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
                     Repeater {
-                        model: effects.loadedEffects.sort()
+                        model: effects.loadedEffects ? effects.loadedEffects.slice().sort() : []
                         Kirigami.SelectableLabel {
                             required property int index
                             required property string modelData
