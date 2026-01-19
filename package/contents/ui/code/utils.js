@@ -3,6 +3,7 @@ function parseCompat(cfgStr) {
   try {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
+      video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
       videos.push(video);
     });
   } catch (e) {
@@ -24,6 +25,7 @@ function createVideo(filename) {
     "duration": 0,
     "customDuration": 0,
     "playbackRate": 0.0,
+    "alternativePlaybackRate": 0.0,
     "loop": false
   };
 }

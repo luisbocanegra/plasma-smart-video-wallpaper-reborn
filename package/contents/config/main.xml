@@ -81,6 +81,9 @@
     <entry name="EffectsShowBlur" type="String">
       <default></default>
     </entry>
+    <entry name="EffectsAlternativeSpeed" type="String">
+      <default></default>
+    </entry>
     <entry name="BlurAnimationDuration" type="Int">
       <default>300</default>
     </entry>
@@ -138,6 +141,18 @@
     </entry>
     <entry name="FillBlurRadius" type="Int">
       <default>64</default>
+    </entry>
+    <!-- Alternative playback rate
+        0: when existing a maximized or full-screen windows
+        1: when a visible window is active
+        2: when a window is visible
+        3: never
+    -->
+    <entry name="AlternativePlaybackRateMode" type="Int">
+      <default>3</default>
+    </entry>
+    <entry name="AlternativePlaybackRate" type="Double">
+      <default>0.5</default>
     </entry>
   </group>
 </kcfg>

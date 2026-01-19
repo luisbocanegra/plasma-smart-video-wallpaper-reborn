@@ -24,6 +24,8 @@ Item {
     property bool resumeLastVideo: true
     property int fillBlurRadius: 32
     property bool fillBlur: true
+    property real alternativePlaybackRateGlobal: 0.5
+    property bool useAlternativePlaybackRate: false
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
@@ -100,7 +102,12 @@ Item {
         anchors.fill: parent
         property var playerSource: root.currentSource
         property int actualDuration: duration / playbackRate
-        playbackRate: playerSource.playbackRate || root.playbackRate
+        playbackRate: {
+            if (root.useAlternativePlaybackRate) {
+                return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
+            }
+            return playerSource.playbackRate || root.playbackRate;
+        }
         source: playerSource.filename ?? ""
         volume: root.volume
         muted: root.muted
@@ -190,7 +197,12 @@ Item {
         anchors.fill: parent
         property var playerSource: Utils.createVideo("")
         property int actualDuration: duration / playbackRate
-        playbackRate: playerSource.playbackRate || root.playbackRate
+        playbackRate: {
+            if (root.useAlternativePlaybackRate) {
+                return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
+            }
+            return playerSource.playbackRate || root.playbackRate;
+        }
         source: playerSource.filename ?? ""
         volume: root.volume
         muted: root.muted
