@@ -31,7 +31,7 @@ function createVideo(filename) {
 }
 
 /**
- * 
+ *
  * @param {String} filename File path
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
@@ -42,7 +42,7 @@ function getVideoByFile(filename, videosConfig) {
 }
 
 /**
- * 
+ *
  * @param {int} index Video index
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
@@ -84,6 +84,21 @@ function delay(interval, callback, parentItem) {
     timer.destroy();
   });
   timer.start();
+}
+
+/**
+ * Generates an SVG string for displaying video annotation badge
+ * @param {String} text - The text to insert in the badge (e.g., "4K", "HDR")
+ * @param {String} bgColor - The background color of the badge. Defaults to blue ('#4285F4')
+ * @param {String} fgColor - The color of the text. Defaults to white.
+ * @returns {String} SVG string representing the badge
+ */
+function generateBadge(text, bgColor="#4285F4", fgColor="white") {
+  return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="200" height="100" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="20" width="160" height="60" rx="10" ry="10" fill="${bgColor}"/>
+  <text x="100" y="60" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="${fgColor}">${text}</text>
+</svg>`;
 }
 
 // a rudimentary way to parse gdbus GVariant into a valid js object
