@@ -26,6 +26,7 @@ import QtMultimedia
 import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
+import "code/utils.js" as Utils
 import "components" as Components
 
 /**
@@ -1145,6 +1146,13 @@ ColumnLayout {
                                             filenameTextField.forceActiveFocus();
                                         }
                                     }
+                                }
+                                Image {
+                                    id: videoResolutionBadge
+                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge("1080p"))
+                                    Layout.fillHeight: true
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: itemDelegate.enabled
                                 }
                             }
 
