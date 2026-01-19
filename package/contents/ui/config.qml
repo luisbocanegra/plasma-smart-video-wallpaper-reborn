@@ -1081,8 +1081,63 @@ ColumnLayout {
                     required property real playbackRate
                     required property real alternativePlaybackRate
                     required property bool loop
+                    required property int videoWidth
+                    required property int videoHeight
+                    required property string videoCodec
+                    required property int videoBitRate
+                    required property real videoFrameRate
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
+
+                    // Hidden MediaPlayer for lazy-loading metadata
+                    MediaPlayer {
+                        id: metadataLoader
+                        audioOutput: AudioOutput { muted: true }
+
+                        onMediaStatusChanged: {
+                            if (mediaStatus === MediaPlayer.LoadedMedia) {
+                                // Extract metadata when media is loaded
+                                const width = metaData.value(MediaMetaData.Resolution)?.width ?? 0;
+                                const height = metaData.value(MediaMetaData.Resolution)?.height ?? 0;
+                                const codec = metaData.stringValue(MediaMetaData.VideoCodec) ?? "";
+                                const bitRate = metaData.value(MediaMetaData.VideoBitRate) ?? 0;
+                                const frameRate = metaData.value(MediaMetaData.VideoFrameRate) ?? 0.0;
+
+
+                                // Only update if we got valid metadata and it differs from current values
+                                if (width > 0 && height > 0 &&
+                                    (itemDelegate.videoWidth !== width || itemDelegate.videoHeight !== height)) {
+                                    videosModel.updateItem(itemDelegate.index, "videoWidth", width);
+                                    videosModel.updateItem(itemDelegate.index, "videoHeight", height);
+                                    videosModel.updateItem(itemDelegate.index, "videoCodec", codec);
+                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", bitRate);
+                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", frameRate);
+                                }
+
+                                // Stop and unload to free resources
+                                metadataLoader.stop();
+                                metadataLoader.source = "";
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            // Only load if we don't have metadata yet and filename is not empty
+                            if (itemDelegate.filename !== "" && itemDelegate.videoWidth === 0 && itemDelegate.videoHeight === 0) {
+                                metadataLoader.source = itemDelegate.filename;
+                            }
+                        }
+                    }
+
+                    // Reload metadata when filename changes
+                    Connections {
+                        target: itemDelegate
+                        function onFilenameChanged() {
+                            if (itemDelegate.filename !== "" && metadataLoader) {
+                                metadataLoader.source = itemDelegate.filename;
+                            }
+                        }
+                    }
+
                     ItemDelegate {
                         id: delegate
                         implicitWidth: itemDelegate.implicitWidth
@@ -1149,13 +1204,19 @@ ColumnLayout {
                                 }
                                 Image {
                                     id: videoResolutionBadge
-                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge("1080p"))
+                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.resolutionLabel(itemDelegate)));
                                     Layout.fillHeight: true
                                     fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.enabled
+                                    visible: itemDelegate.enabled && source !== ""
+                                }
+                                Image {
+                                    id: videoAspectBadge
+                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.aspectRatioLabel(itemDelegate)));
+                                    Layout.fillHeight: true
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: itemDelegate.enabled && source !== ""
                                 }
                             }
-
                             Components.DoubleSpinBox {
                                 id: playbackRate
                                 from: 0

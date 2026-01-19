@@ -27,7 +27,12 @@ Item {
             "customDuration": 0,
             "playbackRate": 0.0,
             "alternativePlaybackRate": 0.0,
-            "loop": false
+            "loop": false,
+            "videoWidth": 0,
+            "videoHeight": 0,
+            "videoCodec": "",
+            "videoBitRate": 0,
+            "videoFrameRate": 0.0,
         });
         updated();
     }
@@ -98,5 +103,55 @@ Item {
             }
         }
         updated();
+    }
+
+    function resolutionLabel(item) {
+        if (item.videoWidth === 0 || item.videoHeight === 0) {
+            return "";
+        }
+
+        // Format resolution as a nice label
+        let resolutionLabel = "";
+        const height = item.videoHeight;
+
+        // Common resolution names
+        if (height >= 2160) {
+            resolutionLabel = "4K";
+        } else if (height >= 1440) {
+            resolutionLabel = "2K";
+        } else if (height >= 1080) {
+            resolutionLabel = "1080p";
+        } else if (height >= 720) {
+            resolutionLabel = "720p";
+        } else if (height >= 480) {
+            resolutionLabel = "480p";
+        } else {
+            resolutionLabel = "Low";
+        }
+
+        return resolutionLabel;
+    }
+
+    function aspectRatioLabel(item) {
+        if (item.videoWidth === 0 || item.videoHeight === 0) {
+            return "";
+        }
+
+        let aspectRatioLabel = ""
+        const ratio = 1.0 * item.videoWidth / item.videoHeight;
+        if ((ratio > 1.13) && (ratio < 1.50)) {
+            aspectRatioLabel = "4:3";
+        } else if (ratio < 2.00) {
+            aspectRatioLabel = "16:9";
+        }
+        else if (ratio < 2.68) {
+            aspectRatioLabel = "21:9";
+        }
+        else if ((ratio > 3.02) && (ratio < 4.09)) {
+            aspectRatioLabel = "32:9";
+        } else {
+            aspectRatioLabel = ratio.toFixed(2);
+        }
+        return aspectRatioLabel;
     }
 }

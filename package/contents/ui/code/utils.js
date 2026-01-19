@@ -4,6 +4,11 @@ function parseCompat(cfgStr) {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
       video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
+      video.videoWidth = video.videoWidth ?? 0;
+      video.videoHeight = video.videoHeight ?? 0;
+      video.videoCodec = video.videoCodec ?? "";
+      video.videoBitRate = video.videoBitRate ?? 0;
+      video.videoFrameRate = video.videoFrameRate ?? 0.0;
       videos.push(video);
     });
   } catch (e) {
@@ -26,7 +31,12 @@ function createVideo(filename) {
     "customDuration": 0,
     "playbackRate": 0.0,
     "alternativePlaybackRate": 0.0,
-    "loop": false
+    "loop": false,
+    "videoWidth": 0,
+    "videoHeight": 0,
+    "videoCodec": "",
+    "videoBitRate": 0,
+    "videoFrameRate": 0.0,
   };
 }
 
