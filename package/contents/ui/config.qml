@@ -37,6 +37,7 @@ ColumnLayout {
     property var parentLayout
     property alias cfg_FillMode: videoFillMode.currentValue
     property alias cfg_PauseMode: pauseModeCombo.currentValue
+    property alias cfg_AlternativePlaybackRateMode: alternativePlaybackRateMode.currentValue
     property alias cfg_BackgroundColor: colorButton.color
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
     property alias cfg_BatteryPausesVideo: batteryPausesVideoCheckBox.checked
@@ -55,10 +56,12 @@ ColumnLayout {
     property alias cfg_EffectsPauseVideo: effectsPauseVideoInput.text
     property alias cfg_EffectsShowBlur: effectsShowBlurInput.text
     property alias cfg_EffectsHideBlur: effectsHideBlurInput.text
+    property alias cfg_EffectsAlternativeSpeed: effectsAlternativeSpeedInput.text
     property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
     property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
     property real cfg_PlaybackRate
+    property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
@@ -166,6 +169,7 @@ ColumnLayout {
                 duration: item.duration,
                 customDuration: item.customDuration,
                 playbackRate: item.playbackRate,
+                alternativePlaybackRate: item.alternativePlaybackRate,
                 loop: item.loop
             });
         }
@@ -336,9 +340,6 @@ ColumnLayout {
                 valueFromText: function (text, locale) {
                     return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
                 }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
-                }
             }
             Button {
                 visible: root.cfg_FillBlurRadius > 64
@@ -418,9 +419,6 @@ ColumnLayout {
                 valueFromText: function (text, locale) {
                     return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
                 }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
-                }
             }
             SpinBox {
                 id: wallpaperTimerMinutes
@@ -441,9 +439,6 @@ ColumnLayout {
                 }
                 valueFromText: function (text, locale) {
                     return parseInt(text);
-                }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
                 }
             }
             SpinBox {
@@ -466,9 +461,6 @@ ColumnLayout {
                 valueFromText: function (text, locale) {
                     return Number.fromLocaleString(locale, reExtractNum.exec(text)[0]);
                 }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
-                }
             }
         }
 
@@ -488,7 +480,7 @@ ColumnLayout {
             Kirigami.FormData.label: i18n("Speed:")
             visible: root.currentTab === 1
             Components.DoubleSpinBox {
-                id: playbackRateSlider
+                id: playbackRateGlobal
                 from: 0.01 * multiplier
                 to: 2 * multiplier
                 value: root.cfg_PlaybackRate * multiplier
@@ -497,7 +489,7 @@ ColumnLayout {
                     "tnum": 1
                 }
                 onValueModified: {
-                    root.cfg_PlaybackRate = value / playbackRateSlider.multiplier;
+                    root.cfg_PlaybackRate = value / playbackRateGlobal.multiplier;
                 }
             }
             Button {
@@ -540,9 +532,6 @@ ColumnLayout {
                 }
                 valueFromText: function (text, locale) {
                     return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
-                }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
                 }
             }
             Button {
@@ -640,6 +629,21 @@ ColumnLayout {
                 id: blurRadiusSpinBox
                 from: 0
                 to: 145
+                font.features: {
+                    "tnum": 1
+                }
+                readonly property regexp reExtractNum: /\D*?(-?\d*\.?\d*)\D*$/
+
+                validator: RegularExpressionValidator {
+                    regularExpression: blurRadiusSpinBox.reExtractNum
+                }
+
+                textFromValue: function (value, locale) {
+                    return i18n("%1px", value);
+                }
+                valueFromText: function (text, locale) {
+                    return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
+                }
             }
             Button {
                 visible: blurRadiusSpinBox.visible && root.cfg_BlurRadius > 64
@@ -661,6 +665,76 @@ ColumnLayout {
                 from: 0
                 to: 9999
                 stepSize: 100
+                font.features: {
+                    "tnum": 1
+                }
+
+                readonly property regexp reExtractNum: /\D*?(-?\d*\.?\d*)\D*$/
+
+                validator: RegularExpressionValidator {
+                    regularExpression: blurAnimationDurationSpinBox.reExtractNum
+                }
+
+                textFromValue: function (value, locale) {
+                    return i18nc("animation duration", "%1ms", value);
+                }
+                valueFromText: function (text, locale) {
+                    return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
+                }
+            }
+        }
+
+        ComboBox {
+            id: alternativePlaybackRateMode
+            Kirigami.FormData.label: i18n("Alternative speed:")
+            model: [
+                {
+                    text: i18n("Maximized or full-screen windows"),
+                    value: Enum.PauseMode.MaximizedOrFullScreen
+                },
+                {
+                    text: i18n("Active window"),
+                    value: Enum.PauseMode.ActiveWindowPresent
+                },
+                {
+                    text: i18n("At least one window is visible"),
+                    value: Enum.PauseMode.WindowVisible
+                },
+                {
+                    text: i18n("Never"),
+                    value: Enum.PauseMode.Never
+                }
+            ]
+            textRole: "text"
+            valueRole: "value"
+            visible: !root.isLockScreenSettings && root.currentTab === 1
+        }
+
+        RowLayout {
+            visible: root.currentTab === 1 && root.cfg_AlternativePlaybackRateMode !== 3
+            Label {
+                text: i18n("Speed:")
+            }
+            Components.DoubleSpinBox {
+                from: 0.01 * multiplier
+                to: 2 * multiplier
+                value: root.cfg_AlternativePlaybackRate * multiplier
+                stepSize: 0.01 * multiplier
+                font.features: {
+                    "tnum": 1
+                }
+                onValueModified: {
+                    root.cfg_AlternativePlaybackRate = value / multiplier;
+                }
+            }
+            Button {
+                icon.name: "edit-undo-symbolic"
+                flat: true
+                onClicked: {
+                    root.cfg_AlternativePlaybackRate = 1.0;
+                }
+                ToolTip.text: i18n("Reset to default")
+                ToolTip.visible: hovered
             }
         }
 
@@ -685,9 +759,6 @@ ColumnLayout {
                 }
                 valueFromText: function (text, locale) {
                     return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
-                }
-                onDisplayTextChanged: {
-                    value = Number.fromLocaleString(Qt.locale(), reExtractNum.exec(displayText)[1]);
                 }
             }
             CheckBox {
@@ -775,6 +846,14 @@ ColumnLayout {
             id: effectsHideBlurInput
             Layout.maximumWidth: 400
             Kirigami.FormData.label: i18n("Hide blur in:")
+            visible: root.currentTab === 2
+            model: effects.loadedEffects
+        }
+
+        Components.CheckableValueListView {
+            id: effectsAlternativeSpeedInput
+            Layout.maximumWidth: 400
+            Kirigami.FormData.label: i18n("Alternative speed in:")
             visible: root.currentTab === 2
             model: effects.loadedEffects
         }
@@ -976,6 +1055,7 @@ ColumnLayout {
                     required property string filename
                     required property bool enabled
                     required property real playbackRate
+                    required property real alternativePlaybackRate
                     required property bool loop
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
@@ -1061,6 +1141,23 @@ ColumnLayout {
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18n("Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore this setting.")
+                            }
+
+                            Components.DoubleSpinBox {
+                                from: 0
+                                to: 2 * multiplier
+                                value: itemDelegate.alternativePlaybackRate * multiplier
+                                stepSize: 0.01 * multiplier
+                                enabled: itemDelegate.enabled
+                                font.features: {
+                                    "tnum": 1
+                                }
+                                onValueModified: {
+                                    videosModel.updateItem(itemDelegate.index, "alternativePlaybackRate", value / multiplier);
+                                }
+                                ToolTip.delay: 1000
+                                ToolTip.visible: hovered
+                                ToolTip.text: i18n("Alternative playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore this setting.")
                             }
                             Button {
                                 icon.name: "media-repeat-single-symbolic"

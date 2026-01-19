@@ -118,8 +118,10 @@ WallpaperItem {
     property var activeEffects: effectsModel.activeEffects
     property var effectsHideBlur: main.configuration.EffectsHideBlur.split(",").filter(Boolean)
     property var effectsShowBlur: main.configuration.EffectsShowBlur.split(",").filter(Boolean)
+    property var effectsAlternativeSpeed: main.configuration.EffectsAlternativeSpeed.split(",").filter(Boolean)
     property bool effectHideBlur: effectsHideBlur.some(item => activeEffects.includes(item))
     property bool effectShowBlur: effectsShowBlur.some(item => activeEffects.includes(item))
+    property bool effectAlternativeSpeed: effectsAlternativeSpeed.some(item => activeEffects.includes(item))
 
     property var effectsPauseVideo: main.configuration.EffectsPauseVideo.split(",").filter(Boolean)
     property var effectsPlayVideo: main.configuration.EffectsPlayVideo.split(",").filter(Boolean)
@@ -166,6 +168,31 @@ WallpaperItem {
             mute = true;
         }
         return mute;
+    }
+    property bool useAlternativePlaybackRate: {
+        if (lockScreenMode) {
+            return false;
+        }
+
+        if (effectAlternativeSpeed) {
+            return true;
+        }
+
+        let r = false;
+        switch (main.configuration.AlternativePlaybackRateMode) {
+        case Enum.PauseMode.MaximizedOrFullScreen:
+            r = windowModel.maximizedExists;
+            break;
+        case Enum.PauseMode.ActiveWindowPresent:
+            r = windowModel.activeExists;
+            break;
+        case Enum.PauseMode.WindowVisible:
+            r = windowModel.visibleExists;
+            break;
+        case Enum.PauseMode.Never:
+            r = false;
+        }
+        return r;
     }
 
     function getVideos() {
@@ -271,6 +298,8 @@ WallpaperItem {
             fillBlurRadius: main.configuration.FillBlurRadius
             volume: main.volume
             playbackRate: main.playbackRate
+            useAlternativePlaybackRate: main.useAlternativePlaybackRate
+            alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
         }
     }
