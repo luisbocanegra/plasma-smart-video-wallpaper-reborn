@@ -73,6 +73,42 @@ function dumpProps(obj) {
   }
 }
 
+function dumpVideoMetadata(filename, metaData) {
+  // Dump all available metadata keys and values
+  console.log("=== Metadata Dump ===");
+  console.log("Filename:", filename);
+  console.log("MetaData object:", metaData);
+  console.log("MetaData keys():", metaData.keys());
+  console.log("Checking known MediaMetaData properties:");
+
+  // List of known MediaMetaData enum values to check
+  const knownKeys = [
+      'Title', 'Author', 'Comment', 'Description', 'Genre', 'Date',
+      'Language', 'Publisher', 'Copyright', 'Url',
+      'Duration', 'MediaType', 'FileFormat', 'AudioBitRate', 'AudioCodec',
+      'VideoBitRate', 'VideoCodec', 'VideoFrameRate', 'VideoWidth', 'VideoHeight',
+      'Orientation', 'Resolution', 'LeadPerformer', 'ContributingArtist',
+      'AlbumTitle', 'AlbumArtist', 'TrackNumber', 'Composer',
+      'ThumbnailImage', 'CoverArtImage',
+      // Qt 6.8+ HDR-related
+      'ColorSpace', 'ColorTransfer', 'HasHdrContent'
+  ];
+
+  knownKeys.forEach(key => {
+      try {
+          if (typeof MediaMetaData[key] !== 'undefined') {
+              const value = metaData.value(MediaMetaData[key]);
+              if (value !== undefined && value !== null && value !== "") {
+                  console.log(`  ${key}:`, value);
+              }
+          }
+      } catch (e) {
+          // Property doesn't exist or can't be read
+      }
+  });
+  console.log("=== End Metadata Dump ===");
+}
+
 // randomize array using Durstenfeld shuffle algorithm
 function shuffleArray(array) {
   for (let i = array.length - 1; i >= 0; i--) {

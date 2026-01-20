@@ -1097,6 +1097,10 @@ ColumnLayout {
 
                         onMediaStatusChanged: {
                             if (mediaStatus === MediaPlayer.LoadedMedia) {
+                                if (cfg_DebugEnabled) {
+                                    Utils.dumpVideoMetadata(itemDelegate.filename, metaData);
+                                }
+
                                 // Extract metadata when media is loaded
                                 const width = metaData.value(MediaMetaData.Resolution)?.width ?? 0;
                                 const height = metaData.value(MediaMetaData.Resolution)?.height ?? 0;
