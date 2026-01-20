@@ -1220,31 +1220,31 @@ ColumnLayout {
                                 }
                                 Image {
                                     id: videoHdrBadge
-                                    source: itemDelegate.isHdr ? "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge("HDR", "#FF6B00")) : ""
+                                    source: videosModel.getHdrBadge(itemDelegate)
                                     Layout.fillHeight: true
                                     fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.enabled && itemDelegate.isHdr
+                                    visible: itemDelegate.isHdr
                                 }
                                 Image {
                                     id: videoCodecBadge
-                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.videoCodecLabel(itemDelegate)));
+                                    source: videosModel.getCodecBadge(itemDelegate)
                                     Layout.fillHeight: true
                                     fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.enabled && source !== "" && itemDelegate.videoCodec !== "Unspecified"
+                                    visible: source !== "" && itemDelegate.videoCodec !== "Unspecified"
                                 }
                                 Image {
                                     id: videoResolutionBadge
-                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.resolutionLabel(itemDelegate)));
+                                    source: videosModel.getResolutionBadge(itemDelegate)
                                     Layout.fillHeight: true
                                     fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.enabled && source !== ""
+                                    visible: source !== ""
                                 }
                                 Image {
                                     id: videoAspectBadge
-                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.aspectRatioLabel(itemDelegate)));
+                                    source: videosModel.getAspectBadge(itemDelegate)
                                     Layout.fillHeight: true
                                     fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.enabled && source !== ""
+                                    visible: source !== ""
                                 }
                             }
                             Components.DoubleSpinBox {
