@@ -107,9 +107,9 @@ function delay(interval, callback, parentItem) {
  */
 function generateBadge(text, bgColor="#4285F4", fgColor="white") {
   return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="80" height="40" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-  <rect x="20" y="20" width="160" height="60" rx="10" ry="10" fill="${bgColor}"/>
-  <text x="100" y="60" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="${fgColor}">${text}</text>
+<svg width="64" height="32" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="12" y="12" width="176" height="76" rx="10" ry="10" fill="${bgColor}"/>
+  <text x="100" y="64" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" fill="${fgColor}">${text}</text>
 </svg>`;
 }
 
