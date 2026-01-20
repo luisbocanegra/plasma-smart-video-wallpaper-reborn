@@ -9,6 +9,7 @@ function parseCompat(cfgStr) {
       video.videoCodec = video.videoCodec ?? "";
       video.videoBitRate = video.videoBitRate ?? 0;
       video.videoFrameRate = video.videoFrameRate ?? 0.0;
+      video.isHdr = video.isHdr ?? false;
       videos.push(video);
     });
   } catch (e) {
@@ -37,6 +38,7 @@ function createVideo(filename) {
     "videoCodec": "",
     "videoBitRate": 0,
     "videoFrameRate": 0.0,
+    "isHdr": false,
   };
 }
 

@@ -1086,6 +1086,7 @@ ColumnLayout {
                     required property string videoCodec
                     required property int videoBitRate
                     required property real videoFrameRate
+                    required property bool isHdr
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
 
@@ -1103,6 +1104,16 @@ ColumnLayout {
                                 const bitRate = metaData.value(MediaMetaData.VideoBitRate) ?? 0;
                                 const frameRate = metaData.value(MediaMetaData.VideoFrameRate) ?? 0.0;
 
+                                // Check for HDR support
+                                // Try to detect if MediaMetaData has HDR-related properties
+                                let isHdr = false;
+                                try {
+                                    // Try to check the HasHdrContent property (Qt 6.8+)
+                                    isHdr = metaData.value(MediaMetaData.HasHdrContent) ?? false;
+                                } catch (e) {
+                                    // If HDR detection fails, just continue without it
+                                    // No need to log as this is expected on older Qt versions
+                                }
 
                                 // Only update if we got valid metadata and it differs from current values
                                 if (width > 0 && height > 0 &&
@@ -1112,6 +1123,7 @@ ColumnLayout {
                                     videosModel.updateItem(itemDelegate.index, "videoCodec", codec);
                                     videosModel.updateItem(itemDelegate.index, "videoBitRate", bitRate);
                                     videosModel.updateItem(itemDelegate.index, "videoFrameRate", frameRate);
+                                    videosModel.updateItem(itemDelegate.index, "isHdr", isHdr);
                                 }
 
                                 // Stop and unload to free resources
@@ -1201,6 +1213,13 @@ ColumnLayout {
                                             filenameTextField.forceActiveFocus();
                                         }
                                     }
+                                }
+                                Image {
+                                    id: videoHdrBadge
+                                    source: itemDelegate.isHdr ? "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge("HDR", "#FF6B00")) : ""
+                                    Layout.fillHeight: true
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: itemDelegate.enabled && itemDelegate.isHdr
                                 }
                                 Image {
                                     id: videoResolutionBadge

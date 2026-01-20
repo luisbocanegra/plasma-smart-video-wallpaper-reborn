@@ -33,6 +33,7 @@ Item {
             "videoCodec": "",
             "videoBitRate": 0,
             "videoFrameRate": 0.0,
+            "isHdr": false,
         });
         updated();
     }
@@ -137,21 +138,38 @@ Item {
             return "";
         }
 
-        let aspectRatioLabel = ""
+        let aspectRatioLabel = "";
         const ratio = 1.0 * item.videoWidth / item.videoHeight;
-        if ((ratio > 1.13) && (ratio < 1.50)) {
+        // Anything that is roughly +/-15% counts.
+        if (item.videoHeight > item.videoWidth) {
+            // Provide a tall numberic ratio.
+            const tall_ratio = 1.0 * item.videoHeight / item.videoWidth;
+            aspectRatioLabel = "1:" + tall_ratio.toFixed(2);
+        } else if (item.videoWidth === item.videoHeight) {
+            // Edge case of equal sides.
+            aspectRatioLabel = "1:1";
+        } else if ((ratio > 1.13) && (ratio < 1.52)) {
+            // Officially 1.33, but we allow anything +/-15% or
+            // between 1.133333 and 1.533333, except see below.
             aspectRatioLabel = "4:3";
         } else if (ratio < 2.00) {
+            // Officially 1.78, but we allow anything +/-15% or
+            // between 1.5111111 and 2.044444, except see above and below.
             aspectRatioLabel = "16:9";
         }
         else if (ratio < 2.68) {
+            // Actual is 2.33, but we allow anything +/-15% or
+            // between 1.9833333 and 2.6833333, except see above.
             aspectRatioLabel = "21:9";
         }
         else if ((ratio > 3.02) && (ratio < 4.09)) {
+            // Actual is 3.55555, between 3.022222 and 4.088888 counts.
             aspectRatioLabel = "32:9";
         } else {
-            aspectRatioLabel = ratio.toFixed(2);
+            // Provide a wide numeric ratio.
+            aspectRatioLabel = ratio.toFixed(2) + ":1";
         }
         return aspectRatioLabel;
     }
+
 }
