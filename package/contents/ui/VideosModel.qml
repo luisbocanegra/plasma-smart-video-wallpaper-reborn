@@ -117,7 +117,11 @@ Item {
         const height = item.videoHeight;
 
         // Common resolution names
-        if (height >= 2160) {
+        if (height >= 4320) {
+            resolutionLabel = "8K";
+        } else if (height >= 3160) {
+            resolutionLabel = "6K";
+        } else if (height >= 2160) {
             resolutionLabel = "4K";
         } else if (height >= 1440) {
             resolutionLabel = "2K";
@@ -176,6 +180,6 @@ Item {
     function videoCodecLabel(item) {
         // videoCodec is stored as a string, just return it directly
         // or format it if needed
-        return item.videoCodec || "Unknown";
+        return item.videoCodec || "UNK";
     }
 }
