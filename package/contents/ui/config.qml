@@ -1222,6 +1222,13 @@ ColumnLayout {
                                     visible: itemDelegate.enabled && itemDelegate.isHdr
                                 }
                                 Image {
+                                    id: videoCodecBadge
+                                    source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.videoCodecLabel(itemDelegate)));
+                                    Layout.fillHeight: true
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: itemDelegate.enabled && source !== "" && itemDelegate.videoCodec !== "Unspecified"
+                                }
+                                Image {
                                     id: videoResolutionBadge
                                     source: "data:image/svg+xml;base64," + Qt.btoa(Utils.generateBadge(videosModel.resolutionLabel(itemDelegate)));
                                     Layout.fillHeight: true

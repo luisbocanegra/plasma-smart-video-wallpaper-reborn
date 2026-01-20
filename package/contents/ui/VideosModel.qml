@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtMultimedia
 import "code/utils.js" as Utils
 
 Item {
@@ -172,4 +173,9 @@ Item {
         return aspectRatioLabel;
     }
 
+    function videoCodecLabel(item) {
+        // videoCodec is stored as a string, just return it directly
+        // or format it if needed
+        return item.videoCodec || "Unknown";
+    }
 }
