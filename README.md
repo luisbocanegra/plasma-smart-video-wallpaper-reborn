@@ -203,3 +203,4 @@ If you like the project please consider donating/sponsoring this and [my other o
 
 - This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
 - [Zren's kpac](https://github.com/Zren/plasma-applet-lib) to manage translations
+- Brand icons from [Simple Icons](https://simpleicons.org)

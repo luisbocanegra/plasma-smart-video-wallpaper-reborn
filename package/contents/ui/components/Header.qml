@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "../" as Root
+import "../"
 
 RowLayout {
     id: root
@@ -14,32 +14,13 @@ RowLayout {
     readonly property string projects: "https://github.com/" + ghUser + "?tab=repositories&q=&type=source&language=&sort=stargazers"
     readonly property string kdeStore: "https://store.kde.org/p/2139746"
     readonly property string matrixRoom: "https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org"
-    property string wallpaperVersion // Plasmoid.metaData.version doesn't work in wallpaper plugin settings
 
-    Component.onCompleted: {
-        const metaDataFile = Qt.resolvedUrl("../../../").toString().substring(7) + "metadata.json";
-        runCommand.run(`cat "${metaDataFile}"`);
-    }
-
-    Root.RunCommand {
-        id: runCommand
-        onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
-            if (exitCode !== 0) {
-                root.wallpaperVersion = stderr;
-                console.log(cmd, stderr);
-            } else {
-                try {
-                    root.wallpaperVersion = JSON.parse(stdout).KPlugin.Version;
-                } catch (e) {
-                    console.log(e);
-                    root.wallpaperVersion = e;
-                }
-            }
-        }
+    PluginMetadataModel {
+        id: pluginMetadata
     }
 
     Label {
-        text: wallpaperVersion
+        text: pluginMetadata.version
         font.weight: Font.DemiBold
     }
 
@@ -73,8 +54,8 @@ RowLayout {
         }
 
         Action {
-            text: "Matrix chat"
-            icon.name: Qt.resolvedUrl("../../icons/matrix_logo.svg").toString().replace("file://", "")
+            text: "Matrix"
+            icon.source: Qt.resolvedUrl("../../icons/matrix_logo.svg")
             onTriggered: Qt.openUrlExternally(matrixRoom)
         }
 
@@ -120,23 +101,6 @@ RowLayout {
             Action {
                 text: "Send an email"
                 onTriggered: Qt.openUrlExternally(email)
-            }
-        }
-
-        Menu {
-            title: "Donate"
-            icon.name: "love"
-            Action {
-                text: "Ko-fi"
-                onTriggered: Qt.openUrlExternally(kofi)
-            }
-            Action {
-                text: "Paypal"
-                onTriggered: Qt.openUrlExternally(paypal)
-            }
-            Action {
-                text: "GitHub sponsors"
-                onTriggered: Qt.openUrlExternally("https://github.com/sponsors/" + ghUser)
             }
         }
 

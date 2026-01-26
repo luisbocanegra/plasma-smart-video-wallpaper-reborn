@@ -195,8 +195,6 @@ ColumnLayout {
     }
 
     Kirigami.FormLayout {
-        id: formLayout // required by parent
-
         RowLayout {
             Kirigami.FormData.label: i18n("Version:")
             Components.Header {
@@ -214,7 +212,53 @@ ColumnLayout {
                 Kirigami.Theme.highlightColor: root.Kirigami.Theme.neutralTextColor
                 icon.color: Kirigami.Theme.neutralTextColor
                 checkable: true
+                font.bold: true
+                font.weight: Font.Bold
             }
+        }
+        Component.onCompleted: {
+            // align with parent form from wallpaper config page
+            if (typeof appearanceRoot !== "undefined") {
+                twinFormLayouts.push(appearanceRoot.parentLayout);
+            }
+        }
+    }
+
+    Kirigami.NavigationTabBar {
+        id: tabBar
+        Layout.fillWidth: true
+        currentIndex: 0
+        onCurrentIndexChanged: {
+            root.currentTab = currentIndex;
+        }
+
+        actions: [
+            Kirigami.Action {
+                icon.name: "emblem-videos-symbolic"
+                text: i18n("Videos")
+                checked: tabBar.currentIndex === 0
+            },
+            Kirigami.Action {
+                icon.name: "media-playback-start-symbolic"
+                text: i18n("Playback")
+                checked: tabBar.currentIndex === 1
+            },
+            Kirigami.Action {
+                icon.name: "star-shape-symbolic"
+                text: i18n("Desktop Effects")
+                checked: tabBar.currentIndex === 2
+            },
+            Kirigami.Action {
+                icon.name: "emblem-favorite-symbolic"
+                text: i18n("Donate")
+                checked: tabBar.currentIndex === 3
+            }
+        ]
+    }
+
+    Kirigami.FormLayout {
+        Item {
+            Kirigami.FormData.isSection: true
         }
 
         Kirigami.InlineMessage {
@@ -252,34 +296,6 @@ ColumnLayout {
                     onTriggered: {
                         Qt.openUrlExternally("https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration");
                     }
-                }
-            ]
-        }
-
-        Kirigami.NavigationTabBar {
-            id: tabBar
-            Layout.preferredWidth: 550
-            currentIndex: 0
-            maximumContentWidth: {
-                const minDelegateWidth = Kirigami.Units.gridUnit * 6;
-                // Always have at least the width of 5 items, so that small amounts of actions look natural.
-                return minDelegateWidth * Math.max(visibleActions.length, 5);
-            }
-            actions: [
-                Kirigami.Action {
-                    icon.name: "emblem-videos-symbolic"
-                    text: i18n("Videos")
-                    checked: tabBar.currentIndex === 0
-                },
-                Kirigami.Action {
-                    icon.name: "media-playback-start-symbolic"
-                    text: i18n("Playback")
-                    checked: tabBar.currentIndex === 1
-                },
-                Kirigami.Action {
-                    icon.name: "star-shape-symbolic"
-                    text: i18n("Desktop Effects")
-                    checked: tabBar.currentIndex === 2
                 }
             ]
         }
@@ -912,6 +928,13 @@ ColumnLayout {
         }
     }
 
+    Components.Donate {
+        visible: root.currentTab === 3
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.margins: Kirigami.Units.gridUnit
+    }
+
     Item {
         Layout.fillHeight: true
         visible: root.currentTab !== 0
@@ -1080,13 +1103,13 @@ ColumnLayout {
                                 checkable: true
                                 checked: itemDelegate.enabled
                                 highlighted: itemDelegate.enabled
-                                icon.color: itemDelegate.enabled ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                icon.color: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
                                 onCheckedChanged: videosModel.updateItem(itemDelegate.index, "enabled", checked)
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: Kirigami.Theme.View
-                                Kirigami.Theme.textColor: itemDelegate.enabled ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
-                                Kirigami.Theme.highlightColor: itemDelegate.enabled ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                Kirigami.Theme.colorSet: root.Kirigami.Theme.View
+                                Kirigami.Theme.textColor: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                Kirigami.Theme.highlightColor: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18n("Whether or not this video will be played")
