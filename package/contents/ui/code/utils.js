@@ -73,6 +73,38 @@ function dumpProps(obj) {
   }
 }
 
+/**
+ * Extracts video metadata from MediaPlayer's metaData object
+ * @param {Object} metaData - The metaData object from MediaPlayer
+ * @returns {Object} Extracted video properties including width, height, codec, etc.
+ */
+function extractVideoMetadata(metaData) {
+  const width = metaData.value(MediaMetaData.Resolution)?.width ?? 0;
+  const height = metaData.value(MediaMetaData.Resolution)?.height ?? 0;
+  const codec = metaData.stringValue(MediaMetaData.VideoCodec) ?? "";
+  const bitRate = metaData.value(MediaMetaData.VideoBitRate) ?? 0;
+  const frameRate = metaData.value(MediaMetaData.VideoFrameRate) ?? 0.0;
+
+  // Check for HDR support
+  let isHdr = false;
+  try {
+      // Try to check the HasHdrContent property (Qt 6.8+)
+      isHdr = metaData.value(MediaMetaData.HasHdrContent) ?? false;
+  } catch (e) {
+      // If HDR detection fails, just continue without it
+      // No need to log as this is expected on older Qt versions
+  }
+
+  return {
+    videoWidth: width,
+    videoHeight: height,
+    videoCodec: codec,
+    videoBitRate: bitRate,
+    videoFrameRate: frameRate,
+    isHdr: isHdr
+  };
+}
+
 function dumpVideoMetadata(filename, metaData) {
   // Dump all available metadata keys and values
   console.log("=== Metadata Dump ===");
@@ -132,21 +164,6 @@ function delay(interval, callback, parentItem) {
     timer.destroy();
   });
   timer.start();
-}
-
-/**
- * Generates an SVG string for displaying video annotation badge
- * @param {String} text - The text to insert in the badge (e.g., "4K", "HDR")
- * @param {String} bgColor - The background color of the badge. Defaults to blue ('#4285F4')
- * @param {String} fgColor - The color of the text. Defaults to white.
- * @returns {String} SVG string representing the badge
- */
-function generateBadge(text, bgColor="#4285F4", fgColor="white") {
-  return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="64" height="32" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-  <rect x="12" y="12" width="176" height="76" rx="10" ry="10" fill="${bgColor}"/>
-  <text x="100" y="64" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" fill="${fgColor}">${text}</text>
-</svg>`;
 }
 
 // a rudimentary way to parse gdbus GVariant into a valid js object

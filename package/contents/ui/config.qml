@@ -1101,33 +1101,18 @@ ColumnLayout {
                                     Utils.dumpVideoMetadata(itemDelegate.filename, metaData);
                                 }
 
-                                // Extract metadata when media is loaded
-                                const width = metaData.value(MediaMetaData.Resolution)?.width ?? 0;
-                                const height = metaData.value(MediaMetaData.Resolution)?.height ?? 0;
-                                const codec = metaData.stringValue(MediaMetaData.VideoCodec) ?? "";
-                                const bitRate = metaData.value(MediaMetaData.VideoBitRate) ?? 0;
-                                const frameRate = metaData.value(MediaMetaData.VideoFrameRate) ?? 0.0;
-
-                                // Check for HDR support
-                                // Try to detect if MediaMetaData has HDR-related properties
-                                let isHdr = false;
-                                try {
-                                    // Try to check the HasHdrContent property (Qt 6.8+)
-                                    isHdr = metaData.value(MediaMetaData.HasHdrContent) ?? false;
-                                } catch (e) {
-                                    // If HDR detection fails, just continue without it
-                                    // No need to log as this is expected on older Qt versions
-                                }
+                                // Extract metadata using utility function
+                                const extractedMetadata = Utils.extractVideoMetadata(metaData);
 
                                 // Only update if we got valid metadata and it differs from current values
-                                if (width > 0 && height > 0 &&
-                                    (itemDelegate.videoWidth !== width || itemDelegate.videoHeight !== height)) {
-                                    videosModel.updateItem(itemDelegate.index, "videoWidth", width);
-                                    videosModel.updateItem(itemDelegate.index, "videoHeight", height);
-                                    videosModel.updateItem(itemDelegate.index, "videoCodec", codec);
-                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", bitRate);
-                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", frameRate);
-                                    videosModel.updateItem(itemDelegate.index, "isHdr", isHdr);
+                                if (extractedMetadata.videoWidth > 0 && extractedMetadata.videoHeight > 0 &&
+                                    (itemDelegate.videoWidth !== extractedMetadata.videoWidth || itemDelegate.videoHeight !== extractedMetadata.videoHeight)) {
+                                    videosModel.updateItem(itemDelegate.index, "videoWidth", extractedMetadata.videoWidth);
+                                    videosModel.updateItem(itemDelegate.index, "videoHeight", extractedMetadata.videoHeight);
+                                    videosModel.updateItem(itemDelegate.index, "videoCodec", extractedMetadata.videoCodec);
+                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", extractedMetadata.videoBitRate);
+                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", extractedMetadata.videoFrameRate);
+                                    videosModel.updateItem(itemDelegate.index, "isHdr", extractedMetadata.isHdr);
                                 }
 
                                 // Stop and unload to free resources
@@ -1218,33 +1203,40 @@ ColumnLayout {
                                         }
                                     }
                                 }
-                                Image {
-                                    id: videoHdrBadge
-                                    source: videosModel.getHdrBadge(itemDelegate)
-                                    Layout.fillHeight: true
-                                    fillMode: Image.PreserveAspectFit
-                                    visible: itemDelegate.isHdr
-                                }
-                                Image {
-                                    id: videoCodecBadge
-                                    source: videosModel.getCodecBadge(itemDelegate)
-                                    Layout.fillHeight: true
-                                    fillMode: Image.PreserveAspectFit
-                                    visible: source !== "" && itemDelegate.videoCodec !== "Unspecified"
-                                }
-                                Image {
-                                    id: videoResolutionBadge
-                                    source: videosModel.getResolutionBadge(itemDelegate)
-                                    Layout.fillHeight: true
-                                    fillMode: Image.PreserveAspectFit
-                                    visible: source !== ""
-                                }
-                                Image {
-                                    id: videoAspectBadge
-                                    source: videosModel.getAspectBadge(itemDelegate)
-                                    Layout.fillHeight: true
-                                    fillMode: Image.PreserveAspectFit
-                                    visible: source !== ""
+                                Flow {
+                                    spacing: Kirigami.Units.smallSpacing
+
+                                    Kirigami.Chip {
+                                        text: videosModel.videoCodecLabel(itemDelegate)
+                                        visible: text !== "" && text !== "UNK" && text !== "Unspecified"
+                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
+                                        closable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 4
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: videosModel.resolutionLabel(itemDelegate)
+                                        visible: text !== ""
+                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
+                                        closable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3.5
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: videosModel.aspectRatioLabel(itemDelegate)
+                                        visible: text !== ""
+                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
+                                        closable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3.5
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: "HDR"
+                                        visible: itemDelegate.isHdr
+                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
+                                        closable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3
+                                    }
                                 }
                             }
                             Components.DoubleSpinBox {
