@@ -1096,105 +1096,32 @@ ColumnLayout {
                         id: fileStatHelper
                     }
 
-                    // Hidden MediaPlayer for lazy-loading metadata
-                    MediaPlayer {
-                        id: metadataLoader
-                        audioOutput: AudioOutput { muted: true }
+                    // Metadata helper for loading and caching video metadata
+                    MetadataHelper {
+                        id: metadataHelper
+                        debugEnabled: cfg_DebugEnabled
+                        fileStatHelper: fileStatHelper
 
-                        onMediaStatusChanged: {
-                            if (mediaStatus === MediaPlayer.LoadedMedia) {
-                                if (cfg_DebugEnabled) {
-                                    Utils.dumpVideoMetadata(itemDelegate.filename, metaData);
-                                }
-
-                                // Extract metadata using utility function
-                                const extractedMetadata = Utils.extractVideoMetadata(metaData);
-
-                                // Only update if we got valid metadata and it differs from current values
-                                if (extractedMetadata.videoWidth > 0 && extractedMetadata.videoHeight > 0 &&
-                                    (itemDelegate.videoWidth !== extractedMetadata.videoWidth || itemDelegate.videoHeight !== extractedMetadata.videoHeight)) {
-                                    videosModel.updateItem(itemDelegate.index, "videoWidth", extractedMetadata.videoWidth);
-                                    videosModel.updateItem(itemDelegate.index, "videoHeight", extractedMetadata.videoHeight);
-                                    videosModel.updateItem(itemDelegate.index, "videoCodec", extractedMetadata.videoCodec);
-                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", extractedMetadata.videoBitRate);
-                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", extractedMetadata.videoFrameRate);
-                                    videosModel.updateItem(itemDelegate.index, "isHdr", extractedMetadata.isHdr);
-
-                                    // Save metadata to cache asynchronously
-                                    saveMetadataToCache(itemDelegate.filename, extractedMetadata);
-                                }
-
-                                // Stop and unload to free resources
-                                metadataLoader.stop();
-                                metadataLoader.source = "";
+                        onMetadataLoaded: (filepath, metadata) => {
+                            // Only update if we got valid metadata and it differs from current values
+                            if (filepath === itemDelegate.filename &&
+                                metadata.videoWidth > 0 && metadata.videoHeight > 0 &&
+                                (itemDelegate.videoWidth !== metadata.videoWidth || itemDelegate.videoHeight !== metadata.videoHeight)) {
+                                videosModel.updateItem(itemDelegate.index, "videoWidth", metadata.videoWidth);
+                                videosModel.updateItem(itemDelegate.index, "videoHeight", metadata.videoHeight);
+                                videosModel.updateItem(itemDelegate.index, "videoCodec", metadata.videoCodec);
+                                videosModel.updateItem(itemDelegate.index, "videoBitRate", metadata.videoBitRate);
+                                videosModel.updateItem(itemDelegate.index, "videoFrameRate", metadata.videoFrameRate);
+                                videosModel.updateItem(itemDelegate.index, "isHdr", metadata.isHdr);
                             }
                         }
+                    }
 
-                        Component.onCompleted: {
-                            // Only load if we don't have metadata yet and filename is not empty
-                            if (itemDelegate.filename !== "" && itemDelegate.videoWidth === 0 && itemDelegate.videoHeight === 0) {
-                                // Try to load from cache first using async approach
-                                tryLoadFromCache();
-                            }
-                        }
-
-                        function tryLoadFromCache() {
-                            // Get file stats asynchronously
-                            fileStatHelper.getFileStatsAsync(itemDelegate.filename, function(fileInfo) {
-                                if (!fileInfo) {
-                                    // No file info available, load metadata directly
-                                    metadataLoader.source = itemDelegate.filename;
-                                    return;
-                                }
-
-                                // Try to get cached metadata
-                                const cachedMetadata = MetadataCache.getCachedMetadata(
-                                    itemDelegate.filename,
-                                    fileInfo.size,
-                                    fileInfo.mtime
-                                );
-
-                                if (cachedMetadata) {
-                                    if (cfg_DebugEnabled) {
-                                        console.log("Using cached metadata for:", itemDelegate.filename);
-                                    }
-
-                                    // Update from cache
-                                    videosModel.updateItem(itemDelegate.index, "videoWidth", cachedMetadata.videoWidth);
-                                    videosModel.updateItem(itemDelegate.index, "videoHeight", cachedMetadata.videoHeight);
-                                    videosModel.updateItem(itemDelegate.index, "videoCodec", cachedMetadata.videoCodec);
-                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", cachedMetadata.videoBitRate);
-                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", cachedMetadata.videoFrameRate);
-                                    videosModel.updateItem(itemDelegate.index, "isHdr", cachedMetadata.isHdr);
-                                } else {
-                                    // Cache miss, load metadata from file
-                                    if (cfg_DebugEnabled) {
-                                        console.log("Cache miss for:", itemDelegate.filename);
-                                    }
-                                    metadataLoader.source = itemDelegate.filename;
-                                }
-                            });
-                        }
-
-                        function saveMetadataToCache(filepath, metadata) {
-                            // Get file stats and save to cache asynchronously
-                            fileStatHelper.getFileStatsAsync(filepath, function(fileInfo) {
-                                if (fileInfo) {
-                                    try {
-                                        MetadataCache.saveMetadata(
-                                            filepath,
-                                            fileInfo.size,
-                                            fileInfo.mtime,
-                                            metadata
-                                        );
-                                        if (cfg_DebugEnabled) {
-                                            console.log("Saved metadata to cache for:", filepath);
-                                        }
-                                    } catch (e) {
-                                        console.error("Error saving to cache:", e);
-                                    }
-                                }
-                            });
+                    // Load metadata on component creation
+                    Component.onCompleted: {
+                        // Only load if we don't have metadata yet and filename is not empty
+                        if (itemDelegate.filename !== "" && itemDelegate.videoWidth === 0 && itemDelegate.videoHeight === 0) {
+                            metadataHelper.loadMetadata(itemDelegate.filename, null);
                         }
                     }
 
@@ -1202,8 +1129,8 @@ ColumnLayout {
                     Connections {
                         target: itemDelegate
                         function onFilenameChanged() {
-                            if (itemDelegate.filename !== "" && metadataLoader) {
-                                metadataLoader.source = itemDelegate.filename;
+                            if (itemDelegate.filename !== "") {
+                                metadataHelper.loadMetadata(itemDelegate.filename, null);
                             }
                         }
                     }
