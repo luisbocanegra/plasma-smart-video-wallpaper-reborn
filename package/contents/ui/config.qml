@@ -27,6 +27,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
 import "code/utils.js" as Utils
+import "code/metadataCache.js" as MetadataCache
 import "components" as Components
 
 /**
@@ -1090,6 +1091,11 @@ ColumnLayout {
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
 
+                    // FileInfo helper for getting file statistics
+                    FileStatHelper {
+                        id: fileStatHelper
+                    }
+
                     // Hidden MediaPlayer for lazy-loading metadata
                     MediaPlayer {
                         id: metadataLoader
@@ -1113,6 +1119,9 @@ ColumnLayout {
                                     videosModel.updateItem(itemDelegate.index, "videoBitRate", extractedMetadata.videoBitRate);
                                     videosModel.updateItem(itemDelegate.index, "videoFrameRate", extractedMetadata.videoFrameRate);
                                     videosModel.updateItem(itemDelegate.index, "isHdr", extractedMetadata.isHdr);
+
+                                    // Save metadata to cache asynchronously
+                                    saveMetadataToCache(itemDelegate.filename, extractedMetadata);
                                 }
 
                                 // Stop and unload to free resources
@@ -1124,8 +1133,68 @@ ColumnLayout {
                         Component.onCompleted: {
                             // Only load if we don't have metadata yet and filename is not empty
                             if (itemDelegate.filename !== "" && itemDelegate.videoWidth === 0 && itemDelegate.videoHeight === 0) {
-                                metadataLoader.source = itemDelegate.filename;
+                                // Try to load from cache first using async approach
+                                tryLoadFromCache();
                             }
+                        }
+
+                        function tryLoadFromCache() {
+                            // Get file stats asynchronously
+                            fileStatHelper.getFileStatsAsync(itemDelegate.filename, function(fileInfo) {
+                                if (!fileInfo) {
+                                    // No file info available, load metadata directly
+                                    metadataLoader.source = itemDelegate.filename;
+                                    return;
+                                }
+
+                                // Try to get cached metadata
+                                const cachedMetadata = MetadataCache.getCachedMetadata(
+                                    itemDelegate.filename,
+                                    fileInfo.size,
+                                    fileInfo.mtime
+                                );
+
+                                if (cachedMetadata) {
+                                    if (cfg_DebugEnabled) {
+                                        console.log("Using cached metadata for:", itemDelegate.filename);
+                                    }
+
+                                    // Update from cache
+                                    videosModel.updateItem(itemDelegate.index, "videoWidth", cachedMetadata.videoWidth);
+                                    videosModel.updateItem(itemDelegate.index, "videoHeight", cachedMetadata.videoHeight);
+                                    videosModel.updateItem(itemDelegate.index, "videoCodec", cachedMetadata.videoCodec);
+                                    videosModel.updateItem(itemDelegate.index, "videoBitRate", cachedMetadata.videoBitRate);
+                                    videosModel.updateItem(itemDelegate.index, "videoFrameRate", cachedMetadata.videoFrameRate);
+                                    videosModel.updateItem(itemDelegate.index, "isHdr", cachedMetadata.isHdr);
+                                } else {
+                                    // Cache miss, load metadata from file
+                                    if (cfg_DebugEnabled) {
+                                        console.log("Cache miss for:", itemDelegate.filename);
+                                    }
+                                    metadataLoader.source = itemDelegate.filename;
+                                }
+                            });
+                        }
+
+                        function saveMetadataToCache(filepath, metadata) {
+                            // Get file stats and save to cache asynchronously
+                            fileStatHelper.getFileStatsAsync(filepath, function(fileInfo) {
+                                if (fileInfo) {
+                                    try {
+                                        MetadataCache.saveMetadata(
+                                            filepath,
+                                            fileInfo.size,
+                                            fileInfo.mtime,
+                                            metadata
+                                        );
+                                        if (cfg_DebugEnabled) {
+                                            console.log("Saved metadata to cache for:", filepath);
+                                        }
+                                    } catch (e) {
+                                        console.error("Error saving to cache:", e);
+                                    }
+                                }
+                            });
                         }
                     }
 
@@ -1208,33 +1277,37 @@ ColumnLayout {
 
                                     Kirigami.Chip {
                                         text: videosModel.videoCodecLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
                                         visible: text !== "" && text !== "UNK" && text !== "Unspecified"
-                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
                                         closable: false
+                                        checkable: false
                                         implicitWidth: Kirigami.Units.gridUnit * 4
                                     }
 
                                     Kirigami.Chip {
                                         text: videosModel.resolutionLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
                                         visible: text !== ""
-                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
                                         closable: false
+                                        checkable: false
                                         implicitWidth: Kirigami.Units.gridUnit * 3.5
                                     }
 
                                     Kirigami.Chip {
                                         text: videosModel.aspectRatioLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
                                         visible: text !== ""
-                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
                                         closable: false
+                                        checkable: false
                                         implicitWidth: Kirigami.Units.gridUnit * 3.5
                                     }
 
                                     Kirigami.Chip {
                                         text: "HDR"
+                                        enabled: itemDelegate.enabled
                                         visible: itemDelegate.isHdr
-                                        opacity: itemDelegate.enabled ? 1.0 : 0.5
                                         closable: false
+                                        checkable: false
                                         implicitWidth: Kirigami.Units.gridUnit * 3
                                     }
                                 }
