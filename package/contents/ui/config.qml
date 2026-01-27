@@ -1,7 +1,8 @@
 /*
  *  Copyright 2018 Rog131 <samrog131@hotmail.com>
  *  Copyright 2019 adhe   <adhemarks2@gmail.com>
- *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
+ *  Copyright 2024-2026 Luis Bocanegra <luisbocanegra17b@gmail.com>
+ *  Copyright 2026 John Franklin <franklin@sentaidigital.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +27,8 @@ import QtMultimedia
 import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
+import "code/utils.js" as Utils
+import "code/metadataCache.js" as MetadataCache
 import "components" as Components
 
 /**
@@ -893,7 +896,7 @@ ColumnLayout {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
                     Repeater {
-                        model: effects.loadedEffects.sort()
+                        model: effects.loadedEffects ? effects.loadedEffects.slice().sort() : []
                         Kirigami.SelectableLabel {
                             required property int index
                             required property string modelData
@@ -1080,8 +1083,59 @@ ColumnLayout {
                     required property real playbackRate
                     required property real alternativePlaybackRate
                     required property bool loop
+                    required property int videoWidth
+                    required property int videoHeight
+                    required property string videoCodec
+                    required property int videoBitRate
+                    required property real videoFrameRate
+                    required property bool isHdr
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
+
+                    // FileInfo helper for getting file statistics
+                    FileStatHelper {
+                        id: fileStatHelper
+                    }
+
+                    // Metadata helper for loading and caching video metadata
+                    MetadataHelper {
+                        id: metadataHelper
+                        debugEnabled: cfg_DebugEnabled
+                        fileStatHelper: fileStatHelper
+
+                        onMetadataLoaded: (filepath, metadata) => {
+                            // Only update if we got valid metadata and it differs from current values
+                            if (filepath === itemDelegate.filename &&
+                                metadata.videoWidth > 0 && metadata.videoHeight > 0 &&
+                                (itemDelegate.videoWidth !== metadata.videoWidth || itemDelegate.videoHeight !== metadata.videoHeight)) {
+                                videosModel.updateItem(itemDelegate.index, "videoWidth", metadata.videoWidth);
+                                videosModel.updateItem(itemDelegate.index, "videoHeight", metadata.videoHeight);
+                                videosModel.updateItem(itemDelegate.index, "videoCodec", metadata.videoCodec);
+                                videosModel.updateItem(itemDelegate.index, "videoBitRate", metadata.videoBitRate);
+                                videosModel.updateItem(itemDelegate.index, "videoFrameRate", metadata.videoFrameRate);
+                                videosModel.updateItem(itemDelegate.index, "isHdr", metadata.isHdr);
+                            }
+                        }
+                    }
+
+                    // Load metadata on component creation
+                    Component.onCompleted: {
+                        // Only load if we don't have metadata yet and filename is not empty
+                        if (itemDelegate.filename !== "" && itemDelegate.videoWidth === 0 && itemDelegate.videoHeight === 0) {
+                            metadataHelper.loadMetadata(itemDelegate.filename, null);
+                        }
+                    }
+
+                    // Reload metadata when filename changes
+                    Connections {
+                        target: itemDelegate
+                        function onFilenameChanged() {
+                            if (itemDelegate.filename !== "") {
+                                metadataHelper.loadMetadata(itemDelegate.filename, null);
+                            }
+                        }
+                    }
+
                     ItemDelegate {
                         id: delegate
                         implicitWidth: itemDelegate.implicitWidth
@@ -1146,8 +1200,46 @@ ColumnLayout {
                                         }
                                     }
                                 }
-                            }
+                                Flow {
+                                    spacing: Kirigami.Units.smallSpacing
 
+                                    Kirigami.Chip {
+                                        text: videosModel.videoCodecLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
+                                        visible: text !== "" && text !== "UNK" && text !== "Unspecified"
+                                        closable: false
+                                        checkable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 4
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: videosModel.resolutionLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
+                                        visible: text !== ""
+                                        closable: false
+                                        checkable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3.5
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: videosModel.aspectRatioLabel(itemDelegate)
+                                        enabled: itemDelegate.enabled
+                                        visible: text !== ""
+                                        closable: false
+                                        checkable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3.5
+                                    }
+
+                                    Kirigami.Chip {
+                                        text: "HDR"
+                                        enabled: itemDelegate.enabled
+                                        visible: itemDelegate.isHdr
+                                        closable: false
+                                        checkable: false
+                                        implicitWidth: Kirigami.Units.gridUnit * 3
+                                    }
+                                }
+                            }
                             Components.DoubleSpinBox {
                                 id: playbackRate
                                 from: 0
