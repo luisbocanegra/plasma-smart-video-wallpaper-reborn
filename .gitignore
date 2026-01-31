@@ -5,3 +5,4 @@ build/
 
 playground
 *.mo
+*.tar.gz
