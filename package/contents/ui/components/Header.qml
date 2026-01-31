@@ -54,6 +54,12 @@ RowLayout {
         }
 
         Action {
+            text: "Discord"
+            icon.source: Qt.resolvedUrl("../../icons/discord.svg")
+            onTriggered: Qt.openUrlExternally("https://discord.gg/ZqD75dzKTe")
+        }
+
+        Action {
             text: "Matrix"
             icon.source: Qt.resolvedUrl("../../icons/matrix_logo.svg")
             onTriggered: Qt.openUrlExternally(matrixRoom)

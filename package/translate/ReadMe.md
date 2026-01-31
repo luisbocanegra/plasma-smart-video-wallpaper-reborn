@@ -2,6 +2,9 @@
 
 ## Status
 
+> [!WARNING]
+> **Translations are currently not being loaded by the plugin when installing from the KDE Store see [issue #84](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/84)**
+
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
 | Template |      69 |       |
