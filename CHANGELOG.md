@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.10.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.9.0...v2.10.0) (2026-01-31)
+
+
+### Features
+
+* alternative playback speed ([73fc437](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/73fc437a281549feb16eb66276f2227afc01c9b3))
+
+
+### Bug Fixes
+
+* limit minimum playback speed to 0.01 ([9acb60d](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9acb60da9f5e316a052a25b5300a15f3e312082e))
+* recover command ([06923ba](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/06923ba7bedc6e02461d7c65b67d4a96b49f72a4))
+* remove url from translatable string ([7776f49](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7776f49de5d15c163206f861909c6276bc3e753e))
+
 ## [2.9.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.1...v2.9.0) (2026-01-13)
 
 
