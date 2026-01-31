@@ -12,7 +12,7 @@ ColumnLayout {
     }
 
     Label {
-        text: i18n("If you enjoy using the plugin please consider sponsoring or donating so I can dedicate more time to maintain and improve this and <a href=\"https://github.com/luisbocanegra?tab=repositories&q=&type=source&language=&sort=stargazers\">my other projects</a>.")
+        text: i18n("If you enjoy using the plugin please consider sponsoring or donating so I can dedicate more time to maintain and improve this and <a href=\"%1\">my other projects</a>.", "https://github.com/luisbocanegra?tab=repositories&q=&type=source&language=&sort=stargazers")
         Layout.fillWidth: true
         wrapMode: Text.Wrap
         onLinkActivated: link => Qt.openUrlExternally(link)
