@@ -21,13 +21,13 @@ If you enjoy using the plugin consider sponsoring or donating so I can dedicate 
 
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsors-%2329313C?logo=githubsponsors&style=for-the-badge)](https://github.com/sponsors/luisbocanegra)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-supporter?logo=ko-fi&logoColor=%23ffffff&color=%23467BEB&style=for-the-badge)](https://ko-fi.com/luisbocanegra)
-[!["Buy Me A Coffee"](https://img.shields.io/badge/Buy%20me%20a%20coffe-supporter?logo=buymeacoffee&logoColor=%23282828&color=%23FF803F&style=for-the-badge)](https://www.buymeacoffee.com/luisbocanegra)
+[!["Buy Me A Coffee"](https://img.shields.io/badge/Buy%20me%20a%20coffee-supporter?logo=buymeacoffee&logoColor=%23282828&color=%23FF803F&style=for-the-badge)](https://www.buymeacoffee.com/luisbocanegra)
 [![PayPal](https://img.shields.io/badge/PayPal-supporter?logo=paypal&logoColor=%23ffffff&color=%23003087&style=for-the-badge)](https://www.paypal.com/donate/?hosted_button_id=Y5TMH3Z4YZRDA)
 [![Patreon](https://img.shields.io/badge/Patreon-%23000000?logo=patreon&logoColor=%23ffffff&style=for-the-badge)](https://patreon.com/luisbocanegra?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink)
 
 ## Join our Discord / Matrix
 
-Help/Support/Discussion about my projects and other Linux/KDE related topics
+Help/Support/Discussion about my projects
 
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ZqD75dzKTe)
 [![Discord](https://img.shields.io/badge/Matrix-%23121212.svg?style=for-the-badge&logo=matrix&logoColor=white)](https://matrix.to/#/#kde-plasma-smart-video-wallpaper-reborn:matrix.org)
@@ -217,8 +217,12 @@ then reboot or restart plasmashell `systemctl --user restart plasma-plasmashell.
 7. Run `lspci -k | grep -EA3 'VGA|3D|Display' > lspci.txt`
 8. Create a new [new issue](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/new) describing the problem and how to reproduce, and attach those files including wether running the **test.qml** also crashes or not.
 
+### Contributing Translations
+
+See [Translations](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/blob/main/translate/README.md)
+
 ## Acknowledgements
 
 - This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
-- [Zren's kpac](https://github.com/Zren/plasma-applet-lib) to manage translations
+- [ccatterina's script](https://github.com/ccatterina) to manage translations
 - Brand icons from [Simple Icons](https://simpleicons.org)

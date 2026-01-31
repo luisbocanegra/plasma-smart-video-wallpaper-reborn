@@ -1,0 +1,104 @@
+#!/bin/bash
+set -e
+
+CONTENT_DIR="package/contents"
+TRANSLATE_DIR="./translate"
+PACKAGE_NAME="luisbocanegra.smart.video.wallpaper.reborn"
+
+# https://api.kde.org/frameworks/ki18n/html/prg_guide.html
+EXTOPTS=(
+    "--from-code=UTF-8 --kde --c++ -ci18n"
+    "-ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3"
+    "-kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3"
+    "-kkli18n:1 -kkli18nc:1c,2 -kkli18np:1,2 -kkli18ncp:1c,2,3"
+    "-kI18N_NOOP:1 -kI18NC_NOOP:1c,2"
+    "--package-name=$PACKAGE_NAME"
+)
+
+extract() {
+    find "$CONTENT_DIR" -name "*.qml" -print0 | sort -z | xargs -0 xgettext ${EXTOPTS[@]} --sort-by-file --output="$TRANSLATE_DIR/template.pot"
+    for po in "$TRANSLATE_DIR"/*.po; do
+        [ -f "$po" ] && msgmerge --quiet --update --backup=off "$po" "$TRANSLATE_DIR/template.pot"
+    done
+
+    echo "✅ Extraction completed!"
+}
+
+check() {
+    if [ ! -f "$TRANSLATE_DIR/template.pot" ]; then
+        echo "template.pot not found. Run extract first."
+        exit 1
+    fi
+
+    new_pot=$(mktemp)
+    find "$CONTENT_DIR" -name "*.qml" -print0 | sort -z | xargs -0 xgettext ${EXTOPTS[@]} --sort-by-file --output="$new_pot"
+    if ! diff <(grep -v '^"POT-Creation-Date' "$TRANSLATE_DIR/template.pot") <(grep -v '^"POT-Creation-Date' "$new_pot") > /dev/null; then
+        echo "❌ template.pot is not up to date with the source files. You should run i18n extract."
+        diff <(grep -v '^"POT-Creation-Date' "$TRANSLATE_DIR/template.pot") <(grep -v '^"POT-Creation-Date' "$new_pot")
+        rm "$new_pot"
+        exit 1
+    fi
+    echo "✅ template.pot is up to date with the source files."
+
+    rm "$new_pot"
+    for po in "$TRANSLATE_DIR"/*.po; do
+        if [ -f "$po" ]; then
+            lang=$(basename "$po" .po)
+            stats=$(msgfmt --statistics -o /dev/null "$po" 2>&1)
+            untranslated=$(echo "$stats" | grep -o '[0-9]* untranslated' | cut -d' ' -f1)
+            [ -z "$untranslated" ] && untranslated=0
+            fuzzy=$(echo "$stats" | grep -o '[0-9]* fuzzy' | cut -d' ' -f1)
+            [ -z "$fuzzy" ] && fuzzy=0
+
+            if [ "$untranslated" != "0" ] || [ "$fuzzy" != "0" ]; then
+                echo "⚠️  $lang: $untranslated untranslated, $fuzzy fuzzy"
+            else
+                echo "✅ $lang: complete"
+            fi
+        fi
+    done
+}
+
+compile() {
+    for po in "$TRANSLATE_DIR"/*.po; do
+        if [ -f "$po" ]; then
+            lang=$(basename "$po" .po)
+            mkdir -p "$CONTENT_DIR/locale/$lang/LC_MESSAGES"
+            msgfmt "$po" -o "$CONTENT_DIR/locale/$lang/LC_MESSAGES/plasma_wallpaper_$PACKAGE_NAME.mo"
+            echo "✅ $lang: compiled"
+        fi
+    done
+}
+
+init() {
+    if [ -z "$LANG" ]; then
+        echo "Usage: $0 init <lang>"
+        exit 1
+    fi
+    if [ ! -f "$TRANSLATE_DIR/template.pot" ]; then
+        echo "❌ template.pot not found. Run extract first."
+        exit 1
+    fi
+    if [ -f "$TRANSLATE_DIR/$LANG.po" ]; then
+        echo "⚠️  $LANG.po already exists"
+        exit 1
+    fi
+    msginit --no-translator --input="$TRANSLATE_DIR/template.pot" --locale="$LANG" --output-file="$TRANSLATE_DIR/$LANG.po"
+    echo "✅ $LANG.po created"
+}
+
+COMMAND="$1"
+LANG="$2"
+
+if ! command -v xgettext >/dev/null 2>&1; then
+    echo "❌ xgettext not found. Please install gettext."
+    exit 1
+fi
+
+case "$COMMAND" in
+    extract) extract ;;
+    check) check ;;
+    compile) compile ;;
+    init) init ;;
+    *) echo "Usage: $0 {extract|check|compile|init} [lang]" ; exit 1 ;;
+esac
