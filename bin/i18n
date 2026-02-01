@@ -16,9 +16,33 @@ EXTOPTS=(
 )
 
 extract() {
-    find "$CONTENT_DIR" -name "*.qml" -print0 | sort -z | xargs -0 xgettext ${EXTOPTS[@]} --sort-by-file --output="$TRANSLATE_DIR/template.pot"
+    local templateFile="$TRANSLATE_DIR/template.pot"
+    local templateFileNew="$TRANSLATE_DIR/template.pot.new"
+
+    find "$CONTENT_DIR" -name "*.qml" -print0 | sort -z | \
+      xargs -0 xgettext ${EXTOPTS[@]} --sort-by-file --output="$templateFileNew"
+
+    # if previous template exists, compare ignoring POT-Creation-Date
+    if [ -f "$templateFile" ]; then
+        oldDate=$(grep 'POT-Creation-Date:' "$templateFile" | sed -z 's/\\n\"//g')
+        newDate=$(grep 'POT-Creation-Date:' "$templateFileNew" | sed -z 's/\\n\"//g')
+
+        sed -i "s|^\"POT-Creation-Date:.*$|$oldDate\\\n\"|" "$templateFileNew"
+
+        if diff -q "$templateFile" "$templateFileNew" >/dev/null; then
+            echo "No real changes (only timestamp), skipping update."
+            rm "$templateFileNew"
+        else
+            # Restore new date
+            sed -i "s|^\"POT-Creation-Date:.*$|$newDate\\\n\"|" "$templateFileNew"
+            mv "$templateFileNew" "$templateFile"
+        fi
+    else
+        mv "$templateFileNew" "$templateFile"
+    fi
+
     for po in "$TRANSLATE_DIR"/*.po; do
-        [ -f "$po" ] && msgmerge --quiet --update --backup=off "$po" "$TRANSLATE_DIR/template.pot"
+        [ -f "$po" ] && msgmerge --quiet --update --backup=off "$po" "$templateFile"
     done
 
     echo "✅ Extraction completed!"
