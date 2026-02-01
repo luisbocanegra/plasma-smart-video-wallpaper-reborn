@@ -358,10 +358,37 @@ WallpaperItem {
                     text += `media status ${player.player.mediaStatus}\n`;
                     text += `player1 playing ${player.player1.playing}\n`;
                     text += `player2 playing ${player.player2.playing}\n`;
+                    text += `player1 opacity ${player.player1.opacity.toFixed(2)}\n`;
+                    text += `player2 opacity ${player.player2.opacity.toFixed(2)}\n`;
                     text += `position ${player.player.position}\n`;
                     text += `duration ${player.player.duration}\n`;
                     text += `resumeLastVideo ${player.resumeLastVideo}`;
                     return text;
+                }
+            }
+
+            ShaderEffectSource {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 200
+                sourceItem: main.debugEnabled ? player.player1 : null
+                opacity: player.player1.opacity
+                live: true
+                Rectangle {
+                    anchors.fill: parent
+                    color: "red"
+                    z: -1
+                }
+            }
+            ShaderEffectSource {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 200
+                sourceItem: main.debugEnabled ? player.player2 : null
+                opacity: player.player2.opacity
+                live: true
+                Rectangle {
+                    anchors.fill: parent
+                    color: "red"
+                    z: -1
                 }
             }
         }
