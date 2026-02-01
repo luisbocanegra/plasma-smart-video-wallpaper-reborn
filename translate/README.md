@@ -15,14 +15,6 @@ Optionally, a graphical editor for translation files (e.g [Lokalize](https://app
 
 The project comes with a helper script (`bin/i18n`) to manage translations:
 
-1. **Extract translatable strings** from the source code:
-
-   ```sh
-   ./bin/i18n extract
-   ```
-
-   Creates/updates the translation template file (`translate/template.pot`) and updates existing `.po` files.
-
 1. **Check translation status**:
 
    ```sh
@@ -31,7 +23,7 @@ The project comes with a helper script (`bin/i18n`) to manage translations:
 
    Check if translations template is up to date and shows how many strings are untranslated in each language file.
 
-1. **Initialize a new language**:
+2. **Initialize a new language**:
 
    ```sh
    ./bin/i18n init <lang_code>
@@ -41,7 +33,7 @@ The project comes with a helper script (`bin/i18n`) to manage translations:
 
    Your region's locale code can be found at: <https://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes/28357857#28357857>
 
-1. **Compile translations**:
+3. **Compile translations**:
 
    ```sh
    ./bin/i18n compile
