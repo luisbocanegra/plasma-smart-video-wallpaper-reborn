@@ -60,6 +60,7 @@ ColumnLayout {
     property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
     property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
+    property alias cfg_PrebufferNextVideo: prebufferNextVideoCheckbox.checked
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
@@ -543,6 +544,15 @@ ColumnLayout {
                 Kirigami.Theme.inherit: false
                 flat: true
             }
+        }
+
+        CheckBox {
+            id: prebufferNextVideoCheckbox
+            Kirigami.FormData.label: i18n("Preload next video:")
+            text: i18n("Minimize loading of a 2nd video")
+            visible: root.currentTab === 1
+            ToolTip.text: i18n("Loads a 2nd video into memory for an instant transition")
+            ToolTip.visible: hovered
         }
 
         CheckBox {

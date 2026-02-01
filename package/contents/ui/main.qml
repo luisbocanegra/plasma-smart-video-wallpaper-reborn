@@ -140,6 +140,11 @@ WallpaperItem {
     property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
+    property bool prebufferNextVideo: main.configuration.PrebufferNextVideo
+    property bool prebufferEnabled: prebufferNextVideo && videosConfig.length > 1
+    property var nextSource: Utils.createVideo("")
+    property int nextVideoIndex: -1
+
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -199,6 +204,30 @@ WallpaperItem {
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
 
+    function updateNextSource() {
+        if (prebufferEnabled) {
+            nextSource = computeNextSource();
+            return;
+        }
+        nextVideoIndex = -1;
+        nextSource = Utils.createVideo("");
+    }
+
+    function computeNextSource() {
+        if (!prebufferEnabled || videosConfig.length === 0) {
+            nextVideoIndex = -1;
+            return Utils.createVideo("");
+        }
+        const nextIndex = (currentVideoIndex + 1) % videosConfig.length;
+        nextVideoIndex = nextIndex;
+
+        if (randomMode && nextIndex === 0) {
+            const shuffledVideos = Utils.shuffleArray(videosConfig);
+            return shuffledVideos[nextIndex];
+        }
+        return videosConfig[nextIndex];
+    }
+
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause();
     }
@@ -217,7 +246,10 @@ WallpaperItem {
                 main.pause();
             }
         }
+        updateNextSource();
     }
+    onPrebufferEnabledChanged: updateNextSource()
+    onRandomModeChanged: updateNextSource()
 
     property QtObject pmSource: P5Support.DataSource {
         id: pmSource
@@ -261,14 +293,21 @@ WallpaperItem {
 
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
-        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
-        if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig);
-            currentSource = shuffledVideos[currentVideoIndex];
+
+        if (prebufferEnabled && nextVideoIndex >= 0) {
+            currentVideoIndex = nextVideoIndex;
+            currentSource = nextSource;
         } else {
-            currentSource = videosConfig[currentVideoIndex];
+            currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
+            if (randomMode && currentVideoIndex === 0) {
+                const shuffledVideos = Utils.shuffleArray(videosConfig);
+                currentSource = shuffledVideos[currentVideoIndex];
+            } else {
+                currentSource = videosConfig[currentVideoIndex];
+            }
         }
         printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
+        updateNextSource();
     }
 
     Rectangle {
@@ -301,6 +340,8 @@ WallpaperItem {
             useAlternativePlaybackRate: main.useAlternativePlaybackRate
             alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
+            prebufferNextVideo: main.prebufferEnabled
+            nextSource: main.nextSource
         }
     }
     FastBlur {
@@ -446,7 +487,11 @@ WallpaperItem {
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
             });
+            player.nextSource = Qt.binding(() => {
+                return main.nextSource;
+            });
         });
+        updateNextSource();
     }
 
     function save() {
