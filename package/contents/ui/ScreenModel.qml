@@ -71,7 +71,7 @@ Item {
         onTriggered: {
             if (root.checkScreenState && !root.screenStateCmdRunning) {
                 root.screenStateCmdRunning = true;
-                runCommand.run(root.screenStateCmd);
+                runCommand.exec(root.screenStateCmd);
             }
         }
     }
