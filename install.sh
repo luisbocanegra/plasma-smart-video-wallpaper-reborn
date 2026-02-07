@@ -16,6 +16,8 @@ fi
 cmake -B build -S .
 cmake --build build
 sudo cmake --install build
+# CMakeLists.txt plasma_install_package doesn't copy executable permission
+sudo chmod 755 "/usr/share/plasma/wallpapers/luisbocanegra.smart.video.wallpaper.reborn/contents/ui/tools/gdbus_get_signal.sh"
 
 # remove KDE Store / kpackagetool6 install so it doesn't override the system-wide one
 echo "Removing previous install (if exists) from $HOME/.local/share/plasma/wallpapers/"
