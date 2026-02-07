@@ -41,14 +41,14 @@ Item {
         }
     }
 
-    function toggleMontitor() {
+    function toggleMonitor() {
         if (enabled) {
             runCommand.exec(monitorCmd);
         } else {
-            runCommand.terminate(monitorCmd);
+            runCommand.exit(monitorCmd);
         }
     }
 
-    onEnabledChanged: toggleMontitor()
-    Component.onCompleted: toggleMontitor()
+    onEnabledChanged: toggleMonitor()
+    Component.onCompleted: toggleMonitor()
 }
