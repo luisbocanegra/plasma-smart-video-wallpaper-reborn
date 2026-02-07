@@ -5,14 +5,14 @@ import org.kde.kirigami as Kirigami
 
 ColumnLayout {
     Kirigami.Heading {
-        text: i18n("Thank you for using Smart Video Wallpaper Reborn!")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Thank you for using Smart Video Wallpaper Reborn!")
         Layout.fillWidth: true
         wrapMode: Text.Wrap
         font.bold: true
     }
 
     Label {
-        text: i18n("If you enjoy using the plugin please consider sponsoring or donating so I can dedicate more time to maintain and improve this and <a href=\"%1\">my other projects</a>.", "https://github.com/luisbocanegra?tab=repositories&q=&type=source&language=&sort=stargazers")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "If you enjoy using the plugin please consider sponsoring or donating so I can dedicate more time to maintain and improve this and <a href=\"%1\">my other projects</a>.", "https://github.com/luisbocanegra?tab=repositories&q=&type=source&language=&sort=stargazers")
         Layout.fillWidth: true
         wrapMode: Text.Wrap
         onLinkActivated: link => Qt.openUrlExternally(link)
@@ -74,7 +74,7 @@ ColumnLayout {
         Layout.topMargin: Kirigami.Units.smallSpacing
         Layout.fillWidth: true
         wrapMode: Text.Wrap
-        text: i18n("You can also")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "You can also")
         font.bold: true
     }
 
@@ -84,13 +84,13 @@ ColumnLayout {
         Repeater {
             model: [
                 {
-                    label: i18n("Star the project on GitHub"),
+                    label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Star the project on GitHub"),
                     icon: Qt.resolvedUrl("../../icons/githubstar.svg"),
                     url: "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn",
                     backgroundColor: "#29313C"
                 },
                 {
-                    label: i18n("Rate in the KDE Store"),
+                    label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Rate in the KDE Store"),
                     icon: Qt.resolvedUrl("../../icons/kde.svg"),
                     url: "https://store.kde.org/p/2139746",
                     backgroundColor: "#2C9AFD"

@@ -35,7 +35,7 @@ ColumnLayout {
                     checkValid();
                 });
             }
-            placeholderText: i18n("Not configured")
+            placeholderText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Not configured")
         }
         Button {
             icon.name: root.showList ? "arrow-up" : "arrow-down"

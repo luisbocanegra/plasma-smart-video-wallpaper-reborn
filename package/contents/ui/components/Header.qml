@@ -26,7 +26,7 @@ RowLayout {
 
     Button {
         id: linksButton
-        text: i18n("About")
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "About")
         icon.name: "info-symbolic"
         onClicked: {
             if (menu.opened) {
