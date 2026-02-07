@@ -17,7 +17,7 @@ Item {
     signal callFinished(reply: var)
     property var callbackRef: null
 
-    function builCmd() {
+    function buildCmd() {
         let cmd = "gdbus call --session --dest " + service + " --object-path " + objectPath + " --method " + iface + "." + method;
         root.arguments.forEach(argument => {
             cmd += ` '${argument}'`;
@@ -61,6 +61,6 @@ Item {
             callbackRef = callback;
             callFinished.connect(callback);
         }
-        runCommand.exec(builCmd());
+        runCommand.exec(buildCmd());
     }
 }
