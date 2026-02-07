@@ -1,9 +1,9 @@
 # Translations
 
-> [!WARNING]
-> Translations are currently not being loaded by wallpaper plugins when installing from the KDE Store see [issue #84](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/84)
+> [!IMPORTANT]
+> If the plugin is installed from KDE Store/kpackagetool6 (non system-wide), translations will only be loaded from Plasma 6.5.6 and later ([upstream bug fixed](https://bugs.kde.org/show_bug.cgi?id=501400)).
 >
-> For now they only work when installing system-wide using `./install.sh` or from a Distribution package
+> For System-wide installs via `./install.sh` or distribution package translations should work with older Plasma too for 2.10.0 or later versions of this wallpaper plugin.
 
 ## Prerequisites
 
@@ -46,9 +46,3 @@ The project comes with a helper script (`bin/i18n`) to manage translations:
 1. Create or edit a `.po` file in the `translate/` directory.
 1. Compile the translations to verify they work correctly.
 1. Submit a pull request with your changes to the `translate/` directory, do not include the compiled `.mo` files, as they will be generated automatically during the build process.
-
-## Acknowledgements
-
-- This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
-- [ccatterina's script](https://github.com/ccatterina) to manage translations
-- Brand icons from [Simple Icons](https://simpleicons.org)
