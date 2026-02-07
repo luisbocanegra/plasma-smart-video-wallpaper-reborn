@@ -9,7 +9,12 @@ P5Support.DataSource {
     property var callbacks: ({})
 
     function exec(cmd, callback) {
-        if (callback) {
+        // ensure each command is unique to avoid race condition where the
+        // same command runs twice but the first run fails deleting the callback
+        // that was going to be used by the second one
+        cmd = cmd + ";t=$(date +%N)";
+        // console.log("running", cmd, "callback", callback);
+        if (callback && typeof callback === "function") {
             callbacks[cmd] = callback;
         }
         dataSource.connectSource(cmd);
@@ -22,14 +27,17 @@ P5Support.DataSource {
     signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
 
     onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
-        if (exitCode === 0 && cmd in callbacks) {
-            callbacks[cmd]({
-                cmd,
-                exitCode,
-                exitStatus,
-                stdout,
-                stderr
-            });
+        if (cmd in callbacks) {
+            if (typeof callbacks[cmd] === "function") {
+                callbacks[cmd]({
+                    cmd,
+                    exitCode,
+                    exitStatus,
+                    stdout,
+                    stderr
+                });
+            }
+            delete callbacks[cmd];
         }
     }
 
