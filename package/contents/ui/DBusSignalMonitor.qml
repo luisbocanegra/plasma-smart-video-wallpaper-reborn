@@ -12,10 +12,11 @@ Item {
     property string path: ""
     property string iface: service
     property string method: ""
+    property string instanceId
 
     readonly property string toolsDir: Qt.resolvedUrl("./tools").toString().substring(7) + "/"
-    readonly property string dbusMessageTool: "'" + toolsDir + "gdbus_get_signal.sh'"
-    readonly property string monitorCmd: `${dbusMessageTool} ${busType} ${service} ${iface} ${path} ${method}`
+    readonly property string dbusMessageTool: toolsDir + "gdbus_get_signal.sh"
+    readonly property string monitorCmd: `"${dbusMessageTool}" ${busType} ${service} ${iface} ${path} ${method} id=${instanceId}`
 
     signal signalReceived(message: string)
 
@@ -41,14 +42,31 @@ Item {
         }
     }
 
-    function toggleMonitor() {
-        if (enabled) {
-            runCommand.exec(monitorCmd);
-        } else {
-            runCommand.exit(monitorCmd);
+    function cleanup() {
+        if (instanceId) {
+            runCommand.exec(`ps -axo pid,cmd | grep '${root.monitorCmd.replace(/"/g, '')}$' | grep -v grep | awk '{print $1}' | xargs kill`);
         }
     }
 
-    onEnabledChanged: toggleMonitor()
-    Component.onCompleted: toggleMonitor()
+    function toggleMonitor() {
+        if (enabled) {
+            runCommand.exec(root.monitorCmd);
+        } else {
+            cleanup();
+        }
+    }
+
+    Component.onCompleted: {
+        Utils.delay(100, () => {
+            runCommand.exec(root.monitorCmd);
+        }, root);
+    }
+
+    Component.onDestruction: cleanup()
+    Connections {
+        target: Qt.application
+        function onAboutToQuit() {
+            root.cleanup();
+        }
+    }
 }

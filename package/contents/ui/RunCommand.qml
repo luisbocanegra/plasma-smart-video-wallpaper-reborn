@@ -1,6 +1,5 @@
 import QtQuick
 import org.kde.plasma.plasma5support as P5Support
-import QtQml
 
 P5Support.DataSource {
     id: dataSource
@@ -9,11 +8,6 @@ P5Support.DataSource {
     property var callbacks: ({})
 
     function exec(cmd, callback) {
-        // ensure each command is unique to avoid race condition where the
-        // same command runs twice but the first run fails deleting the callback
-        // that was going to be used by the second one
-        cmd = cmd + ";t=$(date +%N)";
-        // console.log("running", cmd, "callback", callback);
         if (callback && typeof callback === "function") {
             callbacks[cmd] = callback;
         }

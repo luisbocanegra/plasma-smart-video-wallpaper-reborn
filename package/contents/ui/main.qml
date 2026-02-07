@@ -250,6 +250,7 @@ WallpaperItem {
         checkScreenLock: !main.lockScreenMode
         checkScreenState: main.screenOffPausesVideo && screenStateCmd !== ""
         screenStateCmd: main.configuration.ScreenStateCmd
+        instanceId: Plasmoid.id ?? ""
     }
 
     EffectsModel {
@@ -360,7 +361,14 @@ WallpaperItem {
                     text += `player2 playing ${player.player2.playing}\n`;
                     text += `position ${player.player.position}\n`;
                     text += `duration ${player.player.duration}\n`;
-                    text += `resumeLastVideo ${player.resumeLastVideo}`;
+                    text += `resumeLastVideo ${player.resumeLastVideo}\n`;
+                    text += `pause screen off: ${main.screenOffPausesVideo} paused ${main.screenIsOff}\n`;
+                    text += `pause Battery: ${main.pauseBattery} ${main.pauseBatteryLevel}%\n`;
+                    text += `should play: ${main.playing}\n`;
+                    text += `is lock screen: ${main.lockScreenMode}\n`;
+                    text += `screen locked: ${main.screenLocked}\n`;
+                    text += `blur: ${main.showBlur}\n`;
+                    text += `id ${Plasmoid.id}`;
                     return text;
                 }
             }

@@ -26,6 +26,7 @@ Item {
     property string screenStateCmd
     property bool screenStateCmdRunning: false
     property bool checkScreenState: false
+    property string instanceId
 
     RunCommand {
         id: runCommand
@@ -41,6 +42,7 @@ Item {
                 root.screenIsLocked = message.trim() === "true";
             }
         }
+        instanceId: root.instanceId
     }
 
     Timer {
@@ -51,7 +53,10 @@ Item {
         onTriggered: {
             if (root.checkScreenState && !root.screenStateCmdRunning) {
                 root.screenStateCmdRunning = true;
-                runCommand.exec(root.screenStateCmd, output => {
+                // ensure each command is unique to avoid race condition where the
+                // same command runs twice but the first run fails deleting the callback
+                // that was going to be used by the second one
+                runCommand.exec(root.screenStateCmd + `;t=${Date.now()}`, output => {
                     root.screenStateCmdRunning = false;
                     if (output.exitCode === 0 && output.stdout.length > 0) {
                         const out = output.stdout.trim().toLowerCase();
