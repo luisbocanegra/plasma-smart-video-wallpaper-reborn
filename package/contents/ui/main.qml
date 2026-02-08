@@ -350,25 +350,25 @@ WallpaperItem {
                 text: {
                     let text = `filename: ${main.currentSource.filename}\n`;
                     text += `loops: ${main.currentSource.loop ?? false}\n`;
-                    text += `currentVideoIndex ${main.currentVideoIndex}\n`;
-                    text += `changeWallpaperMode ${main.changeWallpaperMode}\n`;
-                    text += `crossfade ${main.crossfadeEnabled}\n`;
-                    text += `crossfadeDuration ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
-                    text += `multipleVideos ${player.multipleVideos}\n`;
-                    text += `player ${player.player.objectName}\n`;
-                    text += `media status ${player.player.mediaStatus}\n`;
-                    text += `player1 playing ${player.player1.playing}\n`;
-                    text += `player2 playing ${player.player2.playing}\n`;
-                    text += `position ${player.player.position}\n`;
-                    text += `duration ${player.player.duration}\n`;
-                    text += `resumeLastVideo ${player.resumeLastVideo}\n`;
-                    text += `pause screen off: ${main.screenOffPausesVideo} paused ${main.screenIsOff}\n`;
-                    text += `pause Battery: ${main.pauseBattery} ${main.pauseBatteryLevel}%\n`;
-                    text += `should play: ${main.playing}\n`;
-                    text += `is lock screen: ${main.lockScreenMode}\n`;
-                    text += `screen locked: ${main.screenLocked}\n`;
-                    text += `blur: ${main.showBlur}\n`;
-                    text += `id ${Plasmoid.id}`;
+                    text += `currentVideoIndex: ${main.currentVideoIndex}\n`;
+                    text += `changeWallpaperMode: ${main.changeWallpaperMode}\n`;
+                    text += `crossfade: ${main.crossfadeEnabled}\n`;
+                    text += `crossfadeDuration: ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
+                    text += `multipleVideos: ${player.multipleVideos}\n`;
+                    text += `player: ${player.player.objectName}\n`;
+                    text += `mediaStatus: ${player.player.mediaStatus}\n`;
+                    text += `player1 playing: ${player.player1.playing}\n`;
+                    text += `player2 playing: ${player.player2.playing}\n`;
+                    text += `position: ${player.player.position}\n`;
+                    text += `duration: ${player.player.duration}\n`;
+                    text += `resumeLastVideo: ${player.resumeLastVideo}\n`;
+                    text += `screenOffPausesVideo: ${main.screenOffPausesVideo} off ${main.screenIsOff}\n`;
+                    text += `pauseBattery: below ${main.pauseBatteryLevel}% ${main.pauseBattery}\n`;
+                    text += `playing: ${main.playing}\n`;
+                    text += `inLockScreen: ${main.lockScreenMode}\n`;
+                    text += `screenLocked: ${main.screenLocked}\n`;
+                    text += `showBlur: ${main.showBlur}\n`;
+                    text += `id: ${Plasmoid.id}`;
                     return text;
                 }
             }
