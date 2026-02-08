@@ -48,6 +48,7 @@ ColumnLayout {
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
+    property string cfg_ScreenStateCmdDefault
     property alias showWarningMessage: showWarning.checked
     property alias cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
@@ -791,7 +792,6 @@ ColumnLayout {
         CheckBox {
             id: screenOffPausesVideoCheckbox
             Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Pause on screen off:")
-            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Requires setting up command below!")
             visible: root.currentTab === 1
         }
 
@@ -800,13 +800,13 @@ ColumnLayout {
             visible: screenOffPausesVideoCheckbox.checked && root.currentTab === 1
             TextField {
                 id: screenStateCmdTextField
-                placeholderText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "cat /sys/class/backlight/intel_backlight/actual_brightness")
+                placeholderText: root.cfg_ScreenStateCmdDefault
                 text: root.cfg_ScreenStateCmd
                 Layout.maximumWidth: 300
             }
             Button {
                 icon.name: "dialog-information-symbolic"
-                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "The command/script must return '0' (zero) or 'off' when the screen is Off")
+                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "The command/script must return '0' (zero) or 'off' when the screen is off")
                 highlighted: true
                 hoverEnabled: true
                 flat: true
