@@ -27,6 +27,9 @@ Item {
     property real alternativePlaybackRateGlobal: 0.5
     property bool useAlternativePlaybackRate: false
 
+    property bool prebufferNextVideo: true
+    property var nextSource: Utils.createVideo("")
+
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
     // will decrease below the configured duration if needed as videos get played
@@ -59,8 +62,52 @@ Item {
     function stop() {
         player.stop();
     }
+
+    function prebufferInactivePlayer() {
+        if (!root.prebufferNextVideo || !root.nextSource.filename) {
+            return;
+        }
+
+        if (videoPlayer1.opacity > 0 && videoPlayer1.opacity < 1) {
+            prebufferTimer.restart();
+            return;
+        }
+
+        const inactive = root.otherPlayer;
+        if (inactive.playerSource.filename === root.nextSource.filename) {
+            return; // Already set
+        }
+        if (root.debugEnabled) {
+            console.log("Prebuffering next video: ", root.nextSource.filename);
+        }
+        inactive.prebufferPending = true;
+        inactive.playerSource = root.nextSource;
+        // play() is called when source changes to trigger bufferring
+
+    }
+
     function next(switchSource, forceSwitch) {
-        if ((switchSource && !currentSource.loop) || forceSwitch) {
+        const shouldSwitchSource = (switchSource && !currentSource.loop) || forceSwitch;
+
+        if (root.prebufferNextVideo && shouldSwitchSource) {
+            if (primaryPlayer) {
+                videoPlayer2.prebufferPending = false;
+                videoPlayer2.play();
+                root.primaryPlayer = false;
+                videoPlayer1.opacity = 0;
+            } else {
+                videoPlayer1.prebufferPending = false;
+                videoPlayer1.play();
+                root.primaryPlayer = true;
+                videoPlayer1.opacity = 1;
+            }
+            // Signal to advance to next video in playlist
+            setNextSource();
+            return;
+        }
+
+        // Standard mode: no prebuffer or looping
+        if (shouldSwitchSource) {
             setNextSource();
         }
         if (primaryPlayer) {
@@ -75,6 +122,7 @@ Item {
             videoPlayer1.opacity = 1;
         }
     }
+
     signal setNextSource
 
     PausableTimer {
@@ -102,6 +150,7 @@ Item {
         anchors.fill: parent
         property var playerSource: root.currentSource
         property int actualDuration: duration / playbackRate
+        property bool prebufferPending: false
         playbackRate: {
             if (root.useAlternativePlaybackRate) {
                 return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
@@ -125,6 +174,16 @@ Item {
                 return MediaPlayer.Infinite;
         }
         onPositionChanged: {
+            if (prebufferPending && !root.primaryPlayer && position > 0) {
+                if (root.debugEnabled) {
+                    console.log("Player 1 prebuffer fallback: pausing at position ", position);
+                }
+                prebufferPending = false;
+                videoPlayer1.pause();
+                videoPlayer1.position = 0;
+                return;
+            }
+
             if (!root.primaryPlayer) {
                 return;
             }
@@ -160,6 +219,19 @@ Item {
                 }
                 root.restoreLastPosition = false;
             }
+
+            if (prebufferPending && !root.primaryPlayer) {
+                if (mediaStatus == MediaPlayer.LoadedMedia || mediaStatus == MediaPlayer.BufferedMedia) {
+                    if (root.debugEnabled) {
+                        console.log("Player 1 prebuffered, pausing at frame 0");
+                    }
+                    prebufferPending = false;
+                    videoPlayer1.pause();
+                    if (seekable) {
+                        videoPlayer1.position = 0;
+                    }
+                }
+            }
         }
         onLoopsChanged: {
             if (primaryPlayer) {
@@ -177,10 +249,17 @@ Item {
                 }
             }
         }
+        onSourceChanged: {
+            if (root.prebufferNextVideo && prebufferPending && !root.primaryPlayer && source) {
+                videoPlayer1.play();
+            }
+        }
         onOpacityChanged: {
             if (opacity === 0 || opacity === 1) {
                 // Reset other player source to empty to free resources
-                otherPlayer.playerSource = Utils.createVideo("");
+                if (!root.prebufferNextVideo) {
+                    otherPlayer.playerSource = Utils.createVideo("");
+                }
             }
         }
         Behavior on opacity {
@@ -197,6 +276,7 @@ Item {
         anchors.fill: parent
         property var playerSource: Utils.createVideo("")
         property int actualDuration: duration / playbackRate
+        property bool prebufferPending: false
         playbackRate: {
             if (root.useAlternativePlaybackRate) {
                 return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
@@ -219,6 +299,16 @@ Item {
                 return MediaPlayer.Infinite;
         }
         onPositionChanged: {
+            if (prebufferPending && root.primaryPlayer && position > 0) {
+                if (root.debugEnabled) {
+                    console.log("Player 2 prebuffer fallback: pausing at position ", position);
+                }
+                prebufferPending = false;
+                videoPlayer2.pause();
+                videoPlayer2.position = 0;
+                return;
+            }
+
             if (root.primaryPlayer) {
                 return;
             }
@@ -242,6 +332,19 @@ Item {
                     root.next(true);
                 }
             }
+
+            if (prebufferPending && root.primaryPlayer) {
+                if (mediaStatus == MediaPlayer.LoadedMedia || mediaStatus == MediaPlayer.BufferedMedia) {
+                    if (root.debugEnabled) {
+                        console.log("Player 2 prebuffered, pausing at frame 0");
+                    }
+                    prebufferPending = false;
+                    videoPlayer2.pause();
+                    if (seekable) {
+                        videoPlayer2.position = 0;
+                    }
+                }
+            }
         }
         onLoopsChanged: {
             if (!primaryPlayer) {
@@ -258,6 +361,39 @@ Item {
                     console.log("Player 2 playing");
                 }
             }
+        }
+        onSourceChanged: {
+            if (root.prebufferNextVideo && prebufferPending && root.primaryPlayer && source) {
+                videoPlayer2.play();
+            }
+        }
+    }
+
+    onNextSourceChanged: {
+        if (root.prebufferNextVideo) {
+            prebufferInactivePlayer();
+        }
+    }
+
+    onPrimaryPlayerChanged: {
+        if (root.prebufferNextVideo) {
+            prebufferTimer.restart();
+        }
+    }
+
+    Timer {
+        id: prebufferTimer
+        interval: 100
+        onTriggered: root.prebufferInactivePlayer()
+    }
+
+    onPrebufferNextVideoChanged: {
+        if (root.prebufferNextVideo) {
+            prebufferInactivePlayer();
+        } else {
+            videoPlayer1.prebufferPending = false;
+            videoPlayer2.prebufferPending = false;
+            root.otherPlayer.playerSource = Utils.createVideo("");
         }
     }
 }
