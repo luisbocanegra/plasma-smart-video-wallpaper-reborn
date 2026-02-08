@@ -53,10 +53,7 @@ Item {
         onTriggered: {
             if (root.checkScreenState && !root.screenStateCmdRunning) {
                 root.screenStateCmdRunning = true;
-                // ensure each command is unique to avoid race condition where the
-                // same command runs twice but the first run fails deleting the callback
-                // that was going to be used by the second one
-                runCommand.exec(root.screenStateCmd + `;t=${Date.now()}`, output => {
+                runCommand.exec(root.screenStateCmd, output => {
                     root.screenStateCmdRunning = false;
                     if (output.exitCode === 0 && output.stdout.length > 0) {
                         const out = output.stdout.trim().toLowerCase();
