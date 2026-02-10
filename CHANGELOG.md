@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.10.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.9.0...v2.10.0) (2026-02-10)
+
+
+### Features
+
+* add kscreen-doctor to screen off detection command ([8aa0bf4](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/8aa0bf45c3fd8d00ad436107511325197ff6681f))
+* alternative playback speed ([73fc437](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/73fc437a281549feb16eb66276f2227afc01c9b3))
+* update Spanish translation ([e05aff8](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e05aff8d54cf301d6fef4a87457cd6ae19796abd))
+
+
+### Bug Fixes
+
+* add domain to translatable strings ([41dbc0a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/41dbc0abcd49af3e28d603c6efa023b7e9b37e1f))
+* add missing executable permission in install.sh ([9bbb71f](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9bbb71f1b4982bf4d8848447f1ed13867a8bf995))
+* inform about KDE Store version removal on install.sh ([aff251a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/aff251a7089cb9856611963b3c0c1a15a03263fe))
+* limit minimum playback speed to 0.01 ([9acb60d](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/9acb60da9f5e316a052a25b5300a15f3e312082e))
+* race condition in screen state monitoring ([aa9b3d5](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/aa9b3d55f8b9b5dbd4c2271530449e0089b24e65))
+* recover command ([06923ba](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/06923ba7bedc6e02461d7c65b67d4a96b49f72a4))
+* remove url from translatable string ([7776f49](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7776f49de5d15c163206f861909c6276bc3e753e))
+* stop dbus signal monitor when switching to other wallpaper plugin ([4602b65](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/4602b65586ed602b1ba316841886a7cb5d7424d4))
+* stuttering due to unique commands in executable datasource ([cf101b5](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/cf101b552fc0b647fc277ddc554918c7167f8dc3))
+
 ## [2.9.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.8.1...v2.9.0) (2026-01-13)
 
 
