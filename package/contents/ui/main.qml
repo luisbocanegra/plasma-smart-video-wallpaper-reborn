@@ -42,9 +42,41 @@ WallpaperItem {
     }
     property int currentVideoIndex: 0
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
+    property bool dayNightCycle: main.configuration.DayNightCycle
+    property bool isDay: {
+        const currentTime = new Date().getHours();
+        return currentTime >= 6 && currentTime < 19;
+    }
+
+    function getLastVideo() {
+        let lastVideo = main.configuration.LastVideo;
+        if (dayNightCycle) {
+            lastVideo = main.configuration[isDay ? "LastVideoDay" : "LastVideoNight"];
+        }
+        return lastVideo;
+    }
+    function getLastVideoPosition() {
+        let lastVideoPosition = main.configuration.LastVideoPosition;
+        if (dayNightCycle) {
+            lastVideoPosition = main.configuration[isDay ? "LastVideoDayPosition" : "LastVideoNightPosition"];
+        }
+        return lastVideoPosition;
+    }
+    function getLastVideoIndex() {
+        const lastVideo = getLastVideo();
+        for (let index = 0; index < videosConfig.length; index++) {
+            if (videosConfig[index].filename === lastVideo) {
+                return index;
+            }
+        }
+
+        return 0;
+    }
+
     property var currentSource: {
-        if (resumeLastVideo && main.configuration.LastVideo !== "") {
-            return Utils.getVideoByFile(main.configuration.LastVideo, videosConfig);
+        const lastVideo = getLastVideo();
+        if (resumeLastVideo && lastVideo !== "") {
+            return Utils.getVideoByFile(lastVideo, videosConfig);
         }
         return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
     }
@@ -196,6 +228,15 @@ WallpaperItem {
     }
 
     function getVideos() {
+        if (dayNightCycle) {
+            return Utils.parseCompat(videoUrls).filter(video => {
+                const isDayCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Night;
+                const isNightCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Day;
+
+                return video.enabled && ((main.isDay && isDayCycle) || (!main.isDay && isNightCycle));
+            });
+        }
+
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
 
@@ -260,15 +301,58 @@ WallpaperItem {
         }
     }
 
+    Timer {
+        id: dayNightCycleTimer
+        interval: 1000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: {
+            const dayNightCycleConfigChanged = dayNightCycle !== main.configuration.DayNightCycle;
+            if (!dayNightCycleConfigChanged && !main.configuration.DayNightCycle) {
+                return;
+            }
+            dayNightCycle = main.configuration.DayNightCycle;
+
+            const hours = new Date().getHours();
+            const isDay = hours >= 6 && hours < 19;
+
+            if ((main.isDay != isDay) || dayNightCycleConfigChanged) {
+                main.save();
+                main.isDay = isDay;
+                videosConfig = getVideos();
+
+                if (getLastVideo() === "") {
+                    setCurrentSource(0);
+                    return player.next();
+                }
+
+                currentVideoIndex = getLastVideoIndex();
+
+                if (main.configuration.ResumeLastVideo) {
+                    // TODO: Resume last (day/night) video when changing from day to night or vice versa
+                }
+
+                setCurrentSource(currentVideoIndex);
+
+                player.next();
+            }
+        }
+    }
+
+    function setCurrentSource(index) {
+        if (randomMode && index === 0) {
+            const shuffledVideos = Utils.shuffleArray(videosConfig);
+            currentSource = shuffledVideos[index];
+        } else {
+            currentSource = videosConfig[index];
+        }
+    }
+
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
         currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
-        if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig);
-            currentSource = shuffledVideos[currentVideoIndex];
-        } else {
-            currentSource = videosConfig[currentVideoIndex];
-        }
+        setCurrentSource(currentVideoIndex);
         printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
     }
 
@@ -281,7 +365,7 @@ WallpaperItem {
             id: player
             anchors.fill: parent
             muted: main.muteAudio
-            lastVideoPosition: main.configuration.LastVideoPosition
+            lastVideoPosition: main.getLastVideoPosition()
             visible: main.videosConfig.length !== 0
             onSetNextSource: {
                 main.nextVideo();
@@ -450,6 +534,7 @@ WallpaperItem {
 
     Component.onCompleted: {
         startTimer.start();
+        dayNightCycleTimer.start();
         Qt.callLater(() => {
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
@@ -461,6 +546,10 @@ WallpaperItem {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
+        if(dayNightCycle) {
+            main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
+            main.configuration[main.isDay ? "LastVideoDayPosition" : "LastVideoNightPosition"] = player.lastVideoPosition;
+        }
         main.configuration.writeConfig();
         printLog("Bye!");
     }

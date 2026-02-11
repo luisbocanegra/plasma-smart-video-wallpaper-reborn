@@ -4,6 +4,7 @@ function parseCompat(cfgStr) {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
       video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
+      video.dayNightCycleAssignment = video.dayNightCycleAssignment ?? 0;
       videos.push(video);
     });
   } catch (e) {
@@ -26,12 +27,13 @@ function createVideo(filename) {
     "customDuration": 0,
     "playbackRate": 0.0,
     "alternativePlaybackRate": 0.0,
-    "loop": false
+    "loop": false,
+    "dayNightCycleAssignment": 0,
   };
 }
 
 /**
- * 
+ *
  * @param {String} filename File path
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
@@ -42,7 +44,7 @@ function getVideoByFile(filename, videosConfig) {
 }
 
 /**
- * 
+ *
  * @param {int} index Video index
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
