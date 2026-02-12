@@ -49,18 +49,10 @@ WallpaperItem {
     }
 
     function getLastVideo() {
-        let lastVideo = main.configuration.LastVideo;
         if (dayNightCycle) {
-            lastVideo = main.configuration[isDay ? "LastVideoDay" : "LastVideoNight"];
+            return main.configuration[isDay ? "LastVideoDay" : "LastVideoNight"];
         }
-        return lastVideo;
-    }
-    function getLastVideoPosition() {
-        let lastVideoPosition = main.configuration.LastVideoPosition;
-        if (dayNightCycle) {
-            lastVideoPosition = main.configuration[isDay ? "LastVideoDayPosition" : "LastVideoNightPosition"];
-        }
-        return lastVideoPosition;
+        return main.configuration.LastVideo;
     }
     function getLastVideoIndex() {
         const lastVideo = getLastVideo();
@@ -365,7 +357,7 @@ WallpaperItem {
             id: player
             anchors.fill: parent
             muted: main.muteAudio
-            lastVideoPosition: main.getLastVideoPosition()
+            lastVideoPosition: main.configuration.LastVideoPosition
             visible: main.videosConfig.length !== 0
             onSetNextSource: {
                 main.nextVideo();
@@ -548,7 +540,6 @@ WallpaperItem {
         main.configuration.LastVideoPosition = player.lastVideoPosition;
         if(dayNightCycle) {
             main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
-            main.configuration[main.isDay ? "LastVideoDayPosition" : "LastVideoNightPosition"] = player.lastVideoPosition;
         }
         main.configuration.writeConfig();
         printLog("Bye!");
