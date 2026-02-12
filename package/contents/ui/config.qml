@@ -78,6 +78,16 @@ ColumnLayout {
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
+    property string qtMEdiaBackend
+    property string qtMEdiaBackendOverride
+    property string qtHwDecodingDevice
+    property string qtHwDecodingDeviceOverride
+
+    property string vaapiDriver
+    property string vaapiDriverOverride
+
+    property string vdpauDriver
+    property string vdpauDriverOverride
 
     readonly property int seconds: (wallpaperTimerHours.value * 60 * 60) + (wallpaperTimerMinutes.value * 60) + wallpaperTimerSeconds.value
 
@@ -191,6 +201,36 @@ ColumnLayout {
         }
     }
 
+    EnvironmentVariableModel {
+        id: envVarsModel
+        onLoaded: {
+            root.qtMEdiaBackend = getValue("QT_MEDIA_BACKEND");
+            root.qtHwDecodingDevice = getValue("QT_FFMPEG_DECODING_HW_DEVICE_TYPES");
+            root.vaapiDriver = getValue("LIBVA_DRIVER_NAME");
+            root.vdpauDriver = getValue("VDPAU_DRIVER");
+            getPlasmaEnvVar("QT_MEDIA_BACKEND", value => {
+                if (value !== null) {
+                    root.qtMEdiaBackendOverride = value;
+                }
+            });
+            getPlasmaEnvVar("QT_FFMPEG_DECODING_HW_DEVICE_TYPES", value => {
+                if (value !== null) {
+                    root.qtHwDecodingDeviceOverride = value;
+                }
+            });
+            getPlasmaEnvVar("LIBVA_DRIVER_NAME", value => {
+                if (value !== null) {
+                    root.vaapiDriverOverride = value;
+                }
+            });
+            getPlasmaEnvVar("VDPAU_DRIVER", value => {
+                if (value !== null) {
+                    root.vdpauDriverOverride = value;
+                }
+            });
+        }
+    }
+
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
     }
@@ -250,11 +290,26 @@ ColumnLayout {
                 checked: tabBar.currentIndex === 2
             },
             Kirigami.Action {
+                icon.name: "view-list-details"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Advanced")
+                checked: tabBar.currentIndex === 3
+            },
+            Kirigami.Action {
                 icon.name: "emblem-favorite-symbolic"
                 text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Donate")
-                checked: tabBar.currentIndex === 3
+                checked: tabBar.currentIndex === 4
             }
         ]
+    }
+
+    Kirigami.Heading {
+        Layout.topMargin: Kirigami.Units.largeSpacing * 2
+        visible: root.currentTab === 3
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Video Decoding")
+        font.weight: 600
+        Layout.alignment: Qt.AlignHCenter
+        horizontalAlignment: Text.AlignVCenter
+        level: 1
     }
 
     Kirigami.FormLayout {
@@ -815,13 +870,6 @@ ColumnLayout {
             }
         }
 
-        CheckBox {
-            id: debugEnabledCheckbox
-            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Enable debug:")
-            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Print debug messages to the system log")
-            visible: root.currentTab === 1
-        }
-
         TextEdit {
             wrapMode: Text.Wrap
             Layout.maximumWidth: 400
@@ -911,6 +959,207 @@ ColumnLayout {
             }
         }
 
+        ColumnLayout {
+            spacing: Kirigami.Units.largeSpacing
+            Label {
+                visible: root.currentTab === 3
+                text: "<strong>" + i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "A logout is needed for these settings to have an effect!") + "</strong>"
+                Layout.preferredWidth: 500
+                wrapMode: Label.WordWrap
+                color: Kirigami.Theme.neutralTextColor
+            }
+
+            Label {
+                visible: root.currentTab === 3
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "These settings are modified using <a href=\"%1\">Plasma Session Environment Variables</a>", "https://userbase.kde.org/Session_Environment_Variables")
+                Layout.preferredWidth: 500
+                wrapMode: Label.WordWrap
+                onLinkActivated: link => Qt.openUrlExternally(link)
+            }
+
+            Label {
+                visible: root.currentTab === 3
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "If after setting an option to default still shows a value it means you have configured an environment variable elsewhere! See <a href=\"%1\">Environment variables - ArchWiki</a>", "https://wiki.archlinux.org/title/Environment_variables")
+                Layout.preferredWidth: 500
+                wrapMode: Label.WordWrap
+                onLinkActivated: link => Qt.openUrlExternally(link)
+            }
+
+            Label {
+                visible: root.currentTab === 3
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Verify it's working, see <a href=\"%1\">Improve performance by enabling Hardware Video Acceleration</a>", "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn?tab=readme-ov-file#improve-performance-by-enabling-hardware-video-acceleration")
+                Layout.preferredWidth: 500
+                wrapMode: Label.WordWrap
+                onLinkActivated: link => Qt.openUrlExternally(link)
+            }
+
+            Label {
+                visible: root.currentTab === 3
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Looking for documentation?") + "<br>• <a href=\"https://doc.qt.io/qt-6/qtmultimedia-index.html\">Qt Multimedia</a><br>• <a href=\"https://doc.qt.io/qt-6/advanced-ffmpeg-configuration.html\">Qt Advanced FFmpeg Configuration</a><br>• <a href=\"https://wiki.archlinux.org/title/Hardware_video_acceleration\">Hardware video acceleration - ArchWiki</a>"
+                Layout.preferredWidth: 500
+                wrapMode: Label.WordWrap
+                onLinkActivated: link => Qt.openUrlExternally(link)
+            }
+        }
+
+        RowLayout {
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Hardware acceleration backend:")
+            visible: root.currentTab === 3
+            ComboBox {
+                enabled: root.qtMEdiaBackendOverride !== "gstreamer"
+                model: [i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "System default"), "cuda", "drm", "dxva2", "d3d11va", "d3d12va", "opencl", "qsv", "vaapi", "vdpau", "videotoolbox", "mediacodec", "vulkan"]
+                onActivated: {
+                    if (currentIndex === 0) {
+                        envVarsModel.removePlasmaEnvVar("QT_FFMPEG_DECODING_HW_DEVICE_TYPES");
+                    } else {
+                        envVarsModel.setPlasmaEnvVar("QT_FFMPEG_DECODING_HW_DEVICE_TYPES", currentValue);
+                    }
+                }
+                currentIndex: root.qtHwDecodingDeviceOverride ? indexOfValue(root.qtHwDecodingDeviceOverride) : 0
+            }
+            Kirigami.ContextualHelpButton {
+                toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "You can use this to force a specific gpu, for example by setting <strong>vaapi</strong> to use an integrated Intel/AMD gpu instead of a dedicated NVIDIA gpu, which uses <strong>cuda</strong>.<br><br>It's important to note that this will not work if both gpus use the same acceleration backend.")
+            }
+        }
+
+        Label {
+            visible: root.currentTab === 3
+            text: "QT_FFMPEG_DECODING_HW_DEVICE_TYPES<br>" + i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Current value:") + " <strong>" + (root.qtHwDecodingDevice || i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Qt default")) + "</strong>"
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            color: Kirigami.Theme.disabledTextColor
+        }
+
+        ButtonGroup {
+            id: mediaBackendButtonGroup
+            onClicked: {
+                if (checkedButton) {
+                    root.qtMEdiaBackendOverride = checkedButton.backend;
+                    if (checkedButton.backend) {
+                        envVarsModel.setPlasmaEnvVar("QT_MEDIA_BACKEND", checkedButton.backend);
+                    } else {
+                        envVarsModel.removePlasmaEnvVar("QT_MEDIA_BACKEND");
+                    }
+                }
+            }
+        }
+        RowLayout {
+            // By default Qt will use the FFmpeg backend, if it causes playback issues in your system try switching to the GStreamer backend instead.
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Media backend:")
+            visible: root.currentTab === 3
+            RadioButton {
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "System default")
+                ButtonGroup.group: mediaBackendButtonGroup
+                property string backend: ""
+                checked: root.qtMEdiaBackendOverride === backend
+            }
+            Kirigami.ContextualHelpButton {
+                toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "By default Qt will use the FFmpeg backend, if it causes playback issues in your system try switching to the GStreamer backend instead.<br><br>Make sure you have both backends installed in your system, on Arch the packages are <strong>qt6-multimedia-ffmpeg</strong> and <strong>qt6-multimedia-gstreamer</strong>")
+            }
+        }
+
+        RadioButton {
+            visible: root.currentTab === 3
+            text: "FFmpeg"
+            ButtonGroup.group: mediaBackendButtonGroup
+            property string backend: "ffmpeg"
+            checked: root.qtMEdiaBackendOverride === backend
+        }
+
+        RadioButton {
+            visible: root.currentTab === 3
+            text: "GStreamer"
+            ButtonGroup.group: mediaBackendButtonGroup
+            property string backend: "gstreamer"
+            checked: root.qtMEdiaBackendOverride === backend
+        }
+
+        Label {
+            visible: root.currentTab === 3
+            text: "QT_MEDIA_BACKEND<br>" + i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Current value:") + " <strong>" + (root.qtMEdiaBackend || i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Qt default")) + "</strong>"
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            color: Kirigami.Theme.disabledTextColor
+        }
+
+        ////////////////
+        ComboBox {
+            visible: root.currentTab === 3
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "VA-API driver:")
+            model: [i18n("System default"), "i965", "iHD", "nouveau", "nvidia", "radeonsi"]
+            onActivated: {
+                if (currentIndex === 0) {
+                    envVarsModel.removePlasmaEnvVar("LIBVA_DRIVER_NAME");
+                } else {
+                    envVarsModel.setPlasmaEnvVar("LIBVA_DRIVER_NAME", currentValue);
+                }
+            }
+            currentIndex: root.vaapiDriverOverride ? indexOfValue(root.vaapiDriverOverride) : 0
+        }
+
+        Label {
+            visible: root.currentTab === 3
+            text: "LIBVA_DRIVER_NAME<br>" + i18n("Current value: ") + "<strong>" + (root.vaapiDriver || i18n("System default")) + "</strong>"
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            color: Kirigami.Theme.disabledTextColor
+        }
+        ////////////////
+
+        ////////////////
+        ComboBox {
+            visible: root.currentTab === 3
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "VDPAU driver:")
+            model: [i18n("System default"), "va_gl", "nvidia"]
+            onActivated: {
+                if (currentIndex === 0) {
+                    envVarsModel.removePlasmaEnvVar("VDPAU_DRIVER");
+                } else {
+                    envVarsModel.setPlasmaEnvVar("VDPAU_DRIVER", currentValue);
+                }
+            }
+            currentIndex: root.vdpauDriverOverride ? indexOfValue(root.vdpauDriverOverride) : 0
+        }
+
+        Label {
+            visible: root.currentTab === 3
+            text: "VDPAU_DRIVER<br>" + i18n("Current value: ") + "<strong>" + (root.vdpauDriver || i18n("System default")) + "</strong>"
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            color: Kirigami.Theme.disabledTextColor
+        }
+        ////////////////
+
+        Component.onCompleted: {
+            // align with parent form from wallpaper config page
+            if (typeof appearanceRoot !== "undefined") {
+                twinFormLayouts.push(appearanceRoot.parentLayout);
+            }
+
+            let candidate = root.parent;
+            while (candidate) {
+                if (candidate && candidate.hasOwnProperty("configDialog")) {
+                    root.isLockScreenSettings = candidate.configDialog.toString().includes("ScreenLockerKcm");
+                    break;
+                }
+                candidate = candidate.parent;
+            }
+        }
+    }
+
+    Kirigami.Heading {
+        Layout.topMargin: Kirigami.Units.largeSpacing * 2
+        visible: root.currentTab === 3
+        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Debug")
+        font.weight: 600
+        Layout.alignment: Qt.AlignHCenter
+        horizontalAlignment: Text.AlignVCenter
+        level: 2
+    }
+
+    Kirigami.FormLayout {
+        CheckBox {
+            id: debugEnabledCheckbox
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Enable debug:")
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Print debug messages to the system log")
+            visible: root.currentTab === 3
+        }
         Component.onCompleted: {
             // align with parent form from wallpaper config page
             if (typeof appearanceRoot !== "undefined") {
@@ -929,7 +1178,7 @@ ColumnLayout {
     }
 
     Components.Donate {
-        visible: root.currentTab === 3
+        visible: root.currentTab === 4
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.margins: Kirigami.Units.gridUnit
