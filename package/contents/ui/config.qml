@@ -64,7 +64,6 @@ ColumnLayout {
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
-    property bool cfg_DayNightCycleEnabled: dayNightCycleMode.currentValue !== Enum.DayNightCycleMode.Disabled
     property alias cfg_DayNightCycleMode: dayNightCycleMode.currentValue
     property alias cfg_DayNightCycleSunriseTime: dayNightCycleSunriseTime.value
     property alias cfg_DayNightCycleSunsetTime: dayNightCycleSunsetTime.value

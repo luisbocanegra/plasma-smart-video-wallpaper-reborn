@@ -137,10 +137,6 @@
     <entry name="ChangeWallpaperTimerHours" type="Int">
       <default>0</default>
     </entry>
-    <entry name="DayNightCycleEnabled" type="Bool">
-      <label>Whether or not to cycle between day and night wallpapers</label>
-      <default>False</default>
-    </entry>
     <entry name="DayNightCycleMode" type="Int">
       <label>Mode</label>
       <default>0</default>

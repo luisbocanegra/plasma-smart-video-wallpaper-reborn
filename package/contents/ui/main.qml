@@ -142,6 +142,7 @@ WallpaperItem {
     property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
+    property bool dayNightCycleEnabled: main.configuration.DayNightCycleMode !== Enum.DayNightCycleMode.Disabled
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -198,7 +199,7 @@ WallpaperItem {
     }
 
     function getVideos() {
-        if (main.configuration.DayNightCycleEnabled) {
+        if (dayNightCycleEnabled) {
             return Utils.parseCompat(videoUrls).filter(video => {
                 const isDayCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Night;
                 const isNightCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Day;
@@ -210,7 +211,7 @@ WallpaperItem {
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
     function getLastVideo() {
-      if (main.configuration.DayNightCycleEnabled) {
+      if (dayNightCycleEnabled) {
         return main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"];
       }
       return main.configuration.LastVideo;
@@ -288,7 +289,7 @@ WallpaperItem {
 
     DayNightCycleController {
         id: dayNightCycleController
-        enabled: main.configuration.DayNightCycleEnabled
+        enabled: main.dayNightCycleEnabled
         mode: main.configuration.DayNightCycleMode
         sunriseTime: main.configuration.DayNightCycleSunriseTime
         sunsetTime: main.configuration.DayNightCycleSunsetTime
@@ -414,6 +415,9 @@ WallpaperItem {
                     text += `inLockScreen: ${main.lockScreenMode}\n`;
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
+                    text += `isDay: ${main.isDay}\n`;
+                    text += `dayNightCycleController.enabled: ${dayNightCycleController.enabled}\n`;
+                    text += `dayNightCycleController.mode: ${dayNightCycleController.mode}\n`;
                     text += `id: ${Plasmoid.id}`;
                     return text;
                 }
@@ -507,7 +511,7 @@ WallpaperItem {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
-        if (main.configuration.DayNightCycleEnabled) {
+        if (dayNightCycleEnabled) {
             main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
         }
         main.configuration.writeConfig();
