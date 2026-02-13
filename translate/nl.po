@@ -9,24 +9,25 @@ msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-08 00:18+0000\n"
-"PO-Revision-Date: 2025-03-17 16:05+0100\n"
+"PO-Revision-Date: 2026-02-13 11:40+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #: package/contents/ui/components/CheckableValueListView.qml:38
 #, kde-format
 msgid "Not configured"
-msgstr ""
+msgstr "Niet ingesteld"
 
 #: package/contents/ui/components/Donate.qml:8
 #, kde-format
 msgid "Thank you for using Smart Video Wallpaper Reborn!"
-msgstr ""
+msgstr "Bedankt voor het gebruiken van Smart Video Wallpaper Reborn!"
 
 #: package/contents/ui/components/Donate.qml:15
 #, kde-format
@@ -35,26 +36,29 @@ msgid ""
 "can dedicate more time to maintain and improve this and <a href=\"%1\">my "
 "other projects</a>."
 msgstr ""
+"Als je deze plug-in met plezier gebruikt, overweeg dan sponsoring of een "
+"donatie, zodat ik meer tijd aan de ontwikkeling ervan en tevens aan <a "
+"href=\"%1\">mijn andere projecten</a> kan besteden."
 
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
 msgid "You can also"
-msgstr ""
+msgstr "Je kunt ook"
 
 #: package/contents/ui/components/Donate.qml:87
 #, kde-format
 msgid "Star the project on GitHub"
-msgstr ""
+msgstr "het project een ster toekennen op GitHub"
 
 #: package/contents/ui/components/Donate.qml:93
 #, kde-format
 msgid "Rate in the KDE Store"
-msgstr ""
+msgstr "een beoordeling achterlaten in de KDE Store"
 
 #: package/contents/ui/components/Header.qml:29
 #, kde-format
 msgid "About"
-msgstr ""
+msgstr "Over"
 
 #: package/contents/ui/config.qml:93 package/contents/ui/config.qml:134
 #: package/contents/ui/config.qml:397 package/contents/ui/config.qml:589
@@ -78,13 +82,13 @@ msgstr "als er gemaximaliseerde of schermvullende vensters zijn"
 #: package/contents/ui/config.qml:581 package/contents/ui/config.qml:713
 #, kde-format
 msgid "Active window"
-msgstr ""
+msgstr "Actief venster"
 
 #: package/contents/ui/config.qml:112 package/contents/ui/config.qml:149
 #: package/contents/ui/config.qml:585 package/contents/ui/config.qml:717
 #, kde-format
 msgid "At least one window is visible"
-msgstr ""
+msgstr "Minimaal één zichtbaar venster"
 
 #: package/contents/ui/config.qml:126
 #, kde-format
@@ -99,12 +103,12 @@ msgstr "Versie:"
 #: package/contents/ui/config.qml:206
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #: package/contents/ui/config.qml:209
 #, kde-format
 msgid "Click to show"
-msgstr ""
+msgstr "Klik om te tonen"
 
 #: package/contents/ui/config.qml:239 package/contents/ui/config.qml:1027
 #, kde-format
@@ -124,7 +128,7 @@ msgstr "Werkomgevingseffecten"
 #: package/contents/ui/config.qml:254
 #, kde-format
 msgid "Donate"
-msgstr ""
+msgstr "Doneren"
 
 #: package/contents/ui/config.qml:269
 #, kde-format
@@ -134,7 +138,7 @@ msgstr ""
 "geheugen er gebruikt wordt!"
 
 #: package/contents/ui/config.qml:276
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
 "recover from crash remove the videos from the configuration using the "
@@ -171,7 +175,7 @@ msgstr "Instructies"
 #: package/contents/ui/config.qml:305
 #, kde-format
 msgid "Positioning:"
-msgstr ""
+msgstr "Positionering:"
 
 #: package/contents/ui/config.qml:311
 #, kde-format
@@ -196,12 +200,12 @@ msgstr "Achtergrond:"
 #: package/contents/ui/config.qml:337
 #, kde-format
 msgid "Blur"
-msgstr ""
+msgstr "Vervagen"
 
 #: package/contents/ui/config.qml:355
 #, kde-format
 msgid "radius: %1px"
-msgstr ""
+msgstr "straal: %1 px"
 
 #: package/contents/ui/config.qml:364 package/contents/ui/config.qml:668
 #, kde-format
@@ -215,7 +219,7 @@ msgstr ""
 #: package/contents/ui/config.qml:378
 #, kde-format
 msgid "Solid color"
-msgstr ""
+msgstr "Vlakke kleur"
 
 #: package/contents/ui/config.qml:384
 #, kde-format
@@ -225,17 +229,17 @@ msgstr "Kies een achtergrondkleur"
 #: package/contents/ui/config.qml:392
 #, kde-format
 msgid "Change Wallpaper:"
-msgstr ""
+msgstr "Achtergrond wĳzigen:"
 
 #: package/contents/ui/config.qml:401
 #, kde-format
 msgid "Slideshow"
-msgstr ""
+msgstr "Diavoorstelling"
 
 #: package/contents/ui/config.qml:405
 #, kde-format
 msgid "On a Timer"
-msgstr ""
+msgstr "Voorzien van tijdklok"
 
 #: package/contents/ui/config.qml:413
 #, kde-format
@@ -244,42 +248,45 @@ msgid ""
 "change the wallpaper manually using <strong>Next Video</strong> from the "
 "Desktop right click menu."
 msgstr ""
+"Speel automatisch de volgende video af met behulp van de gekozen strategie. "
+"Je kunt dit ook zelf doen door op <strong>Volgende video</strong> te klikken "
+"in het rechtermuisknopmenu van het bureaublad."
 
 #: package/contents/ui/config.qml:434
 #, kde-format
 msgid "%1 hour"
 msgid_plural "%1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 uur"
+msgstr[1] "%1 uur"
 
 #: package/contents/ui/config.qml:455
 #, kde-format
 msgid "%1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 minuut"
+msgstr[1] "%1 minuten"
 
 #: package/contents/ui/config.qml:476
 #, kde-format
 msgid "%1 second"
 msgid_plural "%1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 seconde"
+msgstr[1] "%1 seconden"
 
 #: package/contents/ui/config.qml:486
 #, kde-format
 msgid "Random order:"
-msgstr ""
+msgstr "Willekeurige volgorde:"
 
 #: package/contents/ui/config.qml:492
 #, kde-format
 msgid "Resume last video on startup:"
-msgstr ""
+msgstr "Vorige video hervatten na opstarten:"
 
 #: package/contents/ui/config.qml:497 package/contents/ui/config.qml:733
 #, kde-format
 msgid "Speed:"
-msgstr ""
+msgstr "Snelheid:"
 
 #: package/contents/ui/config.qml:518 package/contents/ui/config.qml:626
 #: package/contents/ui/config.qml:753
@@ -300,7 +307,7 @@ msgstr "Duur:"
 #: package/contents/ui/config.qml:548
 #, kde-format
 msgid "%1ms"
-msgstr ""
+msgstr "%1 ms"
 
 #: package/contents/ui/config.qml:556
 #, kde-format
@@ -324,12 +331,12 @@ msgstr "Alleen op dit scherm"
 #: package/contents/ui/config.qml:574
 #, kde-format
 msgid "Pause:"
-msgstr ""
+msgstr "Pauzeren:"
 
 #: package/contents/ui/config.qml:600
 #, kde-format
 msgid "Mute:"
-msgstr ""
+msgstr "Dempen:"
 
 #: package/contents/ui/config.qml:610
 #, kde-format
@@ -339,7 +346,7 @@ msgstr "Volumeniveau:"
 #: package/contents/ui/config.qml:633
 #, kde-format
 msgid "Blur:"
-msgstr ""
+msgstr "Vervagen:"
 
 #: package/contents/ui/config.qml:643
 #, kde-format
@@ -349,7 +356,7 @@ msgstr "Straal:"
 #: package/contents/ui/config.qml:659
 #, kde-format
 msgid "%1px"
-msgstr ""
+msgstr "%1 px"
 
 #: package/contents/ui/config.qml:678
 #, kde-format
@@ -360,12 +367,12 @@ msgstr "Animatieduur:"
 #, kde-format
 msgctxt "animation duration"
 msgid "%1ms"
-msgstr ""
+msgstr "%1 ms"
 
 #: package/contents/ui/config.qml:706
 #, kde-format
 msgid "Alternative speed:"
-msgstr ""
+msgstr "Alternatieve snelheid:"
 
 #: package/contents/ui/config.qml:759
 #, kde-format
@@ -376,7 +383,7 @@ msgstr "Als het accuniveau laag is:"
 #, kde-format
 msgctxt "battery level e.g 10%"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: package/contents/ui/config.qml:783
 #, kde-format
@@ -391,7 +398,7 @@ msgstr "Blurren uitschakelen"
 #: package/contents/ui/config.qml:794
 #, kde-format
 msgid "Pause on screen off:"
-msgstr ""
+msgstr "Pauzeren na uitschakelen van scherm:"
 
 #: package/contents/ui/config.qml:799
 #, kde-format
@@ -399,11 +406,11 @@ msgid "Screen state command:"
 msgstr "Schermstatusopdracht:"
 
 #: package/contents/ui/config.qml:809
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
 msgstr ""
-"De opdracht dient 0 (nul) als antwoord te geven als het scherm is "
+"De opdracht/het script dient 0 (nul) als antwoord te geven als het scherm is "
 "uitgeschakeld."
 
 #: package/contents/ui/config.qml:820
@@ -422,6 +429,8 @@ msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
 "wallpaper when they become active. Comma separated names."
 msgstr ""
+"Geef aan hoe bureaubladeffecten (bijv. werkbladoverzicht) omgaan met de "
+"achtergrond. De lijst dient kommagescheiden te zijn."
 
 #: package/contents/ui/config.qml:840
 #, kde-format
@@ -446,7 +455,7 @@ msgstr "Blur verbergen in:"
 #: package/contents/ui/config.qml:872
 #, kde-format
 msgid "Alternative speed in:"
-msgstr ""
+msgstr "Alternatieve snelheid in:"
 
 #: package/contents/ui/config.qml:878
 #, kde-format
@@ -454,11 +463,13 @@ msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
 "Desktop Effects:"
 msgstr ""
+"Momenteel ingeschakelde en <u><strong><font color='%1'>actieve</font></"
+"strong></u> bureaubladeffecten:"
 
 #: package/contents/ui/config.qml:888
 #, kde-format
 msgid "Select to copy"
-msgstr ""
+msgstr "Selecteer om te kopiëren"
 
 #: package/contents/ui/config.qml:1007
 #, kde-format
@@ -466,56 +477,58 @@ msgid ""
 "No items found \n"
 " add or drop some files"
 msgstr ""
+"Er zijn geen items beschikbaar\n"
+"Voeg bestanden toe of sleep ze hierheen"
 
 #: package/contents/ui/config.qml:1030
 #, kde-format
 msgid "Actions…"
-msgstr ""
+msgstr "Acties…"
 
 #: package/contents/ui/config.qml:1036
 #, kde-format
 msgid "Disable all"
-msgstr ""
+msgstr "Alles uitschakelen"
 
 #: package/contents/ui/config.qml:1041
 #, kde-format
 msgid "Enable all"
-msgstr ""
+msgstr "Alles inschakelen"
 
 #: package/contents/ui/config.qml:1046
 #, kde-format
 msgid "Swap enabled state"
-msgstr ""
+msgstr "Wisselgeheugenstatus"
 
 #: package/contents/ui/config.qml:1051
 #, kde-format
 msgid "Remove all"
-msgstr ""
+msgstr "Alles verwijderen"
 
 #: package/contents/ui/config.qml:1054
 #, kde-format
 msgid "Remove all media?"
-msgstr ""
+msgstr "Wil je alle media verwijderen?"
 
 #: package/contents/ui/config.qml:1064
 #, kde-format
 msgid "Pick a file…"
-msgstr ""
+msgstr "Kies een bestand…"
 
 #: package/contents/ui/config.qml:1069
 #, kde-format
 msgid "Enter path or url"
-msgstr ""
+msgstr "Voer een locatie of url in"
 
 #: package/contents/ui/config.qml:1115
 #, kde-format
 msgid "Whether or not this video will be played"
-msgstr ""
+msgstr "Of deze video moet worden afgespeeld"
 
 #: package/contents/ui/config.qml:1135
 #, kde-format
 msgid "Local file or static url"
-msgstr ""
+msgstr "Lokaal bestand of vaste url"
 
 #: package/contents/ui/config.qml:1166
 #, kde-format
@@ -523,6 +536,8 @@ msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr ""
+"De afspeelsnelheid van deze video. Minimale snelheid: 0,01. Stel in op 0,0 "
+"om deze instelling te negeren."
 
 #: package/contents/ui/config.qml:1183
 #, kde-format
@@ -530,6 +545,8 @@ msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr ""
+"De alternatieve afspeelsnelheid van deze video. Minimale snelheid: 0,01. "
+"Stel in op 0,0 om deze instelling te negeren."
 
 #: package/contents/ui/config.qml:1200
 #, kde-format
@@ -538,26 +555,29 @@ msgid ""
 "<strong>Next Video</strong> from the Desktop right click menu to play the "
 "next video in the list."
 msgstr ""
+"Schakel in om deze video te herhalen in plaats van de volgende af te spelen."
+"<br>Klik op <strong>Volgende video</strong> in het rechtermuisknop van het "
+"bureaublad om alsnog de volgende af te spelen."
 
 #: package/contents/ui/config.qml:1229
 #, kde-format
 msgid "Preview…"
-msgstr ""
+msgstr "Voorvertonen…"
 
 #: package/contents/ui/config.qml:1236
 #, kde-format
 msgid "Open containing folder"
-msgstr ""
+msgstr "Bijbehorende map openen"
 
 #: package/contents/ui/config.qml:1244
 #, kde-format
 msgid "Play this file only (disable all others)"
-msgstr ""
+msgstr "Alleen dit bestand afspelen (alle andere negeren)"
 
 #: package/contents/ui/config.qml:1254
 #, kde-format
 msgid "Remove media?"
-msgstr ""
+msgstr "Media verwijderen?"
 
 #: package/contents/ui/config.qml:1277
 #, kde-format
