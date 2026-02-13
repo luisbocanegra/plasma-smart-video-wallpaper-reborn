@@ -93,6 +93,10 @@
     <entry name="CrossfadeDuration" type="Int">
       <default>1000</default>
     </entry>
+    <entry name="PrebufferNextVideo" type="Bool">
+      <label>Preload next video into memory to reduce black-frame transitions</label>
+      <default>false</default>
+    </entry>
     <entry name="PlaybackRate" type="Double">
       <default>1</default>
     </entry>
