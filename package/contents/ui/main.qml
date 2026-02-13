@@ -42,29 +42,7 @@ WallpaperItem {
     }
     property int currentVideoIndex: 0
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
-    property bool dayNightCycle: main.configuration.DayNightCycle
-    property bool isDay: {
-        const currentTime = new Date().getHours();
-        return currentTime >= 6 && currentTime < 19;
-    }
-
-    function getLastVideo() {
-        if (dayNightCycle) {
-            return main.configuration[isDay ? "LastVideoDay" : "LastVideoNight"];
-        }
-        return main.configuration.LastVideo;
-    }
-    function getLastVideoIndex() {
-        const lastVideo = getLastVideo();
-        for (let index = 0; index < videosConfig.length; index++) {
-            if (videosConfig[index].filename === lastVideo) {
-                return index;
-            }
-        }
-
-        return 0;
-    }
-
+    property alias isDay: dayNightCycleController.isDay
     property var currentSource: {
         const lastVideo = getLastVideo();
         if (resumeLastVideo && lastVideo !== "") {
@@ -220,7 +198,7 @@ WallpaperItem {
     }
 
     function getVideos() {
-        if (dayNightCycle) {
+        if (main.configuration.DayNightCycleEnabled) {
             return Utils.parseCompat(videoUrls).filter(video => {
                 const isDayCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Night;
                 const isNightCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Day;
@@ -230,6 +208,21 @@ WallpaperItem {
         }
 
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
+    }
+    function getLastVideo() {
+      if (main.configuration.DayNightCycleEnabled) {
+        return main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"];
+      }
+      return main.configuration.LastVideo;
+    }
+    function getLastVideoIndex() {
+      const lastVideo = getLastVideo();
+      for (let index = 0; index < videosConfig.length; index++) {
+        if (videosConfig[index].filename === lastVideo) {
+          return index;
+        }
+      }
+      return 0;
     }
 
     onPlayingChanged: {
@@ -293,42 +286,19 @@ WallpaperItem {
         }
     }
 
-    Timer {
-        id: dayNightCycleTimer
-        interval: 1000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            const dayNightCycleConfigChanged = dayNightCycle !== main.configuration.DayNightCycle;
-            if (!dayNightCycleConfigChanged && !main.configuration.DayNightCycle) {
-                return;
-            }
-            dayNightCycle = main.configuration.DayNightCycle;
-
-            const hours = new Date().getHours();
-            const isDay = hours >= 6 && hours < 19;
-
-            if ((main.isDay != isDay) || dayNightCycleConfigChanged) {
-                main.save();
-                main.isDay = isDay;
-                videosConfig = getVideos();
-
-                if (getLastVideo() === "") {
-                    setCurrentSource(0);
-                    return player.next();
-                }
-
-                currentVideoIndex = getLastVideoIndex();
-
-                if (main.configuration.ResumeLastVideo) {
-                    // TODO: Resume last (day/night) video when changing from day to night or vice versa
-                }
-
-                setCurrentSource(currentVideoIndex);
-
-                player.next();
-            }
+    DayNightCycleController {
+        id: dayNightCycleController
+        enabled: main.configuration.DayNightCycleEnabled
+        mode: main.configuration.DayNightCycleMode
+        sunriseTime: main.configuration.DayNightCycleSunriseTime
+        sunsetTime: main.configuration.DayNightCycleSunsetTime
+        isLoading: main.isLoading
+        onBeforeChanged: { main.save(); }
+        onChanged: {
+            videosConfig = getVideos();
+            currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
+            setCurrentSource(currentVideoIndex);
+            player.next();
         }
     }
 
@@ -526,7 +496,6 @@ WallpaperItem {
 
     Component.onCompleted: {
         startTimer.start();
-        dayNightCycleTimer.start();
         Qt.callLater(() => {
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
@@ -538,7 +507,7 @@ WallpaperItem {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
-        if(dayNightCycle) {
+        if (main.configuration.DayNightCycleEnabled) {
             main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
         }
         main.configuration.writeConfig();
