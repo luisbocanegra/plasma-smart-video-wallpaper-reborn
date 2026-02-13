@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.10.0...v2.11.0) (2026-02-13)
+
+
+### Features
+
+* update Dutch translation ([#234](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/234)) ([eb9e98b](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/eb9e98bbacd2af647dca1aee5b01510be18f1ead))
+
 ## [2.10.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.9.0...v2.10.0) (2026-02-10)
 
 
