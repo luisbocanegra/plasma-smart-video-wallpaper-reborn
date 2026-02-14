@@ -211,19 +211,19 @@ WallpaperItem {
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
     function getLastVideo() {
-      if (dayNightCycleEnabled) {
-        return main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"];
-      }
-      return main.configuration.LastVideo;
+        if (dayNightCycleEnabled) {
+            return main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"];
+        }
+        return main.configuration.LastVideo;
     }
     function getLastVideoIndex() {
-      const lastVideo = getLastVideo();
-      for (let index = 0; index < videosConfig.length; index++) {
-        if (videosConfig[index].filename === lastVideo) {
-          return index;
+        const lastVideo = getLastVideo();
+        for (let index = 0; index < videosConfig.length; index++) {
+            if (videosConfig[index].filename === lastVideo) {
+                return index;
+            }
         }
-      }
-      return 0;
+        return 0;
     }
 
     onPlayingChanged: {
@@ -294,7 +294,9 @@ WallpaperItem {
         sunriseTime: main.configuration.DayNightCycleSunriseTime
         sunsetTime: main.configuration.DayNightCycleSunsetTime
         isLoading: main.isLoading
-        onBeforeChanged: { main.save(); }
+        onBeforeChanged: {
+            main.save();
+        }
         onChanged: {
             videosConfig = getVideos();
             currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
@@ -416,8 +418,8 @@ WallpaperItem {
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
                     text += `isDay: ${main.isDay}\n`;
-                    text += `dayNightCycleController.enabled: ${dayNightCycleController.enabled}\n`;
-                    text += `dayNightCycleController.mode: ${dayNightCycleController.mode}\n`;
+                    text += `dayNightCycleEnabled: ${main.dayNightCycleEnabled}\n`;
+                    text += `dayNightCycleMode: ${main.configuration.DayNightCycleMode}\n`;
                     text += `id: ${Plasmoid.id}`;
                     return text;
                 }
