@@ -16,6 +16,20 @@ const ChangeWallpaperMode = {
   OnATimer: 2,
 };
 
+const DayNightCycleAssignment = {
+  Both: 0,
+  Day: 1,
+  Night: 2,
+};
+
+const DayNightCycleMode = {
+  Disabled: 0,
+  Time: 1,
+  PlasmaStyle: 2,
+  AlwaysDay: 3,
+  AlwaysNight: 4,
+};
+
 const PauseMode = {
   MaximizedOrFullScreen: 0,
   ActiveWindowPresent: 1,

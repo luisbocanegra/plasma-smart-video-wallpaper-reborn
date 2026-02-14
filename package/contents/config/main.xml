@@ -108,6 +108,12 @@
     <entry name="LastVideoPosition" type="Int">
       <default>0</default>
     </entry>
+    <entry name="LastVideoDay" type="String">
+      <default></default>
+    </entry>
+    <entry name="LastVideoNight" type="String">
+      <default></default>
+    </entry>
     <!-- Mute audio
         0: when maximized or full-screen windows
         1: when a visible window is active
@@ -130,6 +136,18 @@
     </entry>
     <entry name="ChangeWallpaperTimerHours" type="Int">
       <default>0</default>
+    </entry>
+    <entry name="DayNightCycleMode" type="Int">
+      <label>Mode</label>
+      <default>0</default>
+    </entry>
+    <entry name="DayNightCycleSunriseTime" type="Int">
+      <label>Time of sunrise</label>
+      <default>360</default>
+    </entry>
+    <entry name="DayNightCycleSunsetTime" type="Int">
+      <label>Time of sunset</label>
+      <default>1080</default>
     </entry>
     <entry name="ResumeLastVideo" type="Bool">
       <label>Whether or not to resume last playing video on startup</label>
