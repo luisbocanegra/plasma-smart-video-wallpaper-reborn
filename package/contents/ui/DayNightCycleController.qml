@@ -11,22 +11,25 @@ Item {
     required property bool isLoading
 
     function detectDayTime(mode: int, sunriseTime: int, sunsetTime: int): bool {
-      switch (root.mode) {
+        switch (root.mode) {
         case Enum.DayNightCycleMode.Time:
-          const now = new Date();
-          const currentTime = now.getHours() * 60 + now.getMinutes();
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
 
-          return currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
-        case Enum.DayNightCycleMode.PlasmaStyle: return Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
-        case Enum.DayNightCycleMode.AlwaysNight: return false;
-        case Enum.DayNightCycleMode.AlwaysDay:   return true;
-      }
+            return currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
+        case Enum.DayNightCycleMode.PlasmaStyle:
+            return Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
+        case Enum.DayNightCycleMode.AlwaysNight:
+            return false;
+        case Enum.DayNightCycleMode.AlwaysDay:
+            return true;
+        }
     }
 
     property bool isDay: true
 
-    signal beforeChanged;
-    signal changed;
+    signal beforeChanged
+    signal changed
 
     Timer {
         id: timer

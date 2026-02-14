@@ -420,8 +420,8 @@ WallpaperItem {
                     text += `showBlur: ${main.showBlur}\n`;
                     text += `Audio Device: ${player.player1.currentAudioDevice}`;
                     text += `isDay: ${main.isDay}\n`;
-                    text += `dayNightCycleController.enabled: ${dayNightCycleController.enabled}\n`;
-                    text += `dayNightCycleController.mode: ${dayNightCycleController.mode}\n`;
+                    text += `dayNightCycleEnabled: ${main.dayNightCycleEnabled}\n`;
+                    text += `dayNightCycleMode: ${main.configuration.DayNightCycleMode}\n`;
                     text += `id: ${Plasmoid.id}`;
                     return text;
                 }

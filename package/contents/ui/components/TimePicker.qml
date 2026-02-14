@@ -15,10 +15,10 @@ RowLayout {
         to: 23
         value: Math.floor(root.value / 60)
         editable: true
-        textFromValue: (value) => value.toString().padStart(2, '0')
-        valueFromText: (text) => parseInt(text, 10)
+        textFromValue: value => value.toString().padStart(2, '0')
+        valueFromText: text => parseInt(text, 10)
         onValueModified: {
-            root.value = hours.value * 60 + minutes.value
+            root.value = hours.value * 60 + minutes.value;
         }
     }
     SpinBox {
@@ -27,10 +27,10 @@ RowLayout {
         to: 59
         value: root.value % 60
         editable: true
-        textFromValue: (value) => value.toString().padStart(2, '0')
-        valueFromText: (text) => parseInt(text, 10)
+        textFromValue: value => value.toString().padStart(2, '0')
+        valueFromText: text => parseInt(text, 10)
         onValueModified: {
-            root.value = hours.value * 60 + minutes.value
+            root.value = hours.value * 60 + minutes.value;
         }
     }
 }
