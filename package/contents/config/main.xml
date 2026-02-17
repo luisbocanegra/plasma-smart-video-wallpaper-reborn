@@ -11,8 +11,12 @@
       <default>[]</default>
     </entry>
     <entry name="BackgroundColor" type="String">
-      <label>Last folder used</label>
+      <label>Background color</label>
       <default>#000000</default>
+    </entry>
+    <entry name="AudioOutputDevice" type="String">
+      <label>Audio output device</label>
+      <default>default</default>
     </entry>
     <entry name="FillMode" type="Int">
       <label>Video fill mode</label>

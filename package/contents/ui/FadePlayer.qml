@@ -26,6 +26,7 @@ Item {
     property bool fillBlur: true
     property real alternativePlaybackRateGlobal: 0.5
     property bool useAlternativePlaybackRate: false
+    property string audioOutputDevice: "default"
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
@@ -111,6 +112,7 @@ Item {
         source: playerSource.filename ?? ""
         volume: root.volume
         muted: root.muted
+        audioOutputDevice: root.audioOutputDevice
         z: 2
         opacity: 1
         fillMode: root.fillMode
@@ -206,6 +208,7 @@ Item {
         source: playerSource.filename ?? ""
         volume: root.volume
         muted: root.muted
+        audioOutputDevice: root.audioOutputDevice
         z: 1
         fillMode: root.fillMode
         fillBlur: root.fillBlur

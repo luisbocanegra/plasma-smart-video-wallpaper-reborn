@@ -604,6 +604,40 @@ ColumnLayout {
             visible: root.currentTab === 1
         }
 
+        MediaDevices {
+            id: mediaDevices
+        }
+
+        property string cfg_AudioOutputDevice
+
+        RowLayout {
+            visible: root.currentTab === 1
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Audio Device:")
+            ComboBox {
+                id: audioDeviceCombo
+                Layout.fillWidth: true
+                model: {
+                    let devices = ["default"];
+                    for (var i = 0; i < mediaDevices.audioOutputs.length; i++) {
+                        devices.push(mediaDevices.audioOutputs[i].description);
+                    }
+                    if (devices.length === 1) {
+                        devices.push("No devices found (check logs)")
+                    }
+                    return devices;
+                }
+                onCurrentTextChanged: {
+                    if (currentText !== "No devices found (check logs)") {
+                        root.cfg_AudioOutputDevice = currentText;
+                    }
+                }
+                Component.onCompleted: {
+                    currentIndex = find(root.cfg_AudioOutputDevice)
+                    if (currentIndex === -1) currentIndex = 0
+                }
+            }
+        }
+
         RowLayout {
             visible: root.currentTab === 1 && root.cfg_MuteMode !== 5
             Label {
