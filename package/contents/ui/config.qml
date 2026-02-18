@@ -45,6 +45,7 @@ ColumnLayout {
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property string cfg_VideoUrls
+    property string cfg_AudioOutputDevice
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
@@ -608,7 +609,7 @@ ColumnLayout {
             id: mediaDevices
         }
 
-        property string cfg_AudioOutputDevice
+
 
         RowLayout {
             visible: root.currentTab === 1
@@ -616,23 +617,38 @@ ColumnLayout {
             ComboBox {
                 id: audioDeviceCombo
                 Layout.fillWidth: true
+                textRole: "text"
+                valueRole: "value"
                 model: {
-                    let devices = ["default"];
+                    let devices = [{
+                        text: "Default",
+                        value: "default"
+                    }];
                     for (var i = 0; i < mediaDevices.audioOutputs.length; i++) {
-                        devices.push(mediaDevices.audioOutputs[i].description);
+                        let device = mediaDevices.audioOutputs[i];
+                        devices.push({
+                            text: device.description,
+                            value: device.id
+                        });
                     }
                     if (devices.length === 1) {
-                        devices.push("No devices found (check logs)")
+                        devices.push({
+                            text: "No devices found (check logs)",
+                            value: "default"
+                        })
                     }
                     return devices;
                 }
-                onCurrentTextChanged: {
+                onActivated: {
                     if (currentText !== "No devices found (check logs)") {
-                        root.cfg_AudioOutputDevice = currentText;
+                        root.cfg_AudioOutputDevice = currentValue;
                     }
                 }
                 Component.onCompleted: {
-                    currentIndex = find(root.cfg_AudioOutputDevice)
+                    currentIndex = indexOfValue(root.cfg_AudioOutputDevice)
+                    if (currentIndex === -1) {
+                        currentIndex = find(root.cfg_AudioOutputDevice)
+                    }
                     if (currentIndex === -1) currentIndex = 0
                 }
             }
