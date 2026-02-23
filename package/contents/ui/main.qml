@@ -140,6 +140,11 @@ WallpaperItem {
     property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
+    property bool prebufferNextVideo: main.configuration.PrebufferNextVideo
+    property bool prebufferEnabled: prebufferNextVideo && videosConfig.length > 1
+    property var nextSource: Utils.createVideo("")
+    property int nextVideoIndex: -1
+
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -199,6 +204,78 @@ WallpaperItem {
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
     }
 
+    function updateNextSource() {
+        if (prebufferEnabled) {
+            nextSource = computeNextSource();
+            return;
+        }
+        nextVideoIndex = -1;
+        if (player && player.transitionBusy) {
+            return;
+        }
+        nextSource = Utils.createVideo("");
+    }
+
+    function computeNextSource() {
+        if (!prebufferEnabled || videosConfig.length === 0) {
+            nextVideoIndex = -1;
+            return Utils.createVideo("");
+        }
+        const nextIndex = (currentVideoIndex + 1) % videosConfig.length;
+        nextVideoIndex = nextIndex;
+
+        if (randomMode && nextIndex === 0) {
+            const shuffledVideos = Utils.shuffleArray(videosConfig);
+            return shuffledVideos[nextIndex];
+        }
+        return videosConfig[nextIndex];
+    }
+
+    function skipNextCandidate(failedFilename) {
+        if (!prebufferEnabled || videosConfig.length === 0) {
+            return;
+        }
+
+        if (videosConfig.length === 1) {
+            nextVideoIndex = currentVideoIndex;
+            nextSource = videosConfig[currentVideoIndex];
+            return;
+        }
+
+        let probeIndex = nextVideoIndex >= 0 ? nextVideoIndex : currentVideoIndex;
+        for (let attempt = 0; attempt < videosConfig.length; attempt++) {
+            const candidateIndex = (probeIndex + 1) % videosConfig.length;
+            let candidate;
+            if (randomMode && candidateIndex === 0) {
+                const shuffledVideos = Utils.shuffleArray(videosConfig);
+                candidate = shuffledVideos[candidateIndex];
+            } else {
+                candidate = videosConfig[candidateIndex];
+            }
+
+            if (candidate.filename !== ""
+                    && candidate.filename !== failedFilename
+                    && candidate.filename !== currentSource.filename) {
+                nextVideoIndex = candidateIndex;
+                nextSource = candidate;
+                printLog("- Replacement next target " + nextVideoIndex + ": " + nextSource.filename);
+                return;
+            }
+            probeIndex = candidateIndex;
+        }
+
+        // Keep a deterministic fallback candidate so FadePlayer never gets stuck with <none>.
+        const fallback = computeNextSource();
+        nextSource = fallback;
+        if (fallback.filename !== "") {
+            printLog("- Fallback next target " + nextVideoIndex + ": " + nextSource.filename + " (after failed prebuffer: " + failedFilename + ")");
+        } else {
+            nextVideoIndex = -1;
+            nextSource = Utils.createVideo("");
+            printLog("- No fallback next target after failed prebuffer: " + failedFilename);
+        }
+    }
+
     onPlayingChanged: {
         playing && !isLoading ? main.play() : main.pause();
     }
@@ -217,7 +294,10 @@ WallpaperItem {
                 main.pause();
             }
         }
+        updateNextSource();
     }
+    onPrebufferEnabledChanged: updateNextSource()
+    onRandomModeChanged: updateNextSource()
 
     property QtObject pmSource: P5Support.DataSource {
         id: pmSource
@@ -262,14 +342,21 @@ WallpaperItem {
 
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
-        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
-        if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig);
-            currentSource = shuffledVideos[currentVideoIndex];
+
+        if (prebufferEnabled && nextVideoIndex >= 0) {
+            currentVideoIndex = nextVideoIndex;
+            currentSource = nextSource;
         } else {
-            currentSource = videosConfig[currentVideoIndex];
+            currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
+            if (randomMode && currentVideoIndex === 0) {
+                const shuffledVideos = Utils.shuffleArray(videosConfig);
+                currentSource = shuffledVideos[currentVideoIndex];
+            } else {
+                currentSource = videosConfig[currentVideoIndex];
+            }
         }
         printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
+        updateNextSource();
     }
 
     Rectangle {
@@ -285,6 +372,9 @@ WallpaperItem {
             visible: main.videosConfig.length !== 0
             onSetNextSource: {
                 main.nextVideo();
+            }
+            onRequestNextCandidate: function (failedFilename) {
+                main.skipNextCandidate(failedFilename);
             }
             crossfadeEnabled: main.crossfadeEnabled
             multipleVideos: main.videosConfig.length > 1
@@ -302,6 +392,17 @@ WallpaperItem {
             useAlternativePlaybackRate: main.useAlternativePlaybackRate
             alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
+            prebufferNextVideo: main.prebufferEnabled
+            nextSource: main.nextSource
+        }
+
+        Connections {
+            target: player
+            function onTransitionBusyChanged() {
+                if (!main.prebufferEnabled && !player.transitionBusy) {
+                    main.updateNextSource();
+                }
+            }
         }
     }
     FastBlur {
@@ -348,15 +449,27 @@ WallpaperItem {
             PlasmaComponents.Label {
                 Layout.margins: Kirigami.Units.largeSpacing
                 text: {
+                    let p1MediaStatusName = Object.keys(Enum.MediaStatus).find(key => Enum.MediaStatus[key] === player.player1.mediaStatus);
+                    let p2MediaStatusName = Object.keys(Enum.MediaStatus).find(key => Enum.MediaStatus[key] === player.player2.mediaStatus);
+
                     let text = `filename: ${main.currentSource.filename}\n`;
                     text += `loops: ${main.currentSource.loop ?? false}\n`;
                     text += `currentVideoIndex: ${main.currentVideoIndex}\n`;
                     text += `changeWallpaperMode: ${main.changeWallpaperMode}\n`;
                     text += `crossfade: ${main.crossfadeEnabled}\n`;
                     text += `crossfadeDuration: ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
+                    text += `transitionState: ${player.transitionStateName}\n`;
+                    text += `pendingTarget: ${player.pendingTargetFilename || "<none>"}\n`;
+                    text += `pendingAdvance: ${player.pendingAdvancePlaylist}\n`;
                     text += `multipleVideos: ${player.multipleVideos}\n`;
                     text += `player: ${player.player.objectName}\n`;
                     text += `mediaStatus: ${player.player.mediaStatus}\n`;
+                    text += `player1 media status: [${player.player1.mediaStatus}] ${p1MediaStatusName}\n`;
+                    text += `player2 media status: [${player.player2.mediaStatus}] ${p2MediaStatusName}\n`;
+                    text += `player1 prebuffer: pending=${player.player1.prebufferPending} ready=${player.player1.prebufferReady} readyPos=${player.player1.prebufferReadyPosition}\n`;
+                    text += `player1 prebuffer target: ${player.player1.prebufferTargetFilename || "<none>"}\n`;
+                    text += `player2 prebuffer: pending=${player.player2.prebufferPending} ready=${player.player2.prebufferReady} readyPos=${player.player2.prebufferReadyPosition}\n`;
+                    text += `player2 prebuffer target: ${player.player2.prebufferTargetFilename || "<none>"}\n`;
                     text += `player1 playing: ${player.player1.playing}\n`;
                     text += `player2 playing: ${player.player2.playing}\n`;
                     text += `position: ${player.player.position}\n`;
@@ -454,7 +567,11 @@ WallpaperItem {
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
             });
+            player.nextSource = Qt.binding(() => {
+                return main.nextSource;
+            });
         });
+        updateNextSource();
     }
 
     function save() {

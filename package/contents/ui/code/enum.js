@@ -40,3 +40,14 @@ const MuteMode = {
   Never: 4,
   Always: 5,
 };
+
+const MediaStatus = {
+  NoMedia: 0,
+  LoadingMedia: 1,
+  LoadedMedia: 2,
+  StalledMedia: 3,
+  BufferingMedia: 4,
+  BufferedMedia: 5,
+  EndOfMedia: 6,
+  InvalidMedia: 7
+};
