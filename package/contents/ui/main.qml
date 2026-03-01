@@ -301,7 +301,12 @@ WallpaperItem {
             videosConfig = getVideos();
             currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
             setCurrentSource(currentVideoIndex);
+
             player.next();
+
+            if (!main.playing) {
+                main.pause();
+            }
         }
     }
 
