@@ -16,7 +16,7 @@
     </entry>
     <entry name="AudioOutputDevice" type="String">
       <label>Audio output device</label>
-      <default>default</default>
+      <default></default>
     </entry>
     <entry name="FillMode" type="Int">
       <label>Video fill mode</label>
