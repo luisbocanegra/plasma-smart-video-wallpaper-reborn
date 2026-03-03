@@ -45,7 +45,7 @@ ColumnLayout {
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property string cfg_VideoUrls
-    property string cfg_AudioOutputDevice
+    property alias cfg_AudioOutputDevice: audioDeviceCombo.currentValue
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
@@ -158,6 +158,34 @@ ColumnLayout {
         return model;
     }
 
+    MediaDevices {
+        id: mediaDevices
+        onAudioOutputsChanged: root.getAudioDevicesModel()
+    }
+
+    ListModel {
+        id: audioDevicesModel
+    }
+
+    function getAudioDevicesModel() {
+        audioDevicesModel.clear();
+
+        audioDevicesModel.append({
+            "id": "",
+            "description": i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default")
+        });
+
+        mediaDevices.audioOutputs.forEach(o => {
+            const id = o.id.toString();
+            const description = o.description.toString();
+            console.log("Output", id, description);
+            audioDevicesModel.append({
+                id,
+                description
+            });
+        });
+    }
+
     function updateConfig() {
         let videos = new Array();
         for (let i = 0; i < videosModel.model.count; i++) {
@@ -194,6 +222,7 @@ ColumnLayout {
 
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
+        getAudioDevicesModel();
     }
 
     Kirigami.FormLayout {
@@ -605,53 +634,13 @@ ColumnLayout {
             visible: root.currentTab === 1
         }
 
-        MediaDevices {
-            id: mediaDevices
-        }
-
-
-
-        RowLayout {
-            visible: root.currentTab === 1
-            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Audio Device:")
-            ComboBox {
-                id: audioDeviceCombo
-                Layout.fillWidth: true
-                textRole: "text"
-                valueRole: "value"
-                model: {
-                    let devices = [{
-                        text: "Default",
-                        value: "default"
-                    }];
-                    for (var i = 0; i < mediaDevices.audioOutputs.length; i++) {
-                        let device = mediaDevices.audioOutputs[i];
-                        devices.push({
-                            text: device.description,
-                            value: device.id
-                        });
-                    }
-                    if (devices.length === 1) {
-                        devices.push({
-                            text: "No devices found (check logs)",
-                            value: "default"
-                        })
-                    }
-                    return devices;
-                }
-                onActivated: {
-                    if (currentText !== "No devices found (check logs)") {
-                        root.cfg_AudioOutputDevice = currentValue;
-                    }
-                }
-                Component.onCompleted: {
-                    currentIndex = indexOfValue(root.cfg_AudioOutputDevice)
-                    if (currentIndex === -1) {
-                        currentIndex = find(root.cfg_AudioOutputDevice)
-                    }
-                    if (currentIndex === -1) currentIndex = 0
-                }
-            }
+        ComboBox {
+            id: audioDeviceCombo
+            visible: root.currentTab === 1 && root.cfg_MuteMode !== 5
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Audio device:")
+            model: audioDevicesModel
+            textRole: "description"
+            valueRole: "id"
         }
 
         RowLayout {
