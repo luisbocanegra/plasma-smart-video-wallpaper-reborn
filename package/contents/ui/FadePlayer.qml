@@ -26,7 +26,7 @@ Item {
     property bool fillBlur: true
     property real alternativePlaybackRateGlobal: 0.5
     property bool useAlternativePlaybackRate: false
-    property string audioOutputDevice: "default"
+    property string audioOutputDevice
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration

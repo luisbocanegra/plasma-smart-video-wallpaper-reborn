@@ -21,6 +21,8 @@ Item {
     readonly property alias videoHeight: videoOutput.contentRect.height
     readonly property alias videoWidth: videoOutput.contentRect.width
     readonly property bool showFillBlur: root.fillBlur && root.fitScale !== 1
+    property string audioOutputDevice
+    readonly property string currentAudioDevice: audioOutput.device ? audioOutput.device.description : i18n("Unknown")
     property real fitScale: {
         if (height > videoHeight) {
             return height / videoHeight;
@@ -48,53 +50,21 @@ Item {
         anchors.fill: parent
     }
 
-    property string audioOutputDevice: "default"
-
-    function updateAudioDevice() {
-        if (root.audioOutputDevice === "default" || root.audioOutputDevice === "") {
-             if (audioOutput.device !== mediaDevices.defaultAudioOutput) {
-                 audioOutput.device = mediaDevices.defaultAudioOutput
-                 console.log("SmartVideoWallpaper: Switched to default audio device: " + mediaDevices.defaultAudioOutput.description)
-             }
-             return;
-        }
-
-        let found = false
-        for (var i = 0; i < mediaDevices.audioOutputs.length; i++) {
-             if (mediaDevices.audioOutputs[i].description === root.audioOutputDevice) {
-                 audioOutput.device = mediaDevices.audioOutputs[i]
-                 console.log("SmartVideoWallpaper: Switched to selected audio device: " + root.audioOutputDevice)
-                 found = true
-                 break
-             }
-        }
-        if (!found) {
-             console.log("SmartVideoWallpaper: Requested device '" + root.audioOutputDevice + "' not found, using default")
-             audioOutput.device = mediaDevices.defaultAudioOutput
-        }
-    }
-
-    onAudioOutputDeviceChanged: updateAudioDevice()
-
     MediaDevices {
         id: mediaDevices
-        onAudioOutputsChanged: updateAudioDevice()
-        onDefaultAudioOutputChanged: updateAudioDevice()
-    }
-
-    Component.onCompleted: {
-        console.log("SmartVideoWallpaper: Available audio outputs:")
-        for (var i = 0; i < mediaDevices.audioOutputs.length; i++) {
-             console.log(" - " + mediaDevices.audioOutputs[i].description + " (id: " + mediaDevices.audioOutputs[i].id + ")")
-        }
-        updateAudioDevice()
     }
 
     AudioOutput {
         id: audioOutput
         volume: root.opacity * root.volume
-        onDeviceChanged: {
-             console.log("SmartVideoWallpaper: AudioOutput device is now: " + device.description)
+        device: {
+            let output;
+            if (root.audioOutputDevice !== "") {
+                output = mediaDevices.audioOutputs.find(o => {
+                    return o.id.toString() === root.audioOutputDevice;
+                });
+            }
+            return output || mediaDevices.defaultAudioOutput;
         }
     }
 
@@ -108,8 +78,6 @@ Item {
         // TODO: Check if this has been reported to Qt
         playbackRate: Math.max(root.playbackRate, 0.01)
     }
-
-    property string currentAudioDevice: audioOutput.device ? audioOutput.device.description : "Unknown"
 
     ShaderEffectSource {
         id: videoBlur
