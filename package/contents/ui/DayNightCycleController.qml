@@ -8,55 +8,58 @@ Item {
     required property int sunriseTime
     required property int sunsetTime
 
-    required property bool isLoading
+    property var dayNightPlugin: null
+    property Item dayNightPluginDay: null
+    property int currentTime
 
-    function detectDayTime(mode: int, sunriseTime: int, sunsetTime: int): bool {
-        switch (root.mode) {
+    property bool isDay: {
+        let day = false;
+        switch (mode) {
         case Enum.DayNightCycleMode.Time:
-            const now = new Date();
-            const currentTime = now.getHours() * 60 + now.getMinutes();
-
-            return currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
+            if (dayNightPlugin) {
+                day = dayNightPlugin.isDay;
+                break;
+            }
+            day = currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
+            break;
         case Enum.DayNightCycleMode.PlasmaStyle:
-            return Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
+            day = Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
+            break;
         case Enum.DayNightCycleMode.AlwaysNight:
-            return false;
+            day = false;
+            break;
         case Enum.DayNightCycleMode.AlwaysDay:
-            return true;
+            day = true;
+            break;
+        default:
+            day = false;
+            break;
         }
+        return day;
     }
 
-    property bool isDay: true
-
-    signal beforeChanged
-    signal changed
+    onIsDayChanged: console.log("isDayChanged", isDay)
 
     Timer {
         id: timer
         interval: 1000
-        running: true
+        running: root.mode === Enum.DayNightCycleMode.Time && root.dayNightPlugin === null
         repeat: true
         triggeredOnStart: true
         property bool prevEnabled: root.enabled
         onTriggered: {
-            const enableChanged = timer.prevEnabled !== root.enabled;
-            if ((!enableChanged && !root.enabled) || root.isLoading) {
-                return;
-            }
-            timer.prevEnabled = root.enabled;
-
-            const isDay = root.detectDayTime(root.mode, root.sunriseTime, root.sunsetTime);
-
-            if ((root.isDay != isDay) || enableChanged) {
-                root.beforeChanged();
-                root.isDay = isDay;
-                root.changed();
-            }
+            const now = new Date();
+            root.currentTime = now.getHours() * 60 + now.getMinutes();
         }
     }
 
     Component.onCompleted: {
-        root.isDay = root.detectDayTime(root.mode, root.sunriseTime, root.sunsetTime);
-        timer.start();
+        let component = null;
+        component = Qt.createComponent("NighttimeHelper.qml");
+        if (component.status === Component.Ready) {
+            dayNightPlugin = component.createObject(root);
+        } else {
+            console.warn(component.errorString());
+        }
     }
 }

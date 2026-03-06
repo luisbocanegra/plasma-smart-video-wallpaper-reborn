@@ -43,13 +43,7 @@ WallpaperItem {
     property int currentVideoIndex: 0
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
     property alias isDay: dayNightCycleController.isDay
-    property var currentSource: {
-        const lastVideo = getLastVideo();
-        if (resumeLastVideo && lastVideo !== "") {
-            return Utils.getVideoByFile(lastVideo, videosConfig);
-        }
-        return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
-    }
+    property var currentSource: Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -287,25 +281,32 @@ WallpaperItem {
         }
     }
 
+    onCurrentSourceChanged: syncConfig()
+
     DayNightCycleController {
         id: dayNightCycleController
         enabled: main.dayNightCycleEnabled
         mode: main.configuration.DayNightCycleMode
         sunriseTime: main.configuration.DayNightCycleSunriseTime
         sunsetTime: main.configuration.DayNightCycleSunsetTime
-        isLoading: main.isLoading
-        onBeforeChanged: {
-            main.save();
-        }
-        onChanged: {
+        onIsDayChanged: {
+            if (main.isLoading) {
+                return;
+            }
+            const wasPlaying = player.player.playing;
             videosConfig = getVideos();
-            currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
-            setCurrentSource(currentVideoIndex);
-
-            player.next();
-
-            if (!main.playing) {
-                main.pause();
+            if (videosConfig.length == 0) {
+                main.stop();
+                main.currentSource.filename = "";
+            } else {
+                currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
+                setCurrentSource(currentVideoIndex);
+                player.next(true, true);
+                if (!wasPlaying) {
+                    // FIXME pause is delayed to avoid black screen
+                    // maybe there is a way to display the first frame
+                    Utils.delay(150, main.pause, main);
+                }
             }
         }
     }
@@ -508,27 +509,28 @@ WallpaperItem {
     Component.onCompleted: {
         startTimer.start();
         Qt.callLater(() => {
+            currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
+            setCurrentSource(currentVideoIndex);
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
             });
         });
     }
 
-    function save() {
+    function syncConfig() {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
         if (dayNightCycleEnabled) {
             main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
         }
-        main.configuration.writeConfig();
-        printLog("Bye!");
     }
 
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.save();
+            syncConfig();
+            main.configuration.writeConfig();
         }
     }
     Item {
