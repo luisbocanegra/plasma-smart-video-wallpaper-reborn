@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import "code/utils.js" as Utils
+import "code/enum.js" as Enum
 
 Item {
     id: root
@@ -27,7 +28,8 @@ Item {
             "customDuration": 0,
             "playbackRate": 0.0,
             "alternativePlaybackRate": 0.0,
-            "loop": false
+            "loop": false,
+            "dayNightCycleAssignment": Enum.DayNightCycleAssignment.Both
         });
         updated();
     }

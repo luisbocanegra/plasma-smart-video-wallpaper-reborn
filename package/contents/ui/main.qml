@@ -42,12 +42,8 @@ WallpaperItem {
     }
     property int currentVideoIndex: 0
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
-    property var currentSource: {
-        if (resumeLastVideo && main.configuration.LastVideo !== "") {
-            return Utils.getVideoByFile(main.configuration.LastVideo, videosConfig);
-        }
-        return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
-    }
+    property alias isDay: dayNightCycleController.isDay
+    property var currentSource: Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -140,6 +136,7 @@ WallpaperItem {
     property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
+    property bool dayNightCycleEnabled: main.configuration.DayNightCycleMode !== Enum.DayNightCycleMode.Disabled
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -196,7 +193,31 @@ WallpaperItem {
     }
 
     function getVideos() {
+        if (dayNightCycleEnabled) {
+            return Utils.parseCompat(videoUrls).filter(video => {
+                const isDayCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Night;
+                const isNightCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Day;
+
+                return video.enabled && ((main.isDay && isDayCycle) || (!main.isDay && isNightCycle));
+            });
+        }
+
         return Utils.parseCompat(videoUrls).filter(video => video.enabled);
+    }
+    function getLastVideo() {
+        if (dayNightCycleEnabled) {
+            return main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"];
+        }
+        return main.configuration.LastVideo;
+    }
+    function getLastVideoIndex() {
+        const lastVideo = getLastVideo();
+        for (let index = 0; index < videosConfig.length; index++) {
+            if (videosConfig[index].filename === lastVideo) {
+                return index;
+            }
+        }
+        return 0;
     }
 
     onPlayingChanged: {
@@ -260,15 +281,49 @@ WallpaperItem {
         }
     }
 
+    onCurrentSourceChanged: syncConfig()
+
+    DayNightCycleController {
+        id: dayNightCycleController
+        enabled: main.dayNightCycleEnabled
+        mode: main.configuration.DayNightCycleMode
+        sunriseTime: main.configuration.DayNightCycleSunriseTime
+        sunsetTime: main.configuration.DayNightCycleSunsetTime
+        onIsDayChanged: {
+            if (main.isLoading) {
+                return;
+            }
+            const wasPlaying = player.player.playing;
+            videosConfig = getVideos();
+            if (videosConfig.length == 0) {
+                main.stop();
+                main.currentSource.filename = "";
+            } else {
+                currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
+                setCurrentSource(currentVideoIndex);
+                player.next(true, true);
+                if (!wasPlaying) {
+                    // FIXME pause is delayed to avoid black screen
+                    // maybe there is a way to display the first frame
+                    Utils.delay(150, main.pause, main);
+                }
+            }
+        }
+    }
+
+    function setCurrentSource(index) {
+        if (randomMode && index === 0) {
+            const shuffledVideos = Utils.shuffleArray(videosConfig);
+            currentSource = shuffledVideos[index];
+        } else {
+            currentSource = videosConfig[index];
+        }
+    }
+
     function nextVideo() {
         printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
         currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
-        if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig);
-            currentSource = shuffledVideos[currentVideoIndex];
-        } else {
-            currentSource = videosConfig[currentVideoIndex];
-        }
+        setCurrentSource(currentVideoIndex);
         printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
     }
 
@@ -368,6 +423,9 @@ WallpaperItem {
                     text += `inLockScreen: ${main.lockScreenMode}\n`;
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
+                    text += `isDay: ${main.isDay}\n`;
+                    text += `dayNightCycleEnabled: ${main.dayNightCycleEnabled}\n`;
+                    text += `dayNightCycleMode: ${main.configuration.DayNightCycleMode}\n`;
                     text += `id: ${Plasmoid.id}`;
                     return text;
                 }
@@ -451,24 +509,28 @@ WallpaperItem {
     Component.onCompleted: {
         startTimer.start();
         Qt.callLater(() => {
+            currentVideoIndex = resumeLastVideo ? getLastVideoIndex() : 0;
+            setCurrentSource(currentVideoIndex);
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
             });
         });
     }
 
-    function save() {
+    function syncConfig() {
         // Save last video and position to resume from it on next login/lock
         main.configuration.LastVideo = main.currentSource.filename;
         main.configuration.LastVideoPosition = player.lastVideoPosition;
-        main.configuration.writeConfig();
-        printLog("Bye!");
+        if (dayNightCycleEnabled) {
+            main.configuration[main.isDay ? "LastVideoDay" : "LastVideoNight"] = main.currentSource.filename;
+        }
     }
 
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.save();
+            syncConfig();
+            main.configuration.writeConfig();
         }
     }
     Item {

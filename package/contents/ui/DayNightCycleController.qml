@@ -1,0 +1,65 @@
+import QtQuick
+import "code/enum.js" as Enum
+
+Item {
+    id: root
+    required property bool enabled
+    required property int mode
+    required property int sunriseTime
+    required property int sunsetTime
+
+    property var dayNightPlugin: null
+    property Item dayNightPluginDay: null
+    property int currentTime
+
+    property bool isDay: {
+        let day = false;
+        switch (mode) {
+        case Enum.DayNightCycleMode.Time:
+            if (dayNightPlugin) {
+                day = dayNightPlugin.isDay;
+                break;
+            }
+            day = currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
+            break;
+        case Enum.DayNightCycleMode.PlasmaStyle:
+            day = Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
+            break;
+        case Enum.DayNightCycleMode.AlwaysNight:
+            day = false;
+            break;
+        case Enum.DayNightCycleMode.AlwaysDay:
+            day = true;
+            break;
+        default:
+            day = false;
+            break;
+        }
+        return day;
+    }
+
+    onIsDayChanged: console.log("isDayChanged", isDay)
+
+    Timer {
+        id: timer
+        interval: 1000
+        running: root.mode === Enum.DayNightCycleMode.Time && root.dayNightPlugin === null
+        repeat: true
+        triggeredOnStart: true
+        property bool prevEnabled: root.enabled
+        onTriggered: {
+            const now = new Date();
+            root.currentTime = now.getHours() * 60 + now.getMinutes();
+        }
+    }
+
+    Component.onCompleted: {
+        let component = null;
+        component = Qt.createComponent("NighttimeHelper.qml");
+        if (component.status === Component.Ready) {
+            dayNightPlugin = component.createObject(root);
+        } else {
+            console.warn(component.errorString());
+        }
+    }
+}
