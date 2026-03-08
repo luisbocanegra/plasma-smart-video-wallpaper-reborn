@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-08 00:18+0000\n"
+"POT-Creation-Date: 2026-03-08 13:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: package/contents/ui/VideoPlayer.qml:25
+#, kde-format
+msgid "Unknown"
+msgstr ""
 
 #: package/contents/ui/components/CheckableValueListView.qml:38
 #, kde-format
@@ -56,82 +61,88 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: package/contents/ui/config.qml:93 package/contents/ui/config.qml:134
-#: package/contents/ui/config.qml:397 package/contents/ui/config.qml:589
-#: package/contents/ui/config.qml:721
+#: package/contents/ui/config.qml:94 package/contents/ui/config.qml:135
+#: package/contents/ui/config.qml:427 package/contents/ui/config.qml:619
+#: package/contents/ui/config.qml:760
 #, kde-format
 msgid "Never"
 msgstr ""
 
-#: package/contents/ui/config.qml:97 package/contents/ui/config.qml:130
+#: package/contents/ui/config.qml:98 package/contents/ui/config.qml:131
 #, kde-format
 msgid "Always"
 msgstr ""
 
-#: package/contents/ui/config.qml:104 package/contents/ui/config.qml:141
-#: package/contents/ui/config.qml:577 package/contents/ui/config.qml:709
+#: package/contents/ui/config.qml:105 package/contents/ui/config.qml:142
+#: package/contents/ui/config.qml:607 package/contents/ui/config.qml:748
 #, kde-format
 msgid "Maximized or full-screen windows"
 msgstr ""
 
-#: package/contents/ui/config.qml:108 package/contents/ui/config.qml:145
-#: package/contents/ui/config.qml:581 package/contents/ui/config.qml:713
+#: package/contents/ui/config.qml:109 package/contents/ui/config.qml:146
+#: package/contents/ui/config.qml:611 package/contents/ui/config.qml:752
 #, kde-format
 msgid "Active window"
 msgstr ""
 
-#: package/contents/ui/config.qml:112 package/contents/ui/config.qml:149
-#: package/contents/ui/config.qml:585 package/contents/ui/config.qml:717
+#: package/contents/ui/config.qml:113 package/contents/ui/config.qml:150
+#: package/contents/ui/config.qml:615 package/contents/ui/config.qml:756
 #, kde-format
 msgid "At least one window is visible"
 msgstr ""
 
-#: package/contents/ui/config.qml:126
+#: package/contents/ui/config.qml:127
 #, kde-format
 msgid "Video is paused"
 msgstr ""
 
-#: package/contents/ui/config.qml:200
+#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
+#: package/contents/ui/main.qml:516
+#, kde-format
+msgid "Default"
+msgstr ""
+
+#: package/contents/ui/config.qml:230
 #, kde-format
 msgid "Version:"
 msgstr ""
 
-#: package/contents/ui/config.qml:206
+#: package/contents/ui/config.qml:236
 #, kde-format
 msgid "Warning"
 msgstr ""
 
-#: package/contents/ui/config.qml:209
+#: package/contents/ui/config.qml:239
 #, kde-format
 msgid "Click to show"
 msgstr ""
 
-#: package/contents/ui/config.qml:239 package/contents/ui/config.qml:1027
+#: package/contents/ui/config.qml:269 package/contents/ui/config.qml:1066
 #, kde-format
 msgid "Videos"
 msgstr ""
 
-#: package/contents/ui/config.qml:244
+#: package/contents/ui/config.qml:274
 #, kde-format
 msgid "Playback"
 msgstr ""
 
-#: package/contents/ui/config.qml:249
+#: package/contents/ui/config.qml:279
 #, kde-format
 msgid "Desktop Effects"
 msgstr ""
 
-#: package/contents/ui/config.qml:254
+#: package/contents/ui/config.qml:284
 #, kde-format
 msgid "Donate"
 msgstr ""
 
-#: package/contents/ui/config.qml:269
+#: package/contents/ui/config.qml:299
 #, kde-format
 msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr ""
 
-#: package/contents/ui/config.qml:276
+#: package/contents/ui/config.qml:306
 #, kde-format
 msgid ""
 "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
@@ -141,91 +152,91 @@ msgid ""
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
 
-#: package/contents/ui/config.qml:281
+#: package/contents/ui/config.qml:311
 #, kde-format
 msgid "Qt Media backend instructions"
 msgstr ""
 
-#: package/contents/ui/config.qml:291
+#: package/contents/ui/config.qml:321
 #, kde-format
 msgid ""
 "Make sure to enable Hardware video acceleration in your system to reduce CPU/"
 "GPU usage when videos are playing."
 msgstr ""
 
-#: package/contents/ui/config.qml:296
+#: package/contents/ui/config.qml:326
 #, kde-format
 msgid "Learn how"
 msgstr ""
 
-#: package/contents/ui/config.qml:305
+#: package/contents/ui/config.qml:335
 #, kde-format
 msgid "Positioning:"
 msgstr ""
 
-#: package/contents/ui/config.qml:311
+#: package/contents/ui/config.qml:341
 #, kde-format
 msgid "Stretch"
 msgstr ""
 
-#: package/contents/ui/config.qml:315
+#: package/contents/ui/config.qml:345
 #, kde-format
 msgid "Keep Proportions"
 msgstr ""
 
-#: package/contents/ui/config.qml:319
+#: package/contents/ui/config.qml:349
 #, kde-format
 msgid "Scaled and Cropped"
 msgstr ""
 
-#: package/contents/ui/config.qml:334
+#: package/contents/ui/config.qml:364
 #, kde-format
 msgid "Background:"
 msgstr ""
 
-#: package/contents/ui/config.qml:337
+#: package/contents/ui/config.qml:367
 #, kde-format
 msgid "Blur"
 msgstr ""
 
-#: package/contents/ui/config.qml:355
+#: package/contents/ui/config.qml:385
 #, kde-format
 msgid "radius: %1px"
 msgstr ""
 
-#: package/contents/ui/config.qml:364 package/contents/ui/config.qml:668
+#: package/contents/ui/config.qml:394 package/contents/ui/config.qml:707
 #, kde-format
 msgid ""
 "Quality of the blur is reduced if value exceeds 64. Higher values may cause "
 "the blur to stop working!"
 msgstr ""
 
-#: package/contents/ui/config.qml:378
+#: package/contents/ui/config.qml:408
 #, kde-format
 msgid "Solid color"
 msgstr ""
 
-#: package/contents/ui/config.qml:384
+#: package/contents/ui/config.qml:414
 #, kde-format
 msgid "Select Background Color"
 msgstr ""
 
-#: package/contents/ui/config.qml:392
+#: package/contents/ui/config.qml:422
 #, kde-format
 msgid "Change Wallpaper:"
 msgstr ""
 
-#: package/contents/ui/config.qml:401
+#: package/contents/ui/config.qml:431
 #, kde-format
 msgid "Slideshow"
 msgstr ""
 
-#: package/contents/ui/config.qml:405
+#: package/contents/ui/config.qml:435
 #, kde-format
 msgid "On a Timer"
 msgstr ""
 
-#: package/contents/ui/config.qml:413
+#: package/contents/ui/config.qml:443
 #, kde-format
 msgid ""
 "Automatically play the next video using the selected strategy. You can also "
@@ -233,289 +244,294 @@ msgid ""
 "Desktop right click menu."
 msgstr ""
 
-#: package/contents/ui/config.qml:434
+#: package/contents/ui/config.qml:464
 #, kde-format
 msgid "%1 hour"
 msgid_plural "%1 hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: package/contents/ui/config.qml:455
+#: package/contents/ui/config.qml:485
 #, kde-format
 msgid "%1 minute"
 msgid_plural "%1 minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: package/contents/ui/config.qml:476
+#: package/contents/ui/config.qml:506
 #, kde-format
 msgid "%1 second"
 msgid_plural "%1 seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: package/contents/ui/config.qml:486
+#: package/contents/ui/config.qml:516
 #, kde-format
 msgid "Random order:"
 msgstr ""
 
-#: package/contents/ui/config.qml:492
+#: package/contents/ui/config.qml:522
 #, kde-format
 msgid "Resume last video on startup:"
 msgstr ""
 
-#: package/contents/ui/config.qml:497 package/contents/ui/config.qml:733
+#: package/contents/ui/config.qml:527 package/contents/ui/config.qml:772
 #, kde-format
 msgid "Speed:"
 msgstr ""
 
-#: package/contents/ui/config.qml:518 package/contents/ui/config.qml:626
-#: package/contents/ui/config.qml:753
+#: package/contents/ui/config.qml:548 package/contents/ui/config.qml:665
+#: package/contents/ui/config.qml:792
 #, kde-format
 msgid "Reset to default"
 msgstr ""
 
-#: package/contents/ui/config.qml:524
+#: package/contents/ui/config.qml:554
 #, kde-format
 msgid "Crossfade (Beta):"
 msgstr ""
 
-#: package/contents/ui/config.qml:530
+#: package/contents/ui/config.qml:560
 #, kde-format
 msgid "Duration:"
 msgstr ""
 
-#: package/contents/ui/config.qml:548
+#: package/contents/ui/config.qml:578
 #, kde-format
 msgid "%1ms"
 msgstr ""
 
-#: package/contents/ui/config.qml:556
+#: package/contents/ui/config.qml:586
 #, kde-format
 msgid ""
 "Adds a smooth transition between videos. <strong>Uses additional Memory and "
 "may cause playback isues when enabled.</strong>"
 msgstr ""
 
-#: package/contents/ui/config.qml:567
+#: package/contents/ui/config.qml:597
 #, kde-format
 msgid "Filter windows:"
 msgstr ""
 
-#: package/contents/ui/config.qml:568
+#: package/contents/ui/config.qml:598
 #, kde-format
 msgid "This screen only"
 msgstr ""
 
-#: package/contents/ui/config.qml:574
+#: package/contents/ui/config.qml:604
 #, kde-format
 msgid "Pause:"
 msgstr ""
 
-#: package/contents/ui/config.qml:600
+#: package/contents/ui/config.qml:630
 #, kde-format
 msgid "Mute:"
 msgstr ""
 
-#: package/contents/ui/config.qml:610
+#: package/contents/ui/config.qml:640
+#, kde-format
+msgid "Audio device:"
+msgstr ""
+
+#: package/contents/ui/config.qml:649
 #, kde-format
 msgid "Volume:"
 msgstr ""
 
-#: package/contents/ui/config.qml:633
+#: package/contents/ui/config.qml:672
 #, kde-format
 msgid "Blur:"
 msgstr ""
 
-#: package/contents/ui/config.qml:643
+#: package/contents/ui/config.qml:682
 #, kde-format
 msgid "Radius:"
 msgstr ""
 
-#: package/contents/ui/config.qml:659
+#: package/contents/ui/config.qml:698
 #, kde-format
 msgid "%1px"
 msgstr ""
 
-#: package/contents/ui/config.qml:678
+#: package/contents/ui/config.qml:717
 #, kde-format
 msgid "Animation duration:"
 msgstr ""
 
-#: package/contents/ui/config.qml:696
+#: package/contents/ui/config.qml:735
 #, kde-format
 msgctxt "animation duration"
 msgid "%1ms"
 msgstr ""
 
-#: package/contents/ui/config.qml:706
+#: package/contents/ui/config.qml:745
 #, kde-format
 msgid "Alternative speed:"
 msgstr ""
 
-#: package/contents/ui/config.qml:759
+#: package/contents/ui/config.qml:798
 #, kde-format
 msgid "On battery below:"
 msgstr ""
 
-#: package/contents/ui/config.qml:775
+#: package/contents/ui/config.qml:814
 #, kde-format
 msgctxt "battery level e.g 10%"
 msgid "%1%"
 msgstr ""
 
-#: package/contents/ui/config.qml:783
+#: package/contents/ui/config.qml:822
 #, kde-format
 msgid "Pause video"
 msgstr ""
 
-#: package/contents/ui/config.qml:788
+#: package/contents/ui/config.qml:827
 #, kde-format
 msgid "Disable blur"
 msgstr ""
 
-#: package/contents/ui/config.qml:794
+#: package/contents/ui/config.qml:833
 #, kde-format
 msgid "Pause on screen off:"
 msgstr ""
 
-#: package/contents/ui/config.qml:799
+#: package/contents/ui/config.qml:838
 #, kde-format
 msgid "Screen state command:"
 msgstr ""
 
-#: package/contents/ui/config.qml:809
+#: package/contents/ui/config.qml:848
 #, kde-format
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
 msgstr ""
 
-#: package/contents/ui/config.qml:820
+#: package/contents/ui/config.qml:859
 #, kde-format
 msgid "Enable debug:"
 msgstr ""
 
-#: package/contents/ui/config.qml:821
+#: package/contents/ui/config.qml:860
 #, kde-format
 msgid "Print debug messages to the system log"
 msgstr ""
 
-#: package/contents/ui/config.qml:830
+#: package/contents/ui/config.qml:869
 #, kde-format
 msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
 "wallpaper when they become active. Comma separated names."
 msgstr ""
 
-#: package/contents/ui/config.qml:840
+#: package/contents/ui/config.qml:879
 #, kde-format
 msgid "Play in:"
 msgstr ""
 
-#: package/contents/ui/config.qml:848
+#: package/contents/ui/config.qml:887
 #, kde-format
 msgid "Pause in:"
 msgstr ""
 
-#: package/contents/ui/config.qml:856
+#: package/contents/ui/config.qml:895
 #, kde-format
 msgid "Show blur in:"
 msgstr ""
 
-#: package/contents/ui/config.qml:864
+#: package/contents/ui/config.qml:903
 #, kde-format
 msgid "Hide blur in:"
 msgstr ""
 
-#: package/contents/ui/config.qml:872
+#: package/contents/ui/config.qml:911
 #, kde-format
 msgid "Alternative speed in:"
 msgstr ""
 
-#: package/contents/ui/config.qml:878
+#: package/contents/ui/config.qml:917
 #, kde-format
 msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
 "Desktop Effects:"
 msgstr ""
 
-#: package/contents/ui/config.qml:888
+#: package/contents/ui/config.qml:927
 #, kde-format
 msgid "Select to copy"
 msgstr ""
 
-#: package/contents/ui/config.qml:1007
+#: package/contents/ui/config.qml:1046
 #, kde-format
 msgid ""
 "No items found \n"
 " add or drop some files"
 msgstr ""
 
-#: package/contents/ui/config.qml:1030
+#: package/contents/ui/config.qml:1069
 #, kde-format
 msgid "Actions…"
 msgstr ""
 
-#: package/contents/ui/config.qml:1036
+#: package/contents/ui/config.qml:1075
 #, kde-format
 msgid "Disable all"
 msgstr ""
 
-#: package/contents/ui/config.qml:1041
+#: package/contents/ui/config.qml:1080
 #, kde-format
 msgid "Enable all"
 msgstr ""
 
-#: package/contents/ui/config.qml:1046
+#: package/contents/ui/config.qml:1085
 #, kde-format
 msgid "Swap enabled state"
 msgstr ""
 
-#: package/contents/ui/config.qml:1051
+#: package/contents/ui/config.qml:1090
 #, kde-format
 msgid "Remove all"
 msgstr ""
 
-#: package/contents/ui/config.qml:1054
+#: package/contents/ui/config.qml:1093
 #, kde-format
 msgid "Remove all media?"
 msgstr ""
 
-#: package/contents/ui/config.qml:1064
+#: package/contents/ui/config.qml:1103
 #, kde-format
 msgid "Pick a file…"
 msgstr ""
 
-#: package/contents/ui/config.qml:1069
+#: package/contents/ui/config.qml:1108
 #, kde-format
 msgid "Enter path or url"
 msgstr ""
 
-#: package/contents/ui/config.qml:1115
+#: package/contents/ui/config.qml:1154
 #, kde-format
 msgid "Whether or not this video will be played"
 msgstr ""
 
-#: package/contents/ui/config.qml:1135
+#: package/contents/ui/config.qml:1174
 #, kde-format
 msgid "Local file or static url"
 msgstr ""
 
-#: package/contents/ui/config.qml:1166
+#: package/contents/ui/config.qml:1205
 #, kde-format
 msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr ""
 
-#: package/contents/ui/config.qml:1183
+#: package/contents/ui/config.qml:1222
 #, kde-format
 msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr ""
 
-#: package/contents/ui/config.qml:1200
+#: package/contents/ui/config.qml:1239
 #, kde-format
 msgid ""
 "If enabled the video will repeat instead of playing the next one.<br>Use "
@@ -523,72 +539,67 @@ msgid ""
 "next video in the list."
 msgstr ""
 
-#: package/contents/ui/config.qml:1229
+#: package/contents/ui/config.qml:1268
 #, kde-format
 msgid "Preview…"
 msgstr ""
 
-#: package/contents/ui/config.qml:1236
+#: package/contents/ui/config.qml:1275
 #, kde-format
 msgid "Open containing folder"
 msgstr ""
 
-#: package/contents/ui/config.qml:1244
+#: package/contents/ui/config.qml:1283
 #, kde-format
 msgid "Play this file only (disable all others)"
 msgstr ""
 
-#: package/contents/ui/config.qml:1254
+#: package/contents/ui/config.qml:1293
 #, kde-format
 msgid "Remove media?"
 msgstr ""
 
-#: package/contents/ui/config.qml:1277
+#: package/contents/ui/config.qml:1316
 #, kde-format
 msgid "Pick a video file"
 msgstr ""
 
-#: package/contents/ui/config.qml:1278
+#: package/contents/ui/config.qml:1317
 #, kde-format
 msgid "All files"
 msgstr ""
 
-#: package/contents/ui/config.qml:1278
+#: package/contents/ui/config.qml:1317
 #, kde-format
 msgid "Video files"
 msgstr ""
 
-#: package/contents/ui/main.qml:325
+#: package/contents/ui/main.qml:326
 #, kde-format
 msgid "No video source \n"
 msgstr ""
 
-#: package/contents/ui/main.qml:489
+#: package/contents/ui/main.qml:491
 #, kde-format
 msgid "Next Video"
 msgstr ""
 
-#: package/contents/ui/main.qml:499
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Pause"
 msgstr ""
 
-#: package/contents/ui/main.qml:501 package/contents/ui/main.qml:514
-#, kde-format
-msgid "Default"
-msgstr ""
-
-#: package/contents/ui/main.qml:503
+#: package/contents/ui/main.qml:505
 #, kde-format
 msgid "Play"
 msgstr ""
 
-#: package/contents/ui/main.qml:512
+#: package/contents/ui/main.qml:514
 #, kde-format
 msgid "Unmute"
 msgstr ""
 
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/main.qml:518
 #, kde-format
 msgid "Mute"
 msgstr ""
