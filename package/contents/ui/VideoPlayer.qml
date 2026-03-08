@@ -21,6 +21,8 @@ Item {
     readonly property alias videoHeight: videoOutput.contentRect.height
     readonly property alias videoWidth: videoOutput.contentRect.width
     readonly property bool showFillBlur: root.fillBlur && root.fitScale !== 1
+    property string audioOutputDevice
+    readonly property string currentAudioDevice: audioOutput.device ? audioOutput.device.description : i18n("Unknown")
     property real fitScale: {
         if (height > videoHeight) {
             return height / videoHeight;
@@ -48,9 +50,22 @@ Item {
         anchors.fill: parent
     }
 
+    MediaDevices {
+        id: mediaDevices
+    }
+
     AudioOutput {
         id: audioOutput
         volume: root.opacity * root.volume
+        device: {
+            let output;
+            if (root.audioOutputDevice !== "") {
+                output = mediaDevices.audioOutputs.find(o => {
+                    return o.id.toString() === root.audioOutputDevice;
+                });
+            }
+            return output || mediaDevices.defaultAudioOutput;
+        }
     }
 
     MediaPlayer {

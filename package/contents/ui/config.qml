@@ -45,6 +45,7 @@ ColumnLayout {
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property string cfg_VideoUrls
+    property alias cfg_AudioOutputDevice: audioDeviceCombo.currentValue
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
@@ -157,6 +158,34 @@ ColumnLayout {
         return model;
     }
 
+    MediaDevices {
+        id: mediaDevices
+        onAudioOutputsChanged: root.getAudioDevicesModel()
+    }
+
+    ListModel {
+        id: audioDevicesModel
+    }
+
+    function getAudioDevicesModel() {
+        audioDevicesModel.clear();
+
+        audioDevicesModel.append({
+            "id": "",
+            "description": i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default")
+        });
+
+        mediaDevices.audioOutputs.forEach(o => {
+            const id = o.id.toString();
+            const description = o.description.toString();
+            console.log("Output", id, description);
+            audioDevicesModel.append({
+                id,
+                description
+            });
+        });
+    }
+
     function updateConfig() {
         let videos = new Array();
         for (let i = 0; i < videosModel.model.count; i++) {
@@ -193,6 +222,7 @@ ColumnLayout {
 
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
+        getAudioDevicesModel();
     }
 
     Kirigami.FormLayout {
@@ -602,6 +632,15 @@ ColumnLayout {
             textRole: "text"
             valueRole: "value"
             visible: root.currentTab === 1
+        }
+
+        ComboBox {
+            id: audioDeviceCombo
+            visible: root.currentTab === 1 && root.cfg_MuteMode !== 5
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Audio device:")
+            model: audioDevicesModel
+            textRole: "description"
+            valueRole: "id"
         }
 
         RowLayout {

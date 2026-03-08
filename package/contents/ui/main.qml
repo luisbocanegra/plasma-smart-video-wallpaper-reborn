@@ -302,6 +302,7 @@ WallpaperItem {
             useAlternativePlaybackRate: main.useAlternativePlaybackRate
             alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
+            audioOutputDevice: main.configuration.AudioOutputDevice
         }
     }
     FastBlur {
@@ -368,7 +369,8 @@ WallpaperItem {
                     text += `inLockScreen: ${main.lockScreenMode}\n`;
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
-                    text += `id: ${Plasmoid.id}`;
+                    text += `id: ${Plasmoid.id}\n`;
+                    text += `Audio Device: ${player.player1.currentAudioDevice}`;
                     return text;
                 }
             }
