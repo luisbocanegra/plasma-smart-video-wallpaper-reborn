@@ -497,29 +497,49 @@ WallpaperItem {
         },
         PlasmaCore.Action {
             text: {
-                if (main.playbackOverride === Enum.PlaybackOverride.Play) {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Pause");
-                } else if (main.playbackOverride === Enum.PlaybackOverride.Pause) {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default");
+                if (main.playbackOverride === Enum.PlaybackOverride.Default) {
+                    return main.playing ? i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Pause") : i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Play");
                 } else {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Play");
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default Playback");
                 }
             }
-            icon.name: main.playing ? "media-playback-start" : "media-playback-pause"
-            onTriggered: main.playbackOverride = (main.playbackOverride + 1) % 3
+            icon.name: {
+                if (main.playbackOverride === Enum.PlaybackOverride.Default) {
+                    return main.playing ? "media-playback-pause" : "media-playback-start";
+                } else {
+                    return "view-refresh";
+                }
+            }
+            onTriggered: {
+                if (main.playbackOverride === Enum.PlaybackOverride.Default) {
+                    main.playbackOverride = main.playing ? Enum.PlaybackOverride.Pause : Enum.PlaybackOverride.Play;
+                } else {
+                    main.playbackOverride = Enum.PlaybackOverride.Default;
+                }
+            }
         },
         PlasmaCore.Action {
             text: {
-                if (main.muteOverride === Enum.MuteOverride.Mute) {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Unmute");
-                } else if (main.muteOverride === Enum.MuteOverride.Unmute) {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default");
+                if (main.muteOverride === Enum.MuteOverride.Default) {
+                    return main.muteAudio ? i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Unmute") : i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Mute");
                 } else {
-                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Mute");
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Default Muting");
                 }
             }
-            icon.name: main.muteAudio ? "audio-volume-muted" : "audio-volume-high"
-            onTriggered: main.muteOverride = (main.muteOverride + 1) % 3
+            icon.name: {
+                if (main.muteOverride === Enum.MuteOverride.Default) {
+                    return main.muteAudio ? "audio-volume-high" : "audio-volume-muted";
+                } else {
+                    return "view-refresh";
+                }
+            }
+            onTriggered: {
+                if (main.muteOverride === Enum.MuteOverride.Default) {
+                    main.muteOverride = main.muteAudio ? Enum.MuteOverride.Unmute : Enum.MuteOverride.Mute;
+                } else {
+                    main.muteOverride = Enum.MuteOverride.Default;
+                }
+            }
         }
     ]
 }
