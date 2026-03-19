@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: package/contents/ui/VideoPlayer.qml:25
 #, kde-format
@@ -248,21 +248,18 @@ msgstr "按照所选策略自动选择下一个视频并播放。您也可以在
 msgid "%1 hour"
 msgid_plural "%1 hours"
 msgstr[0] "%1小时"
-msgstr[1] "%1小时"
 
 #: package/contents/ui/config.qml:485
 #, kde-format
 msgid "%1 minute"
 msgid_plural "%1 minutes"
 msgstr[0] "%1分钟"
-msgstr[1] "%1分钟"
 
 #: package/contents/ui/config.qml:506
 #, kde-format
 msgid "%1 second"
 msgid_plural "%1 seconds"
 msgstr[0] "%1秒"
-msgstr[1] "%1秒"
 
 #: package/contents/ui/config.qml:516
 #, kde-format
