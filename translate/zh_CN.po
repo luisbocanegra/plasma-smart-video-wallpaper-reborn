@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-08 13:52+0000\n"
-"PO-Revision-Date: 2026-03-019 17:55+0800\n"
+"PO-Revision-Date: 2026-03-19 17:55+0800\n"
 "Last-Translator: Linus Xu <linus_xu@live.com>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -70,25 +70,25 @@ msgstr "从不"
 #: package/contents/ui/config.qml:98 package/contents/ui/config.qml:131
 #, kde-format
 msgid "Always"
-msgstr "总是"
+msgstr "始终开启"
 
 #: package/contents/ui/config.qml:105 package/contents/ui/config.qml:142
 #: package/contents/ui/config.qml:607 package/contents/ui/config.qml:748
 #, kde-format
 msgid "Maximized or full-screen windows"
-msgstr "最大化或全屏窗口"
+msgstr "窗口最大化或全屏时"
 
 #: package/contents/ui/config.qml:109 package/contents/ui/config.qml:146
 #: package/contents/ui/config.qml:611 package/contents/ui/config.qml:752
 #, kde-format
 msgid "Active window"
-msgstr "活跃窗口"
+msgstr "有窗口活跃时"
 
 #: package/contents/ui/config.qml:113 package/contents/ui/config.qml:150
 #: package/contents/ui/config.qml:615 package/contents/ui/config.qml:756
 #, kde-format
 msgid "At least one window is visible"
-msgstr "至少一个可见窗口"
+msgstr "至少一个窗口可见时"
 
 #: package/contents/ui/config.qml:127
 #, kde-format
@@ -269,7 +269,7 @@ msgstr "随机顺序："
 #: package/contents/ui/config.qml:522
 #, kde-format
 msgid "Resume last video on startup:"
-msgstr "启动时"
+msgstr "启动时恢复播放上一个视频："
 
 #: package/contents/ui/config.qml:527 package/contents/ui/config.qml:772
 #, kde-format
