@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.11.0...v2.12.0) (2026-03-21)
+
+
+### Features
+
+* add simplified Chinese translation ([#250](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/250)) ([e83c594](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e83c594f3e3987e9729b5e1c122e5257877e8c8d))
+
 ## [2.11.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.10.0...v2.11.0) (2026-03-08)
 
 
