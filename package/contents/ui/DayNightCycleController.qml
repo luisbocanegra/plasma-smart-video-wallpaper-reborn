@@ -1,4 +1,6 @@
 import QtQuick
+import org.kde.plasma.core as PlasmaCore
+import org.kde.kirigami as Kirigami
 import "code/enum.js" as Enum
 
 Item {
@@ -23,7 +25,8 @@ Item {
             day = currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
             break;
         case Enum.DayNightCycleMode.PlasmaStyle:
-            day = Qt.styleHints.colorScheme === Qt.ColorScheme.Light;
+            const targetColor = (palette && palette.window) ? palette.window : Kirigami.Theme.backgroundColor;
+            day = Qt.rgba(targetColor.r, targetColor.g, targetColor.b, targetColor.a).hslLightness > 0.75;
             break;
         case Enum.DayNightCycleMode.AlwaysNight:
             day = false;
