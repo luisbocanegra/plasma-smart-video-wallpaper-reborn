@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2026-02-13 11:40+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -100,8 +100,7 @@ msgstr "Minimaal één zichtbaar venster"
 msgid "Video is paused"
 msgstr "na pauzeren"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr "Standaard"
@@ -625,20 +624,30 @@ msgstr "Volgende video"
 msgid "Pause"
 msgstr "Pauzeren"
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr "Afspelen"
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "Afspelen"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr "Dempen"
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr "Ontdempen"
 
-#: package/contents/ui/main.qml:518
-#, kde-format
-msgid "Mute"
-msgstr "Dempen"
+#: package/contents/ui/main.qml:526
+#, fuzzy, kde-format
+msgid "Default Muting"
+msgstr "Standaard"
 
 #, kde-format
 #~ msgid "Requires setting up command below!"

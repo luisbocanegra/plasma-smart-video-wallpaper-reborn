@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2026-02-07 02:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -99,8 +99,7 @@ msgstr "Al menos una ventana es visible"
 msgid "Video is paused"
 msgstr "El vídeo está en pausa"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr "Por defecto"
@@ -625,20 +624,30 @@ msgstr "Siguiente Vídeo"
 msgid "Pause"
 msgstr "Pausar"
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr "Reproducir"
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "Reproducción"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr "Silenciar"
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr "Habilitar sonido"
 
-#: package/contents/ui/main.qml:518
-#, kde-format
-msgid "Mute"
-msgstr "Silenciar"
+#: package/contents/ui/main.qml:526
+#, fuzzy, kde-format
+msgid "Default Muting"
+msgstr "Por defecto"
 
 #, kde-format
 #~ msgid ""
