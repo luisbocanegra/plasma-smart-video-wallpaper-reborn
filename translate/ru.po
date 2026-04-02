@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2025-03-30 15:06+1100\n"
 "Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
 "Language-Team: shad@altlinux.org\n"
@@ -96,8 +96,7 @@ msgstr ""
 msgid "Video is paused"
 msgstr "Видео приостановлено"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr "По умолчанию"
@@ -603,20 +602,30 @@ msgstr "Следующее видео"
 msgid "Pause"
 msgstr "Пауза"
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr "Играть"
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "Воспроизведение"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr "Выключить звук"
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr "Включить звук"
 
-#: package/contents/ui/main.qml:518
-#, kde-format
-msgid "Mute"
-msgstr "Выключить звук"
+#: package/contents/ui/main.qml:526
+#, fuzzy, kde-format
+msgid "Default Muting"
+msgstr "По умолчанию"
 
 #, kde-format
 #~ msgid "Requires setting up command below!"

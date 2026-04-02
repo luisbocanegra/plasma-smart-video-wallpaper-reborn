@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,8 +95,7 @@ msgstr ""
 msgid "Video is paused"
 msgstr "Vídeo está pausado"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr "Padrão"
@@ -593,20 +592,30 @@ msgstr "Próximo Vídeo"
 msgid "Pause"
 msgstr "Pausar"
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr "Reproduzir"
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "Reprodução"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr "Mutar"
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr "Desmutar"
 
-#: package/contents/ui/main.qml:518
-#, kde-format
-msgid "Mute"
-msgstr "Mutar"
+#: package/contents/ui/main.qml:526
+#, fuzzy, kde-format
+msgid "Default Muting"
+msgstr "Padrão"
 
 #, kde-format
 #~ msgid "cat /sys/class/backlight/intel_backlight/actual_brightness"

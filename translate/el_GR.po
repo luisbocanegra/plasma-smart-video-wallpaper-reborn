@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2025-02-18 13:47+0200\n"
 "Last-Translator: omen <elahistos@yahoo.gr>\n"
 "Language-Team: Greek <kde-i18n-doc@kde.org>\n"
@@ -96,8 +96,7 @@ msgstr ""
 msgid "Video is paused"
 msgstr "Το βίντεο είναι παγωμένο"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr ""
@@ -606,19 +605,29 @@ msgstr ""
 msgid "Pause"
 msgstr ""
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr ""
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "Αναπαραγωγή"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr ""
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr ""
 
-#: package/contents/ui/main.qml:518
+#: package/contents/ui/main.qml:526
 #, kde-format
-msgid "Mute"
+msgid "Default Muting"
 msgstr ""
 
 #, kde-format

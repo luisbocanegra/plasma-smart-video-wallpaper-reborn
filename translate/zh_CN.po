@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2026-03-19 17:55+0800\n"
 "Last-Translator: Linus Xu <linus_xu@live.com>\n"
 "Language-Team: \n"
@@ -38,7 +38,9 @@ msgid ""
 "If you enjoy using the plugin please consider sponsoring or donating so I "
 "can dedicate more time to maintain and improve this and <a href=\"%1\">my "
 "other projects</a>."
-msgstr "如果这个项目对您有用，请考虑赞助或捐款，这将允许我分出更多时间维护并优化该项目和<a href=\"%1\">我的其他项目</a>。"
+msgstr ""
+"如果这个项目对您有用，请考虑赞助或捐款，这将允许我分出更多时间维护并优化该项"
+"目和<a href=\"%1\">我的其他项目</a>。"
 
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
@@ -95,8 +97,7 @@ msgstr "至少一个窗口可见时"
 msgid "Video is paused"
 msgstr "视频暂停"
 
-#: package/contents/ui/config.qml:175 package/contents/ui/main.qml:503
-#: package/contents/ui/main.qml:516
+#: package/contents/ui/config.qml:175
 #, kde-format
 msgid "Default"
 msgstr "默认值"
@@ -149,7 +150,11 @@ msgid ""
 "command below in a terminal/tty then reboot:<br><strong><code>sed -i 's/"
 "^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
-msgstr "发生崩溃或黑屏？请尝试将Qt Media后端改为GStreamer。<br>如果因为崩溃无法进入设置，则从终端或TTY运行以下命令并重启以恢复配置：<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+msgstr ""
+"发生崩溃或黑屏？请尝试将Qt Media后端改为GStreamer。<br>如果因为崩溃无法进入设"
+"置，则从终端或TTY运行以下命令并重启以恢复配置：<br><strong><code>sed -i 's/"
+"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
+"appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 
 #: package/contents/ui/config.qml:311
 #, kde-format
@@ -241,7 +246,9 @@ msgid ""
 "Automatically play the next video using the selected strategy. You can also "
 "change the wallpaper manually using <strong>Next Video</strong> from the "
 "Desktop right click menu."
-msgstr "按照所选策略自动选择下一个视频并播放。您也可以在桌面上右键选择<strong>“下一个视频”</strong>以手动切换。"
+msgstr ""
+"按照所选策略自动选择下一个视频并播放。您也可以在桌面上右键选择<strong>“下一个"
+"视频”</strong>以手动切换。"
 
 #: package/contents/ui/config.qml:464
 #, kde-format
@@ -302,7 +309,8 @@ msgstr "%1毫秒"
 msgid ""
 "Adds a smooth transition between videos. <strong>Uses additional Memory and "
 "may cause playback isues when enabled.</strong>"
-msgstr "在视频间增加平滑过渡。<strong>需要消耗额外内存并可能导致播放问题。</strong>"
+msgstr ""
+"在视频间增加平滑过渡。<strong>需要消耗额外内存并可能导致播放问题。</strong>"
 
 #: package/contents/ui/config.qml:597
 #, kde-format
@@ -417,7 +425,8 @@ msgstr "将调试信息输出到系统日志"
 msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
 "wallpaper when they become active. Comma separated names."
-msgstr "控制桌面特效（比如桌面概览）在生效时如何影响壁纸。名字应用英文逗号“,”分隔。"
+msgstr ""
+"控制桌面特效（比如桌面概览）在生效时如何影响壁纸。名字应用英文逗号“,”分隔。"
 
 #: package/contents/ui/config.qml:879
 #, kde-format
@@ -449,7 +458,8 @@ msgstr "生效时启用第二速度："
 msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
 "Desktop Effects:"
-msgstr "目前启用的和<u><strong><font color='%1'>生效的</font></strong></u>桌面特效："
+msgstr ""
+"目前启用的和<u><strong><font color='%1'>生效的</font></strong></u>桌面特效："
 
 #: package/contents/ui/config.qml:927
 #, kde-format
@@ -461,7 +471,9 @@ msgstr "单击复制"
 msgid ""
 "No items found \n"
 " add or drop some files"
-msgstr "没有找到项目\n请手动添加或将文件拖拽到此处"
+msgstr ""
+"没有找到项目\n"
+"请手动添加或将文件拖拽到此处"
 
 #: package/contents/ui/config.qml:1069
 #, kde-format
@@ -533,7 +545,9 @@ msgid ""
 "If enabled the video will repeat instead of playing the next one.<br>Use "
 "<strong>Next Video</strong> from the Desktop right click menu to play the "
 "next video in the list."
-msgstr "如果启用，将循环该视频而非自动切入下一个。您仍可以在桌面上右键选择<strong>“下一个视频”</strong>以手动切换。"
+msgstr ""
+"如果启用，将循环该视频而非自动切入下一个。您仍可以在桌面上右键选择<strong>“下"
+"一个视频”</strong>以手动切换。"
 
 #: package/contents/ui/config.qml:1268
 #, kde-format
@@ -585,17 +599,27 @@ msgstr "下一个视频"
 msgid "Pause"
 msgstr "暂停"
 
-#: package/contents/ui/main.qml:505
+#: package/contents/ui/main.qml:501
 #, kde-format
 msgid "Play"
 msgstr "播放"
 
-#: package/contents/ui/main.qml:514
+#: package/contents/ui/main.qml:503
+#, fuzzy, kde-format
+msgid "Default Playback"
+msgstr "播放"
+
+#: package/contents/ui/main.qml:524
+#, kde-format
+msgid "Mute"
+msgstr "静音"
+
+#: package/contents/ui/main.qml:524
 #, kde-format
 msgid "Unmute"
 msgstr "取消静音"
 
-#: package/contents/ui/main.qml:518
-#, kde-format
-msgid "Mute"
-msgstr "静音"
+#: package/contents/ui/main.qml:526
+#, fuzzy, kde-format
+msgid "Default Muting"
+msgstr "默认值"
