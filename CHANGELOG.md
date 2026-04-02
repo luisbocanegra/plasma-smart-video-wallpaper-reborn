@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.13.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.12.0...v2.13.0) (2026-04-02)
+
+
+### Features
+
+* add Japanese Translation ([#260](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/260)) ([c65bb5b](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/c65bb5b0301db7aa561544f8f53feba5f920be55))
+
+
+### Bug Fixes
+
+* sync context menu play/pause state ([d51ec64](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/d51ec64c3a86a6f6089dac10abe180afd76d0b8d))
+
 ## [2.12.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.11.0...v2.12.0) (2026-03-21)
 
 
