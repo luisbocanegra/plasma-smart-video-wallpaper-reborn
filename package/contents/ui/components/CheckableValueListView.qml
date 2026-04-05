@@ -54,7 +54,7 @@ ColumnLayout {
             Layout.fillWidth: true
             ListView {
                 id: listView
-                model: root.model.sort()
+                model: root.model ? root.model.slice().sort() : []
                 Layout.preferredWidth: Math.min(width + 50, 100)
                 reuseItems: true
                 clip: true
