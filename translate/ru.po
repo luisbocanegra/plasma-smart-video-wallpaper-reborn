@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-02 19:33+0000\n"
 "PO-Revision-Date: 2025-03-30 15:06+1100\n"
-"Last-Translator: Aleksandr Shamaraev <shad@altlinux.org>\n"
-"Language-Team: shad@altlinux.org\n"
+"Last-Translator: qud0 <qudro0@gmail.com>\n"
+"Language-Team: qud0 <qudro0@gmail.com>\n
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,17 +21,17 @@ msgstr ""
 #: package/contents/ui/VideoPlayer.qml:25
 #, kde-format
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 #: package/contents/ui/components/CheckableValueListView.qml:38
 #, kde-format
 msgid "Not configured"
-msgstr ""
+msgstr "Не настроено"
 
 #: package/contents/ui/components/Donate.qml:8
 #, kde-format
 msgid "Thank you for using Smart Video Wallpaper Reborn!"
-msgstr ""
+msgstr "Благодарим за использование Smart Video Wallpaper Reborn!"
 
 #: package/contents/ui/components/Donate.qml:15
 #, kde-format
@@ -40,26 +40,29 @@ msgid ""
 "can dedicate more time to maintain and improve this and <a href=\"%1\">my "
 "other projects</a>."
 msgstr ""
+"Если вам нравится этот плагин, пожалуйста, рассмотрите возможность "
+"финансовой поддержки. Это позволит мне уделять больше времени "
+"сопровождению и улучшению этого и <a href=\"%1\">других моих проектов</a>."
 
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
 msgid "You can also"
-msgstr ""
+msgstr "Вы также можете"
 
 #: package/contents/ui/components/Donate.qml:87
 #, kde-format
 msgid "Star the project on GitHub"
-msgstr ""
+msgstr "Поставить оценку («звезду») на GitHub"
 
 #: package/contents/ui/components/Donate.qml:93
 #, kde-format
 msgid "Rate in the KDE Store"
-msgstr ""
+msgstr "Оценить в KDE Store"
 
 #: package/contents/ui/components/Header.qml:29
 #, kde-format
 msgid "About"
-msgstr ""
+msgstr "О программе"
 
 #: package/contents/ui/config.qml:94 package/contents/ui/config.qml:135
 #: package/contents/ui/config.qml:427 package/contents/ui/config.qml:619
@@ -77,19 +80,19 @@ msgstr "Всегда"
 #: package/contents/ui/config.qml:607 package/contents/ui/config.qml:748
 #, kde-format
 msgid "Maximized or full-screen windows"
-msgstr "Развернутые или полноэкранные окна"
+msgstr "Развёрнутые или полноэкранные окна"
 
 #: package/contents/ui/config.qml:109 package/contents/ui/config.qml:146
 #: package/contents/ui/config.qml:611 package/contents/ui/config.qml:752
 #, kde-format
 msgid "Active window"
-msgstr ""
+msgstr "Активное окно"
 
 #: package/contents/ui/config.qml:113 package/contents/ui/config.qml:150
 #: package/contents/ui/config.qml:615 package/contents/ui/config.qml:756
 #, kde-format
 msgid "At least one window is visible"
-msgstr ""
+msgstr "Видимо хотя бы одно окно"
 
 #: package/contents/ui/config.qml:127
 #, kde-format
@@ -109,12 +112,12 @@ msgstr "Версия:"
 #: package/contents/ui/config.qml:236
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "Предупреждение"
 
 #: package/contents/ui/config.qml:239
 #, kde-format
 msgid "Click to show"
-msgstr ""
+msgstr "Нажмите, чтобы показать"
 
 #: package/contents/ui/config.qml:269 package/contents/ui/config.qml:1066
 #, kde-format
@@ -134,14 +137,14 @@ msgstr "Эффекты рабочего стола"
 #: package/contents/ui/config.qml:284
 #, kde-format
 msgid "Donate"
-msgstr ""
+msgstr "Поддержать проект"
 
 #: package/contents/ui/config.qml:299
 #, kde-format
 msgid "Videos are loaded in RAM, bigger files will use more system resources!"
 msgstr ""
-"Видео загружаются в оперативную память, большие файлы будут использовать "
-"больше системных ресурсов!"
+"Видео загружаются в оперативную память; файлы большого размера будут "
+"использовать больше системных ресурсов."
 
 #: package/contents/ui/config.qml:306
 #, fuzzy, kde-format
@@ -152,12 +155,12 @@ msgid ""
 "^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
-"Сбои/черный экран? Попробуйте изменить Qt Media Backend на gstreamer."
-"<br>Чтобы восстановиться после сбоя, удалите видео из конфигурации с помощью "
-"следующей команды в терминале/tty, а затем перезагрузите систему:"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
-"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
-"code></strong>"
+"Проблемы или чёрный экран? Попробуйте изменить мультимедийный движок (Qt "
+"Media Backend) на gstreamer.<br>Для восстановления после сбоя удалите список "
+"видео из конфигурации, выполнив следующую команду в терминале, и "
+"перезагрузите систему:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' "
+"$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/"
+"kscreenlockerrc</code></strong>"
 
 #: package/contents/ui/config.qml:311
 #, kde-format
@@ -173,15 +176,29 @@ msgstr ""
 "Обязательно включите аппаратное ускорение видео в вашей системе, чтобы "
 "снизить нагрузку на ЦП/ГП при воспроизведении видео."
 
+#: package/contents/ui/config.qml:311
+#, kde-format
+msgid "Qt Media backend instructions"
+msgstr "Инструкции по настройке мультимедийного движка Qt"
+
+#: package/contents/ui/config.qml:321
+#, kde-format
+msgid ""
+"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
+"GPU usage when videos are playing."
+msgstr ""
+"Убедитесь, что в системе включено аппаратное ускорение видео. Это позволит "
+"снизить нагрузку на процессор и видеокарту при воспроизведении."
+
 #: package/contents/ui/config.qml:326
 #, kde-format
 msgid "Learn how"
-msgstr "Узнайте как"
+msgstr "Подробнее"
 
 #: package/contents/ui/config.qml:335
 #, kde-format
 msgid "Positioning:"
-msgstr ""
+msgstr "Расположение:"
 
 #: package/contents/ui/config.qml:341
 #, kde-format
@@ -191,12 +208,12 @@ msgstr "Растянуть"
 #: package/contents/ui/config.qml:345
 #, kde-format
 msgid "Keep Proportions"
-msgstr "Соблюдать пропорции"
+msgstr "С сохранением пропорций"
 
 #: package/contents/ui/config.qml:349
 #, kde-format
 msgid "Scaled and Cropped"
-msgstr "Масштабировать и обрезать"
+msgstr "Масштабировать с обрезкой"
 
 #: package/contents/ui/config.qml:364
 #, kde-format
@@ -206,12 +223,12 @@ msgstr "Фон:"
 #: package/contents/ui/config.qml:367
 #, kde-format
 msgid "Blur"
-msgstr ""
+msgstr "Размытие"
 
 #: package/contents/ui/config.qml:385
 #, kde-format
 msgid "radius: %1px"
-msgstr ""
+msgstr "радиус: %1 пкс"
 
 #: package/contents/ui/config.qml:394 package/contents/ui/config.qml:707
 #, kde-format
@@ -219,33 +236,33 @@ msgid ""
 "Quality of the blur is reduced if value exceeds 64. Higher values may cause "
 "the blur to stop working!"
 msgstr ""
-"Качество размытия ухудшается, если значение превышает 64. Более высокие "
-"значения могут привести к тому, что размытие перестанет работать!"
+"Качество размытия снижается, если значение превышает 64. Слишком большие "
+"значения могут привести к прекращению работы эффекта!"
 
 #: package/contents/ui/config.qml:408
 #, kde-format
 msgid "Solid color"
-msgstr ""
+msgstr "Сплошной цвет"
 
 #: package/contents/ui/config.qml:414
 #, kde-format
 msgid "Select Background Color"
-msgstr "Выберите цвет фона"
+msgstr "Выбор цвета фона"
 
 #: package/contents/ui/config.qml:422
 #, kde-format
 msgid "Change Wallpaper:"
-msgstr ""
+msgstr "Смена обоев:"
 
 #: package/contents/ui/config.qml:431
 #, kde-format
 msgid "Slideshow"
-msgstr ""
+msgstr "Слайд-шоу"
 
 #: package/contents/ui/config.qml:435
 #, kde-format
 msgid "On a Timer"
-msgstr ""
+msgstr "По таймеру"
 
 #: package/contents/ui/config.qml:443
 #, kde-format
@@ -254,53 +271,59 @@ msgid ""
 "change the wallpaper manually using <strong>Next Video</strong> from the "
 "Desktop right click menu."
 msgstr ""
+"Автоматически переключать видео согласно выбранному правилу. Вы также можете "
+"сменить обои вручную, выбрав пункт <strong>Следующее видео</strong> в "
+"контекстном меню рабочего стола."
 
 #: package/contents/ui/config.qml:464
 #, kde-format
 msgid "%1 hour"
 msgid_plural "%1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 час"
+msgstr[1] "%1 часа"
+msgstr[2] "%1 часов"
 
 #: package/contents/ui/config.qml:485
 #, kde-format
 msgid "%1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 минута"
+msgstr[1] "%1 минуты"
+msgstr[2] "%1 минут"
 
 #: package/contents/ui/config.qml:506
 #, kde-format
 msgid "%1 second"
 msgid_plural "%1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 секунда"
+msgstr[1] "%1 секунды"
+msgstr[2] "%1 секунд"
 
 #: package/contents/ui/config.qml:516
 #, kde-format
 msgid "Random order:"
-msgstr ""
+msgstr "Случайный порядок:"
 
 #: package/contents/ui/config.qml:522
 #, kde-format
 msgid "Resume last video on startup:"
-msgstr ""
+msgstr "Возобновлять последнее видео при запуске:"
 
 #: package/contents/ui/config.qml:527 package/contents/ui/config.qml:772
 #, kde-format
 msgid "Speed:"
-msgstr ""
+msgstr "Скорость:"
 
 #: package/contents/ui/config.qml:548 package/contents/ui/config.qml:665
 #: package/contents/ui/config.qml:792
 #, kde-format
 msgid "Reset to default"
-msgstr "Сбросить до умолчаний"
+msgstr "Сбросить до значений по умолчанию"
 
 #: package/contents/ui/config.qml:554
 #, kde-format
 msgid "Crossfade (Beta):"
-msgstr "Кроссфейд (бета-версия):"
+msgstr "Плавный переход (бета):"
 
 #: package/contents/ui/config.qml:560
 #, kde-format
@@ -310,7 +333,7 @@ msgstr "Продолжительность:"
 #: package/contents/ui/config.qml:578
 #, kde-format
 msgid "%1ms"
-msgstr ""
+msgstr "%1 мс"
 
 #: package/contents/ui/config.qml:586
 #, kde-format
@@ -334,17 +357,17 @@ msgstr "Только этот экран"
 #: package/contents/ui/config.qml:604
 #, kde-format
 msgid "Pause:"
-msgstr ""
+msgstr "Приостановка:"
 
 #: package/contents/ui/config.qml:630
 #, kde-format
 msgid "Mute:"
-msgstr ""
+msgstr "Приглушить звук:"
 
 #: package/contents/ui/config.qml:640
 #, kde-format
 msgid "Audio device:"
-msgstr ""
+msgstr "Звуковое устройство:"
 
 #: package/contents/ui/config.qml:649
 #, kde-format
@@ -354,7 +377,7 @@ msgstr "Громкость:"
 #: package/contents/ui/config.qml:672
 #, kde-format
 msgid "Blur:"
-msgstr ""
+msgstr "Размытие:"
 
 #: package/contents/ui/config.qml:682
 #, kde-format
@@ -364,7 +387,7 @@ msgstr "Радиус:"
 #: package/contents/ui/config.qml:698
 #, kde-format
 msgid "%1px"
-msgstr ""
+msgstr "%1 пкс"
 
 #: package/contents/ui/config.qml:717
 #, kde-format
@@ -375,38 +398,38 @@ msgstr "Продолжительность анимации:"
 #, kde-format
 msgctxt "animation duration"
 msgid "%1ms"
-msgstr ""
+msgstr "%1 мс"
 
 #: package/contents/ui/config.qml:745
 #, kde-format
 msgid "Alternative speed:"
-msgstr ""
+msgstr "Альтернативная скорость:"
 
 #: package/contents/ui/config.qml:798
 #, kde-format
 msgid "On battery below:"
-msgstr "При значении батареи"
+msgstr "При заряде батареи ниже:"
 
 #: package/contents/ui/config.qml:814
 #, kde-format
 msgctxt "battery level e.g 10%"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: package/contents/ui/config.qml:822
 #, kde-format
 msgid "Pause video"
-msgstr "Пауза видео"
+msgstr "Приостановить воспроизведение"
 
 #: package/contents/ui/config.qml:827
 #, kde-format
 msgid "Disable blur"
-msgstr "Отключить размытие"
+msgstr "Выключить размытие"
 
 #: package/contents/ui/config.qml:833
 #, kde-format
 msgid "Pause on screen off:"
-msgstr ""
+msgstr "Приостанавливать при выключении экрана:"
 
 #: package/contents/ui/config.qml:838
 #, kde-format
@@ -417,7 +440,9 @@ msgstr "Команда состояния экрана:"
 #, fuzzy, kde-format
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
-msgstr "Команда/скрипт должны возвращать 0 (ноль), когда экран выключен."
+msgstr ""
+"Команда или сценарий должны возвращать «0» (ноль) или «off», когда экран "
+"выключен"
 
 #: package/contents/ui/config.qml:859
 #, kde-format
@@ -435,31 +460,33 @@ msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
 "wallpaper when they become active. Comma separated names."
 msgstr ""
+"Настройка поведения обоев при активации эффектов рабочего стола (например, "
+"«Обзор» или «Показать рабочий стол»). Список имён через запятую."
 
 #: package/contents/ui/config.qml:879
 #, kde-format
 msgid "Play in:"
-msgstr "Play in:"
+msgstr "Воспроизводить в:"
 
 #: package/contents/ui/config.qml:887
 #, kde-format
 msgid "Pause in:"
-msgstr "Pause in:"
+msgstr "Приостанавливать в:"
 
 #: package/contents/ui/config.qml:895
 #, kde-format
 msgid "Show blur in:"
-msgstr "Show blur in:"
+msgstr "Показывать размытие в:"
 
 #: package/contents/ui/config.qml:903
 #, kde-format
 msgid "Hide blur in:"
-msgstr "Hide blur in:"
+msgstr "Скрывать размытие в:"
 
 #: package/contents/ui/config.qml:911
 #, kde-format
 msgid "Alternative speed in:"
-msgstr ""
+msgstr "Альтернативная скорость в:"
 
 #: package/contents/ui/config.qml:917
 #, kde-format
@@ -467,11 +494,13 @@ msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
 "Desktop Effects:"
 msgstr ""
+"Текущие включённые и <u><strong><font color='%1'>активные</font></strong></"
+"u> эффекты рабочего стола:"
 
 #: package/contents/ui/config.qml:927
 #, kde-format
 msgid "Select to copy"
-msgstr ""
+msgstr "Выберите, чтобы скопировать"
 
 #: package/contents/ui/config.qml:1046
 #, kde-format
@@ -479,56 +508,58 @@ msgid ""
 "No items found \n"
 " add or drop some files"
 msgstr ""
+"Ничего не найдено. \n"
+" Добавьте или перетащите файлы."
 
 #: package/contents/ui/config.qml:1069
 #, kde-format
 msgid "Actions…"
-msgstr ""
+msgstr "Действия…"
 
 #: package/contents/ui/config.qml:1075
 #, kde-format
 msgid "Disable all"
-msgstr ""
+msgstr "Отключить все"
 
 #: package/contents/ui/config.qml:1080
 #, kde-format
 msgid "Enable all"
-msgstr ""
+msgstr "Включить все"
 
 #: package/contents/ui/config.qml:1085
 #, kde-format
 msgid "Swap enabled state"
-msgstr ""
+msgstr "Инвертировать состояние"
 
 #: package/contents/ui/config.qml:1090
 #, kde-format
 msgid "Remove all"
-msgstr ""
+msgstr "Удалить все"
 
 #: package/contents/ui/config.qml:1093
 #, kde-format
 msgid "Remove all media?"
-msgstr ""
+msgstr "Удалить все медиафайлы?"
 
 #: package/contents/ui/config.qml:1103
 #, kde-format
 msgid "Pick a file…"
-msgstr ""
+msgstr "Выбрать файл…"
 
 #: package/contents/ui/config.qml:1108
 #, kde-format
 msgid "Enter path or url"
-msgstr ""
+msgstr "Введите путь или URL"
 
 #: package/contents/ui/config.qml:1154
 #, kde-format
 msgid "Whether or not this video will be played"
-msgstr ""
+msgstr "Будет ли воспроизводиться это видео"
 
 #: package/contents/ui/config.qml:1174
 #, kde-format
 msgid "Local file or static url"
-msgstr ""
+msgstr "Локальный файл или прямая ссылка"
 
 #: package/contents/ui/config.qml:1205
 #, kde-format
@@ -536,6 +567,8 @@ msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr ""
+"Скорость воспроизведения для этого видео. Минимальное значение — 0.01. "
+"Установите 0.0, чтобы игнорировать этот параметр."
 
 #: package/contents/ui/config.qml:1222
 #, kde-format
@@ -543,6 +576,8 @@ msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr ""
+"Альтернативная скорость воспроизведения для этого видео. Минимальное значение — 0.01. "
+"Установите 0.0, чтобы игнорировать этот параметр."
 
 #: package/contents/ui/config.qml:1239
 #, kde-format
@@ -551,26 +586,29 @@ msgid ""
 "<strong>Next Video</strong> from the Desktop right click menu to play the "
 "next video in the list."
 msgstr ""
+"Если этот параметр включён, видео будет повторяться вместо перехода к следующему.<br>"
+"Используйте пункт <strong>Следующее видео</strong> в контекстном меню рабочего стола, "
+"чтобы переключиться на следующий файл в списке."
 
 #: package/contents/ui/config.qml:1268
 #, kde-format
 msgid "Preview…"
-msgstr ""
+msgstr "Предпросмотр…"
 
 #: package/contents/ui/config.qml:1275
 #, kde-format
 msgid "Open containing folder"
-msgstr ""
+msgstr "Открыть папку с файлом"
 
 #: package/contents/ui/config.qml:1283
 #, kde-format
 msgid "Play this file only (disable all others)"
-msgstr ""
+msgstr "Воспроизводить только этот файл (отключить остальные)"
 
 #: package/contents/ui/config.qml:1293
 #, kde-format
 msgid "Remove media?"
-msgstr ""
+msgstr "Удалить медиафайл?"
 
 #: package/contents/ui/config.qml:1316
 #, kde-format
@@ -610,7 +648,7 @@ msgstr "Играть"
 #: package/contents/ui/main.qml:503
 #, fuzzy, kde-format
 msgid "Default Playback"
-msgstr "Воспроизведение"
+msgstr "Воспроизведение по умолчанию"
 
 #: package/contents/ui/main.qml:524
 #, kde-format
