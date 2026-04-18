@@ -10,7 +10,6 @@ Item {
     required property int sunsetTime
 
     property var dayNightPlugin: null
-    property Item dayNightPluginDay: null
     property int currentTime
 
     property bool isDay: {
@@ -40,8 +39,6 @@ Item {
         return day;
     }
 
-    onIsDayChanged: console.log("isDayChanged", isDay)
-
     Timer {
         id: timer
         interval: 1000
@@ -60,6 +57,13 @@ Item {
         component = Qt.createComponent("NighttimeHelper.qml");
         if (component.status === Component.Ready) {
             dayNightPlugin = component.createObject(root);
+            dayNightPlugin.initialState = configuration.DarkLightScheduleState;
+            dayNightPlugin.stateChanged.connect(() => {
+                if (configuration.DarkLightScheduleState != dayNightPlugin.state) {
+                    configuration.DarkLightScheduleState = dayNightPlugin.state;
+                    configuration.writeConfig();
+                }
+            });
         } else {
             console.warn(component.errorString());
         }

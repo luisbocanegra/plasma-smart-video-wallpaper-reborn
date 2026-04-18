@@ -176,5 +176,9 @@
     <entry name="AlternativePlaybackRate" type="Double">
       <default>0.5</default>
     </entry>
+    <entry name="DarkLightScheduleState" type="String">
+      <label>Saved dark light schedule state</label>
+      <default></default>
+    </entry>
   </group>
 </kcfg>

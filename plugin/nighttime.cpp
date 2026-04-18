@@ -73,39 +73,96 @@ DayNight::DayNight(QObject *parent)
     : QObject(parent)
     , m_systemClockMonitor(new KSystemClockSkewNotifier(this))
     , m_rescheduleTimer(new QTimer(this))
+    , m_transitionUpdateTimer(new QTimer(this))
 {
-    provider = new KDarkLightScheduleProvider();
-    QObject::connect(provider, &KDarkLightScheduleProvider::scheduleChanged, this, &DayNight::schedule);
+    m_transitionUpdateTimer->setSingleShot(true);
+    connect(m_transitionUpdateTimer, &QTimer::timeout, this, &DayNight::update);
+
     m_systemClockMonitor->setActive(true);
     connect(m_systemClockMonitor, &KSystemClockSkewNotifier::skewed, this, &DayNight::schedule);
+
     m_rescheduleTimer->setSingleShot(true);
     connect(m_rescheduleTimer, &QTimer::timeout, this, &DayNight::schedule);
-    schedule();
 }
 
-DayNight::~DayNight() = default;
+void DayNight::classBegin()
+{
+}
+
+void DayNight::componentComplete()
+{
+    m_darkLightScheduleProvider = new KDarkLightScheduleProvider(m_initialState, this);
+    connect(m_darkLightScheduleProvider, &KDarkLightScheduleProvider::scheduleChanged, this, [this]() {
+        setState(m_darkLightScheduleProvider->state());
+        schedule();
+    });
+}
+
+void DayNight::schedule()
+{
+    const QDateTime now = QDateTime::currentDateTime();
+    const KDarkLightSchedule schedule = m_darkLightScheduleProvider->schedule();
+
+    m_previousTransition = *schedule.previousTransition(now);
+    m_nextTransition = *schedule.nextTransition(now);
+
+    m_rescheduleTimer->start(now.msecsTo(m_nextTransition.startDateTime()));
+    update();
+}
+
+void DayNight::update()
+{
+    const QDateTime now = QDateTime::currentDateTime();
+
+    DayNightPhase phase = DayNightPhase::from(now, m_previousTransition, m_nextTransition);
+
+    const bool isDay = phase == DayNightPhase::Day || phase == DayNightPhase::Sunset;
+
+    if (m_isDay != isDay) {
+        m_isDay = isDay;
+        emit isDayChanged(isDay);
+    }
+
+    const int blendInterval = 60000;
+    switch (phase) {
+    case DayNightPhase::Night:
+    case DayNightPhase::Day:
+        m_transitionUpdateTimer->stop();
+        break;
+    case DayNightPhase::Sunrise:
+    case DayNightPhase::Sunset:
+        m_transitionUpdateTimer->start(blendInterval);
+        break;
+    }
+}
+
+void DayNight::setInitialState(const QString &state)
+{
+    if (m_initialState != state) {
+        m_initialState = state;
+        Q_EMIT initialStateChanged();
+    }
+}
+
+void DayNight::setState(const QString &state)
+{
+    if (m_state != state) {
+        m_state = state;
+        Q_EMIT stateChanged();
+    }
+}
 
 bool DayNight::isDay() const
 {
     return m_isDay;
 }
 
-void DayNight::schedule()
+QString DayNight::initialState() const
 {
-    qDebug() << "Updating day/night status...";
-    const QDateTime now = QDateTime::currentDateTime();
-    const KDarkLightSchedule schedule = provider->schedule();
-    const KDarkLightTransition previousTransition = *schedule.previousTransition(now);
-    const KDarkLightTransition nextTransition = *schedule.nextTransition(now);
-    qDebug() << "Previous transition:" << previousTransition.type() << previousTransition.endDateTime();
-    qDebug() << "Next transition:" << nextTransition.type() << nextTransition.startDateTime();
-    const DayNightPhase phase = DayNightPhase::from(now, previousTransition, nextTransition);
-    qDebug() << "Current phase:" << int(phase);
-    const bool isDay = phase == DayNightPhase::Day || phase == DayNightPhase::Sunrise;
-    qDebug() << "Is it day?" << isDay;
-    if (m_isDay != isDay) {
-        m_isDay = isDay;
-        emit isDayChanged(isDay);
-    }
-    m_rescheduleTimer->start(now.msecsTo(nextTransition.startDateTime()));
+    return m_initialState;
+}
+
+QString DayNight::state() const
+{
+    return m_state;
 }

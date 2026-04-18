@@ -12,7 +12,9 @@
 #include <KDarkLightScheduleProvider>
 #include <KSystemClockSkewNotifier>
 #include <QObject>
+#include <QQmlParserStatus>
 #include <QTimer>
+#include <qqmlintegration.h>
 
 class DayNightPhase
 {
@@ -44,28 +46,49 @@ inline DayNightPhase::operator DayNightPhase::Kind() const
     return m_kind;
 }
 
-class DayNight : public QObject
+class DayNight : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
+    QML_ELEMENT
+
     Q_PROPERTY(bool isDay READ isDay NOTIFY isDayChanged)
+    Q_PROPERTY(QString initialState READ initialState WRITE setInitialState NOTIFY initialStateChanged)
+    Q_PROPERTY(QString state READ state NOTIFY stateChanged)
 
 public:
     explicit DayNight(QObject *parent = nullptr);
 
+    void classBegin() override;
+    void componentComplete() override;
+
     bool isDay() const;
 
-    ~DayNight() override;
+    QString initialState() const;
+    void setInitialState(const QString &state);
+
+    QString state() const;
+    void setState(const QString &state);
 
 signals:
 
     void isDayChanged(bool isDay);
+    void initialStateChanged();
+    void stateChanged();
 
 private:
     void schedule();
+    void update();
 
-    KDarkLightScheduleProvider *provider = nullptr;
+    KDarkLightScheduleProvider *m_darkLightScheduleProvider = nullptr;
     KSystemClockSkewNotifier *m_systemClockMonitor;
+    KDarkLightTransition m_previousTransition;
+    KDarkLightTransition m_nextTransition;
     QTimer *m_rescheduleTimer;
+    QTimer *m_transitionUpdateTimer;
+    QString m_initialState;
+    QString m_state;
+
     bool m_isDay = false;
 };
 
