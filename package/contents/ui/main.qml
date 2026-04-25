@@ -20,14 +20,15 @@
 
 import QtQuick
 import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
+import QtMultimedia
 import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.extras as PlasmaExtras
+import org.kde.kirigami as Kirigami
 import org.kde.ksvg as KSvg
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.plasmoid
-import Qt5Compat.GraphicalEffects
-import org.kde.plasma.extras as PlasmaExtras
-import org.kde.kirigami as Kirigami
-import org.kde.plasma.components as PlasmaComponents
 import "code/utils.js" as Utils
 import "code/enum.js" as Enum
 
@@ -37,17 +38,21 @@ WallpaperItem {
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: {
-        const videos = getVideos();
-        return randomMode ? Utils.shuffleArray(videos) : videos;
-    }
-    property int currentVideoIndex: 0
-    property bool resumeLastVideo: main.configuration.ResumeLastVideo
-    property var currentSource: {
-        if (resumeLastVideo && main.configuration.LastVideo !== "") {
-            return Utils.getVideoByFile(main.configuration.LastVideo, videosConfig);
+        let videos = Utils.getVideos(dayNightCycleEnabled, isDay, videoUrls);
+        if (randomMode && videos.length > 1) {
+            Utils.shuffleArray(videos);
         }
-        return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
+        return videos;
     }
+
+    property int videosCount: videosConfig.length || 0
+    property bool hasVideos: videosCount > 0
+    property bool videoUpdatePending: false
+    property int currentVideoIndex: 0
+    property string lastSelectedVideo: ""
+    property bool resumeLastVideo: main.configuration.ResumeLastVideo
+    property alias isDay: dayNightCycleController.isDay
+    property var currentSource: Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -77,10 +82,10 @@ WallpaperItem {
         return play;
     }
     property bool playing: {
-        return ((shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo) && videosConfig.length !== 0;
+        return ((shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo) || effectPlayVideo) && hasVideos && !isLoading;
     }
     property bool shouldBlur: {
-        if (videosConfig.length == 0) {
+        if (!hasVideos) {
             return false;
         }
         let blur = false;
@@ -140,6 +145,7 @@ WallpaperItem {
     property int changeWallpaperTimerSeconds: main.configuration.ChangeWallpaperTimerSeconds
     property int changeWallpaperTimerMinutes: main.configuration.ChangeWallpaperTimerMinutes
     property int changeWallpaperTimerHours: main.configuration.ChangeWallpaperTimerHours
+    property bool dayNightCycleEnabled: main.configuration.DayNightCycleMode !== Enum.DayNightCycleMode.Disabled
     property bool muteAudio: {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
@@ -195,27 +201,92 @@ WallpaperItem {
         return r;
     }
 
-    function getVideos() {
-        return Utils.parseCompat(videoUrls).filter(video => video.enabled);
+    function setCurrentIndex() {
+        if (!hasVideos) {
+            currentVideoIndex = 0;
+            return;
+        }
+
+        let preferredIndex = -1;
+
+        if (resumeLastVideo) {
+            preferredIndex = Utils.getLastVideoIndex(dayNightCycleEnabled, isDay, main.configuration, videosConfig);
+        }
+
+        if (preferredIndex === -1) {
+            preferredIndex = Utils.getVideoIndex(lastSelectedVideo, videosConfig);
+        }
+
+        currentVideoIndex = preferredIndex !== -1 ? preferredIndex : 0;
     }
 
-    onPlayingChanged: {
-        playing && !isLoading ? main.play() : main.pause();
-    }
-    onVideoUrlsChanged: {
-        if (isLoading)
+    function nextVideo() {
+        if (!hasVideos) {
             return;
-        videosConfig = getVideos();
-        const wasPlaying = player.player.playing;
-        // console.error(videoUrls);
-        if (videosConfig.length == 0) {
-            main.stop();
-            main.currentSource.filename = "";
-        } else if (videosConfig.length == 1) {
-            player.next(true, true);
-            if (!wasPlaying) {
-                main.pause();
+        }
+        currentVideoIndex = (currentVideoIndex + 1) % videosCount;
+        setCurrentSource();
+    }
+
+    function setCurrentSource() {
+        if (!hasVideos) {
+            stop();
+            player.player1.playerSource = Utils.createVideo("");
+            player.player2.playerSource = Utils.createVideo("");
+            return;
+        }
+        currentSource = videosConfig[currentVideoIndex] ?? Utils.createVideo("");
+        if (player.player.playerSource.filename !== currentSource.filename) {
+            player.stop();
+            player.player.playerSource = currentSource;
+            player.player.position = 0;
+            player.otherPlayer.playerSource = Utils.createVideo("");
+        }
+
+        if (playing) {
+            updateState();
+        } else {
+            play();
+            pauseWhenReady();
+        }
+    }
+
+    function updateVideo() {
+        if (videoUpdatePending || isLoading) {
+            return;
+        }
+        videoUpdatePending = true;
+        Qt.callLater(() => {
+            videoUpdatePending = false;
+            setCurrentIndex();
+            setCurrentSource();
+        });
+    }
+
+    Timer {
+        id: updateVideoDebounce
+        interval: 50
+        onTriggered: main.updateVideo()
+    }
+
+    function pauseWhenReady() {
+        pauseWhenReadyTimer.attempt = 0;
+        pauseWhenReadyTimer.restart();
+    }
+
+    Timer {
+        id: pauseWhenReadyTimer
+        interval: 50
+        repeat: true
+        property int attempt: 0
+        onTriggered: {
+            const ready = player.player.mediaStatus === MediaPlayer.LoadedMedia || player.player.mediaStatus === MediaPlayer.BufferedMedia || player.player.position > 0;
+            if (ready || attempt >= 20) {
+                stop();
+                Utils.delay(200, main.pause, main);
+                return;
             }
+            attempt++;
         }
     }
 
@@ -260,34 +331,51 @@ WallpaperItem {
         }
     }
 
-    function nextVideo() {
-        printLog("- Video ended " + currentVideoIndex + ": " + currentSource.filename);
-        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
-        if (randomMode && currentVideoIndex === 0) {
-            const shuffledVideos = Utils.shuffleArray(videosConfig);
-            currentSource = shuffledVideos[currentVideoIndex];
-        } else {
-            currentSource = videosConfig[currentVideoIndex];
+    onPlayingChanged: {
+        if (isLoading) {
+            return;
         }
-        printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
+        playing ? play() : pause();
+    }
+
+    onVideosConfigChanged: {
+        updateVideoDebounce.restart();
+    }
+    onCurrentSourceChanged: {
+        if (currentSource.filename !== "") {
+            lastSelectedVideo = currentSource.filename;
+            main.saveLastSource(main.currentSource.filename, main.isDay);
+        }
+    }
+
+    DayNightCycleController {
+        id: dayNightCycleController
+        enabled: main.dayNightCycleEnabled
+        mode: main.configuration.DayNightCycleMode
+        sunriseTime: main.configuration.DayNightCycleSunriseTime
+        sunsetTime: main.configuration.DayNightCycleSunsetTime
+        onIsDayChanged: {
+            updateVideoDebounce.restart();
+        }
     }
 
     Rectangle {
         id: background
         anchors.fill: parent
-        color: videosConfig.length == 0 ? Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
+        color: !main.hasVideos ? Kirigami.Theme.backgroundColor : main.configuration.BackgroundColor
 
         FadePlayer {
             id: player
             anchors.fill: parent
+            currentSource: main.currentSource
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
-            visible: main.videosConfig.length !== 0
+            visible: main.hasVideos
             onSetNextSource: {
                 main.nextVideo();
             }
             crossfadeEnabled: main.crossfadeEnabled
-            multipleVideos: main.videosConfig.length > 1
+            multipleVideos: main.videosCount > 1
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
             changeWallpaperMode: main.changeWallpaperMode
@@ -319,7 +407,7 @@ WallpaperItem {
     }
 
     PlasmaExtras.PlaceholderMessage {
-        visible: main.videosConfig.length == 0
+        visible: !main.hasVideos
         anchors.centerIn: parent
         width: parent.width - Kirigami.Units.gridUnit * 2
         iconName: "video-symbolic"
@@ -350,6 +438,13 @@ WallpaperItem {
                 Layout.margins: Kirigami.Units.largeSpacing
                 text: {
                     let text = `filename: ${main.currentSource.filename}\n`;
+                    text += `videos:\n${main.videosConfig.map(v => {
+                        const filenameParts = v.filename.split("/");
+                        return filenameParts[filenameParts.length - 1];
+                    }).join("\n")}\n\n`;
+                    text += `last: ${main.configuration.LastVideo}\n`;
+                    text += `lastDay: ${main.configuration.LastVideoDay}\n`;
+                    text += `lastNight: ${main.configuration.LastVideoNight}\n`;
                     text += `loops: ${main.currentSource.loop ?? false}\n`;
                     text += `currentVideoIndex: ${main.currentVideoIndex}\n`;
                     text += `changeWallpaperMode: ${main.changeWallpaperMode}\n`;
@@ -369,8 +464,11 @@ WallpaperItem {
                     text += `inLockScreen: ${main.lockScreenMode}\n`;
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
-                    text += `id: ${Plasmoid.id}\n`;
                     text += `Audio Device: ${player.player1.currentAudioDevice}`;
+                    text += `isDay: ${main.isDay}\n`;
+                    text += `dayNightCycleEnabled: ${main.dayNightCycleEnabled}\n`;
+                    text += `dayNightCycleMode: ${main.configuration.DayNightCycleMode}\n`;
+                    text += `id: ${Plasmoid.id}`;
                     return text;
                 }
             }
@@ -393,17 +491,17 @@ WallpaperItem {
 
     function updateState() {
         if (playing) {
-            main.pause();
-            main.play();
+            pause();
+            play();
         } else {
-            main.play();
-            main.pause();
+            play();
+            pause();
         }
     }
 
     Timer {
         id: pauseTimer
-        interval: showBlur ? blurAnimationDuration : 10
+        interval: main.showBlur ? main.blurAnimationDuration : 10
         onTriggered: {
             player.pause();
         }
@@ -418,15 +516,11 @@ WallpaperItem {
         }
     }
 
-    Timer {
-        id: startTimer
-        interval: 100
-        onTriggered: {
+    Component.onCompleted: {
+        Utils.delay(100, () => {
             isLoading = false;
-            if (debugEnabled)
-                Utils.dumpProps(main.configuration);
-            updateState();
-        }
+            updateVideoDebounce.restart();
+        }, main);
     }
 
     function printLog(msg) {
@@ -437,40 +531,49 @@ WallpaperItem {
 
     Timer {
         id: debugTimer
-        running: debugEnabled
+        running: main.debugEnabled
         repeat: true
         interval: 2000
         onTriggered: {
-            printLog("------------------------");
-            printLog("Videos: '" + JSON.stringify(videosConfig) + "'");
-            printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery);
-            printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff);
-            printLog("Windows: " + main.shouldPlay + " Blur: " + main.showBlur);
-            printLog("Video playing: " + playing + " Blur: " + showBlur);
+            main.printLog("------------------------");
+            main.printLog("Videos: '" + JSON.stringify(main.videosConfig) + "'");
+            main.printLog("Pause Battery: " + main.pauseBatteryLevel + "% " + main.pauseBattery);
+            main.printLog("Pause Screen Off: " + main.screenOffPausesVideo + " Off: " + main.screenIsOff);
+            main.printLog("Windows: " + main.shouldPlay + " Blur: " + main.showBlur);
+            main.printLog("Video playing: " + main.playing + " Blur: " + main.showBlur);
         }
     }
 
-    Component.onCompleted: {
-        startTimer.start();
-        Qt.callLater(() => {
-            player.currentSource = Qt.binding(() => {
-                return main.currentSource;
-            });
-        });
+    function saveLastSource(filename, cycleIsDay) {
+        if (filename === "") {
+            return;
+        }
+
+        main.configuration.LastVideo = filename;
+        if (dayNightCycleEnabled) {
+            if (cycleIsDay) {
+                main.configuration.LastVideoDay = filename;
+            } else {
+                main.configuration.LastVideoNight = filename;
+            }
+        }
     }
 
-    function save() {
-        // Save last video and position to resume from it on next login/lock
-        main.configuration.LastVideo = main.currentSource.filename;
+    function saveLastPosition() {
+        const currentFilename = currentSource.filename || lastSelectedVideo;
+        if (currentFilename === "") {
+            return;
+        }
+
         main.configuration.LastVideoPosition = player.lastVideoPosition;
-        main.configuration.writeConfig();
-        printLog("Bye!");
     }
 
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.save();
+            main.saveLastSource(main.currentSource.filename || main.lastSelectedVideo, main.isDay);
+            main.saveLastPosition();
+            main.configuration.writeConfig();
         }
     }
     Item {

@@ -23,6 +23,8 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtMultimedia
+import org.kde.config as KConfig
+import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
@@ -65,6 +67,9 @@ ColumnLayout {
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
+    property alias cfg_DayNightCycleMode: dayNightCycleMode.currentValue
+    property alias cfg_DayNightCycleSunriseTime: dayNightCycleSunriseTime.value
+    property alias cfg_DayNightCycleSunsetTime: dayNightCycleSunsetTime.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
     property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentValue
@@ -79,6 +84,7 @@ ColumnLayout {
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
+    property var dayNightPlugin: null
 
     readonly property int seconds: (wallpaperTimerHours.value * 60 * 60) + (wallpaperTimerMinutes.value * 60) + wallpaperTimerSeconds.value
 
@@ -200,7 +206,8 @@ ColumnLayout {
                 customDuration: item.customDuration,
                 playbackRate: item.playbackRate,
                 alternativePlaybackRate: item.alternativePlaybackRate,
-                loop: item.loop
+                loop: item.loop,
+                dayNightCycleAssignment: item.dayNightCycleAssignment
             });
         }
         cfg_VideoUrls = JSON.stringify(videos);
@@ -223,6 +230,11 @@ ColumnLayout {
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
         getAudioDevicesModel();
+        try {
+            dayNightPlugin = Qt.createQmlObject("import com.github.luisbocanegra.svwr.nighttime 1.0; DayNight {}", root);
+        } catch (e) {
+            console.warn("QML Plugin com.github.luisbocanegra.svwr.nighttime not found, will use fixed times");
+        }
     }
 
     Kirigami.FormLayout {
@@ -354,6 +366,59 @@ ColumnLayout {
                 valueRole: "value"
             }
         }
+
+        RowLayout {
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day/Night Switch:")
+            visible: root.currentTab === 0
+
+            ComboBox {
+                id: dayNightCycleMode
+                model: [
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Disabled"),
+                        value: Enum.DayNightCycleMode.Disabled
+                    },
+                    {
+                        text: root.dayNightPlugin !== null ? i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day-Night Cycle") : i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Based on time"),
+                        value: Enum.DayNightCycleMode.Time
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Based on Plasma Style"),
+                        value: Enum.DayNightCycleMode.PlasmaStyle
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always Day"),
+                        value: Enum.DayNightCycleMode.AlwaysDay
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always Night"),
+                        value: Enum.DayNightCycleMode.AlwaysNight
+                    }
+                ]
+                textRole: "text"
+                valueRole: "value"
+            }
+            Button {
+                visible: root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time && root.dayNightPlugin !== null
+                enabled: KConfig.KAuthorized.authorizeControlModule("kcm_nighttime")
+                text: i18nc("@action:button Configure day-night cycle times", "Configure…")
+                icon.name: "configure"
+                onClicked: KCM.KCMLauncher.open("kcm_nighttime")
+            }
+        }
+        ColumnLayout {
+            visible: root.currentTab === 0 && root.dayNightPlugin === null && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time
+            enabled: dayNightCycleMode.currentValue === Enum.DayNightCycleMode.Time
+            Components.TimePicker {
+                id: dayNightCycleSunriseTime
+                label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunrise:")
+            }
+            Components.TimePicker {
+                id: dayNightCycleSunsetTime
+                label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunset: ")
+            }
+        }
+
         // RowLayout {
         ButtonGroup {
             id: backgroundGroup
@@ -1119,6 +1184,7 @@ ColumnLayout {
                     required property real playbackRate
                     required property real alternativePlaybackRate
                     required property bool loop
+                    required property int dayNightCycleAssignment
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
                     ItemDelegate {
@@ -1221,6 +1287,25 @@ ColumnLayout {
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Alternative playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore this setting.")
                             }
+
+                            Button {
+                                readonly property int currAssignment: itemDelegate.dayNightCycleAssignment
+                                readonly property bool notBoth: currAssignment !== Enum.DayNightCycleAssignment.Both
+                                icon.name: ["night-light-disabled-symbolic", "weather-clear-symbolic", "weather-clear-night-symbolic"][currAssignment]
+                                enabled: itemDelegate.enabled
+                                highlighted: notBoth
+                                icon.color: notBoth ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                onClicked: videosModel.updateItem(itemDelegate.index, "dayNightCycleAssignment", (currAssignment + 1) % 3)
+                                Layout.fillHeight: true
+                                Layout.preferredWidth: height
+                                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                Kirigami.Theme.textColor: notBoth ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                Kirigami.Theme.highlightColor: notBoth ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                ToolTip.delay: 1000
+                                ToolTip.visible: hovered
+                                ToolTip.text: i18n("Tells if video will be displayed during the day, night or both.")
+                            }
+
                             Button {
                                 icon.name: "media-repeat-single-symbolic"
                                 checkable: true
