@@ -4,7 +4,7 @@ function parseCompat(cfgStr) {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
       video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
-      video.dayNightCycleAssignment = video.dayNightCycleAssignment ?? 0;
+      video.dayNightPhase = video.dayNightPhase ?? Enum.DayNightPhase.Unknown;
       videos.push(video);
     });
   } catch (e) {
@@ -40,29 +40,72 @@ function createVideo(filename) {
   video.filename = filename;
   return video;
 }
-/**
- * Get videos based on day/night cycle and enabled status
- * @param {boolean} dayNightCycleEnabled Whether day/night cycle is enabled
- * @param {boolean} isDay Whether it is day cycle
- * @param {string} videoUrls Video URLs configuration string
- * @returns {Array.<Video>} List of videos matching the criteria
- */
-function getVideos(dayNightCycleEnabled, isDay, videoUrls) {
-  console.log("getVideos()");
-  if (dayNightCycleEnabled) {
-    return parseCompat(videoUrls).filter(video => {
-      const isDayCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Night;
-      const isNightCycle = video.dayNightCycleAssignment !== Enum.DayNightCycleAssignment.Day;
-      return video.enabled && ((isDay && isDayCycle) || (!isDay && isNightCycle));
-    });
-  }
 
-  return parseCompat(videoUrls).filter(video => video.enabled);
+/**
+ * Get fallback day-night phase for sunrise and sunset
+ * @param {DayNightPhase} dayNightPhase Current day-night phase
+ * @returns {DayNightPhase} Fallback phase for sunrise and sunset, or unknown if no fallback exists
+ */
+function getFallbackPhase(dayNightPhase) {
+  switch (dayNightPhase) {
+    case Enum.DayNightPhase.Sunrise:
+      return Enum.DayNightPhase.Day;
+    case Enum.DayNightPhase.Sunset:
+      return Enum.DayNightPhase.Night;
+    default:
+      return Enum.DayNightPhase.Unknown;
+  }
 }
 
 /**
- * Find video index by filename
+ * Get videos matching the given day-night phase
+ * @param {Array.<Video>} videos 
+ * @param {DayNightPhase} dayNightPhase 
+ * @returns {Array.<Video>} List of videos matching the given day-night phase
+ */
+function getMatchingVideos(videos, dayNightPhase) {
+  return videos.filter(video => {
+    return video.dayNightPhase === dayNightPhase;
+  });
+}
+
+/**
+ * Get videos matching the current day-night phase, including videos without a specific phase assigned
+ * 
+ * If day-night cycle is disabled, returns all videos
+ * 
+ * If no videos match the current phase, tries to get fallback videos for sunrise and sunset
+ * @param {boolean} dayNightCycleEnabled Whether day-night cycle is enabled
+ * @param {DayNightPhase} dayNightPhase Current day-night phase
+ * @param {string} videoUrls Video URLs configuration string
+ * @returns {Array.<Video>} List of videos matching the criteria
+ */
+function getVideos(dayNightCycleEnabled, dayNightPhase, videoUrls) {
+  const videos = parseCompat(videoUrls).filter(video => video.enabled);
+
+  if (!dayNightCycleEnabled) {
+    return videos;
+  }
+
+  const defaultVideos = videos.filter(video => video.dayNightPhase === Enum.DayNightPhase.Unknown);
+  let matchingVideos = getMatchingVideos(videos, dayNightPhase);
+  if (matchingVideos.length > 0) {
+    return matchingVideos.concat(defaultVideos);
+  }
+
+  // try to get fallback videos for sunrise and sunset
+  let fallbackPhase = getFallbackPhase(dayNightPhase);
+  if (fallbackPhase !== Enum.DayNightPhase.Unknown) {
+    matchingVideos = getMatchingVideos(videos, fallbackPhase);
+  }
+
+  return matchingVideos.concat(defaultVideos);
+}
+
+/**
+ * Get video index by filename
  * @param {string} filename Video filename to search for
+ * @param {Array.<Video>} videosConfig List of videos with their properties
  * @returns {int} Matching index, or -1 when not found
  */
 function getVideoIndex(filename, videosConfig) {
@@ -71,29 +114,51 @@ function getVideoIndex(filename, videosConfig) {
 
 /**
  * Get index of the last played video or -1 if not last video exists
- * if day/night cycle is enabled returns the last video for that cycle
- * @param {boolean} dayNightCycleEnabled Whether Day/night cycle is enabled
- * @param {boolean} isDay Whether is day cycle
+ * if day-night cycle is enabled returns the last video for that cycle
+ * @param {boolean} dayNightCycleEnabled Whether day-night cycle is enabled
+ * @param {DayNightPhase} dayNightPhase Current day-night phase
  * @param {KConfigPropertyMap} configuration Wallpaper (WallpaperItem) configuration
  * @param {Array.<Video>} videosConfig List of videos with their properties
  * @returns {int} Video index or -1 if not found
  */
-function getLastVideoIndex(dayNightCycleEnabled, isDay, configuration, videosConfig) {
-  let lastVideo = "";
+function getLastVideoIndex(dayNightCycleEnabled, dayNightPhase, configuration, videosConfig) {
   if (dayNightCycleEnabled) {
-    lastVideo = configuration[isDay ? "LastVideoDay" : "LastVideoNight"];
+    let lastVideos = [];
+    switch (dayNightPhase) {
+      case Enum.DayNightPhase.Day:
+        lastVideos = [configuration.LastDayVideo, configuration.LastVideo];
+        break;
+      case Enum.DayNightPhase.Night:
+        lastVideos = [configuration.LastNightVideo, configuration.LastVideo];
+        break;
+      case Enum.DayNightPhase.Sunrise:
+        lastVideos = [configuration.LastSunriseVideo, configuration.LastDayVideo, configuration.LastVideo];
+        break;
+      case Enum.DayNightPhase.Sunset:
+        lastVideos = [configuration.LastSunsetVideo, configuration.LastNightVideo, configuration.LastVideo];
+        break;
+      default:
+        lastVideos = [configuration.LastVideo];
+    }
+
+    for (let lastVideo of lastVideos) {
+      const index = getVideoIndex(lastVideo, videosConfig);
+      if (lastVideo !== "" && index !== -1) {
+        return index;
+      }
+    }
   } else {
-    lastVideo = main.configuration.LastVideo;
+    const lastVideo = configuration.LastVideo;
+    return lastVideo === "" ? -1 : getVideoIndex(lastVideo, videosConfig);
   }
-  return lastVideo === "" ? -1 : getVideoIndex(lastVideo, videosConfig);
+
+  return -1;
 }
 
 function dumpProps(obj) {
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
   for (var k of Object.keys(obj)) {
     const val = obj[k];
-    if (typeof val === 'function') continue;
-    if (k === 'metaData') continue;
     console.log(k + "=" + val + "\n");
   }
 }

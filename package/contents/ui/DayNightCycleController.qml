@@ -4,64 +4,55 @@ import "code/enum.js" as Enum
 
 Item {
     id: root
-    required property bool enabled
     required property int mode
     required property int sunriseTime
     required property int sunsetTime
-
+    required property int transitionDuration
+    property string darkLightScheduleState
     property var dayNightPlugin: null
-    property int currentTime
 
-    property bool isDay: {
-        let day = false;
+    readonly property color targetColor: (palette && palette.window) ? palette.window : Kirigami.Theme.backgroundColor
+    readonly property int dayNightByColor: Qt.rgba(targetColor.r, targetColor.g, targetColor.b, targetColor.a).hslLightness > 0.75 ? Enum.DayNightPhase.Day : Enum.DayNightPhase.Night
+
+    readonly property int currentPhase: {
+        let phase = Enum.DayNightPhase.Unknown;
         switch (mode) {
         case Enum.DayNightCycleMode.Time:
-            if (dayNightPlugin) {
-                day = dayNightPlugin.isDay;
-                break;
-            }
-            day = currentTime >= root.sunriseTime && currentTime < root.sunsetTime;
+            phase = dayNightCycleTimer.phase;
+            break;
+        case Enum.DayNightCycleMode.DayNightCycle:
+            phase = dayNightPlugin ? dayNightPlugin.phase : Enum.DayNightPhase.Unknown;
             break;
         case Enum.DayNightCycleMode.PlasmaStyle:
-            const targetColor = (palette && palette.window) ? palette.window : Kirigami.Theme.backgroundColor;
-            day = Qt.rgba(targetColor.r, targetColor.g, targetColor.b, targetColor.a).hslLightness > 0.75;
+            phase = root.dayNightByColor;
             break;
         case Enum.DayNightCycleMode.AlwaysNight:
-            day = false;
+            phase = Enum.DayNightPhase.Night;
             break;
         case Enum.DayNightCycleMode.AlwaysDay:
-            day = true;
-            break;
-        default:
-            day = false;
+            phase = Enum.DayNightPhase.Day;
             break;
         }
-        return day;
+        return phase;
     }
 
-    Timer {
-        id: timer
-        interval: 1000
-        running: root.mode === Enum.DayNightCycleMode.Time && root.dayNightPlugin === null
-        repeat: true
-        triggeredOnStart: true
-        property bool prevEnabled: root.enabled
-        onTriggered: {
-            const now = new Date();
-            root.currentTime = now.getHours() * 60 + now.getMinutes();
-        }
+    DayNightCycleTimer {
+        id: dayNightCycleTimer
+        running: root.mode === Enum.DayNightCycleMode.Time
+        sunriseTime: root.sunriseTime
+        sunsetTime: root.sunsetTime
+        transitionDuration: root.transitionDuration
     }
 
     Component.onCompleted: {
         let component = null;
-        component = Qt.createComponent("NighttimeHelper.qml");
+        component = Qt.createComponent("DayNightCyclePlugin.qml");
         if (component.status === Component.Ready) {
             dayNightPlugin = component.createObject(root);
-            dayNightPlugin.initialState = configuration.DarkLightScheduleState;
+            dayNightPlugin.initialState = root.darkLightScheduleState;
             dayNightPlugin.stateChanged.connect(() => {
-                if (configuration.DarkLightScheduleState != dayNightPlugin.state) {
-                    configuration.DarkLightScheduleState = dayNightPlugin.state;
-                    configuration.writeConfig();
+                if (root.darkLightScheduleState != dayNightPlugin.state) {
+                    root.darkLightScheduleState = dayNightPlugin.state;
                 }
             });
         } else {

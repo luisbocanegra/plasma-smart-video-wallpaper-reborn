@@ -29,7 +29,7 @@ Item {
             "playbackRate": 0.0,
             "alternativePlaybackRate": 0.0,
             "loop": false,
-            "dayNightCycleAssignment": Enum.DayNightCycleAssignment.Both
+            "dayNightPhase": Enum.DayNightPhase.Unknown
         });
         updated();
     }

@@ -38,7 +38,7 @@ WallpaperItem {
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property var videosConfig: {
-        let videos = Utils.getVideos(dayNightCycleEnabled, isDay, videoUrls);
+        let videos = Utils.getVideos(dayNightCycleEnabled, dayNightPhase, videoUrls);
         if (randomMode && videos.length > 1) {
             Utils.shuffleArray(videos);
         }
@@ -51,7 +51,7 @@ WallpaperItem {
     property int currentVideoIndex: 0
     property string lastSelectedVideo: ""
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
-    property alias isDay: dayNightCycleController.isDay
+    property alias dayNightPhase: dayNightCycleController.currentPhase
     property var currentSource: Utils.createVideo("")
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
@@ -210,7 +210,7 @@ WallpaperItem {
         let preferredIndex = -1;
 
         if (resumeLastVideo) {
-            preferredIndex = Utils.getLastVideoIndex(dayNightCycleEnabled, isDay, main.configuration, videosConfig);
+            preferredIndex = Utils.getLastVideoIndex(dayNightCycleEnabled, dayNightPhase, main.configuration, videosConfig);
         }
 
         if (preferredIndex === -1) {
@@ -344,18 +344,25 @@ WallpaperItem {
     onCurrentSourceChanged: {
         if (currentSource.filename !== "") {
             lastSelectedVideo = currentSource.filename;
-            main.saveLastSource(main.currentSource.filename, main.isDay);
+            main.saveLastSource(main.currentSource.filename, main.dayNightPhase);
         }
     }
 
     DayNightCycleController {
         id: dayNightCycleController
-        enabled: main.dayNightCycleEnabled
         mode: main.configuration.DayNightCycleMode
         sunriseTime: main.configuration.DayNightCycleSunriseTime
         sunsetTime: main.configuration.DayNightCycleSunsetTime
-        onIsDayChanged: {
+        transitionDuration: main.configuration.DayNightCycleTransitionDuration
+        onCurrentPhaseChanged: {
             updateVideoDebounce.restart();
+        }
+        darkLightScheduleState: main.configuration.DarkLightScheduleState
+        onDarkLightScheduleStateChanged: {
+            if (main.configuration.DarkLightScheduleState != dayNightCycleController.darkLightScheduleState) {
+                main.configuration.DarkLightScheduleState = dayNightCycleController.darkLightScheduleState;
+                main.configuration.writeConfig();
+            }
         }
     }
 
@@ -452,7 +459,7 @@ WallpaperItem {
                     text += `crossfadeDuration: ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
                     text += `multipleVideos: ${player.multipleVideos}\n`;
                     text += `player: ${player.player.objectName}\n`;
-                    text += `mediaStatus: ${player.player.mediaStatus}\n`;
+                    text += `mediaStatus: ${["NoMedia", "LoadingMedia", "LoadedMedia", "StalledMedia", "BufferingMedia", "BufferedMedia", "EndOfMedia", "InvalidMedia"][player.player.mediaStatus]}\n`;
                     text += `player1 playing: ${player.player1.playing}\n`;
                     text += `player2 playing: ${player.player2.playing}\n`;
                     text += `position: ${player.player.position}\n`;
@@ -464,10 +471,9 @@ WallpaperItem {
                     text += `inLockScreen: ${main.lockScreenMode}\n`;
                     text += `screenLocked: ${main.screenLocked}\n`;
                     text += `showBlur: ${main.showBlur}\n`;
-                    text += `Audio Device: ${player.player1.currentAudioDevice}`;
-                    text += `isDay: ${main.isDay}\n`;
-                    text += `dayNightCycleEnabled: ${main.dayNightCycleEnabled}\n`;
-                    text += `dayNightCycleMode: ${main.configuration.DayNightCycleMode}\n`;
+                    text += `Audio Device: ${player.player1.currentAudioDevice}\n`;
+                    text += `dayNightPhase: ${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]}\n`;
+                    text += `dayNightCycleMode: ${["disabled", "dayNightCycle", "time", "plasmaStyle", "alwaysDay", "alwaysNight"][main.configuration.DayNightCycleMode]}\n`;
                     text += `id: ${Plasmoid.id}`;
                     return text;
                 }
@@ -544,17 +550,26 @@ WallpaperItem {
         }
     }
 
-    function saveLastSource(filename, cycleIsDay) {
+    function saveLastSource(filename, dayNightPhase) {
         if (filename === "") {
             return;
         }
 
         main.configuration.LastVideo = filename;
         if (dayNightCycleEnabled) {
-            if (cycleIsDay) {
-                main.configuration.LastVideoDay = filename;
-            } else {
-                main.configuration.LastVideoNight = filename;
+            switch (dayNightPhase) {
+            case Enum.DayNightPhase.Day:
+                main.configuration.LastDayVideo = filename;
+                break;
+            case Enum.DayNightPhase.Night:
+                main.configuration.LastNightVideo = filename;
+                break;
+            case Enum.DayNightPhase.Sunrise:
+                main.configuration.LastSunriseVideo = filename;
+                break;
+            case Enum.DayNightPhase.Sunset:
+                main.configuration.LastSunsetVideo = filename;
+                break;
             }
         }
     }
@@ -571,7 +586,7 @@ WallpaperItem {
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.saveLastSource(main.currentSource.filename || main.lastSelectedVideo, main.isDay);
+            main.saveLastSource(main.currentSource.filename || main.lastSelectedVideo, main.dayNightPhase);
             main.saveLastPosition();
             main.configuration.writeConfig();
         }

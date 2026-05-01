@@ -96,6 +96,8 @@ void DayNight::componentComplete()
         setState(m_darkLightScheduleProvider->state());
         schedule();
     });
+
+    schedule();
 }
 
 void DayNight::schedule()
@@ -114,19 +116,18 @@ void DayNight::update()
 {
     const QDateTime now = QDateTime::currentDateTime();
 
-    DayNightPhase phase = DayNightPhase::from(now, m_previousTransition, m_nextTransition);
+    const DayNightPhase currentPhase = DayNightPhase::from(now, m_previousTransition, m_nextTransition);
 
-    const bool isDay = phase == DayNightPhase::Day || phase == DayNightPhase::Sunset;
-
-    if (m_isDay != isDay) {
-        m_isDay = isDay;
-        emit isDayChanged(isDay);
+    if (m_phase != currentPhase) {
+        m_phase = currentPhase;
+        emit phaseChanged();
     }
 
     const int blendInterval = 60000;
-    switch (phase) {
+    switch (currentPhase) {
     case DayNightPhase::Night:
     case DayNightPhase::Day:
+    case DayNightPhase::Unknown:
         m_transitionUpdateTimer->stop();
         break;
     case DayNightPhase::Sunrise:
@@ -152,9 +153,9 @@ void DayNight::setState(const QString &state)
     }
 }
 
-bool DayNight::isDay() const
+int DayNight::phase() const
 {
-    return m_isDay;
+    return m_phase;
 }
 
 QString DayNight::initialState() const

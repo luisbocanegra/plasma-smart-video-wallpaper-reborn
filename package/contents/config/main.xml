@@ -118,6 +118,12 @@
     <entry name="LastVideoNight" type="String">
       <default></default>
     </entry>
+    <entry name="LastVideoSunrise" type="String">
+      <default></default>
+    </entry>
+    <entry name="LastVideoSunset" type="String">
+      <default></default>
+    </entry>
     <!-- Mute audio
         0: when maximized or full-screen windows
         1: when a visible window is active
@@ -152,6 +158,10 @@
     <entry name="DayNightCycleSunsetTime" type="Int">
       <label>Time of sunset</label>
       <default>1080</default>
+    </entry>
+    <entry name="DayNightCycleTransitionDuration" type="Int">
+      <label>Duration of sunrise and sunset (minutes)</label>
+      <default>5</default>
     </entry>
     <entry name="ResumeLastVideo" type="Bool">
       <label>Whether or not to resume last playing video on startup</label>

@@ -24,6 +24,7 @@ public:
         Sunrise,
         Day,
         Sunset,
+        Unknown,
     };
 
     DayNightPhase();
@@ -52,7 +53,7 @@ class DayNight : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     QML_ELEMENT
 
-    Q_PROPERTY(bool isDay READ isDay NOTIFY isDayChanged)
+    Q_PROPERTY(int phase READ phase NOTIFY phaseChanged)
     Q_PROPERTY(QString initialState READ initialState WRITE setInitialState NOTIFY initialStateChanged)
     Q_PROPERTY(QString state READ state NOTIFY stateChanged)
 
@@ -62,7 +63,7 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
-    bool isDay() const;
+    int phase() const;
 
     QString initialState() const;
     void setInitialState(const QString &state);
@@ -72,7 +73,7 @@ public:
 
 signals:
 
-    void isDayChanged(bool isDay);
+    void phaseChanged();
     void initialStateChanged();
     void stateChanged();
 
@@ -89,7 +90,7 @@ private:
     QString m_initialState;
     QString m_state;
 
-    bool m_isDay = false;
+    int m_phase = DayNightPhase::Unknown;
 };
 
 #endif

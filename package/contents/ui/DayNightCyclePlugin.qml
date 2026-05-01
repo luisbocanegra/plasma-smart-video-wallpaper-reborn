@@ -2,9 +2,9 @@ import QtQuick
 import com.github.luisbocanegra.svwr.nighttime 1.0
 
 Item {
-    property alias isDay: dayNight.isDay
+    readonly property alias phase: dayNight.phase
+    readonly property alias state: dayNight.state
     property alias initialState: dayNight.initialState
-    property alias state: dayNight.state
     DayNight {
         id: dayNight
     }

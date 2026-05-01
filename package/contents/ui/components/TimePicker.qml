@@ -3,12 +3,8 @@ import QtQuick.Layouts
 
 RowLayout {
     id: root
-    required property string label
     property int value
 
-    Label {
-        text: root.label
-    }
     SpinBox {
         id: hours
         from: 0

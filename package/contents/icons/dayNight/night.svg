@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="22"
+   height="22"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="weather-night.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.4204545"
+     inkscape:cx="30.766067"
+     inkscape:cy="49.203085"
+     inkscape:window-width="1078"
+     inkscape:window-height="984"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <style
+       id="current-color-scheme"
+       type="text/css">
+   .ColorScheme-Text { color:#dfdfdf; } .ColorScheme-Highlight { color:#4285f4; } .ColorScheme-NeutralText { color:#ff9800; } .ColorScheme-PositiveText { color:#4caf50; } .ColorScheme-NegativeText { color:#f44336; }
+  </style>
+  </defs>
+  <path
+     style="fill:currentColor"
+     class="ColorScheme-Text"
+     d="M 15.659927,5.352327 13.733913,6.829192 14.426669,9.158679 12.424528,7.78078 10.422387,9.158679 11.115143,6.829192 9.1891284,5.352327 l 2.4284526,-0.06851 0.806947,-2.283815 0.806946,2.283811 2.428453,0.06851 m 2.664446,5.260379 -1.248483,0.951588 0.449149,1.507315 -1.294159,-0.890686 -1.29416,0.890686 0.449149,-1.507315 -1.248483,-0.951588 1.568217,-0.03806 0.525277,-1.484477 0.525276,1.484477 1.568217,0.03806 m -1.735696,3.768288 c 0.631854,-0.0609 1.309385,0.837397 0.905911,1.40835 -0.243606,0.342572 -0.502438,0.662305 -0.822172,0.966814 -2.976567,2.991792 -7.7954086,2.991792 -10.7643636,0 -2.976567,-2.968955 -2.976567,-7.795409 0,-10.764363 0.304509,-0.304509 0.624242,-0.578566 0.966814,-0.822172 0.570953,-0.403474 1.469252,0.274057 1.40835,0.905911 -0.205543,2.177234 0.525276,4.438207 2.2000716,6.105389 1.667182,1.674794 3.920543,2.405614 6.105389,2.200071 m -1.248484,1.537766 C 13.185798,15.796957 11.054241,14.906271 9.4022834,13.277152 7.7503274,11.60997 6.8672534,9.4708 6.7454504,7.324018 c -2.13917,2.390389 -2.05543,6.059712 0.235994,8.358748 2.299036,2.291424 5.9683596,2.375164 8.3587486,0.235994 z"
+     id="path1" />
+</svg>
