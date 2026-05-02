@@ -50,9 +50,9 @@ Item {
         if (component.status === Component.Ready) {
             dayNightPlugin = component.createObject(root);
             dayNightPlugin.initialState = root.darkLightScheduleState;
-            dayNightPlugin.stateChanged.connect(() => {
-                if (root.darkLightScheduleState != dayNightPlugin.state) {
-                    root.darkLightScheduleState = dayNightPlugin.state;
+            dayNightPlugin.scheduleStateChanged.connect(() => {
+                if (root.darkLightScheduleState != dayNightPlugin.scheduleState) {
+                    root.darkLightScheduleState = dayNightPlugin.scheduleState;
                 }
             });
         } else {

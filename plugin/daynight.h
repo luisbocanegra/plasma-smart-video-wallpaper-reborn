@@ -5,8 +5,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef NIGHTTIME_H
-#define NIGHTTIME_H
+#ifndef DAYNIGHT_H
+#define DAYNIGHT_H
 
 #pragma once
 #include <KDarkLightScheduleProvider>

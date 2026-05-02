@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "nighttime.h"
+#include "daynight.h"
 
 DayNightPhase::DayNightPhase()
     : m_kind(Night)

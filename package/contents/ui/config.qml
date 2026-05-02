@@ -85,7 +85,6 @@ ColumnLayout {
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
-    property var dayNightPlugin: null
     property bool showCustomTimeControls: false
     property string cfg_DarkLightScheduleState
 
@@ -247,11 +246,6 @@ ColumnLayout {
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
         getAudioDevicesModel();
-        try {
-            dayNightPlugin = Qt.createQmlObject("import com.github.luisbocanegra.svwr.nighttime 1.0; DayNight {}", root);
-        } catch (e) {
-            console.warn("QML Plugin com.github.luisbocanegra.svwr.nighttime not found, will use fixed times");
-        }
     }
 
     Kirigami.FormLayout {
@@ -453,7 +447,7 @@ ColumnLayout {
             }
             Button {
                 visible: root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.DayNightCycle
-                enabled: KConfig.KAuthorized.authorizeControlModule("kcm_nighttime") && root.dayNightPlugin !== null
+                enabled: KConfig.KAuthorized.authorizeControlModule("kcm_nighttime") && dayNightCycleController.dayNightPlugin !== null
                 text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "@action:button Configure day-night cycle times", "Configure…")
                 icon.name: "configure"
                 onClicked: KCM.KCMLauncher.open("kcm_nighttime")
@@ -471,7 +465,7 @@ ColumnLayout {
         }
         Label {
             id: dayNightCyclePluginWarning
-            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.DayNightCycle && root.dayNightPlugin === null
+            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.DayNightCycle && dayNightCycleController.dayNightPlugin === null
             color: Kirigami.Theme.negativeTextColor
             text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "⚠ The C++ plugin is not available, this feature will not work. Switch to the Smart Video Wallpaper Reborn package for your distribution if available, or build the plugin from source. See <a href='%1'>install instructions</a>.", "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn#installing")
             wrapMode: Label.WordWrap
