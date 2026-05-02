@@ -1,9 +1,12 @@
 import QtQuick
 import QtMultimedia
 import Qt5Compat.GraphicalEffects
+import "code/utils.js" as Utils
+import "code/enum.js" as Enum
 
 Item {
     id: root
+    property var playerSource: Utils.createVideo("")
     property real volume: 1.0
     property int actualDuration: player.duration / playbackRate
     property int fillBlurRadius: 32
