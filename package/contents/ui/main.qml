@@ -60,6 +60,11 @@ WallpaperItem {
             return false;
         }
 
+        // If "Show Desktop" is active, always play regardless of window state
+        if (showDesktopMonitor.showingDesktop) {
+            return true;
+        }
+
         let play = false;
         switch (main.configuration.PauseMode) {
         case Enum.PauseMode.MaximizedOrFullScreen:
@@ -83,6 +88,12 @@ WallpaperItem {
         if (videosConfig.length == 0) {
             return false;
         }
+
+        // If "Show Desktop" is active, never blur the wallpaper
+        if (showDesktopMonitor.showingDesktop) {
+            return false;
+        }
+
         let blur = false;
         switch (main.configuration.BlurMode) {
         case Enum.BlurMode.MaximizedOrFullScreen:
@@ -144,6 +155,11 @@ WallpaperItem {
         if (muteOverride === Enum.MuteOverride.Mute) {
             return true;
         } else if (muteOverride === Enum.MuteOverride.Unmute) {
+            return false;
+        }
+
+        // If "Show Desktop" is active, never mute due to window state
+        if (showDesktopMonitor.showingDesktop) {
             return false;
         }
 
@@ -243,6 +259,11 @@ WallpaperItem {
     TasksModel {
         id: windowModel
         screenGeometry: main.parent?.screenGeometry ?? null
+    }
+
+    ShowDesktopMonitor {
+        id: showDesktopMonitor
+        instanceId: Plasmoid.id ?? ""
     }
 
     ScreenModel {
