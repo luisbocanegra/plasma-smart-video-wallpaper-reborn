@@ -164,8 +164,7 @@ Item {
             }
         }
         onLoopsChanged: {
-            if (primaryPlayer) {
-                // needed to correctly update player with new loops value
+            if (primaryPlayer && videoPlayer1.mediaStatus === MediaPlayer.LoadedMedia) {
                 let pos = videoPlayer1.position;
                 videoPlayer1.stop();
                 videoPlayer1.play();
@@ -247,8 +246,7 @@ Item {
             }
         }
         onLoopsChanged: {
-            if (!primaryPlayer) {
-                // needed to correctly update player with new loops value
+            if (!primaryPlayer && videoPlayer2.mediaStatus === MediaPlayer.LoadedMedia) {
                 let pos = videoPlayer2.position;
                 videoPlayer2.stop();
                 videoPlayer2.play();
