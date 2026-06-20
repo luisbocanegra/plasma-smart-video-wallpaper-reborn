@@ -35,17 +35,21 @@ ColumnLayout {
     id: root
     spacing: 0
     property var parentLayout
-    property alias cfg_FillMode: videoFillMode.currentValue
-    property alias cfg_PauseMode: pauseModeCombo.currentValue
-    property alias cfg_AlternativePlaybackRateMode: alternativePlaybackRateMode.currentValue
+    property var configDialog: null
+    property var wallpaperConfiguration: null
+    property int cfg_FillMode: 2
+    property int cfg_PauseMode: 0
+    property int cfg_AlternativePlaybackRateMode: 3
+    property string cfg_AudioOutputDevice: ""
+    property int cfg_BlurMode: 5
+    property int cfg_ChangeWallpaperMode: 1
+    property int cfg_MuteMode: 5
     property alias cfg_BackgroundColor: colorButton.color
     property alias cfg_PauseBatteryLevel: pauseBatteryLevel.value
     property alias cfg_BatteryPausesVideo: batteryPausesVideoCheckBox.checked
-    property alias cfg_BlurMode: blurModeCombo.currentValue
     property alias cfg_BatteryDisablesBlur: batteryDisablesBlurCheckBox.checked
     property alias cfg_BlurRadius: blurRadiusSpinBox.value
     property string cfg_VideoUrls
-    property alias cfg_AudioOutputDevice: audioDeviceCombo.currentValue
     property bool isLoading: false
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
@@ -67,7 +71,6 @@ ColumnLayout {
     property alias cfg_Volume: volumeSlider.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
-    property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentValue
     property alias cfg_ChangeWallpaperTimerSeconds: wallpaperTimerSeconds.value
     property alias cfg_ChangeWallpaperTimerMinutes: wallpaperTimerMinutes.value
     property alias cfg_ChangeWallpaperTimerHours: wallpaperTimerHours.value
@@ -76,7 +79,6 @@ ColumnLayout {
     property alias currentTab: tabBar.currentIndex
     property bool showVideosList: false
     property var isLockScreenSettings: null
-    property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
 
@@ -352,6 +354,13 @@ ColumnLayout {
                 ]
                 textRole: "text"
                 valueRole: "value"
+                currentIndex: {
+                    for (let i = 0; i < model.length; i++) {
+                        if (model[i].value === root.cfg_FillMode) return i;
+                    }
+                    return 0;
+                }
+                onActivated: root.cfg_FillMode = currentValue
             }
         }
         // RowLayout {
@@ -438,6 +447,13 @@ ColumnLayout {
                 ]
                 textRole: "text"
                 valueRole: "value"
+                currentIndex: {
+                    for (let i = 0; i < model.length; i++) {
+                        if (model[i].value === root.cfg_ChangeWallpaperMode) return i;
+                    }
+                    return 0;
+                }
+                onActivated: root.cfg_ChangeWallpaperMode = currentValue
             }
             Kirigami.ContextualHelpButton {
                 toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Automatically play the next video using the selected strategy. You can also change the wallpaper manually using <strong>Next Video</strong> from the Desktop right click menu.")
@@ -623,6 +639,13 @@ ColumnLayout {
             textRole: "text"
             valueRole: "value"
             visible: !root.isLockScreenSettings && root.currentTab === 1
+            currentIndex: {
+                for (let i = 0; i < model.length; i++) {
+                    if (model[i].value === root.cfg_PauseMode) return i;
+                }
+                return 0;
+            }
+            onActivated: root.cfg_PauseMode = currentValue
         }
 
         ComboBox {
@@ -632,6 +655,13 @@ ColumnLayout {
             textRole: "text"
             valueRole: "value"
             visible: root.currentTab === 1
+            currentIndex: {
+                for (let i = 0; i < model.length; i++) {
+                    if (model[i].value === root.cfg_MuteMode) return i;
+                }
+                return 0;
+            }
+            onActivated: root.cfg_MuteMode = currentValue
         }
 
         ComboBox {
@@ -641,6 +671,13 @@ ColumnLayout {
             model: audioDevicesModel
             textRole: "description"
             valueRole: "id"
+            currentIndex: {
+                for (let i = 0; i < model.count; i++) {
+                    if (model.get(i).id === root.cfg_AudioOutputDevice) return i;
+                }
+                return 0;
+            }
+            onActivated: root.cfg_AudioOutputDevice = currentValue
         }
 
         RowLayout {
@@ -674,6 +711,13 @@ ColumnLayout {
             textRole: "text"
             valueRole: "value"
             visible: root.currentTab === 1
+            currentIndex: {
+                for (let i = 0; i < model.length; i++) {
+                    if (model[i].value === root.cfg_BlurMode) return i;
+                }
+                return 0;
+            }
+            onActivated: root.cfg_BlurMode = currentValue
         }
 
         RowLayout {
@@ -764,6 +808,13 @@ ColumnLayout {
             textRole: "text"
             valueRole: "value"
             visible: !root.isLockScreenSettings && root.currentTab === 1
+            currentIndex: {
+                for (let i = 0; i < model.length; i++) {
+                    if (model[i].value === root.cfg_AlternativePlaybackRateMode) return i;
+                }
+                return 0;
+            }
+            onActivated: root.cfg_AlternativePlaybackRateMode = currentValue
         }
 
         RowLayout {
