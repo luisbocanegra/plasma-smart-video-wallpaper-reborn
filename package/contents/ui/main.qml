@@ -307,7 +307,7 @@ WallpaperItem {
     }
     FastBlur {
         id: mainBlur
-        source: background
+        source: main.showBlur ? background : null
         radius: main.showBlur ? main.configuration.BlurRadius : 0
         visible: radius !== 0
         anchors.fill: background
