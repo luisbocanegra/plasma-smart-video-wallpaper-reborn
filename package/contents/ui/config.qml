@@ -1118,7 +1118,7 @@ ColumnLayout {
                     required property bool enabled
                     required property real playbackRate
                     required property real alternativePlaybackRate
-                    property bool loop: false
+                    required property bool loop
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
                     ItemDelegate {
