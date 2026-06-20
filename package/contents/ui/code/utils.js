@@ -1,5 +1,8 @@
 function parseCompat(cfgStr) {
   let videos = [];
+  if (!cfgStr || cfgStr.trim() === "" || cfgStr === "[]") {
+    return videos;
+  }
   try {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
