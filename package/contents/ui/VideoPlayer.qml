@@ -72,7 +72,7 @@ Item {
         id: player
         videoOutput: videoOutput
         audioOutput: audioOutput
-        loops: root.loops
+        // loops: root.loops
         // Ignore very small values as it makes the video go crazy fast, stops
         // responding to this property and needs to be stopped to recover
         // TODO: Check if this has been reported to Qt
@@ -92,7 +92,7 @@ Item {
 
     FastBlur {
         id: fillBlur
-        source: videoBlur
+        source: root.showFillBlur && videoBlur.sourceItem ? videoBlur : null
         radius: root.fillBlurRadius
         visible: root.showFillBlur && videoBlur.sourceItem
         anchors.fill: videoBlur
