@@ -506,7 +506,8 @@ ColumnLayout {
             }
             SpinBox {
                 id: wallpaperTimerSeconds
-                from: root.seconds > 0 ? 0 : 1
+                // 
+                from: (wallpaperTimerHours.value === 0 && wallpaperTimerMinutes.value === 0) ? 1 : 0
                 to: 59
                 stepSize: 1
                 editable: true
