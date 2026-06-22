@@ -226,3 +226,4 @@ See [Translations](https://github.com/luisbocanegra/plasma-smart-video-wallpaper
 - This project a rewrite based on [adhec/Smart Video Wallpaper](https://github.com/adhec/plasma_tweaks/tree/master/SmartVideoWallpaper) and [PeterTucker/smartER-video-wallpaper](https://github.com/PeterTucker/smartER-video-wallpaper) projects.
 - [ccatterina's script](https://github.com/ccatterina) to manage translations
 - Brand icons from [Simple Icons](https://simpleicons.org)
+- Day-night icons from [Google LLC. / Pictogrammers](https://pictogrammers.com/library/mdi/)

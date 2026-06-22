@@ -6,3 +6,5 @@ build/
 playground
 *.mo
 *.tar.gz
+.cache/
+compile_commands.json

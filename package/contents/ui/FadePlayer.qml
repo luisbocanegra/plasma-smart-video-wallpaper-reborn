@@ -156,7 +156,7 @@ Item {
             if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
                 if (root.restoreLastPosition && root.resumeLastVideo) {
                     if (root.lastVideoPosition < duration) {
-                        console.error("RESTORE LAST POSITION:", root.lastVideoPosition);
+                        console.log("RESTORE LAST POSITION:", root.lastVideoPosition);
                         videoPlayer1.position = root.lastVideoPosition;
                     }
                 }

@@ -23,6 +23,8 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtMultimedia
+import org.kde.config as KConfig
+import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
@@ -65,6 +67,10 @@ ColumnLayout {
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
+    property alias cfg_DayNightCycleMode: dayNightCycleMode.currentValue
+    property alias cfg_DayNightCycleSunriseTime: dayNightCycleSunriseTime.value
+    property alias cfg_DayNightCycleSunsetTime: dayNightCycleSunsetTime.value
+    property alias cfg_DayNightCycleTransitionDuration: dayNightCycleTransitionDuration.value
     property alias cfg_RandomMode: randomModeCheckbox.checked
     property alias cfg_ResumeLastVideo: resumeLastVideoCheckbox.checked
     property alias cfg_ChangeWallpaperMode: changeWallpaperModeComboBox.currentValue
@@ -79,6 +85,8 @@ ColumnLayout {
     property alias cfg_MuteMode: muteModeCombo.currentValue
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
+    property bool showCustomTimeControls: false
+    property string cfg_DarkLightScheduleState
 
     readonly property int seconds: (wallpaperTimerHours.value * 60 * 60) + (wallpaperTimerMinutes.value * 60) + wallpaperTimerSeconds.value
 
@@ -200,7 +208,8 @@ ColumnLayout {
                 customDuration: item.customDuration,
                 playbackRate: item.playbackRate,
                 alternativePlaybackRate: item.alternativePlaybackRate,
-                loop: item.loop
+                loop: item.loop,
+                dayNightPhase: item.dayNightPhase
             });
         }
         cfg_VideoUrls = JSON.stringify(videos);
@@ -217,6 +226,20 @@ ColumnLayout {
         id: videosModel
         onUpdated: () => {
             root.updateConfig();
+        }
+    }
+
+    DayNightCycleController {
+        id: dayNightCycleController
+        mode: cfg_DayNightCycleMode
+        sunriseTime: cfg_DayNightCycleSunriseTime
+        sunsetTime: cfg_DayNightCycleSunsetTime
+        transitionDuration: cfg_DayNightCycleTransitionDuration
+        darkLightScheduleState: cfg_DarkLightScheduleState
+        onDarkLightScheduleStateChanged: {
+            if (dayNightCycleController.darkLightScheduleState != root.cfg_DarkLightScheduleState) {
+                root.cfg_DarkLightScheduleState = dayNightCycleController.darkLightScheduleState;
+            }
         }
     }
 
@@ -354,6 +377,135 @@ ColumnLayout {
                 valueRole: "value"
             }
         }
+
+        RowLayout {
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day-night switch:")
+            visible: root.currentTab === 0
+
+            ComboBox {
+                id: dayNightCycleMode
+                Layout.preferredWidth: 250
+                model: [
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Disabled"),
+                        value: Enum.DayNightCycleMode.Disabled,
+                        description: "All videos will be played"
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Plasma style"),
+                        value: Enum.DayNightCycleMode.PlasmaStyle,
+                        description: "Current Plasma style's color scheme (light/dark)"
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Custom times"),
+                        value: Enum.DayNightCycleMode.Time,
+                        description: "Set custom sunrise/sunset times"
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day-night cycle"),
+                        value: Enum.DayNightCycleMode.DayNightCycle,
+                        description: "Use KDE's Day-Night Cycle service"
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always day"),
+                        value: Enum.DayNightCycleMode.AlwaysDay,
+                        description: "Only play videos set to the day phase"
+                    },
+                    {
+                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always night"),
+                        value: Enum.DayNightCycleMode.AlwaysNight,
+                        description: "Only play videos set to the night phase"
+                    }
+                ]
+                textRole: "text"
+                valueRole: "value"
+                delegate: ItemDelegate {
+                    id: delegate
+                    required property var model
+                    width: parent?.width ?? 0
+                    text: model.text
+                    highlighted: model.value === root.cfg_DayNightCycleMode
+                    contentItem: Kirigami.TitleSubtitle {
+                        title: delegate.text
+                        subtitle: model.description
+                        font: delegate.font
+                        selected: delegate.highlighted || delegate.down
+                        wrapMode: Text.WordWrap
+                    }
+                }
+            }
+            Item {
+                implicitHeight: parent.height
+                Layout.preferredWidth: Kirigami.Units.gridUnit
+                Kirigami.Icon {
+                    source: Qt.resolvedUrl("../icons/dayNight/" + ["night", "sunrise", "day", "sunset", "disabled"][dayNightCycleController.currentPhase] + ".svg")
+                    fallback: "unknown"
+                    anchors.centerIn: parent
+                    implicitHeight: Kirigami.Units.iconSizes.smallMedium
+                    implicitWidth: Kirigami.Units.iconSizes.smallMedium
+                }
+            }
+            Button {
+                visible: root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.DayNightCycle
+                enabled: KConfig.KAuthorized.authorizeControlModule("kcm_nighttime") && dayNightCycleController.dayNightPlugin !== null
+                text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "@action:button Configure day-night cycle times", "Configure…")
+                icon.name: "configure"
+                onClicked: KCM.KCMLauncher.open("kcm_nighttime")
+                Layout.preferredHeight: parent.height
+            }
+            Button {
+                visible: root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time
+                text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "@action:button Configure custom day-night times", "Configure")
+                icon.name: "configure"
+                checkable: true
+                checked: root.showCustomTimeControls
+                onClicked: root.showCustomTimeControls = !root.showCustomTimeControls
+                Layout.preferredHeight: parent.height
+            }
+        }
+        Label {
+            id: dayNightCyclePluginWarning
+            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.DayNightCycle && dayNightCycleController.dayNightPlugin === null
+            color: Kirigami.Theme.negativeTextColor
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "⚠ The C++ plugin is not available, this feature will not work. Switch to the Smart Video Wallpaper Reborn package for your distribution if available, or build the plugin from source. See <a href='%1'>install instructions</a>.", "https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn#installing")
+            wrapMode: Label.WordWrap
+            font: Kirigami.Theme.smallFont
+            onLinkActivated: Qt.openUrlExternally(link)
+            Layout.fillWidth: true
+            Layout.preferredWidth: 450
+        }
+        Components.TimePicker {
+            id: dayNightCycleSunriseTime
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunrise:")
+            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time && root.showCustomTimeControls
+        }
+        Components.TimePicker {
+            id: dayNightCycleSunsetTime
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunset:")
+            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time && root.showCustomTimeControls
+        }
+
+        SpinBox {
+            id: dayNightCycleTransitionDuration
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Transition duration:")
+            visible: root.currentTab === 0 && root.cfg_DayNightCycleMode == Enum.DayNightCycleMode.Time && root.showCustomTimeControls
+            from: 1
+            to: 60
+            stepSize: 1
+            editable: true
+            readonly property regexp reExtractNum: /\D*?(-?\d*\.?\d*)\D*$/
+
+            validator: RegularExpressionValidator {
+                regularExpression: dayNightCycleTransitionDuration.reExtractNum
+            }
+            textFromValue: function (value, locale) {
+                return i18np("%1 minute", "%1 minutes", value);
+            }
+            valueFromText: function (text, locale) {
+                return parseInt(text);
+            }
+        }
+
         // RowLayout {
         ButtonGroup {
             id: backgroundGroup
@@ -1119,6 +1271,18 @@ ColumnLayout {
                     required property real playbackRate
                     required property real alternativePlaybackRate
                     required property bool loop
+                    required property int dayNightPhase
+                    readonly property string icon: Qt.resolvedUrl("../icons/dayNight/" + ["night", "sunrise", "day", "sunset", "disabled"][dayNightPhase] + ".svg")
+                    // qmlformat off
+                    readonly property string displayText: [
+                        i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Night"),
+                        i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunrise"),
+                        i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day"),
+                        i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Sunset"),
+                        i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Disabled")
+                    ][dayNightPhase]
+                    // qmlformat on
+                    readonly property bool isPhase: itemDelegate.dayNightPhase !== Enum.DayNightPhase.Unknown
                     implicitWidth: ListView.view.width
                     implicitHeight: delegate.height
                     ItemDelegate {
@@ -1221,6 +1385,34 @@ ColumnLayout {
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Alternative playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore this setting.")
                             }
+
+                            Button {
+                                enabled: itemDelegate.enabled
+                                contentItem: Item {
+                                    implicitHeight: Kirigami.Units.gridUnit * 2
+                                    Kirigami.Icon {
+                                        source: itemDelegate.icon
+                                        fallback: "unknown"
+                                        anchors.centerIn: parent
+                                        implicitHeight: Kirigami.Units.iconSizes.smallMedium
+                                        implicitWidth: Kirigami.Units.iconSizes.smallMedium
+                                        color: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                        isMask: true
+                                    }
+                                }
+                                checkable: true
+                                checked: itemDelegate.isPhase
+                                highlighted: itemDelegate.isPhase
+                                onClicked: videosModel.updateItem(itemDelegate.index, "dayNightPhase", (itemDelegate.dayNightPhase + 1) % 5)
+                                Layout.fillHeight: true
+                                Kirigami.Theme.colorSet: root.Kirigami.Theme.View
+                                Kirigami.Theme.textColor: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
+                                Kirigami.Theme.highlightColor: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                ToolTip.delay: 1000
+                                ToolTip.visible: hovered
+                                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Phase of the day at which this video will play. If set to <strong>Disabled</strong> the video will play regardless of the current phase. <br>Current: <strong>%1</strong>", itemDelegate.displayText)
+                            }
+
                             Button {
                                 icon.name: "media-repeat-single-symbolic"
                                 checkable: true
