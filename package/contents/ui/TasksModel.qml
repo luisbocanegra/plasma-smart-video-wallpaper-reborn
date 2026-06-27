@@ -34,6 +34,7 @@ Item {
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
     property bool activeScreenOnly: main.configuration.CheckWindowsActiveScreen
+    readonly property string currentActivity: activityInfo.currentActivity
 
     Connections {
         target: main.configuration
@@ -50,7 +51,6 @@ Item {
 
     TaskManager.ActivityInfo {
         id: activityInfo
-        readonly property string nullUuid: "00000000-0000-0000-0000-000000000000"
     }
 
     TaskManager.TasksModel {
