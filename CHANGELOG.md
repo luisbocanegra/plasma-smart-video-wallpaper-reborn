@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.14.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.13.0...v2.14.0) (2026-06-28)
+
+
+### Features
+
+* pause video on inactive Plasma Activities ([132e7c1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/132e7c1caf0ada167e7385d6b3fd52ccadaa7087))
+* update Russian translation ([d9ce594](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/d9ce594f91693eb6ee6ef0cf38cfa08bd8ad7023))
+
 ## [2.13.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.12.0...v2.13.0) (2026-04-02)
 
 
