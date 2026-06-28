@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 19:33+0000\n"
+"POT-Creation-Date: 2026-06-28 18:39+0000\n"
 "PO-Revision-Date: 2026-02-07 02:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -609,42 +609,42 @@ msgstr "Todos los archivos"
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: package/contents/ui/main.qml:326
+#: package/contents/ui/main.qml:327
 #, kde-format
 msgid "No video source \n"
 msgstr "No hay fuente de vídeo \n"
 
-#: package/contents/ui/main.qml:491
+#: package/contents/ui/main.qml:492
 #, kde-format
 msgid "Next Video"
 msgstr "Siguiente Vídeo"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Pause"
 msgstr "Pausar"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Play"
 msgstr "Reproducir"
 
-#: package/contents/ui/main.qml:503
+#: package/contents/ui/main.qml:504
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Reproducción"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Mute"
 msgstr "Silenciar"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Unmute"
 msgstr "Habilitar sonido"
 
-#: package/contents/ui/main.qml:526
+#: package/contents/ui/main.qml:527
 #, fuzzy, kde-format
 msgid "Default Muting"
 msgstr "Por defecto"
