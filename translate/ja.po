@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 19:33+0000\n"
+"POT-Creation-Date: 2026-06-28 18:39+0000\n"
 "PO-Revision-Date: 2026-04-02 14:09+0800\n"
 "Last-Translator: \n"
 "Language-Team: KairikiFedora\n"
@@ -606,42 +606,42 @@ msgstr "すべてのファイル"
 msgid "Video files"
 msgstr "ビデオファイル"
 
-#: package/contents/ui/main.qml:326
+#: package/contents/ui/main.qml:327
 #, kde-format
 msgid "No video source \n"
 msgstr "ビデオソースがありません \n"
 
-#: package/contents/ui/main.qml:491
+#: package/contents/ui/main.qml:492
 #, kde-format
 msgid "Next Video"
 msgstr "次のビデオ"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Pause"
 msgstr "一時停止"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Play"
 msgstr "再生"
 
-#: package/contents/ui/main.qml:503
+#: package/contents/ui/main.qml:504
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "再生"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Mute"
 msgstr "ミュート"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Unmute"
 msgstr "ミュート解除"
 
-#: package/contents/ui/main.qml:526
+#: package/contents/ui/main.qml:527
 #, fuzzy, kde-format
 msgid "Default Muting"
 msgstr "デフォルト"

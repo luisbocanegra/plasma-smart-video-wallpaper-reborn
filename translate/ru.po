@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 19:33+0000\n"
+"POT-Creation-Date: 2026-06-28 18:39+0000\n"
 "PO-Revision-Date: 2026-06-19 13:18+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 23.08.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: package/contents/ui/VideoPlayer.qml:25
 #, kde-format
@@ -41,8 +41,8 @@ msgid ""
 "can dedicate more time to maintain and improve this and <a href=\"%1\">my "
 "other projects</a>."
 msgstr ""
-"Чтобы поддержать развитие этого модуля, а также <a href=\"%1\">других"
-" проектов его автора</a>, можно стать спонсором или сделать пожертвование."
+"Чтобы поддержать развитие этого модуля, а также <a href=\"%1\">других "
+"проектов его автора</a>, можно стать спонсором или сделать пожертвование."
 
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
@@ -155,12 +155,12 @@ msgid ""
 "^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
-"Сбои или чёрный экран? Попробуйте сменить вспомогательную программу Qt Media"
-" на gstreamer.<br>Чтобы выполнить восстановление после сбоя, удалите видео из"
-" конфигурации с помощью следующей команды в терминале/tty, а затем"
-" перезагрузите систему:<br><strong><code>sed -i"
-" 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-a"
-"ppletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+"Сбои или чёрный экран? Попробуйте сменить вспомогательную программу Qt Media "
+"на gstreamer.<br>Чтобы выполнить восстановление после сбоя, удалите видео из "
+"конфигурации с помощью следующей команды в терминале/tty, а затем "
+"перезагрузите систему:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/"
+"g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/"
+"kscreenlockerrc</code></strong>"
 
 #: package/contents/ui/config.qml:311
 #, kde-format
@@ -257,9 +257,9 @@ msgid ""
 "change the wallpaper manually using <strong>Next Video</strong> from the "
 "Desktop right click menu."
 msgstr ""
-"Автоматически воспроизводить следующее видео в выбранном режиме. Также можно"
-" сменить обои вручную: щёлкните по рабочему столу правой кнопкой мыши и"
-" выберите в контекстном меню пункт <strong>Следующее видео</strong>."
+"Автоматически воспроизводить следующее видео в выбранном режиме. Также можно "
+"сменить обои вручную: щёлкните по рабочему столу правой кнопкой мыши и "
+"выберите в контекстном меню пункт <strong>Следующее видео</strong>."
 
 #: package/contents/ui/config.qml:464
 #, kde-format
@@ -427,8 +427,8 @@ msgstr "Команда состояния экрана:"
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
 msgstr ""
-"Команда или сценарий должны возвращать «0» (ноль) или «off», когда экран"
-" отключён"
+"Команда или сценарий должны возвращать «0» (ноль) или «off», когда экран "
+"отключён"
 
 #: package/contents/ui/config.qml:859
 #, kde-format
@@ -446,8 +446,8 @@ msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
 "wallpaper when they become active. Comma separated names."
 msgstr ""
-"Управление тем, как эффекты рабочего стола (например, «Обзор» или «Взглянуть"
-" на рабочий стол») влияют на обои при активации. Названия через запятую."
+"Управление тем, как эффекты рабочего стола (например, «Обзор» или «Взглянуть "
+"на рабочий стол») влияют на обои при активации. Названия через запятую."
 
 #: package/contents/ui/config.qml:879
 #, kde-format
@@ -480,8 +480,8 @@ msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
 "Desktop Effects:"
 msgstr ""
-"Текущие включённые и <u><strong><font color='%1'>активные</font></strong></u> "
-"эффекты рабочего стола:"
+"Текущие включённые и <u><strong><font color='%1'>активные</font></strong></"
+"u> эффекты рабочего стола:"
 
 #: package/contents/ui/config.qml:927
 #, kde-format
@@ -553,8 +553,8 @@ msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr ""
-"Скорость воспроизведения для этого видео. Минимальное допустимое значение —"
-" 0,01. Установите равным 0,0 для игнорирования данного параметра."
+"Скорость воспроизведения для этого видео. Минимальное допустимое значение — "
+"0,01. Установите равным 0,0 для игнорирования данного параметра."
 
 #: package/contents/ui/config.qml:1222
 #, kde-format
@@ -562,9 +562,9 @@ msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr ""
-"Альтернативная скорость воспроизведения для этого видео. Минимальное"
-" допустимое значение — 0,01. Установите равным 0,0 для игнорирования данного"
-" параметра."
+"Альтернативная скорость воспроизведения для этого видео. Минимальное "
+"допустимое значение — 0,01. Установите равным 0,0 для игнорирования данного "
+"параметра."
 
 #: package/contents/ui/config.qml:1239
 #, kde-format
@@ -573,11 +573,10 @@ msgid ""
 "<strong>Next Video</strong> from the Desktop right click menu to play the "
 "next video in the list."
 msgstr ""
-"Если этот параметр включён, вместо воспроизведения следующего видео будет"
-" выполняться повтор этого видео.<br>Чтобы воспроизвести следующее видео из"
-" списка, щёлкните по рабочему столу правой кнопкой мыши и выберите в"
-" контекстном меню пункт  "
-"<strong>Следующее видео</strong>."
+"Если этот параметр включён, вместо воспроизведения следующего видео будет "
+"выполняться повтор этого видео.<br>Чтобы воспроизвести следующее видео из "
+"списка, щёлкните по рабочему столу правой кнопкой мыши и выберите в "
+"контекстном меню пункт  <strong>Следующее видео</strong>."
 
 #: package/contents/ui/config.qml:1268
 #, kde-format
@@ -614,42 +613,42 @@ msgstr "Все файлы"
 msgid "Video files"
 msgstr "Видеофайлы"
 
-#: package/contents/ui/main.qml:326
+#: package/contents/ui/main.qml:327
 #, kde-format
 msgid "No video source \n"
 msgstr "Нет источника видео\n"
 
-#: package/contents/ui/main.qml:491
+#: package/contents/ui/main.qml:492
 #, kde-format
 msgid "Next Video"
 msgstr "Следующее видео"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Pause"
 msgstr "Приостановить"
 
-#: package/contents/ui/main.qml:501
+#: package/contents/ui/main.qml:502
 #, kde-format
 msgid "Play"
 msgstr "Воспроизвести"
 
-#: package/contents/ui/main.qml:503
+#: package/contents/ui/main.qml:504
 #, kde-format
 msgid "Default Playback"
 msgstr "Воспроизведение по умолчанию"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Mute"
 msgstr "Отключить звук"
 
-#: package/contents/ui/main.qml:524
+#: package/contents/ui/main.qml:525
 #, kde-format
 msgid "Unmute"
 msgstr "Включить звук"
 
-#: package/contents/ui/main.qml:526
+#: package/contents/ui/main.qml:527
 #, kde-format
 msgid "Default Muting"
 msgstr "Отключение звука по умолчанию"
@@ -723,4 +722,3 @@ msgstr "Отключение звука по умолчанию"
 #~ msgstr ""
 #~ "Значение, отличное от 0,0, переопределяет глобальную скорость "
 #~ "воспроизведения для этого видео."
-
