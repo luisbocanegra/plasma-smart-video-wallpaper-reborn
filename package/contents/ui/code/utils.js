@@ -1,9 +1,13 @@
 function parseCompat(cfgStr) {
   let videos = [];
+  if (!cfgStr || cfgStr.trim() === "" || cfgStr === "[]") {
+    return videos;
+  }
   try {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
       video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
+      video.loop = video.loop ?? false;
       videos.push(video);
     });
   } catch (e) {
