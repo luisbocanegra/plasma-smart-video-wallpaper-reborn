@@ -4,6 +4,12 @@ function parseCompat(cfgStr) {
     JSON.parse(cfgStr).forEach((video) => {
       video.playbackRate = video.playbackRate ?? 0.0;
       video.alternativePlaybackRate = video.alternativePlaybackRate ?? 0.0;
+      video.videoWidth = video.videoWidth ?? 0;
+      video.videoHeight = video.videoHeight ?? 0;
+      video.videoCodec = video.videoCodec ?? "";
+      video.videoBitRate = video.videoBitRate ?? 0;
+      video.videoFrameRate = video.videoFrameRate ?? 0.0;
+      video.isHdr = video.isHdr ?? false;
       videos.push(video);
     });
   } catch (e) {
@@ -26,12 +32,18 @@ function createVideo(filename) {
     "customDuration": 0,
     "playbackRate": 0.0,
     "alternativePlaybackRate": 0.0,
-    "loop": false
+    "loop": false,
+    "videoWidth": 0,
+    "videoHeight": 0,
+    "videoCodec": "",
+    "videoBitRate": 0,
+    "videoFrameRate": 0.0,
+    "isHdr": false,
   };
 }
 
 /**
- * 
+ *
  * @param {String} filename File path
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
@@ -42,7 +54,7 @@ function getVideoByFile(filename, videosConfig) {
 }
 
 /**
- * 
+ *
  * @param {int} index Video index
  * @param {Array} videosConfig Videos config
  * @returns {Object} Video properties
@@ -59,6 +71,74 @@ function dumpProps(obj) {
     if (k === 'metaData') continue;
     console.log(k + "=" + val + "\n");
   }
+}
+
+/**
+ * Extracts video metadata from MediaPlayer's metaData object
+ * @param {Object} metaData - The metaData object from MediaPlayer
+ * @returns {Object} Extracted video properties including width, height, codec, etc.
+ */
+function extractVideoMetadata(metaData) {
+  const width = metaData.value(MediaMetaData.Resolution)?.width ?? 0;
+  const height = metaData.value(MediaMetaData.Resolution)?.height ?? 0;
+  const codec = metaData.stringValue(MediaMetaData.VideoCodec) ?? "";
+  const bitRate = metaData.value(MediaMetaData.VideoBitRate) ?? 0;
+  const frameRate = metaData.value(MediaMetaData.VideoFrameRate) ?? 0.0;
+
+  // Check for HDR support
+  let isHdr = false;
+  try {
+      // Try to check the HasHdrContent property (Qt 6.8+)
+      isHdr = metaData.value(MediaMetaData.HasHdrContent) ?? false;
+  } catch (e) {
+      // If HDR detection fails, just continue without it
+      // No need to log as this is expected on older Qt versions
+  }
+
+  return {
+    videoWidth: width,
+    videoHeight: height,
+    videoCodec: codec,
+    videoBitRate: bitRate,
+    videoFrameRate: frameRate,
+    isHdr: isHdr
+  };
+}
+
+function dumpVideoMetadata(filename, metaData) {
+  // Dump all available metadata keys and values
+  console.log("=== Metadata Dump ===");
+  console.log("Filename:", filename);
+  console.log("MetaData object:", metaData);
+  console.log("MetaData keys():", metaData.keys());
+  console.log("Checking known MediaMetaData properties:");
+
+  // List of known MediaMetaData enum values to check
+  const knownKeys = [
+      'Title', 'Author', 'Comment', 'Description', 'Genre', 'Date',
+      'Language', 'Publisher', 'Copyright', 'Url',
+      'Duration', 'MediaType', 'FileFormat', 'AudioBitRate', 'AudioCodec',
+      'VideoBitRate', 'VideoCodec', 'VideoFrameRate', 'VideoWidth', 'VideoHeight',
+      'Orientation', 'Resolution', 'LeadPerformer', 'ContributingArtist',
+      'AlbumTitle', 'AlbumArtist', 'TrackNumber', 'Composer',
+      'ThumbnailImage', 'CoverArtImage',
+      // Qt 6.8+ HDR-related
+      'ColorSpace', 'ColorTransfer', 'HasHdrContent'
+  ];
+
+  knownKeys.forEach(key => {
+      try {
+          if (typeof MediaMetaData[key] !== 'undefined') {
+              const value = metaData.value(MediaMetaData[key]);
+              if (value !== undefined && value !== null && value !== "") {
+                  console.log(`  ${key}:`, value);
+              }
+          }
+      } catch (e) {
+          // Property doesn't exist or can't be read
+      }
+  });
+  console.log("=== End Metadata Dump ===");
 }
 
 // randomize array using Durstenfeld shuffle algorithm
