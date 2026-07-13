@@ -72,7 +72,6 @@ Item {
         id: player
         videoOutput: videoOutput
         audioOutput: audioOutput
-        loops: root.loops
         // Ignore very small values as it makes the video go crazy fast, stops
         // responding to this property and needs to be stopped to recover
         // TODO: Check if this has been reported to Qt
