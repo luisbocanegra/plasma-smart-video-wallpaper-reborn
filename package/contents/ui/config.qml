@@ -82,8 +82,6 @@ ColumnLayout {
     property int editingIndex: -1
     property var validDropExtensions: [".mp4", ".mpg", ".ogg", ".mov", ".webm", ".flv", ".mkv", ".avi", ".wmv", ".gif"]
 
-    readonly property int seconds: (wallpaperTimerHours.value * 60 * 60) + (wallpaperTimerMinutes.value * 60) + wallpaperTimerSeconds.value
-
     property var muteModeModel: {
         // options for desktop and lock screen
         let model = [
@@ -500,7 +498,7 @@ ColumnLayout {
             }
             SpinBox {
                 id: wallpaperTimerSeconds
-                from: root.seconds > 0 ? 0 : 1
+                from: (wallpaperTimerHours.value === 0 && wallpaperTimerMinutes.value === 0) ? 1 : 0
                 to: 59
                 stepSize: 1
                 editable: true
