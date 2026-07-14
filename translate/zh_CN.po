@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-28 18:39+0000\n"
+"POT-Creation-Date: 2026-07-14 00:37+0000\n"
 "PO-Revision-Date: 2026-03-19 17:55+0800\n"
 "Last-Translator: Linus Xu <linus_xu@live.com>\n"
 "Language-Team: \n"
@@ -63,8 +63,8 @@ msgid "About"
 msgstr "关于"
 
 #: package/contents/ui/config.qml:94 package/contents/ui/config.qml:135
-#: package/contents/ui/config.qml:427 package/contents/ui/config.qml:619
-#: package/contents/ui/config.qml:760
+#: package/contents/ui/config.qml:431 package/contents/ui/config.qml:627
+#: package/contents/ui/config.qml:790
 #, kde-format
 msgid "Never"
 msgstr "从不"
@@ -75,19 +75,19 @@ msgid "Always"
 msgstr "始终开启"
 
 #: package/contents/ui/config.qml:105 package/contents/ui/config.qml:142
-#: package/contents/ui/config.qml:607 package/contents/ui/config.qml:748
+#: package/contents/ui/config.qml:615 package/contents/ui/config.qml:778
 #, kde-format
 msgid "Maximized or full-screen windows"
 msgstr "窗口最大化或全屏时"
 
 #: package/contents/ui/config.qml:109 package/contents/ui/config.qml:146
-#: package/contents/ui/config.qml:611 package/contents/ui/config.qml:752
+#: package/contents/ui/config.qml:619 package/contents/ui/config.qml:782
 #, kde-format
 msgid "Active window"
 msgstr "有窗口活跃时"
 
 #: package/contents/ui/config.qml:113 package/contents/ui/config.qml:150
-#: package/contents/ui/config.qml:615 package/contents/ui/config.qml:756
+#: package/contents/ui/config.qml:623 package/contents/ui/config.qml:786
 #, kde-format
 msgid "At least one window is visible"
 msgstr "至少一个窗口可见时"
@@ -117,7 +117,7 @@ msgstr "警告"
 msgid "Click to show"
 msgstr "点击展开"
 
-#: package/contents/ui/config.qml:269 package/contents/ui/config.qml:1066
+#: package/contents/ui/config.qml:269 package/contents/ui/config.qml:1100
 #, kde-format
 msgid "Videos"
 msgstr "视频"
@@ -193,54 +193,54 @@ msgstr "保持比例"
 msgid "Scaled and Cropped"
 msgstr "缩放并裁剪"
 
-#: package/contents/ui/config.qml:364
+#: package/contents/ui/config.qml:368
 #, kde-format
 msgid "Background:"
 msgstr "背景："
 
-#: package/contents/ui/config.qml:367
+#: package/contents/ui/config.qml:371
 #, kde-format
 msgid "Blur"
 msgstr "模糊"
 
-#: package/contents/ui/config.qml:385
+#: package/contents/ui/config.qml:389
 #, kde-format
 msgid "radius: %1px"
 msgstr "半径：%1像素"
 
-#: package/contents/ui/config.qml:394 package/contents/ui/config.qml:707
+#: package/contents/ui/config.qml:398 package/contents/ui/config.qml:737
 #, kde-format
 msgid ""
 "Quality of the blur is reduced if value exceeds 64. Higher values may cause "
 "the blur to stop working!"
 msgstr "大于64的值会导致模糊质量下降，进一步提升可能会导致其完全失效！"
 
-#: package/contents/ui/config.qml:408
+#: package/contents/ui/config.qml:412
 #, kde-format
 msgid "Solid color"
 msgstr "纯色"
 
-#: package/contents/ui/config.qml:414
+#: package/contents/ui/config.qml:418
 #, kde-format
 msgid "Select Background Color"
 msgstr "选择背景色："
 
-#: package/contents/ui/config.qml:422
+#: package/contents/ui/config.qml:426
 #, kde-format
 msgid "Change Wallpaper:"
 msgstr "更换壁纸："
 
-#: package/contents/ui/config.qml:431
+#: package/contents/ui/config.qml:435
 #, kde-format
 msgid "Slideshow"
 msgstr "幻灯片"
 
-#: package/contents/ui/config.qml:435
+#: package/contents/ui/config.qml:439
 #, kde-format
 msgid "On a Timer"
 msgstr "定时"
 
-#: package/contents/ui/config.qml:443
+#: package/contents/ui/config.qml:451
 #, kde-format
 msgid ""
 "Automatically play the next video using the selected strategy. You can also "
@@ -250,61 +250,61 @@ msgstr ""
 "按照所选策略自动选择下一个视频并播放。您也可以在桌面上右键选择<strong>“下一个"
 "视频”</strong>以手动切换。"
 
-#: package/contents/ui/config.qml:464
+#: package/contents/ui/config.qml:472
 #, kde-format
 msgid "%1 hour"
 msgid_plural "%1 hours"
 msgstr[0] "%1小时"
 
-#: package/contents/ui/config.qml:485
+#: package/contents/ui/config.qml:493
 #, kde-format
 msgid "%1 minute"
 msgid_plural "%1 minutes"
 msgstr[0] "%1分钟"
 
-#: package/contents/ui/config.qml:506
+#: package/contents/ui/config.qml:514
 #, kde-format
 msgid "%1 second"
 msgid_plural "%1 seconds"
 msgstr[0] "%1秒"
 
-#: package/contents/ui/config.qml:516
+#: package/contents/ui/config.qml:524
 #, kde-format
 msgid "Random order:"
 msgstr "随机顺序："
 
-#: package/contents/ui/config.qml:522
+#: package/contents/ui/config.qml:530
 #, kde-format
 msgid "Resume last video on startup:"
 msgstr "启动时恢复播放上一个视频："
 
-#: package/contents/ui/config.qml:527 package/contents/ui/config.qml:772
+#: package/contents/ui/config.qml:535 package/contents/ui/config.qml:806
 #, kde-format
 msgid "Speed:"
 msgstr "播放速度："
 
-#: package/contents/ui/config.qml:548 package/contents/ui/config.qml:665
-#: package/contents/ui/config.qml:792
+#: package/contents/ui/config.qml:556 package/contents/ui/config.qml:691
+#: package/contents/ui/config.qml:826
 #, kde-format
 msgid "Reset to default"
 msgstr "恢复默认值"
 
-#: package/contents/ui/config.qml:554
+#: package/contents/ui/config.qml:562
 #, kde-format
 msgid "Crossfade (Beta):"
 msgstr "平滑淡入淡出（Beta）："
 
-#: package/contents/ui/config.qml:560
+#: package/contents/ui/config.qml:568
 #, kde-format
 msgid "Duration:"
 msgstr "持续时间："
 
-#: package/contents/ui/config.qml:578
+#: package/contents/ui/config.qml:586
 #, kde-format
 msgid "%1ms"
 msgstr "%1毫秒"
 
-#: package/contents/ui/config.qml:586
+#: package/contents/ui/config.qml:594
 #, kde-format
 msgid ""
 "Adds a smooth transition between videos. <strong>Uses additional Memory and "
@@ -312,115 +312,115 @@ msgid ""
 msgstr ""
 "在视频间增加平滑过渡。<strong>需要消耗额外内存并可能导致播放问题。</strong>"
 
-#: package/contents/ui/config.qml:597
+#: package/contents/ui/config.qml:605
 #, kde-format
 msgid "Filter windows:"
 msgstr "检索窗口时："
 
-#: package/contents/ui/config.qml:598
+#: package/contents/ui/config.qml:606
 #, kde-format
 msgid "This screen only"
 msgstr "只包含当前屏幕上的窗口"
 
-#: package/contents/ui/config.qml:604
+#: package/contents/ui/config.qml:612
 #, kde-format
 msgid "Pause:"
 msgstr "自动暂停："
 
-#: package/contents/ui/config.qml:630
+#: package/contents/ui/config.qml:642
 #, kde-format
 msgid "Mute:"
 msgstr "自动静音："
 
-#: package/contents/ui/config.qml:640
+#: package/contents/ui/config.qml:656
 #, kde-format
 msgid "Audio device:"
 msgstr "声音设备："
 
-#: package/contents/ui/config.qml:649
+#: package/contents/ui/config.qml:675
 #, kde-format
 msgid "Volume:"
 msgstr "音量："
 
-#: package/contents/ui/config.qml:672
+#: package/contents/ui/config.qml:698
 #, kde-format
 msgid "Blur:"
 msgstr "自动模糊："
 
-#: package/contents/ui/config.qml:682
+#: package/contents/ui/config.qml:712
 #, kde-format
 msgid "Radius:"
 msgstr "半径："
 
-#: package/contents/ui/config.qml:698
+#: package/contents/ui/config.qml:728
 #, kde-format
 msgid "%1px"
 msgstr "%1像素"
 
-#: package/contents/ui/config.qml:717
+#: package/contents/ui/config.qml:747
 #, kde-format
 msgid "Animation duration:"
 msgstr "动画持续时长："
 
-#: package/contents/ui/config.qml:735
+#: package/contents/ui/config.qml:765
 #, kde-format
 msgctxt "animation duration"
 msgid "%1ms"
 msgstr "%1毫秒"
 
-#: package/contents/ui/config.qml:745
+#: package/contents/ui/config.qml:775
 #, kde-format
 msgid "Alternative speed:"
 msgstr "自动采用第二速度："
 
-#: package/contents/ui/config.qml:798
+#: package/contents/ui/config.qml:832
 #, kde-format
 msgid "On battery below:"
 msgstr "电池电量阈值："
 
-#: package/contents/ui/config.qml:814
+#: package/contents/ui/config.qml:848
 #, kde-format
 msgctxt "battery level e.g 10%"
 msgid "%1%"
 msgstr "%1%"
 
-#: package/contents/ui/config.qml:822
+#: package/contents/ui/config.qml:856
 #, kde-format
 msgid "Pause video"
 msgstr "自动暂停视频"
 
-#: package/contents/ui/config.qml:827
+#: package/contents/ui/config.qml:861
 #, kde-format
 msgid "Disable blur"
 msgstr "自动禁用模糊"
 
-#: package/contents/ui/config.qml:833
+#: package/contents/ui/config.qml:867
 #, kde-format
 msgid "Pause on screen off:"
 msgstr "屏幕关闭时暂停："
 
-#: package/contents/ui/config.qml:838
+#: package/contents/ui/config.qml:872
 #, kde-format
 msgid "Screen state command:"
 msgstr "查询屏幕状态命令："
 
-#: package/contents/ui/config.qml:848
+#: package/contents/ui/config.qml:882
 #, kde-format
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
 msgstr "该命令或脚本应在屏幕关闭时返回字符串“0”或“off”。"
 
-#: package/contents/ui/config.qml:859
+#: package/contents/ui/config.qml:893
 #, kde-format
 msgid "Enable debug:"
 msgstr "调试设置："
 
-#: package/contents/ui/config.qml:860
+#: package/contents/ui/config.qml:894
 #, kde-format
 msgid "Print debug messages to the system log"
 msgstr "将调试信息输出到系统日志"
 
-#: package/contents/ui/config.qml:869
+#: package/contents/ui/config.qml:903
 #, kde-format
 msgid ""
 "Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
@@ -428,32 +428,32 @@ msgid ""
 msgstr ""
 "控制桌面特效（比如桌面概览）在生效时如何影响壁纸。名字应用英文逗号“,”分隔。"
 
-#: package/contents/ui/config.qml:879
+#: package/contents/ui/config.qml:913
 #, kde-format
 msgid "Play in:"
 msgstr "生效时播放："
 
-#: package/contents/ui/config.qml:887
+#: package/contents/ui/config.qml:921
 #, kde-format
 msgid "Pause in:"
 msgstr "生效时暂停："
 
-#: package/contents/ui/config.qml:895
+#: package/contents/ui/config.qml:929
 #, kde-format
 msgid "Show blur in:"
 msgstr "生效时启用模糊："
 
-#: package/contents/ui/config.qml:903
+#: package/contents/ui/config.qml:937
 #, kde-format
 msgid "Hide blur in:"
 msgstr "生效时禁用模糊："
 
-#: package/contents/ui/config.qml:911
+#: package/contents/ui/config.qml:945
 #, kde-format
 msgid "Alternative speed in:"
 msgstr "生效时启用第二速度："
 
-#: package/contents/ui/config.qml:917
+#: package/contents/ui/config.qml:951
 #, kde-format
 msgid ""
 "Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
@@ -461,12 +461,12 @@ msgid ""
 msgstr ""
 "目前启用的和<u><strong><font color='%1'>生效的</font></strong></u>桌面特效："
 
-#: package/contents/ui/config.qml:927
+#: package/contents/ui/config.qml:961
 #, kde-format
 msgid "Select to copy"
 msgstr "单击复制"
 
-#: package/contents/ui/config.qml:1046
+#: package/contents/ui/config.qml:1080
 #, kde-format
 msgid ""
 "No items found \n"
@@ -475,71 +475,71 @@ msgstr ""
 "没有找到项目\n"
 "请手动添加或将文件拖拽到此处"
 
-#: package/contents/ui/config.qml:1069
+#: package/contents/ui/config.qml:1103
 #, kde-format
 msgid "Actions…"
 msgstr "批量操作…"
 
-#: package/contents/ui/config.qml:1075
+#: package/contents/ui/config.qml:1109
 #, kde-format
 msgid "Disable all"
 msgstr "全部禁用"
 
-#: package/contents/ui/config.qml:1080
+#: package/contents/ui/config.qml:1114
 #, kde-format
 msgid "Enable all"
 msgstr "全部启用"
 
-#: package/contents/ui/config.qml:1085
+#: package/contents/ui/config.qml:1119
 #, kde-format
 msgid "Swap enabled state"
 msgstr "反转启用状态"
 
-#: package/contents/ui/config.qml:1090
+#: package/contents/ui/config.qml:1124
 #, kde-format
 msgid "Remove all"
 msgstr "全部移除"
 
-#: package/contents/ui/config.qml:1093
+#: package/contents/ui/config.qml:1127
 #, kde-format
 msgid "Remove all media?"
 msgstr "是否移除所有媒体？"
 
-#: package/contents/ui/config.qml:1103
+#: package/contents/ui/config.qml:1137
 #, kde-format
 msgid "Pick a file…"
 msgstr "选择文件…"
 
-#: package/contents/ui/config.qml:1108
+#: package/contents/ui/config.qml:1142
 #, kde-format
 msgid "Enter path or url"
 msgstr "手动输入文件路径或URL"
 
-#: package/contents/ui/config.qml:1154
+#: package/contents/ui/config.qml:1188
 #, kde-format
 msgid "Whether or not this video will be played"
 msgstr "是否使用该文件"
 
-#: package/contents/ui/config.qml:1174
+#: package/contents/ui/config.qml:1208
 #, kde-format
 msgid "Local file or static url"
 msgstr "本地文件或完整URL路径"
 
-#: package/contents/ui/config.qml:1205
+#: package/contents/ui/config.qml:1239
 #, kde-format
 msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr "该视频文件的播放速度。最小值为0.01，使用0.0则采用全局配置。"
 
-#: package/contents/ui/config.qml:1222
+#: package/contents/ui/config.qml:1256
 #, kde-format
 msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr "该视频文件的第二播放速度。最小值为0.01，使用0.0则采用全局配置。"
 
-#: package/contents/ui/config.qml:1239
+#: package/contents/ui/config.qml:1273
 #, kde-format
 msgid ""
 "If enabled the video will repeat instead of playing the next one.<br>Use "
@@ -549,37 +549,37 @@ msgstr ""
 "如果启用，将循环该视频而非自动切入下一个。您仍可以在桌面上右键选择<strong>“下"
 "一个视频”</strong>以手动切换。"
 
-#: package/contents/ui/config.qml:1268
+#: package/contents/ui/config.qml:1302
 #, kde-format
 msgid "Preview…"
 msgstr "预览…"
 
-#: package/contents/ui/config.qml:1275
+#: package/contents/ui/config.qml:1309
 #, kde-format
 msgid "Open containing folder"
 msgstr "打开所在的文件夹"
 
-#: package/contents/ui/config.qml:1283
+#: package/contents/ui/config.qml:1317
 #, kde-format
 msgid "Play this file only (disable all others)"
 msgstr "只启用该文件（禁用所有其他文件）"
 
-#: package/contents/ui/config.qml:1293
+#: package/contents/ui/config.qml:1327
 #, kde-format
 msgid "Remove media?"
 msgstr "是否移除媒体？"
 
-#: package/contents/ui/config.qml:1316
+#: package/contents/ui/config.qml:1350
 #, kde-format
 msgid "Pick a video file"
 msgstr "选择一个视频文件"
 
-#: package/contents/ui/config.qml:1317
+#: package/contents/ui/config.qml:1351
 #, kde-format
 msgid "All files"
 msgstr "所有文件"
 
-#: package/contents/ui/config.qml:1317
+#: package/contents/ui/config.qml:1351
 #, kde-format
 msgid "Video files"
 msgstr "视频文件"
