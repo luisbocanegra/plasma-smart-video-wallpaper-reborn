@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project("plasma-smart-video-wallpaper-reborn")
 option(INSTALL_WALLPAPER "Install wallpaper" ON)
 option(PACKAGE_WALLPAPER "Package wallpaper" OFF)
+option(BUILD_NATIVE_DPMS_MONITOR "Build the native KWin/Wayland DPMS monitor QML plugin" ON)
 
 set(PROJECT_DEP_VERSION "6.0.0")
 set(QT_MIN_VERSION "6.6.0")
@@ -29,6 +30,10 @@ if(INSTALL_WALLPAPER)
     find_package(Plasma ${PROJECT_DEP_VERSION} REQUIRED)
     plasma_install_package(package ${PLUGIN_ID} wallpapers)
     add_subdirectory(translate)
+endif()
+
+if(BUILD_NATIVE_DPMS_MONITOR)
+    add_subdirectory(package/contents/ui/dpms)
 endif()
 
 if(PACKAGE_WALLPAPER)
