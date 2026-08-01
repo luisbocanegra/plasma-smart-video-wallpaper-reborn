@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.14.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.13.0...v2.14.0) (2026-08-01)
+
+
+### Features
+
+* add zh_TW translation ([0f68993](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/0f6899391b7c5e61c0bf157c44c7af474cdbe1a9))
+* pause video on inactive Plasma Activities ([132e7c1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/132e7c1caf0ada167e7385d6b3fd52ccadaa7087))
+* update Russian translation ([d9ce594](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/d9ce594f91693eb6ee6ef0cf38cfa08bd8ad7023))
+
+
+### Bug Fixes
+
+* binding loop in seconds SpinBox ([c6462da](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/c6462dab63b51c0922d3197529e09a4829d3f86c))
+* ComboBox currentValue is read-only in Qt 6.9 and older ([537a800](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/537a800176d00db99ad31f283913a0b83b29f9c2))
+* handle missing `loop` property in the configuration after updating from an older version ([1c945fc](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/1c945fc867febc3a4917a39f05f48dbd5812970a))
+* prevent JSON parsing error on empty configuration ([3e136a0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/3e136a0c54e6fdb2b5de1354d17ddd474607d2d1))
+
 ## [2.13.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.12.0...v2.13.0) (2026-04-02)
 
 
