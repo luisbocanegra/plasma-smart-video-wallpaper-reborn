@@ -111,7 +111,7 @@ WallpaperItem {
     property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
 
     property bool screenIsOff: screenModel.screenIsOff
-    property bool isCurrentActivity: Plasmoid.activity === windowModel.currentActivity
+    property bool isCurrentActivity: main.lockScreenMode || Plasmoid.activity === windowModel.currentActivity
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
     property bool lockScreenMode: false
     property bool debugEnabled: main.configuration.DebugEnabled
@@ -252,6 +252,7 @@ WallpaperItem {
         checkScreenState: main.screenOffPausesVideo && screenStateCmd !== ""
         screenStateCmd: main.configuration.ScreenStateCmd
         instanceId: Plasmoid.id ?? ""
+        screenGeometry: main.parent?.screenGeometry ?? null
     }
 
     EffectsModel {

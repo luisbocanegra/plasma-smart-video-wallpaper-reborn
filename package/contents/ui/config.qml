@@ -54,6 +54,10 @@ ColumnLayout {
     property alias cfg_ScreenOffPausesVideo: screenOffPausesVideoCheckbox.checked
     property alias cfg_ScreenStateCmd: screenStateCmdTextField.text
     property string cfg_ScreenStateCmdDefault
+    // True once the native KWin/Wayland DPMS plugin confirms it can watch
+    // this screen directly, so the manual command field can stay hidden.
+    property bool nativeDpmsAvailable: false
+    property QtObject nativeDpmsProbe: null
     property alias showWarningMessage: showWarning.checked
     property alias cfg_CheckWindowsActiveScreen: activeScreenOnlyCheckbx.checked
     property alias cfg_DebugEnabled: debugEnabledCheckbox.checked
@@ -220,9 +224,25 @@ ColumnLayout {
         }
     }
 
+    Connections {
+        target: root.nativeDpmsProbe
+        function onAvailableChanged() {
+            root.nativeDpmsAvailable = root.nativeDpmsProbe.available;
+        }
+    }
+
     Component.onCompleted: {
         videosModel.initModel(cfg_VideoUrls);
         getAudioDevicesModel();
+        // Optional native plugin (see package/contents/ui/dpms) - a failed
+        // import just leaves nativeDpmsAvailable false and the manual
+        // command field visible, same as ScreenModel.qml's fallback.
+        try {
+            root.nativeDpmsProbe = Qt.createQmlObject('import org.kde.smartvideowallpaper.dpms 1.0; DpmsMonitor {}', root, "nativeDpmsProbe");
+            root.nativeDpmsAvailable = true;
+        } catch (e) {
+            root.nativeDpmsProbe = null;
+        }
     }
 
     Kirigami.FormLayout {
@@ -870,7 +890,7 @@ ColumnLayout {
 
         RowLayout {
             Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Screen state command:")
-            visible: screenOffPausesVideoCheckbox.checked && root.currentTab === 1
+            visible: screenOffPausesVideoCheckbox.checked && root.currentTab === 1 && !root.nativeDpmsAvailable
             TextField {
                 id: screenStateCmdTextField
                 placeholderText: root.cfg_ScreenStateCmdDefault
@@ -885,6 +905,15 @@ ColumnLayout {
                 flat: true
                 ToolTip.visible: hovered
                 display: AbstractButton.IconOnly
+            }
+        }
+
+        RowLayout {
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Screen state detection:")
+            visible: screenOffPausesVideoCheckbox.checked && root.currentTab === 1 && root.nativeDpmsAvailable
+            Label {
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Using KWin's DPMS signal directly (instant, no command needed)")
+                opacity: 0.7
             }
         }
 
