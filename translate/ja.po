@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-14 00:37+0000\n"
-"PO-Revision-Date: 2026-04-02 14:09+0800\n"
+"PO-Revision-Date: 2026-08-16 23:14+0800\n"
 "Last-Translator: \n"
-"Language-Team: KairikiFedora\n"
+"Language-Team: KairikiFedora <13278297951@sina.cn>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -627,9 +627,9 @@ msgid "Play"
 msgstr "再生"
 
 #: package/contents/ui/main.qml:504
-#, fuzzy, kde-format
+#, kde-format
 msgid "Default Playback"
-msgstr "再生"
+msgstr "デフォルト再生"
 
 #: package/contents/ui/main.qml:525
 #, kde-format
@@ -642,6 +642,6 @@ msgid "Unmute"
 msgstr "ミュート解除"
 
 #: package/contents/ui/main.qml:527
-#, fuzzy, kde-format
+#, kde-format
 msgid "Default Muting"
-msgstr "デフォルト"
+msgstr "デフォルトでミュート"
