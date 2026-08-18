@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 00:37+0000\n"
+"POT-Creation-Date: 2026-08-18 04:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -577,42 +577,42 @@ msgstr "Todos arquivos"
 msgid "Video files"
 msgstr "Arquivos de vídeo"
 
-#: package/contents/ui/main.qml:327
+#: package/contents/ui/main.qml:333
 #, kde-format
 msgid "No video source \n"
 msgstr "Nenhum arquivo de vídeo\n"
 
-#: package/contents/ui/main.qml:492
+#: package/contents/ui/main.qml:498
 #, kde-format
 msgid "Next Video"
 msgstr "Próximo Vídeo"
 
-#: package/contents/ui/main.qml:502
+#: package/contents/ui/main.qml:508
 #, kde-format
 msgid "Pause"
 msgstr "Pausar"
 
-#: package/contents/ui/main.qml:502
+#: package/contents/ui/main.qml:508
 #, kde-format
 msgid "Play"
 msgstr "Reproduzir"
 
-#: package/contents/ui/main.qml:504
+#: package/contents/ui/main.qml:510
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Reprodução"
 
-#: package/contents/ui/main.qml:525
+#: package/contents/ui/main.qml:531
 #, kde-format
 msgid "Mute"
 msgstr "Mutar"
 
-#: package/contents/ui/main.qml:525
+#: package/contents/ui/main.qml:531
 #, kde-format
 msgid "Unmute"
 msgstr "Desmutar"
 
-#: package/contents/ui/main.qml:527
+#: package/contents/ui/main.qml:533
 #, fuzzy, kde-format
 msgid "Default Muting"
 msgstr "Padrão"
