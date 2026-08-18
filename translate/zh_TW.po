@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 00:37+0000\n"
+"POT-Creation-Date: 2026-08-18 04:16+0000\n"
 "PO-Revision-Date: 2026-07-02 03:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -590,42 +590,42 @@ msgstr "所有檔案"
 msgid "Video files"
 msgstr "影片檔案"
 
-#: package/contents/ui/main.qml:327
+#: package/contents/ui/main.qml:333
 #, kde-format
 msgid "No video source \n"
 msgstr "沒有影片來源 \n"
 
-#: package/contents/ui/main.qml:492
+#: package/contents/ui/main.qml:498
 #, kde-format
 msgid "Next Video"
 msgstr "下一個影片"
 
-#: package/contents/ui/main.qml:502
+#: package/contents/ui/main.qml:508
 #, kde-format
 msgid "Pause"
 msgstr "暫停"
 
-#: package/contents/ui/main.qml:502
+#: package/contents/ui/main.qml:508
 #, kde-format
 msgid "Play"
 msgstr "播放"
 
-#: package/contents/ui/main.qml:504
+#: package/contents/ui/main.qml:510
 #, kde-format
 msgid "Default Playback"
 msgstr "預設播放"
 
-#: package/contents/ui/main.qml:525
+#: package/contents/ui/main.qml:531
 #, kde-format
 msgid "Mute"
 msgstr "靜音"
 
-#: package/contents/ui/main.qml:525
+#: package/contents/ui/main.qml:531
 #, kde-format
 msgid "Unmute"
 msgstr "解除靜音"
 
-#: package/contents/ui/main.qml:527
+#: package/contents/ui/main.qml:533
 #, kde-format
 msgid "Default Muting"
 msgstr "預設靜音"
