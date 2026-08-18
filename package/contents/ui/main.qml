@@ -111,7 +111,13 @@ WallpaperItem {
     property bool batteryDisablesBlur: pauseBattery && main.configuration.BatteryDisablesBlur
 
     property bool screenIsOff: screenModel.screenIsOff
-    property bool isCurrentActivity: Plasmoid.activity === windowModel.currentActivity
+    property bool isCurrentActivity: {
+        // lock and login screens have no activity
+        if (Plasmoid.activity === undefined) {
+            return true;
+        }
+        return Plasmoid.activity === windowModel.currentActivity;
+    }
     property bool screenOffPausesVideo: main.configuration.ScreenOffPausesVideo
     property bool lockScreenMode: false
     property bool debugEnabled: main.configuration.DebugEnabled
