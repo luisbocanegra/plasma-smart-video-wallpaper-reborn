@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.0...v2.14.1) (2026-08-19)
+
+
+### Bug Fixes
+
+* videos not playing in the lock and login screen ([beeb946](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/beeb946bd0ff8f084e29e6ed722c1059f4a794b0))
+
 ## [2.14.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.13.0...v2.14.0) (2026-08-01)
 
 
