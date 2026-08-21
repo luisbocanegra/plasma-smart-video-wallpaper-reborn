@@ -30,7 +30,7 @@ Item {
     RunCommand {
         id: runCommand
         onExited: (cmd, exitCode, exitStatus, stdout, stderr) => {
-            if (exitCode !== 130) {
+            if (exitCode !== 0) {
                 console.error(cmd, exitCode, exitStatus, stdout, stderr);
                 return;
             }
