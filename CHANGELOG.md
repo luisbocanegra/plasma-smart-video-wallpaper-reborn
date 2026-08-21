@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.2](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.1...v2.14.2) (2026-08-21)
+
+
+### Bug Fixes
+
+* gdbus_get_signal.sh leaking tail processes on every ScreenSaver signal ([e4cc9cd](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e4cc9cd6e36c119dcbd278d3942ba90bea65a736)), closes [#267](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/267)
+
 ## [2.14.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.0...v2.14.1) (2026-08-19)
 
 
