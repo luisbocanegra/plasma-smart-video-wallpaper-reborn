@@ -20,8 +20,8 @@
 
 import QtQuick
 import QtQuick.Layouts
-import Qt5Compat.GraphicalEffects
 import QtMultimedia
+import Qt5Compat.GraphicalEffects
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.plasma.extras as PlasmaExtras
@@ -37,13 +37,7 @@ WallpaperItem {
     anchors.fill: parent
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
-    property var videosConfig: {
-        let videos = Utils.getVideos(dayNightCycleEnabled, dayNightPhase, videoUrls);
-        if (randomMode && videos.length > 1) {
-            Utils.shuffleArray(videos);
-        }
-        return videos;
-    }
+    property list<var> videosConfig: []
 
     property int videosCount: videosConfig.length || 0
     property bool hasVideos: videosCount > 0
@@ -52,7 +46,24 @@ WallpaperItem {
     property string lastSelectedVideo: ""
     property bool resumeLastVideo: main.configuration.ResumeLastVideo
     property alias dayNightPhase: dayNightCycleController.currentPhase
-    property var currentSource: Utils.createVideo("")
+    property bool dayNightPhaseHasChanged: false
+    property var currentSource: {
+        if (dayNightPhaseHasChanged) {
+            let video = Utils.createVideo();
+            if (isLoading) {
+                return video;
+            }
+            if (resumeLastVideo) {
+                video = Utils.getLastVideo(dayNightCycleEnabled, dayNightPhase, main.configuration, videosConfig);
+            }
+            if (!video.filename) {
+                video = Utils.getVideoByFile(lastSelectedVideo, videosConfig);
+            }
+            // fall back to the first video of the new list
+            return video.filename ? video : Utils.getVideoByIndex(0, videosConfig);
+        }
+        return Utils.getVideoByIndex(currentVideoIndex, videosConfig);
+    }
     property int pauseBatteryLevel: main.configuration.PauseBatteryLevel
     property bool shouldPlay: {
         if (lockScreenMode) {
@@ -208,95 +219,6 @@ WallpaperItem {
         return r;
     }
 
-    function setCurrentIndex() {
-        if (!hasVideos) {
-            currentVideoIndex = 0;
-            return;
-        }
-
-        let preferredIndex = -1;
-
-        if (resumeLastVideo) {
-            preferredIndex = Utils.getLastVideoIndex(dayNightCycleEnabled, dayNightPhase, main.configuration, videosConfig);
-        }
-
-        if (preferredIndex === -1) {
-            preferredIndex = Utils.getVideoIndex(lastSelectedVideo, videosConfig);
-        }
-
-        currentVideoIndex = preferredIndex !== -1 ? preferredIndex : 0;
-    }
-
-    function nextVideo() {
-        if (!hasVideos) {
-            return;
-        }
-        currentVideoIndex = (currentVideoIndex + 1) % videosCount;
-        setCurrentSource();
-    }
-
-    function setCurrentSource() {
-        if (!hasVideos) {
-            stop();
-            player.player1.playerSource = Utils.createVideo("");
-            player.player2.playerSource = Utils.createVideo("");
-            return;
-        }
-        currentSource = videosConfig[currentVideoIndex] ?? Utils.createVideo("");
-        if (player.player.playerSource.filename !== currentSource.filename) {
-            player.stop();
-            player.player.playerSource = currentSource;
-            player.player.position = 0;
-            player.otherPlayer.playerSource = Utils.createVideo("");
-        }
-
-        if (playing) {
-            updateState();
-        } else {
-            play();
-            pauseWhenReady();
-        }
-    }
-
-    function updateVideo() {
-        if (videoUpdatePending || isLoading) {
-            return;
-        }
-        videoUpdatePending = true;
-        Qt.callLater(() => {
-            videoUpdatePending = false;
-            setCurrentIndex();
-            setCurrentSource();
-        });
-    }
-
-    Timer {
-        id: updateVideoDebounce
-        interval: 50
-        onTriggered: main.updateVideo()
-    }
-
-    function pauseWhenReady() {
-        pauseWhenReadyTimer.attempt = 0;
-        pauseWhenReadyTimer.restart();
-    }
-
-    Timer {
-        id: pauseWhenReadyTimer
-        interval: 50
-        repeat: true
-        property int attempt: 0
-        onTriggered: {
-            const ready = player.player.mediaStatus === MediaPlayer.LoadedMedia || player.player.mediaStatus === MediaPlayer.BufferedMedia || player.player.position > 0;
-            if (ready || attempt >= 20) {
-                stop();
-                Utils.delay(200, main.pause, main);
-                return;
-            }
-            attempt++;
-        }
-    }
-
     property QtObject pmSource: P5Support.DataSource {
         id: pmSource
         engine: "powermanagement"
@@ -338,23 +260,6 @@ WallpaperItem {
         }
     }
 
-    onPlayingChanged: {
-        if (isLoading) {
-            return;
-        }
-        playing ? play() : pause();
-    }
-
-    onVideosConfigChanged: {
-        updateVideoDebounce.restart();
-    }
-    onCurrentSourceChanged: {
-        if (currentSource.filename !== "") {
-            lastSelectedVideo = currentSource.filename;
-            main.saveLastSource(main.currentSource.filename, main.dayNightPhase);
-        }
-    }
-
     DayNightCycleController {
         id: dayNightCycleController
         mode: main.configuration.DayNightCycleMode
@@ -362,7 +267,7 @@ WallpaperItem {
         sunsetTime: main.configuration.DayNightCycleSunsetTime
         transitionDuration: main.configuration.DayNightCycleTransitionDuration
         onCurrentPhaseChanged: {
-            updateVideoDebounce.restart();
+            main.dayNightPhaseHasChanged = true;
         }
         darkLightScheduleState: main.configuration.DarkLightScheduleState
         onDarkLightScheduleStateChanged: {
@@ -370,6 +275,48 @@ WallpaperItem {
                 main.configuration.DarkLightScheduleState = dayNightCycleController.darkLightScheduleState;
                 main.configuration.writeConfig();
             }
+        }
+    }
+
+    function setNextSource() {
+        printLog("- Prev " + currentVideoIndex + ": " + currentSource.filename);
+        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
+        printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
+    }
+
+    function skipNext() {
+        player.player.ending = true;
+        setNextSource();
+    }
+
+    function nextVideo(forceSwitch) {
+        if (main.changeWallpaperMode === Enum.ChangeWallpaperMode.Never || currentSource.loop) {
+            player.player.ending = true;
+            player.loadVideo();
+        } else {
+            setNextSource();
+        }
+    }
+    // qmlformat off
+    property int changeWallpaperTimerMs: {
+        return ((main.changeWallpaperTimerHours * 60 * 60)
+        + (main.changeWallpaperTimerMinutes * 60)
+        + main.changeWallpaperTimerSeconds) * 1000
+    }
+    // qmlformat on
+
+    PausableTimer {
+        id: changeTimer
+        running: main.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer && player.player.playing && !main.currentSource.loop
+        interval: main.changeWallpaperTimerMs
+        repeat: true
+        useNewIntervalImmediately: true
+        onTriggered: {
+            printLog("Timer triggered, changing wallpaper");
+            main.skipNext();
+        }
+        onIntervalChanged: {
+            printLog("Timer changed:", interval);
         }
     }
 
@@ -381,30 +328,28 @@ WallpaperItem {
         FadePlayer {
             id: player
             anchors.fill: parent
-            currentSource: main.currentSource
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
-            visible: main.hasVideos
+            visible: main.videosConfig.length !== 0
             onSetNextSource: {
+                printLog("main.player.onSetNextSource");
                 main.nextVideo();
             }
             crossfadeEnabled: main.crossfadeEnabled
-            multipleVideos: main.videosCount > 1
+            multipleVideos: main.videosConfig.length > 1
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
             changeWallpaperMode: main.changeWallpaperMode
-            changeWallpaperTimerSeconds: main.changeWallpaperTimerSeconds
-            changeWallpaperTimerMinutes: main.changeWallpaperTimerMinutes
-            changeWallpaperTimerHours: main.changeWallpaperTimerHours
             fillMode: main.configuration.FillMode
             fillBlur: main.configuration.FillBlur && !main.batteryDisablesBlur
             fillBlurRadius: main.configuration.FillBlurRadius
             volume: main.volume
-            playbackRate: main.playbackRate
+            globalPlaybackRate: main.playbackRate
             useAlternativePlaybackRate: main.useAlternativePlaybackRate
             alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
             audioOutputDevice: main.configuration.AudioOutputDevice
+            shouldPlay: main.playing
         }
     }
     FastBlur {
@@ -428,132 +373,90 @@ WallpaperItem {
         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "No video source \n" + main.videoUrls)
     }
 
-    Item {
-        visible: main.debugEnabled
-        implicitWidth: debugArea.implicitWidth + debugArea.anchors.leftMargin + debugArea.anchors.rightMargin
-        implicitHeight: debugArea.implicitHeight + debugArea.anchors.topMargin + debugArea.anchors.bottomMargin
-        x: 40
-        y: 100
-        KSvg.FrameSvgItem {
-            id: frameSvg
-            imagePath: "widgets/background"
-            anchors.fill: parent
-        }
-        ColumnLayout {
-            id: debugArea
-            anchors {
-                fill: parent
-                leftMargin: frameSvg.fixedMargins.left
-                rightMargin: frameSvg.fixedMargins.right
-                topMargin: frameSvg.fixedMargins.top
-                bottomMargin: frameSvg.fixedMargins.bottom
+    Component {
+        id: debugOverlay
+        Item {
+            implicitWidth: debugArea.implicitWidth + debugArea.anchors.leftMargin + debugArea.anchors.rightMargin
+            implicitHeight: debugArea.implicitHeight + debugArea.anchors.topMargin + debugArea.anchors.bottomMargin
+            x: 40
+            y: 100
+            KSvg.FrameSvgItem {
+                id: frameSvg
+                imagePath: "widgets/background"
+                anchors.fill: parent
             }
-            PlasmaComponents.Label {
-                Layout.margins: Kirigami.Units.largeSpacing
-                text: {
-                    let text = `filename: ${main.currentSource.filename}\n`;
-                    text += `videos:\n${main.videosConfig.map(v => {
-                        const filenameParts = v.filename.split("/");
-                        return filenameParts[filenameParts.length - 1];
-                    }).join("\n")}\n\n`;
-                    text += `last: ${main.configuration.LastVideo}\n`;
-                    text += `lastDay: ${main.configuration.LastVideoDay}\n`;
-                    text += `lastNight: ${main.configuration.LastVideoNight}\n`;
-                    text += `loops: ${main.currentSource.loop ?? false}\n`;
-                    text += `currentVideoIndex: ${main.currentVideoIndex}\n`;
-                    text += `changeWallpaperMode: ${main.changeWallpaperMode}\n`;
-                    text += `crossfade: ${main.crossfadeEnabled}\n`;
-                    text += `crossfadeDuration: ${player.crossfadeDuration} ${player.crossfadeMinDurationLast} ${player.crossfadeMinDurationCurrent}\n`;
-                    text += `multipleVideos: ${player.multipleVideos}\n`;
-                    text += `player: ${player.player.objectName}\n`;
-                    text += `mediaStatus: ${["NoMedia", "LoadingMedia", "LoadedMedia", "StalledMedia", "BufferingMedia", "BufferedMedia", "EndOfMedia", "InvalidMedia"][player.player.mediaStatus]}\n`;
-                    text += `player1 playing: ${player.player1.playing}\n`;
-                    text += `player2 playing: ${player.player2.playing}\n`;
-                    text += `position: ${player.player.position}\n`;
-                    text += `duration: ${player.player.duration}\n`;
-                    text += `resumeLastVideo: ${player.resumeLastVideo}\n`;
-                    text += `screenOffPausesVideo: ${main.screenOffPausesVideo} off ${main.screenIsOff}\n`;
-                    text += `pauseBattery: below ${main.pauseBatteryLevel}% ${main.pauseBattery}\n`;
-                    text += `playing: ${main.playing}\n`;
-                    text += `inLockScreen: ${main.lockScreenMode}\n`;
-                    text += `screenLocked: ${main.screenLocked}\n`;
-                    text += `showBlur: ${main.showBlur}\n`;
-                    text += `Audio Device: ${player.player1.currentAudioDevice}\n`;
-                    text += `dayNightPhase: ${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]}\n`;
-                    text += `dayNightCycleMode: ${["disabled", "dayNightCycle", "time", "plasmaStyle", "alwaysDay", "alwaysNight"][main.configuration.DayNightCycleMode]}\n`;
-                    text += `id: ${Plasmoid.id}`;
-                    return text;
+            ColumnLayout {
+                id: debugArea
+                anchors {
+                    fill: parent
+                    leftMargin: frameSvg.fixedMargins.left
+                    rightMargin: frameSvg.fixedMargins.right
+                    topMargin: frameSvg.fixedMargins.top
+                    bottomMargin: frameSvg.fixedMargins.bottom
+                }
+                PlasmaComponents.Label {
+                    Layout.margins: Kirigami.Units.largeSpacing
+                    text: {
+                        let text = `player.filename: ${player.player.playerSource.filename}\n`;
+                        text += `main.currentSource.filename: ${main.currentSource.filename}\n`;
+                        text += `videos:\n${main.videosConfig.map(v => {
+                            const filenameParts = v.filename.split("/");
+                            return filenameParts[filenameParts.length - 1];
+                        }).join("\n")}\n`;
+                        text += `last: ${main.configuration.LastVideo}\n`;
+                        text += `lastSunrise: ${main.configuration.LastVideoSunrise}\n`;
+                        text += `lastDay: ${main.configuration.LastVideoDay}\n`;
+                        text += `lastSunset: ${main.configuration.LastVideoSunset}\n`;
+                        text += `lastNight: ${main.configuration.LastVideoNight}\n`;
+                        text += `source.loop: ${main.currentSource.loop ?? false}\n`;
+                        text += `player.loops: ${player.loops === MediaPlayer.Infinite}\n`;
+                        text += `player.depth: ${player.depth}\n`;
+                        text += `currentVideoIndex: ${main.currentVideoIndex}\n`;
+                        text += `changeWallpaperMode: ${["Never", "Slideshow", `OnATimer time: ${changeTimer.interval}`][main.changeWallpaperMode]}\n`;
+                        text += `crossfade: ${player.player.crossfadeEnabled}\n`;
+                        text += `crossfadeDuration: ${player.targetCrossfadeDuration} current: ${player.player.crossfadeDuration}\n`;
+                        text += `multipleVideos: ${player.multipleVideos}\n`;
+                        text += `mediaStatus: ${["NoMedia", "LoadingMedia", "LoadedMedia", "StalledMedia", "BufferingMedia", "BufferedMedia", "EndOfMedia", "InvalidMedia"][player.player.mediaStatus]}\n`;
+                        text += `shouldPlay: ${main.shouldPlay}\n`;
+                        text += `playing: ${player.player.playing}\n`;
+                        text += `position: ${player.player.position}\n`;
+                        text += `duration: ${player.player.duration}\n`;
+                        text += `playbackRate: ${player.player.playbackRate.toFixed(2)}\n`;
+                        text += `useAlternativePlaybackRate: ${player.useAlternativePlaybackRate}\n`;
+                        text += `resumeLastVideo: ${player.resumeLastVideo}\n`;
+                        text += `screenOffPausesVideo: ${main.screenOffPausesVideo} off ${main.screenIsOff}\n`;
+                        text += `pauseBattery: below ${main.pauseBatteryLevel}% ${main.pauseBattery}\n`;
+                        text += `inLockScreen: ${main.lockScreenMode}\n`;
+                        text += `screenLocked: ${main.screenLocked}\n`;
+                        text += `showBlur: ${main.showBlur}\n`;
+                        text += `dayNightPhase: ${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]}\n`;
+                        text += `dayNightCycleMode: ${["disabled", "dayNightCycle", "time", "plasmaStyle", "alwaysDay", "alwaysNight"][main.configuration.DayNightCycleMode]}\n`;
+                        text += `id: ${Plasmoid.id}\n`;
+                        text += `Audio Device: ${player.player.currentAudioDevice}`;
+                        return text;
+                    }
                 }
             }
         }
     }
-
-    function play() {
-        pauseTimer.stop();
-        playTimer.start();
-    }
-    function pause() {
-        if (playing)
-            return;
-        playTimer.stop();
-        pauseTimer.start();
-    }
-    function stop() {
-        player.stop();
-    }
-
-    function updateState() {
-        if (playing) {
-            pause();
-            play();
-        } else {
-            play();
-            pause();
-        }
+    Loader {
+        sourceComponent: debugOverlay
+        active: main.debugEnabled
     }
 
     Timer {
-        id: pauseTimer
-        interval: main.showBlur ? main.blurAnimationDuration : 10
+        id: startTimer
+        interval: 100
         onTriggered: {
-            player.pause();
+            main.isLoading = false;
+            if (main.debugEnabled)
+                Utils.dumpProps(main.configuration);
         }
-    }
-
-    // Fixes video playing between active window changes
-    Timer {
-        id: playTimer
-        interval: 10
-        onTriggered: {
-            player.play();
-        }
-    }
-
-    Component.onCompleted: {
-        Utils.delay(100, () => {
-            isLoading = false;
-            updateVideoDebounce.restart();
-        }, main);
     }
 
     function printLog(msg) {
         if (debugEnabled) {
             console.log(main.pluginName, msg);
-        }
-    }
-
-    Timer {
-        id: debugTimer
-        running: main.debugEnabled
-        repeat: true
-        interval: 2000
-        onTriggered: {
-            main.printLog("------------------------");
-            main.printLog("Videos: '" + JSON.stringify(main.videosConfig) + "'");
-            main.printLog("Pause Battery: " + main.pauseBatteryLevel + "% " + main.pauseBattery);
-            main.printLog("Pause Screen Off: " + main.screenOffPausesVideo + " Off: " + main.screenIsOff);
-            main.printLog("Windows: " + main.shouldPlay + " Blur: " + main.showBlur);
-            main.printLog("Video playing: " + main.playing + " Blur: " + main.showBlur);
         }
     }
 
@@ -566,35 +469,114 @@ WallpaperItem {
         if (dayNightCycleEnabled) {
             switch (dayNightPhase) {
             case Enum.DayNightPhase.Day:
-                main.configuration.LastDayVideo = filename;
+                main.configuration.LastVideoDay = filename;
                 break;
             case Enum.DayNightPhase.Night:
-                main.configuration.LastNightVideo = filename;
+                main.configuration.LastVideoNight = filename;
                 break;
             case Enum.DayNightPhase.Sunrise:
-                main.configuration.LastSunriseVideo = filename;
+                main.configuration.LastVideoSunrise = filename;
                 break;
             case Enum.DayNightPhase.Sunset:
-                main.configuration.LastSunsetVideo = filename;
+                main.configuration.LastVideoSunset = filename;
                 break;
             }
         }
     }
 
-    function saveLastPosition() {
-        const currentFilename = currentSource.filename || lastSelectedVideo;
-        if (currentFilename === "") {
+    function logPauseBattery() {
+        printLog("Pause Battery: " + pauseBatteryLevel + "% " + pauseBattery);
+    }
+
+    function logPauseScreenOff() {
+        printLog("Pause Screen Off: " + screenOffPausesVideo + " Off: " + screenIsOff);
+    }
+
+    function logShouldPlay() {
+        printLog("Should Play: " + main.shouldPlay);
+    }
+
+    onPauseBatteryChanged: logPauseBattery()
+    onPauseBatteryLevelChanged: logPauseBattery()
+    onScreenOffPausesVideoChanged: logPauseScreenOff()
+    onScreenIsOffChanged: logPauseScreenOff()
+    onVideosConfigChanged: {
+        if (isLoading) {
             return;
         }
+        if (!dayNightPhaseHasChanged && Utils.getVideoByFile(currentSource.filename, videosConfig).filename === "") {
+            printLog("main.videosConfig changed, currentSource no longer exists, skipping to next video");
+            main.skipNext();
+        }
+        printLog("Videos: '" + JSON.stringify(videosConfig) + "'");
+    }
+    onShouldPlayChanged: logShouldPlay()
+    onPlayingChanged: printLog("Video playing: " + playing)
+    onShowBlurChanged: printLog("Blur: " + showBlur)
+    onCurrentSourceChanged: {
+        Qt.callLater(() => {
+            const filename = main.currentSource.filename;
+            if (!filename) {
+                return;
+            }
+            // reset index for the current set of videos
+            const index = Utils.getVideoIndex(filename, main.videosConfig);
+            if (index !== -1) {
+                main.currentVideoIndex = index;
+            }
+            main.lastSelectedVideo = filename;
+            dayNightPhaseHasChanged = false;
+            main.saveLastSource(filename, main.dayNightPhase);
+        });
+    }
+    function updateVideosConfig() {
+        const videos = Utils.getVideos(dayNightCycleEnabled, dayNightPhase, videoUrls);
+        if (randomMode) {
+            Utils.shuffleArray(videos);
+        }
+        videosConfig = videos;
+    }
 
-        main.configuration.LastVideoPosition = player.lastVideoPosition;
+    onDayNightCycleEnabledChanged: {
+        if (isLoading) {
+            return;
+        }
+        updateVideosConfig();
+    }
+    onDayNightPhaseChanged: {
+        if (isLoading) {
+            return;
+        }
+        updateVideosConfig();
+    }
+    onVideoUrlsChanged: {
+        if (isLoading) {
+            return;
+        }
+        updateVideosConfig();
+    }
+    onRandomModeChanged: {
+        if (isLoading) {
+            return;
+        }
+        updateVideosConfig();
+        printLog("Random mode changed: " + main.randomMode);
+    }
+
+    Component.onCompleted: {
+        startTimer.start();
+        updateVideosConfig();
+        Qt.callLater(() => {
+            player.currentSource = Qt.binding(() => {
+                return main.currentSource;
+            });
+        });
     }
 
     Connections {
         target: Qt.application
         function onAboutToQuit() {
-            main.saveLastSource(main.currentSource.filename || main.lastSelectedVideo, main.dayNightPhase);
-            main.saveLastPosition();
+            main.configuration.LastVideoPosition = player.player.position;
             main.configuration.writeConfig();
         }
     }
@@ -616,7 +598,7 @@ WallpaperItem {
             text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Next Video")
             icon.name: "media-skip-forward"
             onTriggered: {
-                player.next(true, true);
+                main.skipNext();
             }
             visible: player.multipleVideos
         },

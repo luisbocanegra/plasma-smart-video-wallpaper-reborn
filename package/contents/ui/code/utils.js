@@ -40,9 +40,7 @@ const Video = {
  * @returns {Video} Video object with the given filename and default properties
  */
 function createVideo(filename) {
-  let video = Object.create(Video);
-  video.filename = filename;
-  return video;
+  return Object.assign({}, Video, { filename });
 }
 
 /**
@@ -117,46 +115,66 @@ function getVideoIndex(filename, videosConfig) {
 }
 
 /**
- * Get index of the last played video or -1 if not last video exists
+ * 
+ * @param {String} filename File path
+ * @param {Array} videosConfig Videos config
+ * @returns {Object} Video properties
+ */
+function getVideoByFile(filename, videosConfig) {
+  const video = videosConfig.find((video) => video.filename === filename);
+  return video ?? createVideo("");
+}
+
+/**
+ * 
+ * @param {int} index Video index
+ * @param {Array} videosConfig Videos config
+ * @returns {Object} Video properties
+ */
+function getVideoByIndex(index, videosConfig) {
+  return videosConfig.length > 0 ? videosConfig[index] : createVideo("");
+}
+
+
+/**
+ * Get the last played video
  * if day-night cycle is enabled returns the last video for that cycle
  * @param {boolean} dayNightCycleEnabled Whether day-night cycle is enabled
  * @param {DayNightPhase} dayNightPhase Current day-night phase
  * @param {KConfigPropertyMap} configuration Wallpaper (WallpaperItem) configuration
  * @param {Array.<Video>} videosConfig List of videos with their properties
- * @returns {int} Video index or -1 if not found
+ * @returns {Object} Video properties
  */
-function getLastVideoIndex(dayNightCycleEnabled, dayNightPhase, configuration, videosConfig) {
+function getLastVideo(dayNightCycleEnabled, dayNightPhase, configuration, videosConfig) {
   if (dayNightCycleEnabled) {
     let lastVideos = [];
     switch (dayNightPhase) {
       case Enum.DayNightPhase.Day:
-        lastVideos = [configuration.LastDayVideo, configuration.LastVideo];
+        lastVideos = [configuration.LastVideoDay, configuration.LastVideo];
         break;
       case Enum.DayNightPhase.Night:
-        lastVideos = [configuration.LastNightVideo, configuration.LastVideo];
+        lastVideos = [configuration.LastVideoNight, configuration.LastVideo];
         break;
       case Enum.DayNightPhase.Sunrise:
-        lastVideos = [configuration.LastSunriseVideo, configuration.LastDayVideo, configuration.LastVideo];
+        lastVideos = [configuration.LastVideoSunrise, configuration.LastVideoDay, configuration.LastVideo];
         break;
       case Enum.DayNightPhase.Sunset:
-        lastVideos = [configuration.LastSunsetVideo, configuration.LastNightVideo, configuration.LastVideo];
+        lastVideos = [configuration.LastVideoSunset, configuration.LastVideoNight, configuration.LastVideo];
         break;
       default:
         lastVideos = [configuration.LastVideo];
     }
-
-    for (let lastVideo of lastVideos) {
-      const index = getVideoIndex(lastVideo, videosConfig);
-      if (lastVideo !== "" && index !== -1) {
-        return index;
+    for (let video of lastVideos) {
+      const v = getVideoByFile(video, videosConfig);
+      if (v.filename !== "") {
+        return v;
       }
     }
   } else {
-    const lastVideo = configuration.LastVideo;
-    return lastVideo === "" ? -1 : getVideoIndex(lastVideo, videosConfig);
+    return getVideoByFile(configuration.LastVideo, videosConfig);
   }
 
-  return -1;
+  return createVideo();
 }
 
 function dumpProps(obj) {

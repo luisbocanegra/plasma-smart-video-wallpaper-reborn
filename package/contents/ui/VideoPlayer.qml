@@ -1,22 +1,40 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtMultimedia
 import Qt5Compat.GraphicalEffects
-import "code/utils.js" as Utils
-import "code/enum.js" as Enum
 
 Item {
     id: root
-    property var playerSource: Utils.createVideo("")
     property real volume: 1.0
-    property int actualDuration: player.duration / playbackRate
     property int fillBlurRadius: 32
     property bool fillBlur: true
-    property alias source: player.source
+    property string audioOutputDevice
+    property var playerSource
+    property bool crossfadeEnabled
+    property int targetCrossfadeDuration
+    property bool changeWallpaperMode
     property alias muted: audioOutput.muted
-    property real playbackRate
     property alias fillMode: videoOutput.fillMode
     property alias loops: player.loops
     property alias position: player.position
+    property alias playbackRate: player.playbackRate
+    property bool firstFrame: true
+    property bool shouldPlay: false
+    property int lastVideoPosition: 0
+    property bool debugEnabled: false
+
+    // Crossfade must not be longer than the shortest video or the fade becomes glitchy
+    // we don't know the length until a video gets played, so the crossfade duration
+    // will decrease below the configured duration if needed as videos get played
+    readonly property int crossfadeDuration: {
+        if (!root.crossfadeEnabled) {
+            return 0;
+        } else {
+            return Math.min(targetCrossfadeDuration, actualDuration / 3);
+        }
+    }
+
+    readonly property int actualDuration: player.duration / playbackRate
     readonly property alias mediaStatus: player.mediaStatus
     readonly property alias playing: player.playing
     readonly property alias seekable: player.seekable
@@ -24,9 +42,8 @@ Item {
     readonly property alias videoHeight: videoOutput.contentRect.height
     readonly property alias videoWidth: videoOutput.contentRect.width
     readonly property bool showFillBlur: root.fillBlur && root.fitScale !== 1
-    property string audioOutputDevice
     readonly property string currentAudioDevice: audioOutput.device ? audioOutput.device.description : i18n("Unknown")
-    property real fitScale: {
+    readonly property real fitScale: {
         if (height > videoHeight) {
             return height / videoHeight;
         }
@@ -45,6 +62,23 @@ Item {
     }
     function stop() {
         player.stop();
+    }
+
+    function updatePlaybackState() {
+        if (debugEnabled) {
+            console.log("VideoPlayer.updatePlaybackState() shouldPlay", shouldPlay);
+        }
+        if (shouldPlay) {
+            player.play();
+        } else {
+            player.pause();
+        }
+    }
+
+    onShouldPlayChanged: {
+        if (firstFrame)
+            return;
+        updatePlaybackState();
     }
 
     VideoOutput {
@@ -71,14 +105,82 @@ Item {
         }
     }
 
+    property bool ending: false
+    signal aboutToFinish
+
     MediaPlayer {
         id: player
         videoOutput: videoOutput
         audioOutput: audioOutput
-        // Ignore very small values as it makes the video go crazy fast, stops
-        // responding to this property and needs to be stopped to recover
-        // TODO: Check if this has been reported to Qt
-        playbackRate: Math.max(root.playbackRate, 0.01)
+        source: root.playerSource?.filename ?? ""
+        autoPlay: true
+
+        onMediaStatusChanged: {
+            if (root.debugEnabled) {
+                let statusString = "";
+                switch (mediaStatus) {
+                case MediaPlayer.NoMedia:
+                    statusString = `${MediaPlayer.NoMedia} MediaPlayer.NoMedia`;
+                    break;
+                case MediaPlayer.LoadingMedia:
+                    statusString = `${MediaPlayer.LoadingMedia} MediaPlayer.LoadingMedia`;
+                    break;
+                case MediaPlayer.LoadedMedia:
+                    statusString = `${MediaPlayer.LoadedMedia} MediaPlayer.LoadedMedia`;
+                    break;
+                case MediaPlayer.StalledMedia:
+                    statusString = `${MediaPlayer.StalledMedia} MediaPlayer.StalledMedia`;
+                    break;
+                case MediaPlayer.BufferingMedia:
+                    statusString = `${MediaPlayer.BufferingMedia} MediaPlayer.BufferingMedia`;
+                    break;
+                case MediaPlayer.BufferedMedia:
+                    statusString = `${MediaPlayer.BufferedMedia} MediaPlayer.BufferedMedia`;
+                    break;
+                case MediaPlayer.EndOfMedia:
+                    statusString = `${MediaPlayer.EndOfMedia} MediaPlayer.EndOfMedia`;
+                    break;
+                case MediaPlayer.InvalidMedia:
+                    statusString = `${MediaPlayer.InvalidMedia} MediaPlayer.InvalidMedia`;
+                    break;
+                }
+                console.log(this, "Media status:", statusString);
+            }
+            if (mediaStatus === MediaPlayer.EndOfMedia && !root.crossfadeEnabled && !root.ending) {
+                root.aboutToFinish();
+            }
+
+            if (mediaStatus === MediaPlayer.LoadedMedia && seekable) {
+                if (root.lastVideoPosition && root.lastVideoPosition < duration) {
+                    if (root.debugEnabled) {
+                        console.log("RESTORE LAST POSITION:", root.lastVideoPosition);
+                    }
+                    position = root.lastVideoPosition;
+                }
+            }
+
+            if (mediaStatus === MediaPlayer.BufferedMedia && root.firstFrame) {
+                // HACK: without this the next video may still play when paused
+                play();
+            }
+        }
+
+        onPositionChanged: position => {
+            if (root.firstFrame && position > 0) {
+                root.firstFrame = false;
+                updatePlaybackStateTimer.start();
+            }
+            if (duration < 1 || position < 1 || root.ending || loops === MediaPlayer.Infinite) {
+                return;
+            }
+            const remaining = duration - position;
+            //FIXME: adding 500/200 reduces the chances of the background from showing between videos
+            // this assumes the video will load during that window, which isn't always the case
+            if (root.crossfadeEnabled ? remaining < root.crossfadeDuration + 500 : remaining < 200) {
+                root.ending = true;
+                root.aboutToFinish();
+            }
+        }
     }
 
     ShaderEffectSource {
@@ -100,5 +202,36 @@ Item {
         anchors.fill: videoBlur
         anchors.centerIn: parent
         z: -1
+    }
+
+    Component {
+        id: progress
+        Item {
+            Rectangle {
+                height: 2
+                width: parent.width
+                color: "black"
+                Rectangle {
+                    height: 2
+                    width: parent.width * player.position / player.duration
+                }
+            }
+        }
+    }
+    Loader {
+        anchors.fill: parent
+        sourceComponent: progress
+        active: root.debugEnabled
+    }
+
+    Timer {
+        id: updatePlaybackStateTimer
+        interval: 200
+        onTriggered: {
+            if (root.debugEnabled) {
+                console.log("VideoPlayer.updateStateTimer.onTriggered");
+            }
+            root.updatePlaybackState();
+        }
     }
 }

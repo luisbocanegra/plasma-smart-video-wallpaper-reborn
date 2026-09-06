@@ -1,266 +1,195 @@
+// based on https://github.com/KDE/plasma-workspace/blob/master/wallpapers/image/imagepackage/contents/ui/ImageStackView.qml
+pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Controls
 import QtMultimedia
 import "code/utils.js" as Utils
 import "code/enum.js" as Enum
 
-Item {
+StackView {
     id: root
-    property var currentSource: Utils.createVideo("")
+    property var currentSource
     property real volume: 1.0
     property bool muted: true
-    property real playbackRate: 1
+    property real globalPlaybackRate: 1
     property int fillMode
     property bool crossfadeEnabled: false
     property int targetCrossfadeDuration: 1000
     property bool multipleVideos: false
+    property bool resumeLastVideo: true
     property int lastVideoPosition: 0
-    property bool restoreLastPosition: true
+    property bool _restoreLastPosition: true
     property bool debugEnabled: false
     property int changeWallpaperMode: Enum.ChangeWallpaperMode.Slideshow
-    property int changeWallpaperTimerSeconds: 0
-    property int changeWallpaperTimerMinutes: 10
-    property int changeWallpaperTimerHours: 0
-    property int changeWallpaperTimerMs: ((changeWallpaperTimerHours * 60 * 60) + (changeWallpaperTimerMinutes * 60) + changeWallpaperTimerSeconds) * 1000
-    property bool resumeLastVideo: true
     property int fillBlurRadius: 32
     property bool fillBlur: true
     property real alternativePlaybackRateGlobal: 0.5
     property bool useAlternativePlaybackRate: false
     property string audioOutputDevice
-
-    // Crossfade must not be longer than the shortest video or the fade becomes glitchy
-    // we don't know the length until a video gets played, so the crossfade duration
-    // will decrease below the configured duration if needed as videos get played
-    // Split the crossfade duration between the two videos. If either video is too short,
-    // reduce only it's part of the crossfade duration accordingly
-    property int crossfadeMinDurationLast: Math.min(root.targetCrossfadeDuration / 2, otherPlayer.actualDuration / 3)
-    property int crossfadeMinDurationCurrent: Math.min(root.targetCrossfadeDuration / 2, player.actualDuration / 3)
-    property int crossfadeDuration: {
-        if (!root.crossfadeEnabled) {
-            return 0;
-        } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer) {
-            return Math.min(root.targetCrossfadeDuration, changeWallpaperTimerMs / 3 * 2);
+    property bool shouldPlay: true
+    property real playbackRate: 1
+    property int loops: {
+        if ((changeWallpaperMode === Enum.ChangeWallpaperMode.Never || !multipleVideos) && !crossfadeEnabled) {
+            return MediaPlayer.Infinite;
+        }
+        return 1;
+    }
+    function updatePlaybackRate() {
+        let rate = 1;
+        if (root.useAlternativePlaybackRate) {
+            rate = currentSource?.alternativePlaybackRate || alternativePlaybackRateGlobal;
         } else {
-            return crossfadeMinDurationLast + crossfadeMinDurationCurrent;
+            rate = currentSource?.playbackRate || globalPlaybackRate;
+        }
+        // Ignore very small values as it makes the video go crazy fast, stops
+        // responding to this property and needs to be stopped to recover
+        // TODO: Check if this has been reported to Qt
+        playbackRate = Math.max(rate, 0.01);
+    }
+
+    property list<var> propertiesMonitor: [currentSource, volume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate]
+
+    onPropertiesMonitorChanged: {
+        updatePlaybackRate();
+        if (root.currentItem) {
+            root.currentItem.volume = root.volume;
+            root.currentItem.muted = root.muted;
+            root.currentItem.fillMode = root.fillMode;
+            root.currentItem.targetCrossfadeDuration = root.targetCrossfadeDuration;
+            root.currentItem.loops = root.loops;
+            root.currentItem.changeWallpaperMode = root.changeWallpaperMode;
+            root.currentItem.fillBlurRadius = root.fillBlurRadius;
+            root.currentItem.fillBlur = root.fillBlur;
+            root.currentItem.audioOutputDevice = root.audioOutputDevice;
+            root.currentItem.crossfadeEnabled = root.crossfadeEnabled;
+            root.currentItem.debugEnabled = root.debugEnabled;
         }
     }
 
     property bool primaryPlayer: true
-    property VideoPlayer player: primaryPlayer ? videoPlayer1 : videoPlayer2
-    property VideoPlayer otherPlayer: primaryPlayer ? videoPlayer2 : videoPlayer1
-    readonly property alias player1: videoPlayer1
-    readonly property alias player2: videoPlayer2
+    property var player: root.currentItem
 
-    function play() {
-        player.play();
-    }
-    function pause() {
-        player.pause();
-    }
-    function stop() {
-        player.stop();
-    }
-    function next(switchSource, forceSwitch) {
-        if ((switchSource && !currentSource.loop) || forceSwitch) {
-            setNextSource();
-        }
-        if (primaryPlayer) {
-            videoPlayer2.playerSource = root.currentSource;
-            videoPlayer2.play();
-            root.primaryPlayer = false;
-            videoPlayer1.opacity = 0;
-        } else {
-            videoPlayer1.playerSource = root.currentSource;
-            videoPlayer1.play();
-            root.primaryPlayer = true;
-            videoPlayer1.opacity = 1;
-        }
-    }
     signal setNextSource
 
-    PausableTimer {
-        id: changeTimer
-        running: root.changeWallpaperMode === Enum.ChangeWallpaperMode.OnATimer && root.player.playing
-        interval: root.changeWallpaperTimerMs - (root.crossfadeEnabled ? root.crossfadeMinDurationCurrent : 0)
-        repeat: true
-        useNewIntervalImmediately: true
-        onTriggered: {
-            if (root.debugEnabled) {
-                console.log("Timer triggered, changing wallpaper");
-            }
-            root.next(true);
+    property Component videoComponent
+
+    property var pendingVideo
+    property bool doesSkipAnimation: true
+
+    function createVideoComponent() {
+        if (!videoComponent) {
+            videoComponent = Qt.createComponent("VideoPlayer.qml");
         }
-        onIntervalChanged: {
-            if (root.debugEnabled) {
-                console.log("Timer changed:", interval);
-            }
+        return videoComponent;
+    }
+
+    function loadVideoImmediately() {
+        loadVideo(true);
+    }
+
+    function loadVideo(skipAnimation) {
+        if (pendingVideo) {
+            pendingVideo.mediaStatusChanged.disconnect(replaceWhenLoaded);
+            pendingVideo.destroy();
+            pendingVideo = null;
+        }
+
+        doesSkipAnimation = root.currentItem == undefined;
+
+        const baseVideo = createVideoComponent();
+        const properties = {
+            "playerSource": root.currentSource,
+            "volume": root.volume,
+            "loops": root.loops,
+            "fillBlur": root.fillBlur,
+            "fillBlurRadius": root.fillBlurRadius,
+            "crossfadeEnabled": root.crossfadeEnabled,
+            "targetCrossfadeDuration": root.targetCrossfadeDuration,
+            "parent": root,
+            "implicitWidth": root.width,
+            "implicitHeight": root.height,
+            "visible": false,
+            "fillMode": root.fillMode,
+            "muted": root.muted,
+            "audioOutputDevice": root.audioOutputDevice,
+            "playbackRate": Qt.binding(() => root.playbackRate),
+            "changeWallpaperMode": root.changeWallpaperMode,
+            "shouldPlay": Qt.binding(() => root.shouldPlay),
+            "lastVideoPosition": root.resumeLastVideo && root._restoreLastPosition ? root.lastVideoPosition : 0,
+            "debugEnabled": root.debugEnabled
+        };
+        pendingVideo = baseVideo.createObject(root, properties);
+
+        if (!pendingVideo) {
+            console.error("baseVideo.errorString()", videoComponent.errorString());
+        }
+
+        pendingVideo.mediaStatusChanged.connect(replaceWhenLoaded);
+        replaceWhenLoaded();
+    }
+
+    onCurrentItemChanged: {
+        if (debugEnabled) {
+            console.log("FadePlayer.onCurrentItemChanged");
+        }
+        root.currentItem.aboutToFinish.connect(replaceAboutToFinish);
+    }
+
+    function replaceAboutToFinish() {
+        if (debugEnabled) {
+            console.log("replaceAboutToFinish()");
+        }
+        setNextSource();
+        root.currentItem.mediaStatusChanged.disconnect(replaceAboutToFinish);
+    }
+
+    function replaceWhenLoaded() {
+        if (pendingVideo.mediaStatus <= MediaPlayer.LoadingMedia) {
+            return;
+        }
+        root._restoreLastPosition = false;
+        pendingVideo.mediaStatusChanged.disconnect(replaceWhenLoaded);
+
+        // onRemoved only fires when all transitions end. If a user switches wallpaper quickly this adds up
+        // Given it's such a heavy item, try to cleanup as early as possible
+        pendingVideo.StackView.onDeactivated.connect(pendingVideo.destroy);
+        pendingVideo.StackView.onRemoved.connect(pendingVideo.destroy);
+        root.replace(pendingVideo, {}, StackView.Transition);
+
+        pendingVideo = null;
+    }
+
+    replaceEnter: Transition {
+        NumberAnimation {
+            id: replaceEnterOpacityAnimator
+            property: "opacity"
+            from: 0
+            to: 1
+            duration: root.currentItem.crossfadeDuration ?? 0
+        }
+        enabled: root.crossfadeEnabled
+    }
+    // Keep the old video around till the new one is fully faded in
+    // If we fade both at the same time you can see the background behind glimpse through
+    replaceExit: Transition {
+        PauseAnimation {
+            // 500: The exit transition starts first and can be completed earlier than the enter transition
+            duration: replaceEnterOpacityAnimator.duration + 500
         }
     }
 
-    VideoPlayer {
-        id: videoPlayer1
-        objectName: "1"
-        anchors.fill: parent
-        property var playerSource: root.currentSource
-        property int actualDuration: duration / playbackRate
-        playbackRate: {
-            if (root.useAlternativePlaybackRate) {
-                return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
-            }
-            return playerSource.playbackRate || root.playbackRate;
+    onCurrentSourceChanged: {
+        if (debugEnabled) {
+            console.log("FadePlayer.onCurrentSourceChanged", currentSource.filename);
         }
-        source: playerSource.filename ?? ""
-        volume: root.volume
-        muted: root.muted
-        audioOutputDevice: root.audioOutputDevice
-        z: 2
-        opacity: 1
-        fillMode: root.fillMode
-        fillBlur: root.fillBlur
-        fillBlurRadius: root.fillBlurRadius
-        loops: {
-            if (!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
-                return MediaPlayer.Infinite;
-            else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
-                return 1;
-            else
-                return MediaPlayer.Infinite;
+        // only reload the player when the video file changes
+        if (root.currentItem && root.currentItem.playerSource?.filename === currentSource.filename) {
+            return;
         }
-        onPositionChanged: {
-            if (!root.primaryPlayer) {
-                return;
-            }
-            if (!root.restoreLastPosition) {
-                root.lastVideoPosition = position;
-            }
-
-            if (root.crossfadeEnabled) {
-                if ((position / playbackRate) > (actualDuration - root.crossfadeMinDurationCurrent)) {
-                    if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
-                        root.next(true);
-                    } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
-                        root.next(false);
-                    }
-                }
-            }
-        }
-        onMediaStatusChanged: {
-            if (mediaStatus == MediaPlayer.EndOfMedia) {
-                if (root.crossfadeEnabled) {
-                    return;
-                } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
-                    root.next(true);
-                }
-            }
-
-            if (mediaStatus == MediaPlayer.LoadedMedia && seekable) {
-                if (root.restoreLastPosition && root.resumeLastVideo) {
-                    if (root.lastVideoPosition < duration) {
-                        console.log("RESTORE LAST POSITION:", root.lastVideoPosition);
-                        videoPlayer1.position = root.lastVideoPosition;
-                    }
-                }
-                root.restoreLastPosition = false;
-            }
-        }
-        onLoopsChanged: {
-            if (primaryPlayer) {
-                // needed to correctly update player with new loops value
-                let pos = videoPlayer1.position;
-                videoPlayer1.stop();
-                videoPlayer1.play();
-                videoPlayer1.position = pos;
-            }
-        }
-        onPlayingChanged: {
-            if (playing) {
-                if (root.debugEnabled) {
-                    console.log("Player 1 playing");
-                }
-            }
-        }
-        onOpacityChanged: {
-            if (opacity === 0 || opacity === 1) {
-                // Reset other player source to empty to free resources
-                otherPlayer.playerSource = Utils.createVideo("");
-            }
-        }
-        Behavior on opacity {
-            NumberAnimation {
-                duration: root.crossfadeDuration
-                easing.type: Easing.OutQuint
-            }
-        }
+        root.loadVideo();
     }
 
-    VideoPlayer {
-        id: videoPlayer2
-        objectName: "2"
-        anchors.fill: parent
-        property var playerSource: Utils.createVideo("")
-        property int actualDuration: duration / playbackRate
-        playbackRate: {
-            if (root.useAlternativePlaybackRate) {
-                return playerSource.alternativePlaybackRate || root.alternativePlaybackRateGlobal;
-            }
-            return playerSource.playbackRate || root.playbackRate;
-        }
-        source: playerSource.filename ?? ""
-        volume: root.volume
-        muted: root.muted
-        audioOutputDevice: root.audioOutputDevice
-        z: 1
-        fillMode: root.fillMode
-        fillBlur: root.fillBlur
-        fillBlurRadius: root.fillBlurRadius
-        loops: {
-            if (!root.multipleVideos || (root.currentSource.loop && !root.crossfadeEnabled))
-                return MediaPlayer.Infinite;
-            else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow)
-                return 1;
-            else
-                return MediaPlayer.Infinite;
-        }
-        onPositionChanged: {
-            if (root.primaryPlayer) {
-                return;
-            }
-            root.lastVideoPosition = position;
-
-            if (root.crossfadeEnabled) {
-                if ((position / playbackRate) > (actualDuration - root.crossfadeMinDurationCurrent)) {
-                    if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
-                        root.next(true);
-                    } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Never) {
-                        root.next(false);
-                    }
-                }
-            }
-        }
-        onMediaStatusChanged: {
-            if (mediaStatus == MediaPlayer.EndOfMedia) {
-                if (root.crossfadeEnabled) {
-                    return;
-                } else if (root.changeWallpaperMode === Enum.ChangeWallpaperMode.Slideshow) {
-                    root.next(true);
-                }
-            }
-        }
-        onLoopsChanged: {
-            if (!primaryPlayer) {
-                // needed to correctly update player with new loops value
-                let pos = videoPlayer2.position;
-                videoPlayer2.stop();
-                videoPlayer2.play();
-                videoPlayer2.position = pos;
-            }
-        }
-        onPlayingChanged: {
-            if (playing) {
-                if (root.debugEnabled) {
-                    console.log("Player 2 playing");
-                }
-            }
-        }
+    initialItem: VideoPlayer {
+        playerSource: Utils.createVideo("")
     }
 }
