@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project("plasma-smart-video-wallpaper-reborn")
+option(BUILD_PLUGIN "Build the plugin" ON)
 option(INSTALL_WALLPAPER "Install wallpaper" ON)
 option(PACKAGE_WALLPAPER "Package wallpaper" OFF)
 
@@ -7,7 +8,9 @@ set(PROJECT_DEP_VERSION "6.0.0")
 set(QT_MIN_VERSION "6.6.0")
 set(KF6_MIN_VERSION "6.0.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.85")
-
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
@@ -53,4 +56,8 @@ if(PACKAGE_WALLPAPER)
     )
 
     add_dependencies(wallpaper translations)
+endif()
+
+if(BUILD_PLUGIN)
+    add_subdirectory(plugin)
 endif()

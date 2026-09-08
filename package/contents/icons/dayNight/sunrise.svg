@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="22"
+   height="22"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="weather-sunset-up.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.4204545"
+     inkscape:cx="30.766067"
+     inkscape:cy="49.203085"
+     inkscape:window-width="1078"
+     inkscape:window-height="984"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <style
+       id="current-color-scheme"
+       type="text/css">
+   .ColorScheme-Text { color:#dfdfdf; } .ColorScheme-Highlight { color:#4285f4; } .ColorScheme-NeutralText { color:#ff9800; } .ColorScheme-PositiveText { color:#4caf50; } .ColorScheme-NegativeText { color:#f44336; }
+  </style>
+  </defs>
+  <path
+     style="fill:currentColor"
+     class="ColorScheme-Text"
+     d="m 3.4656635,11.371485 h 3.348594 a 4.1857423,4.1857423 0 0 1 4.1857435,-4.185743 4.1857423,4.1857423 0 0 1 4.185742,4.185743 h 3.348594 a 0.83714846,0.83714846 0 0 1 0.837147,0.837148 0.83714846,0.83714846 0 0 1 -0.837147,0.837149 H 3.4656635 a 0.83714846,0.83714846 0 0 1 -0.837148,-0.837149 0.83714846,0.83714846 0 0 1 0.837148,-0.837148 m 10.0457825,0 A 2.5114454,2.5114454 0 0 0 11.000001,8.860039 2.5114454,2.5114454 0 0 0 8.4885545,11.371485 H 13.511446 M 11.000001,3 13.000785,5.863048 c -0.619489,-0.22603 -1.29758,-0.351603 -2.000784,-0.351603 -0.703205,0 -1.3812955,0.125573 -2.0007855,0.351603 L 11.000001,3 M 3.7502945,7.185742 7.2328325,6.89274 c -0.50229,0.426946 -0.95435,0.945978 -1.305952,1.548725 -0.368345,0.61949 -0.577632,1.255723 -0.694833,1.91707 L 3.7502945,7.185742 m 14.4910405,0 -1.481753,3.172793 C 16.642381,9.697188 16.416351,9.052583 16.064749,8.441465 15.713146,7.838718 15.269458,7.311315 14.767169,6.884369 l 3.474166,0.301373 m -6.646959,7.785481 2.603532,2.603532 c 0.326488,0.326488 0.326488,0.853891 0,1.180379 -0.326488,0.326488 -0.853892,0.326488 -1.18038,0 l -2.017527,-2.017528 -2.0175285,2.017528 c -0.326488,0.326488 -0.853892,0.326488 -1.180379,0 -0.326488,-0.326488 -0.326488,-0.853891 0,-1.180379 L 10.405625,14.971223 C 10.581426,14.803793 10.782342,14.720078 11,14.720078 c 0.217658,0 0.418574,0.08371 0.594376,0.251145 z"
+     id="path1" />
+</svg>

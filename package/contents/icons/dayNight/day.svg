@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="22"
+   height="22"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="weather-sunny.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.4204545"
+     inkscape:cx="30.766067"
+     inkscape:cy="49.203085"
+     inkscape:window-width="1078"
+     inkscape:window-height="984"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <style
+       id="current-color-scheme"
+       type="text/css">
+   .ColorScheme-Text { color:#dfdfdf; } .ColorScheme-Highlight { color:#4285f4; } .ColorScheme-NeutralText { color:#ff9800; } .ColorScheme-PositiveText { color:#4caf50; } .ColorScheme-NegativeText { color:#f44336; }
+  </style>
+  </defs>
+  <path
+     style="fill:currentColor"
+     class="ColorScheme-Text"
+     d="m 11.004,7 a 4,4 0 0 1 4,4 4,4 0 0 1 -4,4 4,4 0 0 1 -4,-4 4,4 0 0 1 4,-4 m 0,1.6 a 2.4,2.4 0 0 0 -2.4,2.4 2.4,2.4 0 0 0 2.4,2.4 2.4,2.4 0 0 0 2.4,-2.4 2.4,2.4 0 0 0 -2.4,-2.4 m 0,-5.6 1.912,2.736 C 12.324,5.52 11.676,5.4 11.004,5.4 10.332,5.4 9.684,5.52 9.092,5.736 L 11.004,3 M 4.076,7 7.404,6.72 C 6.924,7.128 6.492,7.624 6.156,8.2 5.804,8.792 5.604,9.4 5.492,10.032 L 4.076,7 M 4.092,15 5.5,11.984 c 0.112,0.616 0.328,1.24 0.664,1.816 0.336,0.592 0.768,1.088 1.24,1.496 L 4.092,15 M 17.924,7 16.508,10.032 C 16.396,9.4 16.18,8.784 15.844,8.2 15.508,7.624 15.084,7.12 14.604,6.712 L 17.924,7 m -0.008,8 -3.312,0.288 C 15.076,14.88 15.5,14.376 15.836,13.8 16.172,13.216 16.388,12.6 16.5,11.968 L 17.916,15 m -6.912,4 -1.928,-2.752 c 0.592,0.216 1.24,0.352 1.928,0.352 0.656,0 1.304,-0.136 1.896,-0.352 z"
+     id="path1" />
+</svg>
