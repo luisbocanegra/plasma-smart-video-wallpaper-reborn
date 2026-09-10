@@ -1245,8 +1245,6 @@ ColumnLayout {
                 model: videosModel.model
                 clip: true
                 spacing: 0
-                Kirigami.Theme.colorSet: Kirigami.Theme.View
-                Kirigami.Theme.inherit: false
                 headerPositioning: ListView.OverlayHeader
                 header: Kirigami.InlineViewHeader {
                     width: list.width
@@ -1328,6 +1326,8 @@ ColumnLayout {
                         highlighted: false
                         background: Item {}
                         contentItem: RowLayout {
+                            Kirigami.Theme.inherit: false
+                            Kirigami.Theme.colorSet: root.Kirigami.Theme.View
                             Kirigami.ListItemDragHandle {
                                 visible: itemDelegate.view.count > 1
                                 listItem: delegate
@@ -1341,13 +1341,10 @@ ColumnLayout {
                                 checkable: true
                                 checked: itemDelegate.enabled
                                 highlighted: itemDelegate.enabled
-                                icon.color: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
                                 onCheckedChanged: videosModel.updateItem(itemDelegate.index, "enabled", checked)
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: root.Kirigami.Theme.View
-                                Kirigami.Theme.textColor: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
-                                Kirigami.Theme.highlightColor: itemDelegate.enabled ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Whether or not this video will be played")
@@ -1362,7 +1359,7 @@ ColumnLayout {
                                     id: filenamePreview
                                     text: itemDelegate.filename
                                     elide: Text.ElideRight
-                                    color: Kirigami.Theme.textColor
+                                    Kirigami.Theme.inherit: true
                                     visible: (!filenameHoverHandler.hovered && !filenameTextField.cursorVisible) && itemDelegate.filename !== ""
                                     Layout.fillWidth: true
                                     Layout.leftMargin: filenameTextField.padding ?? 6
@@ -1373,7 +1370,7 @@ ColumnLayout {
                                     placeholderText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Local file or static url")
                                     visible: !filenamePreview.visible
                                     onTextChanged: videosModel.updateItem(itemDelegate.index, "filename", text)
-                                    Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                    Kirigami.Theme.inherit: true
                                     Layout.fillWidth: true
                                     ToolTip.delay: 1000
                                     ToolTip.visible: hovered
@@ -1431,7 +1428,6 @@ ColumnLayout {
                                         anchors.centerIn: parent
                                         implicitHeight: Kirigami.Units.iconSizes.smallMedium
                                         implicitWidth: Kirigami.Units.iconSizes.smallMedium
-                                        color: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
                                         isMask: true
                                     }
                                 }
@@ -1440,9 +1436,7 @@ ColumnLayout {
                                 highlighted: itemDelegate.isPhase
                                 onClicked: videosModel.updateItem(itemDelegate.index, "dayNightPhase", (itemDelegate.dayNightPhase + 1) % 5)
                                 Layout.fillHeight: true
-                                Kirigami.Theme.colorSet: root.Kirigami.Theme.View
-                                Kirigami.Theme.textColor: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
-                                Kirigami.Theme.highlightColor: itemDelegate.isPhase ? root.Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Phase of the day at which this video will play. If set to <strong>Disabled</strong> the video will play regardless of the current phase. <br>Current: <strong>%1</strong>", itemDelegate.displayText)
@@ -1454,13 +1448,10 @@ ColumnLayout {
                                 checked: itemDelegate.loop
                                 enabled: itemDelegate.enabled
                                 highlighted: itemDelegate.loop
-                                icon.color: itemDelegate.loop ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
                                 onCheckedChanged: videosModel.updateItem(itemDelegate.index, "loop", checked)
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: Kirigami.Theme.View
-                                Kirigami.Theme.textColor: itemDelegate.loop ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.textColor
-                                Kirigami.Theme.highlightColor: itemDelegate.loop ? Kirigami.Theme.highlightColor : root.Kirigami.Theme.highlightColor
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "If enabled the video will repeat instead of playing the next one.<br>Use <strong>Next Video</strong> from the Desktop right click menu to play the next video in the list.")
@@ -1474,7 +1465,7 @@ ColumnLayout {
                                 }
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: "Pick a file"
@@ -1484,7 +1475,7 @@ ColumnLayout {
                                 onPressed: mediaMenu.opened ? mediaMenu.close() : mediaMenu.open()
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: "More actions"
@@ -1525,7 +1516,7 @@ ColumnLayout {
                                 }
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: height
-                                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                                Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
                                 ToolTip.text: "Remove from list"
