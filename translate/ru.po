@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 07:43+0000\n"
+"POT-Creation-Date: 2026-09-10 14:59+0000\n"
 "PO-Revision-Date: 2026-06-19 13:18+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -711,42 +711,42 @@ msgstr "Все файлы"
 msgid "Video files"
 msgstr "Видеофайлы"
 
-#: package/contents/ui/main.qml:373
+#: package/contents/ui/main.qml:374
 #, kde-format
 msgid "No video source \n"
 msgstr "Нет источника видео\n"
 
-#: package/contents/ui/main.qml:598
+#: package/contents/ui/main.qml:599
 #, kde-format
 msgid "Next Video"
 msgstr "Следующее видео"
 
-#: package/contents/ui/main.qml:608
+#: package/contents/ui/main.qml:609
 #, kde-format
 msgid "Pause"
 msgstr "Приостановить"
 
-#: package/contents/ui/main.qml:608
+#: package/contents/ui/main.qml:609
 #, kde-format
 msgid "Play"
 msgstr "Воспроизвести"
 
-#: package/contents/ui/main.qml:610
+#: package/contents/ui/main.qml:611
 #, kde-format
 msgid "Default Playback"
 msgstr "Воспроизведение по умолчанию"
 
-#: package/contents/ui/main.qml:631
+#: package/contents/ui/main.qml:632
 #, kde-format
 msgid "Mute"
 msgstr "Отключить звук"
 
-#: package/contents/ui/main.qml:631
+#: package/contents/ui/main.qml:632
 #, kde-format
 msgid "Unmute"
 msgstr "Включить звук"
 
-#: package/contents/ui/main.qml:633
+#: package/contents/ui/main.qml:634
 #, kde-format
 msgid "Default Muting"
 msgstr "Отключение звука по умолчанию"
