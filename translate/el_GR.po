@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-08 17:53+0000\n"
+"POT-Creation-Date: 2026-09-10 07:43+0000\n"
 "PO-Revision-Date: 2025-02-18 13:47+0200\n"
 "Last-Translator: omen <elahistos@yahoo.gr>\n"
 "Language-Team: Greek <kde-i18n-doc@kde.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.12.2\n"
 
-#: package/contents/ui/VideoPlayer.qml:28
+#: package/contents/ui/VideoPlayer.qml:45
 #, kde-format
 msgid "Unknown"
 msgstr ""
@@ -688,42 +688,42 @@ msgstr "Όλα τα αρχεία"
 msgid "Video files"
 msgstr "Αρχεία βίντεο"
 
-#: package/contents/ui/main.qml:428
+#: package/contents/ui/main.qml:373
 #, kde-format
 msgid "No video source \n"
 msgstr "Χωρίς πηγή βίντεο \n"
 
-#: package/contents/ui/main.qml:616
+#: package/contents/ui/main.qml:598
 #, kde-format
 msgid "Next Video"
 msgstr ""
 
-#: package/contents/ui/main.qml:626
+#: package/contents/ui/main.qml:608
 #, kde-format
 msgid "Pause"
 msgstr ""
 
-#: package/contents/ui/main.qml:626
+#: package/contents/ui/main.qml:608
 #, kde-format
 msgid "Play"
 msgstr ""
 
-#: package/contents/ui/main.qml:628
+#: package/contents/ui/main.qml:610
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Αναπαραγωγή"
 
-#: package/contents/ui/main.qml:649
+#: package/contents/ui/main.qml:631
 #, kde-format
 msgid "Mute"
 msgstr ""
 
-#: package/contents/ui/main.qml:649
+#: package/contents/ui/main.qml:631
 #, kde-format
 msgid "Unmute"
 msgstr ""
 
-#: package/contents/ui/main.qml:651
+#: package/contents/ui/main.qml:633
 #, kde-format
 msgid "Default Muting"
 msgstr ""
