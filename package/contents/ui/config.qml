@@ -1187,6 +1187,7 @@ ColumnLayout {
 
     DropArea {
         id: dropArea
+        clip: true
         onEntered: drag => {
             if (drag.hasUrls) {
                 drag.accept();
