@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 07:43+0000\n"
+"POT-Creation-Date: 2026-09-10 14:59+0000\n"
 "PO-Revision-Date: 2026-02-13 11:40+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -707,42 +707,42 @@ msgstr "Alle bestanden"
 msgid "Video files"
 msgstr "Videobestanden"
 
-#: package/contents/ui/main.qml:373
+#: package/contents/ui/main.qml:374
 #, kde-format
 msgid "No video source \n"
 msgstr "Geen videobron \n"
 
-#: package/contents/ui/main.qml:598
+#: package/contents/ui/main.qml:599
 #, kde-format
 msgid "Next Video"
 msgstr "Volgende video"
 
-#: package/contents/ui/main.qml:608
+#: package/contents/ui/main.qml:609
 #, kde-format
 msgid "Pause"
 msgstr "Pauzeren"
 
-#: package/contents/ui/main.qml:608
+#: package/contents/ui/main.qml:609
 #, kde-format
 msgid "Play"
 msgstr "Afspelen"
 
-#: package/contents/ui/main.qml:610
+#: package/contents/ui/main.qml:611
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Afspelen"
 
-#: package/contents/ui/main.qml:631
+#: package/contents/ui/main.qml:632
 #, kde-format
 msgid "Mute"
 msgstr "Dempen"
 
-#: package/contents/ui/main.qml:631
+#: package/contents/ui/main.qml:632
 #, kde-format
 msgid "Unmute"
 msgstr "Ontdempen"
 
-#: package/contents/ui/main.qml:633
+#: package/contents/ui/main.qml:634
 #, fuzzy, kde-format
 msgid "Default Muting"
 msgstr "Standaard"
