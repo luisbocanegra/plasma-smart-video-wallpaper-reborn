@@ -243,6 +243,7 @@ WallpaperItem {
     TasksModel {
         id: windowModel
         screenGeometry: main.parent?.screenGeometry ?? null
+        filterByScreen: main.configuration.CheckWindowsActiveScreen
     }
 
     ScreenModel {

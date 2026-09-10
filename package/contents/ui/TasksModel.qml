@@ -1,49 +1,95 @@
-/*
- *  Copyright 2018 Rog131 <samrog131@hotmail.com>
- *  Copyright 2019 adhe   <adhemarks2@gmail.com>
- *  Copyright 2024 Luis Bocanegra <luisbocanegra17b@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  2.010-1301, USA.
- */
-
 import QtQuick
 import org.kde.taskmanager 0.1 as TaskManager
+import org.kde.plasma.plasmoid
 
 Item {
     id: root
     property var screenGeometry
-    property bool maximizedExists: false
-    property bool visibleExists: false
     property bool activeExists: false
+    property bool maximizedExists: false
+    property bool fullscreenExists: false
+    property bool visibleExists: false
     property var abstractTasksModel: TaskManager.AbstractTasksModel
     property var isMaximized: abstractTasksModel.IsMaximized
     property var isActive: abstractTasksModel.IsActive
     property var isWindow: abstractTasksModel.IsWindow
     property var isFullScreen: abstractTasksModel.IsFullScreen
     property var isMinimized: abstractTasksModel.IsMinimized
-    property bool activeScreenOnly: main.configuration.CheckWindowsActiveScreen
+    property bool filterByActive: false
+    property bool filterByScreen: false
+    property bool trackLastActive: false
     readonly property string currentActivity: activityInfo.currentActivity
 
-    Connections {
-        target: main.configuration
-        function onValueChanged() {
-            updateWindowsinfo();
+    function getTopTask() {
+        let highestTask = null;
+        let maxStackingOrder = -1;
+        for (var i = 0; i < tasksModel.count; i++) {
+            const currentTask = tasksModel.index(i, 0);
+            if (currentTask === undefined || !tasksModel.data(currentTask, isWindow))
+                continue;
+
+            const stackingOrder = tasksModel.data(currentTask, abstractTasksModel.StackingOrder);
+            if (stackingOrder > maxStackingOrder) {
+                maxStackingOrder = stackingOrder;
+                highestTask = currentTask;
+            }
         }
+        return highestTask;
     }
 
-    signal updated
+    function updateWindowsInfo() {
+        let activeCount = 0;
+        let visibleCount = 0;
+        let maximizedCount = 0;
+        let fullscreenCount = 0;
+        for (var i = 0; i < tasksModel.count; i++) {
+            const currentTask = tasksModel.index(i, 0);
+            if (currentTask === undefined || !tasksModel.data(currentTask, isWindow))
+                continue;
+
+            if (filterByActive && !tasksModel.data(currentTask, isActive))
+                continue;
+
+            visibleCount += 1;
+            if (tasksModel.data(currentTask, isMaximized))
+                maximizedCount += 1;
+
+            if (tasksModel.data(currentTask, isFullScreen))
+                fullscreenCount += 1;
+        }
+
+        let _activeExists = tasksModel.data(tasksModel.activeTask, isActive) || false;
+        let _activeTask = null;
+        let _maximizedExists = maximizedCount > 0;
+        let _fullscreenExists = fullscreenCount > 0;
+        let _visibleExists = visibleCount > 0;
+        if (filterByActive && _activeExists) {
+            _activeTask = tasksModel.activeTask;
+        }
+
+        if (!_activeTask && trackLastActive) {
+            _activeTask = getTopTask();
+            _activeExists = Boolean(_activeTask);
+        }
+
+        if (_activeTask) {
+            _maximizedExists = tasksModel.data(_activeTask, isMaximized) || false;
+            _fullscreenExists = tasksModel.data(_activeTask, isFullScreen) || false;
+            _visibleExists = _activeExists;
+        }
+
+        activeExists = _activeExists;
+        fullscreenExists = _fullscreenExists;
+        maximizedExists = _maximizedExists;
+        visibleExists = _visibleExists;
+    }
+
+    Connections {
+        target: Plasmoid.configuration
+        function onValueChanged() {
+            Qt.callLater(root.update);
+        }
+    }
 
     TaskManager.VirtualDesktopInfo {
         id: virtualDesktopInfo
@@ -54,49 +100,47 @@ Item {
     }
 
     TaskManager.TasksModel {
-        id: model
+        id: tasksModel
+
         sortMode: TaskManager.TasksModel.SortVirtualDesktop
         groupMode: TaskManager.TasksModel.GroupDisabled
-        virtualDesktop: virtualDesktopInfo.currentDesktop
         activity: activityInfo.currentActivity
         screenGeometry: root.screenGeometry
-        filterByVirtualDesktop: true
-        filterByScreen: activeScreenOnly
+        filterByScreen: root.filterByScreen
         filterByActivity: true
         filterMinimized: true
-
         onDataChanged: {
-            Qt.callLater(() => {
-                root.updateWindowsinfo();
-            });
+            Qt.callLater(root.update);
         }
         onCountChanged: {
-            Qt.callLater(() => {
-                root.updateWindowsinfo();
-            });
+            Qt.callLater(root.update);
+        }
+        Component.onCompleted: {
+            // Plasma 6.7 per-output virtual desktops
+            // https://invent.kde.org/plasma/plasma-desktop/-/merge_requests/3427
+            if (tasksModel.hasOwnProperty("filterByCurrentVirtualDesktop")) {
+                tasksModel.filterByCurrentVirtualDesktop = true;
+            } else {
+                tasksModel.virtualDesktop = Qt.binding(function () {
+                    return virtualDesktopInfo.currentDesktop;
+                });
+                tasksModel.filterByVirtualDesktop = true;
+            }
         }
     }
 
-    function updateWindowsinfo() {
-        let activeCount = 0;
-        let visibleCount = 0;
-        let maximizedCount = 0;
-        for (var i = 0; i < model.count; i++) {
-            const currentTask = model.index(i, 0);
-            if (currentTask === undefined)
-                continue;
-            if (model.data(currentTask, isWindow) && !model.data(currentTask, isMinimized)) {
-                visibleCount += 1;
-                if (model.data(currentTask, isMaximized) || model.data(currentTask, isFullScreen))
-                    maximizedCount += 1;
-                if (model.data(currentTask, isActive))
-                    activeCount += 1;
-            }
+    function update() {
+        if (!updateTimer.running) {
+            updateTimer.start();
         }
+    }
 
-        visibleExists = visibleCount > 0;
-        maximizedExists = maximizedCount > 0;
-        activeExists = activeCount > 0;
-        root.updated();
+    Timer {
+        id: updateTimer
+
+        interval: 5
+        onTriggered: {
+            root.updateWindowsInfo();
+        }
     }
 }
