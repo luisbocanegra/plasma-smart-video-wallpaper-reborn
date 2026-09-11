@@ -179,6 +179,7 @@ function getLastVideo(dayNightCycleEnabled, dayNightPhase, configuration, videos
 
 function dumpProps(obj) {
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  console.log(obj);
   for (var k of Object.keys(obj)) {
     const val = obj[k];
     console.log(k + "=" + val + "\n");

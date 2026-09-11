@@ -430,7 +430,7 @@ WallpaperItem {
                         text += `inLockScreen: ${main.lockScreenMode}\n`;
                         text += `screenLocked: ${main.screenLocked}\n`;
                         text += `showBlur: ${main.showBlur}\n`;
-                        text += `dayNightPhase: ${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]}\n`;
+                        text += `dayNightPhase: ${main.dayNightPhase} (${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]})\n`;
                         text += `dayNightCycleMode: ${["disabled", "dayNightCycle", "time", "plasmaStyle", "alwaysDay", "alwaysNight"][main.configuration.DayNightCycleMode]}\n`;
                         text += `id: ${Plasmoid.id}\n`;
                         text += `Audio Device: ${player.player.currentAudioDevice}`;
@@ -539,34 +539,23 @@ WallpaperItem {
     }
 
     onDayNightCycleEnabledChanged: {
-        if (isLoading) {
-            return;
-        }
-        updateVideosConfig();
+        Qt.callLater(updateVideosConfig);
     }
     onDayNightPhaseChanged: {
-        if (isLoading) {
-            return;
-        }
-        updateVideosConfig();
+        Qt.callLater(updateVideosConfig);
+        printLog("DayNight phase changed: " + dayNightPhase);
     }
     onVideoUrlsChanged: {
-        if (isLoading) {
-            return;
-        }
-        updateVideosConfig();
+        Qt.callLater(updateVideosConfig);
     }
     onRandomModeChanged: {
-        if (isLoading) {
-            return;
-        }
-        updateVideosConfig();
+        Qt.callLater(updateVideosConfig);
         printLog("Random mode changed: " + main.randomMode);
     }
 
     Component.onCompleted: {
         startTimer.start();
-        updateVideosConfig();
+        Qt.callLater(updateVideosConfig);
         Qt.callLater(() => {
             player.currentSource = Qt.binding(() => {
                 return main.currentSource;
