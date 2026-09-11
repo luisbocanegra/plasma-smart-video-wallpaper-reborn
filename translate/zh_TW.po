@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 14:59+0000\n"
+"POT-Creation-Date: 2026-09-11 20:14+0000\n"
 "PO-Revision-Date: 2026-07-02 03:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -120,7 +120,7 @@ msgstr "警告"
 msgid "Click to show"
 msgstr "點擊以顯示"
 
-#: package/contents/ui/config.qml:292 package/contents/ui/config.qml:1252
+#: package/contents/ui/config.qml:292 package/contents/ui/config.qml:1251
 #, kde-format
 msgid "Videos"
 msgstr "影片"
@@ -202,7 +202,7 @@ msgstr "調整大小並切割"
 msgid "Day-night switch:"
 msgstr ""
 
-#: package/contents/ui/config.qml:394 package/contents/ui/config.qml:1316
+#: package/contents/ui/config.qml:394 package/contents/ui/config.qml:1315
 #, fuzzy, kde-format
 msgid "Disabled"
 msgstr "全部停用"
@@ -542,7 +542,7 @@ msgstr ""
 msgid "Select to copy"
 msgstr "選取來複製"
 
-#: package/contents/ui/config.qml:1232
+#: package/contents/ui/config.qml:1233
 #, kde-format
 msgid ""
 "No items found \n"
@@ -551,91 +551,91 @@ msgstr ""
 "找不到任何項目 \n"
 " 新增或拖放檔案至此"
 
-#: package/contents/ui/config.qml:1255
+#: package/contents/ui/config.qml:1254
 #, kde-format
 msgid "Actions…"
 msgstr "動作…"
 
-#: package/contents/ui/config.qml:1261
+#: package/contents/ui/config.qml:1260
 #, kde-format
 msgid "Disable all"
 msgstr "全部停用"
 
-#: package/contents/ui/config.qml:1266
+#: package/contents/ui/config.qml:1265
 #, kde-format
 msgid "Enable all"
 msgstr "全部啟用"
 
-#: package/contents/ui/config.qml:1271
+#: package/contents/ui/config.qml:1270
 #, kde-format
 msgid "Swap enabled state"
 msgstr "切換啟用狀態"
 
-#: package/contents/ui/config.qml:1276
+#: package/contents/ui/config.qml:1275
 #, kde-format
 msgid "Remove all"
 msgstr "全部移除"
 
-#: package/contents/ui/config.qml:1279
+#: package/contents/ui/config.qml:1278
 #, kde-format
 msgid "Remove all media?"
 msgstr "要移除所有媒體嗎？"
 
-#: package/contents/ui/config.qml:1289
+#: package/contents/ui/config.qml:1288
 #, kde-format
 msgid "Pick a file…"
 msgstr "挑選檔案…"
 
-#: package/contents/ui/config.qml:1294
+#: package/contents/ui/config.qml:1293
 #, kde-format
 msgid "Enter path or url"
 msgstr "輸入路徑或網址"
 
-#: package/contents/ui/config.qml:1312
+#: package/contents/ui/config.qml:1311
 #, kde-format
 msgid "Night"
 msgstr ""
 
-#: package/contents/ui/config.qml:1313
+#: package/contents/ui/config.qml:1312
 #, kde-format
 msgid "Sunrise"
 msgstr ""
 
-#: package/contents/ui/config.qml:1314
+#: package/contents/ui/config.qml:1313
 #, kde-format
 msgid "Day"
 msgstr ""
 
-#: package/contents/ui/config.qml:1315
+#: package/contents/ui/config.qml:1314
 #, kde-format
 msgid "Sunset"
 msgstr ""
 
-#: package/contents/ui/config.qml:1352
+#: package/contents/ui/config.qml:1350
 #, kde-format
 msgid "Whether or not this video will be played"
 msgstr "是否播放這個影片"
 
-#: package/contents/ui/config.qml:1372
+#: package/contents/ui/config.qml:1370
 #, kde-format
 msgid "Local file or static url"
 msgstr "本地檔案或固定網址"
 
-#: package/contents/ui/config.qml:1403
+#: package/contents/ui/config.qml:1401
 #, kde-format
 msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
 msgstr "這個影片的播放速度。最低數值是 0.01，設為 0.0 則會忽略此設定。"
 
-#: package/contents/ui/config.qml:1420
+#: package/contents/ui/config.qml:1418
 #, kde-format
 msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr "這個影片的替代播放速度。最低數值是 0.01，設為 0.0 則會忽略此設定。"
 
-#: package/contents/ui/config.qml:1447
+#: package/contents/ui/config.qml:1442
 #, kde-format
 msgid ""
 "Phase of the day at which this video will play. If set to <strong>Disabled</"
@@ -643,7 +643,7 @@ msgid ""
 "<strong>%1</strong>"
 msgstr ""
 
-#: package/contents/ui/config.qml:1465
+#: package/contents/ui/config.qml:1457
 #, kde-format
 msgid ""
 "If enabled the video will repeat instead of playing the next one.<br>Use "
@@ -653,37 +653,37 @@ msgstr ""
 "啟用時影片結束時會重複播放而非播放下一個影片。<br>若要播放下一個影片，請使用"
 "桌面右鍵選單的 <strong>下一個影片</strong> 選項。"
 
-#: package/contents/ui/config.qml:1494
+#: package/contents/ui/config.qml:1486
 #, kde-format
 msgid "Preview…"
 msgstr "預覽…"
 
-#: package/contents/ui/config.qml:1501
+#: package/contents/ui/config.qml:1493
 #, kde-format
 msgid "Open containing folder"
 msgstr "開啟包含資料夾"
 
-#: package/contents/ui/config.qml:1509
+#: package/contents/ui/config.qml:1501
 #, kde-format
 msgid "Play this file only (disable all others)"
 msgstr "僅播放此檔案（停用其他所有檔案）"
 
-#: package/contents/ui/config.qml:1519
+#: package/contents/ui/config.qml:1511
 #, kde-format
 msgid "Remove media?"
 msgstr "要移除媒體嗎？"
 
-#: package/contents/ui/config.qml:1542
+#: package/contents/ui/config.qml:1534
 #, kde-format
 msgid "Pick a video file"
 msgstr "挑選影片檔案"
 
-#: package/contents/ui/config.qml:1543
+#: package/contents/ui/config.qml:1535
 #, kde-format
 msgid "All files"
 msgstr "所有檔案"
 
-#: package/contents/ui/config.qml:1543
+#: package/contents/ui/config.qml:1535
 #, kde-format
 msgid "Video files"
 msgstr "影片檔案"
@@ -693,37 +693,37 @@ msgstr "影片檔案"
 msgid "No video source \n"
 msgstr "沒有影片來源 \n"
 
-#: package/contents/ui/main.qml:599
+#: package/contents/ui/main.qml:588
 #, kde-format
 msgid "Next Video"
 msgstr "下一個影片"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:598
 #, kde-format
 msgid "Pause"
 msgstr "暫停"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:598
 #, kde-format
 msgid "Play"
 msgstr "播放"
 
-#: package/contents/ui/main.qml:611
+#: package/contents/ui/main.qml:600
 #, kde-format
 msgid "Default Playback"
 msgstr "預設播放"
 
-#: package/contents/ui/main.qml:632
+#: package/contents/ui/main.qml:621
 #, kde-format
 msgid "Mute"
 msgstr "靜音"
 
-#: package/contents/ui/main.qml:632
+#: package/contents/ui/main.qml:621
 #, kde-format
 msgid "Unmute"
 msgstr "解除靜音"
 
-#: package/contents/ui/main.qml:634
+#: package/contents/ui/main.qml:623
 #, kde-format
 msgid "Default Muting"
 msgstr "預設靜音"
