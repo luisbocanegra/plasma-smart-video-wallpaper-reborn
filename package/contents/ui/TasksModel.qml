@@ -85,7 +85,7 @@ Item {
     }
 
     Connections {
-        target: Plasmoid.configuration
+        target: main.configuration
         function onValueChanged() {
             Qt.callLater(root.update);
         }
