@@ -1433,8 +1433,10 @@ ColumnLayout {
                                 }
                                 checkable: true
                                 checked: itemDelegate.isPhase
-                                highlighted: itemDelegate.isPhase
-                                onClicked: videosModel.updateItem(itemDelegate.index, "dayNightPhase", (itemDelegate.dayNightPhase + 1) % 5)
+                                onClicked: {
+                                    videosModel.updateItem(itemDelegate.index, "dayNightPhase", (itemDelegate.dayNightPhase + 1) % 5);
+                                    checked = itemDelegate.isPhase;
+                                }
                                 Layout.fillHeight: true
                                 Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
