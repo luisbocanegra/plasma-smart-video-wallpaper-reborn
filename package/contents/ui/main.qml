@@ -571,7 +571,13 @@ WallpaperItem {
         function onAboutToQuit() {
             main.configuration.LastVideoPosition = player.player.position;
             main.configuration.writeConfig();
+            printLog("About to quit. Last video position saved:", main.configuration.LastVideoPosition);
         }
+    }
+    Component.onDestruction: {
+        main.configuration.LastVideoPosition = player.player.position;
+        main.configuration.writeConfig();
+        printLog("Component on destruction. Last video position saved:", main.configuration.LastVideoPosition);
     }
     Item {
         onWindowChanged: window => {
