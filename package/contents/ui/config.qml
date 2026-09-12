@@ -71,6 +71,7 @@ ColumnLayout {
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
+    property alias cfg_AudioFadeInOutDuration: audioFadeInOutDuration.value
     property alias cfg_DayNightCycleMode: dayNightCycleMode.currentValue
     property alias cfg_DayNightCycleSunriseTime: dayNightCycleSunriseTime.value
     property alias cfg_DayNightCycleSunsetTime: dayNightCycleSunsetTime.value
@@ -842,6 +843,21 @@ ColumnLayout {
                 }
                 ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Reset to default")
                 ToolTip.visible: hovered
+            }
+        }
+
+        RowLayout {
+            visible: root.currentTab === 1 && root.cfg_MuteMode !== 5
+            Label {
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Audio fade in/out (seconds):")
+            }
+            SpinBox {
+                id: audioFadeInOutDuration
+                from: 0
+                to: 10
+            }
+            Kirigami.ContextualHelpButton {
+                toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Gradually increase and decrease the volume at the beginning and end of videos. If crossfade is enabled, the final volume is a multiplication of the volume produced by the crossfade and the volume produced by the audio fade in/out.")
             }
         }
 

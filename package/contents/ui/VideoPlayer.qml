@@ -2,10 +2,11 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtMultimedia
 import Qt5Compat.GraphicalEffects
+import "code/utils.js" as Utils
 
 Item {
     id: root
-    property real volume: 1.0
+    property real globalVolume: 1.0
     property int fillBlurRadius: 32
     property bool fillBlur: true
     property string audioOutputDevice
@@ -22,6 +23,27 @@ Item {
     property bool shouldPlay: false
     property int lastVideoPosition: 0
     property bool debugEnabled: false
+
+    property int audioFadeInOutDuration: 5000
+    property real fadeInOutRatio: {
+        if (audioFadeInOutDuration === 0) {
+            return 1;
+        } else if (position < audioFadeInOutDuration) {
+            return position / audioFadeInOutDuration;
+        } else if (remaining < audioFadeInOutDuration) {
+            return remaining / audioFadeInOutDuration;
+        }
+        return 1;
+    }
+
+    property real audioCrossfadeOutRatio: {
+        if (crossfadeDuration === 0) {
+            return 1;
+        } else if (remaining < crossfadeDuration) {
+            return remaining / crossfadeDuration;
+        }
+        return 1;
+    }
 
     // Crossfade must not be longer than the shortest video or the fade becomes glitchy
     // we don't know the length until a video gets played, so the crossfade duration
@@ -41,8 +63,10 @@ Item {
     readonly property alias duration: player.duration
     readonly property alias videoHeight: videoOutput.contentRect.height
     readonly property alias videoWidth: videoOutput.contentRect.width
+    readonly property int remaining: duration - position
     readonly property bool showFillBlur: root.fillBlur && root.fitScale !== 1
     readonly property string currentAudioDevice: audioOutput.device ? audioOutput.device.description : i18n("Unknown")
+    readonly property alias volume: audioOutput.volume
     readonly property real fitScale: {
         if (height > videoHeight) {
             return height / videoHeight;
@@ -93,7 +117,7 @@ Item {
 
     AudioOutput {
         id: audioOutput
-        volume: root.opacity * root.volume
+        volume: root.opacity * root.globalVolume * Utils.easeOutCubic(root.fadeInOutRatio) * root.audioCrossfadeOutRatio
         device: {
             let output;
             if (root.audioOutputDevice !== "") {
@@ -173,10 +197,9 @@ Item {
             if (duration < 1 || position < 1 || root.ending || loops === MediaPlayer.Infinite) {
                 return;
             }
-            const remaining = duration - position;
             //FIXME: adding 500/200 reduces the chances of the background from showing between videos
             // this assumes the video will load during that window, which isn't always the case
-            if (root.crossfadeEnabled ? remaining < root.crossfadeDuration + 500 : remaining < 200) {
+            if (root.crossfadeEnabled ? root.remaining < root.crossfadeDuration + 500 : root.remaining < 200) {
                 root.ending = true;
                 root.aboutToFinish();
             }

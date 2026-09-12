@@ -190,5 +190,8 @@
       <label>Saved dark light schedule state</label>
       <default></default>
     </entry>
+    <entry name="AudioFadeInOutDuration" type="Int">
+      <default>0</default>
+    </entry>
   </group>
 </kcfg>

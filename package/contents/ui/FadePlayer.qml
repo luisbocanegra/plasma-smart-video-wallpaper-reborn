@@ -9,12 +9,13 @@ import "code/enum.js" as Enum
 StackView {
     id: root
     property var currentSource
-    property real volume: 1.0
+    property real globalVolume: 1.0
     property bool muted: true
     property real globalPlaybackRate: 1
     property int fillMode
     property bool crossfadeEnabled: false
     property int targetCrossfadeDuration: 1000
+    property int audioFadeInOutDuration: 0
     property bool multipleVideos: false
     property bool resumeLastVideo: true
     property int lastVideoPosition: 0
@@ -47,12 +48,12 @@ StackView {
         playbackRate = Math.max(rate, 0.01);
     }
 
-    property list<var> propertiesMonitor: [currentSource, volume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate]
+    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration]
 
     onPropertiesMonitorChanged: {
         updatePlaybackRate();
         if (root.currentItem) {
-            root.currentItem.volume = root.volume;
+            root.currentItem.globalVolume = root.globalVolume;
             root.currentItem.muted = root.muted;
             root.currentItem.fillMode = root.fillMode;
             root.currentItem.targetCrossfadeDuration = root.targetCrossfadeDuration;
@@ -63,6 +64,7 @@ StackView {
             root.currentItem.audioOutputDevice = root.audioOutputDevice;
             root.currentItem.crossfadeEnabled = root.crossfadeEnabled;
             root.currentItem.debugEnabled = root.debugEnabled;
+            root.currentItem.audioFadeInOutDuration = root.audioFadeInOutDuration;
         }
     }
 
@@ -99,7 +101,7 @@ StackView {
         const baseVideo = createVideoComponent();
         const properties = {
             "playerSource": root.currentSource,
-            "volume": root.volume,
+            "globalVolume": root.globalVolume,
             "loops": root.loops,
             "fillBlur": root.fillBlur,
             "fillBlurRadius": root.fillBlurRadius,
@@ -116,7 +118,8 @@ StackView {
             "changeWallpaperMode": root.changeWallpaperMode,
             "shouldPlay": Qt.binding(() => root.shouldPlay),
             "lastVideoPosition": root.resumeLastVideo && root._restoreLastPosition ? root.lastVideoPosition : 0,
-            "debugEnabled": root.debugEnabled
+            "debugEnabled": root.debugEnabled,
+            "audioFadeInOutDuration": root.audioFadeInOutDuration
         };
         pendingVideo = baseVideo.createObject(root, properties);
 
