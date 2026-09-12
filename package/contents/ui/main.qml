@@ -76,21 +76,21 @@ WallpaperItem {
             return false;
         }
 
-        let play = false;
+        let pause = false;
         switch (main.configuration.PauseMode) {
         case Enum.PauseMode.MaximizedOrFullScreen:
-            play = !windowModel.maximizedExists;
+            pause = windowModel.maximizedExists || windowModel.fullscreenExists;
             break;
         case Enum.PauseMode.ActiveWindowPresent:
-            play = !windowModel.activeExists;
+            pause = windowModel.activeExists;
             break;
         case Enum.PauseMode.WindowVisible:
-            play = !windowModel.visibleExists;
+            pause = windowModel.visibleExists;
             break;
         case Enum.PauseMode.Never:
-            play = true;
+            pause = false;
         }
-        return play;
+        return !pause;
     }
     property bool playing: {
         return ((shouldPlay && !batteryPausesVideo && !screenLocked && !screenIsOff && !effectPauseVideo && isCurrentActivity) || effectPlayVideo) && hasVideos;
