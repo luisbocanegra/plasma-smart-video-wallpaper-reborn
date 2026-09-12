@@ -344,13 +344,14 @@ WallpaperItem {
             fillMode: main.configuration.FillMode
             fillBlur: main.configuration.FillBlur && !main.batteryDisablesBlur
             fillBlurRadius: main.configuration.FillBlurRadius
-            volume: main.volume
+            globalVolume: main.volume
             globalPlaybackRate: main.playbackRate
             useAlternativePlaybackRate: main.useAlternativePlaybackRate
             alternativePlaybackRateGlobal: main.configuration.AlternativePlaybackRate
             resumeLastVideo: main.configuration.ResumeLastVideo
             audioOutputDevice: main.configuration.AudioOutputDevice
             shouldPlay: main.playing
+            audioFadeInOutDuration: main.configuration.AudioFadeInOutDuration * 1000
         }
     }
     FastBlur {
@@ -433,7 +434,9 @@ WallpaperItem {
                         text += `dayNightPhase: ${main.dayNightPhase} (${["night", "sunrise", "day", "sunset", "unknown"][main.dayNightPhase]})\n`;
                         text += `dayNightCycleMode: ${["disabled", "dayNightCycle", "time", "plasmaStyle", "alwaysDay", "alwaysNight"][main.configuration.DayNightCycleMode]}\n`;
                         text += `id: ${Plasmoid.id}\n`;
-                        text += `Audio Device: ${player.player.currentAudioDevice}`;
+                        text += `volume: ${player.player.volume.toFixed(2)}\n`;
+                        text += `audioFadeInOutDuration: ${player.player.audioFadeInOutDuration}\n`;
+                        text += `currentAudioDevice: ${player.player.currentAudioDevice}`;
                         return text;
                     }
                 }
