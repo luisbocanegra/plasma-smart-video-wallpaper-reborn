@@ -77,7 +77,7 @@
       <default></default>
     </entry>
     <entry name="EffectsPlayVideo" type="String">
-      <default></default>
+      <default>windowaperture</default>
     </entry>
     <entry name="EffectsHideBlur" type="String">
       <default></default>
