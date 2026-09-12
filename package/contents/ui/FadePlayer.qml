@@ -169,6 +169,7 @@ StackView {
             from: 0
             to: 1
             duration: root.currentItem.crossfadeDuration ?? 0
+            easing.type: Easing.InOutCubic
         }
         enabled: root.crossfadeEnabled
     }
