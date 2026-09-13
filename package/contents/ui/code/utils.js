@@ -249,10 +249,10 @@ function gVariantTupleToArray(str) {
 }
 
 /**
- * Easing curve for a cubic (t^3) function: decelerating to zero velocity.
+ * Easing curve for a cubic (t^3) function: acceleration until halfway, then deceleration.
  * @param {real} x The input value between 0 and 1.
  * @returns {real} The eased output value.
  */
-function easeOutCubic(x) {
-  return 1 - Math.pow(1 - x, 3);
+function easeInOutCubic(x) {
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }

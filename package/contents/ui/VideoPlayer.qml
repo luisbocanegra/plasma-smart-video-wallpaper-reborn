@@ -29,18 +29,19 @@ Item {
         if (audioFadeInOutDuration === 0) {
             return 1;
         } else if (position < audioFadeInOutDuration) {
-            return position / audioFadeInOutDuration;
+            return Utils.easeInOutCubic(position / audioFadeInOutDuration);
         } else if (remaining < audioFadeInOutDuration) {
-            return remaining / audioFadeInOutDuration;
+            return Utils.easeInOutCubic(remaining / audioFadeInOutDuration);
         }
         return 1;
     }
 
+    // fade in is done by the StackView transition
     property real audioCrossfadeOutRatio: {
         if (crossfadeDuration === 0) {
             return 1;
         } else if (remaining < crossfadeDuration) {
-            return remaining / crossfadeDuration;
+            return Utils.easeInOutCubic(remaining / crossfadeDuration);
         }
         return 1;
     }
@@ -117,7 +118,7 @@ Item {
 
     AudioOutput {
         id: audioOutput
-        volume: root.opacity * root.globalVolume * Utils.easeOutCubic(root.fadeInOutRatio) * root.audioCrossfadeOutRatio
+        volume: root.globalVolume * root.opacity * root.fadeInOutRatio * root.audioCrossfadeOutRatio
         device: {
             let output;
             if (root.audioOutputDevice !== "") {
