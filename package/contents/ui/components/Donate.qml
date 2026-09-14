@@ -24,7 +24,7 @@ ColumnLayout {
         Repeater {
             model: [
                 {
-                    label: "GitHub Sponsors",
+                    label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "GitHub Sponsors"),
                     icon: Qt.resolvedUrl("../../icons/githubsponsors.svg"),
                     url: "https://github.com/sponsors/luisbocanegra",
                     backgroundColor: "#29313C"
