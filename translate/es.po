@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 15:08+0000\n"
+"POT-Creation-Date: 2026-09-14 03:06+0000\n"
 "PO-Revision-Date: 2026-02-07 02:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -44,6 +44,11 @@ msgstr ""
 "para que pueda dedicar más tiempo a mantener y mejorar este y <a "
 "href=\"%1\">mis otros proyectos</a>."
 
+#: package/contents/ui/components/Donate.qml:27
+#, kde-format
+msgid "GitHub Sponsors"
+msgstr ""
+
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
 msgid "You can also"
@@ -63,6 +68,93 @@ msgstr "Calificar en la KDE Store"
 #, kde-format
 msgid "About"
 msgstr "Acerca de"
+
+#: package/contents/ui/components/Header.qml:46
+#, kde-format
+msgid "Changelog"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:51
+#, kde-format
+msgid "Releases"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:57
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Discord"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:63
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Matrix"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:71
+#, kde-format
+msgid "Project page"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:74
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "GitHub"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:78
+#, fuzzy, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "KDE Store"
+msgstr "Calificar en la KDE Store"
+
+#: package/contents/ui/components/Header.qml:84
+#, kde-format
+msgid "Issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:87
+#, kde-format
+msgid "Current issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:91
+#, kde-format
+msgid "Report a bug"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:95
+#, kde-format
+msgid "Request a feature"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:101
+#, kde-format
+msgid "Help"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:104
+#, kde-format
+msgid "Discussions"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:108
+#, kde-format
+msgid "Send an email"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:116
+#, kde-format
+msgid "More projects"
+msgstr ""
 
 #: package/contents/ui/config.qml:103 package/contents/ui/config.qml:144
 #: package/contents/ui/config.qml:584 package/contents/ui/config.qml:780
@@ -211,9 +303,19 @@ msgstr ""
 msgid "Disabled"
 msgstr "Deshabilitar todo"
 
+#: package/contents/ui/config.qml:397
+#, fuzzy, kde-format
+msgid "All videos will be played"
+msgstr "Si este vídeo se reproducirá o no"
+
 #: package/contents/ui/config.qml:400
 #, kde-format
 msgid "Plasma style"
+msgstr ""
+
+#: package/contents/ui/config.qml:402
+#, kde-format
+msgid "Current Plasma style's color scheme (light/dark)"
 msgstr ""
 
 #: package/contents/ui/config.qml:405
@@ -221,9 +323,19 @@ msgstr ""
 msgid "Custom times"
 msgstr ""
 
+#: package/contents/ui/config.qml:407
+#, kde-format
+msgid "Set custom sunrise/sunset times"
+msgstr ""
+
 #: package/contents/ui/config.qml:410
 #, kde-format
 msgid "Day-night cycle"
+msgstr ""
+
+#: package/contents/ui/config.qml:412
+#, kde-format
+msgid "Use KDE's Day-Night Cycle service"
 msgstr ""
 
 #: package/contents/ui/config.qml:415
@@ -231,10 +343,20 @@ msgstr ""
 msgid "Always day"
 msgstr "Siempre"
 
+#: package/contents/ui/config.qml:417
+#, kde-format
+msgid "Only play videos set to the day phase"
+msgstr ""
+
 #: package/contents/ui/config.qml:420
 #, fuzzy, kde-format
 msgid "Always night"
 msgstr "Siempre"
+
+#: package/contents/ui/config.qml:422
+#, kde-format
+msgid "Only play videos set to the night phase"
+msgstr ""
 
 #: package/contents/ui/config.qml:456
 #, fuzzy, kde-format
@@ -686,6 +808,16 @@ msgstr ""
 "<br>Utilice <strong>Siguiente Vídeo</strong> en el menú contextual del "
 "Escritorio para reproducir el siguiente vídeo de la lista."
 
+#: package/contents/ui/config.qml:1489
+#, fuzzy, kde-format
+msgid "Pick a file"
+msgstr "Elige un archivo…"
+
+#: package/contents/ui/config.qml:1499
+#, kde-format
+msgid "More actions"
+msgstr ""
+
 #: package/contents/ui/config.qml:1504
 #, kde-format
 msgid "Preview…"
@@ -704,6 +836,11 @@ msgstr "Reproducir este archivo solamente (deshabilita todos los demás)"
 #: package/contents/ui/config.qml:1529
 #, kde-format
 msgid "Remove media?"
+msgstr "¿Quitar medios?"
+
+#: package/contents/ui/config.qml:1540
+#, fuzzy, kde-format
+msgid "Remove from list"
 msgstr "¿Quitar medios?"
 
 #: package/contents/ui/config.qml:1552
