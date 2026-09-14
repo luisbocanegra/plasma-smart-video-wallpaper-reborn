@@ -27,7 +27,9 @@ Item {
     property int loadingTime: 0
 
     property int audioFadeInOutDuration: 5000
-    property real fadeInOutRatio: {
+    property int loadAheadTime: 0
+
+    readonly property real fadeInOutRatio: {
         if (audioFadeInOutDuration === 0) {
             return 1;
         } else if (position < audioFadeInOutDuration) {
@@ -39,7 +41,7 @@ Item {
     }
 
     // fade in is done by the StackView transition
-    property real audioCrossfadeOutRatio: {
+    readonly property real audioCrossfadeOutRatio: {
         if (crossfadeDuration === 0) {
             return 1;
         } else if (remaining < crossfadeDuration) {
@@ -203,7 +205,7 @@ Item {
             }
             //FIXME: adding 500/200 reduces the chances of the background from showing between videos
             // this assumes the video will load during that window, which isn't always the case
-            if (root.crossfadeEnabled ? root.remaining < root.crossfadeDuration + 500 : root.remaining < 200) {
+            if (root.crossfadeEnabled ? root.remaining < Math.max(root.crossfadeDuration, root.loadAheadTime) : root.remaining < root.loadAheadTime) {
                 root.ending = true;
                 root.aboutToFinish();
             }

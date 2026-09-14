@@ -193,5 +193,8 @@
     <entry name="AudioFadeInOutDuration" type="Int">
       <default>0</default>
     </entry>
+    <entry name="LoadAheadTime" type="Int">
+      <default>1000</default>
+    </entry>
   </group>
 </kcfg>
