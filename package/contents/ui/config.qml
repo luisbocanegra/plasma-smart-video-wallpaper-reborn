@@ -394,32 +394,32 @@ ColumnLayout {
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Disabled"),
                         value: Enum.DayNightCycleMode.Disabled,
-                        description: "All videos will be played"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "All videos will be played")
                     },
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Plasma style"),
                         value: Enum.DayNightCycleMode.PlasmaStyle,
-                        description: "Current Plasma style's color scheme (light/dark)"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Current Plasma style's color scheme (light/dark)")
                     },
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Custom times"),
                         value: Enum.DayNightCycleMode.Time,
-                        description: "Set custom sunrise/sunset times"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Set custom sunrise/sunset times")
                     },
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Day-night cycle"),
                         value: Enum.DayNightCycleMode.DayNightCycle,
-                        description: "Use KDE's Day-Night Cycle service"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Use KDE's Day-Night Cycle service")
                     },
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always day"),
                         value: Enum.DayNightCycleMode.AlwaysDay,
-                        description: "Only play videos set to the day phase"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Only play videos set to the day phase")
                     },
                     {
                         text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Always night"),
                         value: Enum.DayNightCycleMode.AlwaysNight,
-                        description: "Only play videos set to the night phase"
+                        description: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Only play videos set to the night phase")
                     }
                 ]
                 textRole: "text"
@@ -1486,7 +1486,7 @@ ColumnLayout {
                                 Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
-                                ToolTip.text: "Pick a file"
+                                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Pick a file")
                             }
                             Button {
                                 icon.name: "overflow-menu-symbolic"
@@ -1496,7 +1496,7 @@ ColumnLayout {
                                 Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
-                                ToolTip.text: "More actions"
+                                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "More actions")
                                 Menu {
                                     id: mediaMenu
                                     y: parent.height
@@ -1537,7 +1537,7 @@ ColumnLayout {
                                 Kirigami.Theme.inherit: true
                                 ToolTip.delay: 1000
                                 ToolTip.visible: hovered
-                                ToolTip.text: "Remove from list"
+                                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Remove from list")
                             }
                         }
                     }

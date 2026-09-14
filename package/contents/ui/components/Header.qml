@@ -43,24 +43,24 @@ RowLayout {
         y: linksButton.height
         x: linksButton.x
         Action {
-            text: "Changelog"
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Changelog")
             onTriggered: Qt.openUrlExternally(ghRepo + "/blob/main/CHANGELOG.md")
             icon.name: "view-calendar-list-symbolic"
         }
         Action {
-            text: "Releases"
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Releases")
             onTriggered: Qt.openUrlExternally(ghRepo + "/releases")
             icon.name: "update-none-symbolic"
         }
 
         Action {
-            text: "Discord"
+            text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Proper noun. If you wish, transliterate it for easier reading. Otherwise, ignore.", "Discord")
             icon.source: Qt.resolvedUrl("../../icons/discord.svg")
             onTriggered: Qt.openUrlExternally("https://discord.gg/ZqD75dzKTe")
         }
 
         Action {
-            text: "Matrix"
+            text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Proper noun. If you wish, transliterate it for easier reading. Otherwise, ignore.", "Matrix")
             icon.source: Qt.resolvedUrl("../../icons/matrix_logo.svg")
             onTriggered: Qt.openUrlExternally(matrixRoom)
         }
@@ -68,44 +68,44 @@ RowLayout {
         MenuSeparator {}
 
         Menu {
-            title: "Project page"
+            title: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Project page")
             icon.name: "globe"
             Action {
-                text: "GitHub"
+                text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Proper noun. If you wish, transliterate it for easier reading. Otherwise, ignore.", "GitHub")
                 onTriggered: Qt.openUrlExternally(ghRepo)
             }
             Action {
-                text: "KDE Store"
+                text: i18ndc("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Proper noun. If you wish, transliterate it for easier reading. Otherwise, ignore.", "KDE Store")
                 onTriggered: Qt.openUrlExternally(kdeStore)
             }
         }
 
         Menu {
-            title: "Issues"
+            title: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Issues")
             icon.name: "project-open-symbolic"
             Action {
-                text: "Current issues"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Current issues")
                 onTriggered: Qt.openUrlExternally(ghRepo + "/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen")
             }
             Action {
-                text: "Report a bug"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Report a bug")
                 onTriggered: Qt.openUrlExternally(ghRepo + "/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=%5BBug%5D%3A+")
             }
             Action {
-                text: "Request a feature"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Request a feature")
                 onTriggered: Qt.openUrlExternally(ghRepo + "/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5BFeature+Request%5D%3A+")
             }
         }
 
         Menu {
-            title: "Help"
+            title: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Help")
             icon.name: "question-symbolic"
             Action {
-                text: "Discussions"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Discussions")
                 onTriggered: Qt.openUrlExternally(ghRepo + "/discussions")
             }
             Action {
-                text: "Send an email"
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Send an email")
                 onTriggered: Qt.openUrlExternally(email)
             }
         }
@@ -113,7 +113,7 @@ RowLayout {
         MenuSeparator {}
 
         Action {
-            text: "More projects"
+            text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "More projects")
             onTriggered: Qt.openUrlExternally(projects)
             icon.name: "starred-symbolic"
         }
