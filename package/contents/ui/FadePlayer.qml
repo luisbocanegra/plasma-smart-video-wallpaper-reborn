@@ -16,6 +16,7 @@ StackView {
     property bool crossfadeEnabled: false
     property int targetCrossfadeDuration: 1000
     property int audioFadeInOutDuration: 0
+    property int loadAheadTime: 0
     property bool multipleVideos: false
     property bool resumeLastVideo: true
     property int lastVideoPosition: 0
@@ -48,7 +49,7 @@ StackView {
         playbackRate = Math.max(rate, 0.01);
     }
 
-    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration]
+    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime]
 
     onPropertiesMonitorChanged: {
         updatePlaybackRate();
@@ -65,6 +66,7 @@ StackView {
             root.currentItem.crossfadeEnabled = root.crossfadeEnabled;
             root.currentItem.debugEnabled = root.debugEnabled;
             root.currentItem.audioFadeInOutDuration = root.audioFadeInOutDuration;
+            root.currentItem.loadAheadTime = loadAheadTime;
         }
     }
 
@@ -119,7 +121,8 @@ StackView {
             "shouldPlay": Qt.binding(() => root.shouldPlay),
             "lastVideoPosition": root.resumeLastVideo && root._restoreLastPosition ? root.lastVideoPosition : 0,
             "debugEnabled": root.debugEnabled,
-            "audioFadeInOutDuration": root.audioFadeInOutDuration
+            "audioFadeInOutDuration": root.audioFadeInOutDuration,
+            "loadAheadTime": root.loadAheadTime
         };
         pendingVideo = baseVideo.createObject(root, properties);
 

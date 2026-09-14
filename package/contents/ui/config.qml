@@ -68,6 +68,7 @@ ColumnLayout {
     property alias cfg_BlurAnimationDuration: blurAnimationDurationSpinBox.value
     property alias cfg_CrossfadeEnabled: crossfadeEnabledCheckbox.checked
     property alias cfg_CrossfadeDuration: crossfadeDurationSpinBox.value
+    property alias cfg_LoadAheadTime: loadAheadTimeSpinBox.value
     property real cfg_PlaybackRate
     property real cfg_AlternativePlaybackRate
     property alias cfg_Volume: volumeSlider.value
@@ -750,6 +751,35 @@ ColumnLayout {
                 ToolTip.visible: hovered
                 Kirigami.Theme.inherit: false
                 flat: true
+            }
+        }
+
+        RowLayout {
+            visible: root.currentTab === 1
+            Kirigami.FormData.label: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Load ahead time:")
+            SpinBox {
+                id: loadAheadTimeSpinBox
+                from: 0
+                to: 2000
+                stepSize: 100
+                font.features: {
+                    "tnum": 1
+                }
+                readonly property regexp reExtractNum: /\D*?(-?\d*\.?,?\d*)\D*$/
+
+                validator: RegularExpressionValidator {
+                    regularExpression: loadAheadTimeSpinBox.reExtractNum
+                }
+
+                textFromValue: function (value, locale) {
+                    return i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "%1ms", value);
+                }
+                valueFromText: function (text, locale) {
+                    return Number.fromLocaleString(locale, reExtractNum.exec(text)[1]);
+                }
+            }
+            Kirigami.ContextualHelpButton {
+                toolTipText: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Loads the next video before the current one finishes to prevent blank frames between videos. Increase this value if you still see them.")
             }
         }
 

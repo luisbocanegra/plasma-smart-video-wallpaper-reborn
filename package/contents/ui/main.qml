@@ -360,6 +360,7 @@ WallpaperItem {
             audioOutputDevice: main.configuration.AudioOutputDevice
             shouldPlay: main.playing
             audioFadeInOutDuration: main.configuration.AudioFadeInOutDuration * 1000
+            loadAheadTime: main.configuration.LoadAheadTime
         }
     }
     FastBlur {
@@ -425,6 +426,7 @@ WallpaperItem {
                         text += `changeWallpaperMode: ${["Never", "Slideshow", `OnATimer time: ${changeTimer.interval}`][main.changeWallpaperMode]}\n`;
                         text += `crossfade: ${player.player.crossfadeEnabled}\n`;
                         text += `crossfadeDuration: ${player.targetCrossfadeDuration} current: ${player.player.crossfadeDuration}\n`;
+                        text += `loadAheadTime: ${player.player.loadAheadTime}\n`;
                         text += `multipleVideos: ${player.multipleVideos}\n`;
                         text += `mediaStatus: ${["NoMedia", "LoadingMedia", "LoadedMedia", "StalledMedia", "BufferingMedia", "BufferedMedia", "EndOfMedia", "InvalidMedia"][player.player.mediaStatus]}\n`;
                         text += `shouldPlay: ${main.shouldPlay}\n`;
