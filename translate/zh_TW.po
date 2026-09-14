@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 15:08+0000\n"
+"POT-Creation-Date: 2026-09-14 03:06+0000\n"
 "PO-Revision-Date: 2026-07-02 03:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -45,6 +45,11 @@ msgstr ""
 "如果您喜歡這個外掛程式，請考慮贊助或捐款讓我能夠花更多時間維護並改善這個專案"
 "以及<a href=\"%1\">我的其他專案</a>。"
 
+#: package/contents/ui/components/Donate.qml:27
+#, kde-format
+msgid "GitHub Sponsors"
+msgstr ""
+
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
 msgid "You can also"
@@ -64,6 +69,93 @@ msgstr "在 KDE Store 上評價"
 #, kde-format
 msgid "About"
 msgstr "關於"
+
+#: package/contents/ui/components/Header.qml:46
+#, kde-format
+msgid "Changelog"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:51
+#, kde-format
+msgid "Releases"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:57
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Discord"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:63
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Matrix"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:71
+#, kde-format
+msgid "Project page"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:74
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "GitHub"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:78
+#, fuzzy, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "KDE Store"
+msgstr "在 KDE Store 上評價"
+
+#: package/contents/ui/components/Header.qml:84
+#, kde-format
+msgid "Issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:87
+#, kde-format
+msgid "Current issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:91
+#, kde-format
+msgid "Report a bug"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:95
+#, kde-format
+msgid "Request a feature"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:101
+#, kde-format
+msgid "Help"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:104
+#, kde-format
+msgid "Discussions"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:108
+#, kde-format
+msgid "Send an email"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:116
+#, kde-format
+msgid "More projects"
+msgstr ""
 
 #: package/contents/ui/config.qml:103 package/contents/ui/config.qml:144
 #: package/contents/ui/config.qml:584 package/contents/ui/config.qml:780
@@ -207,9 +299,19 @@ msgstr ""
 msgid "Disabled"
 msgstr "全部停用"
 
+#: package/contents/ui/config.qml:397
+#, fuzzy, kde-format
+msgid "All videos will be played"
+msgstr "是否播放這個影片"
+
 #: package/contents/ui/config.qml:400
 #, kde-format
 msgid "Plasma style"
+msgstr ""
+
+#: package/contents/ui/config.qml:402
+#, kde-format
+msgid "Current Plasma style's color scheme (light/dark)"
 msgstr ""
 
 #: package/contents/ui/config.qml:405
@@ -217,9 +319,19 @@ msgstr ""
 msgid "Custom times"
 msgstr ""
 
+#: package/contents/ui/config.qml:407
+#, kde-format
+msgid "Set custom sunrise/sunset times"
+msgstr ""
+
 #: package/contents/ui/config.qml:410
 #, kde-format
 msgid "Day-night cycle"
+msgstr ""
+
+#: package/contents/ui/config.qml:412
+#, kde-format
+msgid "Use KDE's Day-Night Cycle service"
 msgstr ""
 
 #: package/contents/ui/config.qml:415
@@ -227,10 +339,20 @@ msgstr ""
 msgid "Always day"
 msgstr "總是"
 
+#: package/contents/ui/config.qml:417
+#, kde-format
+msgid "Only play videos set to the day phase"
+msgstr ""
+
 #: package/contents/ui/config.qml:420
 #, fuzzy, kde-format
 msgid "Always night"
 msgstr "總是"
+
+#: package/contents/ui/config.qml:422
+#, kde-format
+msgid "Only play videos set to the night phase"
+msgstr ""
 
 #: package/contents/ui/config.qml:456
 #, fuzzy, kde-format
@@ -667,6 +789,16 @@ msgstr ""
 "啟用時影片結束時會重複播放而非播放下一個影片。<br>若要播放下一個影片，請使用"
 "桌面右鍵選單的 <strong>下一個影片</strong> 選項。"
 
+#: package/contents/ui/config.qml:1489
+#, fuzzy, kde-format
+msgid "Pick a file"
+msgstr "挑選檔案…"
+
+#: package/contents/ui/config.qml:1499
+#, kde-format
+msgid "More actions"
+msgstr ""
+
 #: package/contents/ui/config.qml:1504
 #, kde-format
 msgid "Preview…"
@@ -685,6 +817,11 @@ msgstr "僅播放此檔案（停用其他所有檔案）"
 #: package/contents/ui/config.qml:1529
 #, kde-format
 msgid "Remove media?"
+msgstr "要移除媒體嗎？"
+
+#: package/contents/ui/config.qml:1540
+#, fuzzy, kde-format
+msgid "Remove from list"
 msgstr "要移除媒體嗎？"
 
 #: package/contents/ui/config.qml:1552

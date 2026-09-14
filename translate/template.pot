@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 15:08+0000\n"
+"POT-Creation-Date: 2026-09-14 03:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,11 @@ msgid ""
 "other projects</a>."
 msgstr ""
 
+#: package/contents/ui/components/Donate.qml:27
+#, kde-format
+msgid "GitHub Sponsors"
+msgstr ""
+
 #: package/contents/ui/components/Donate.qml:77
 #, kde-format
 msgid "You can also"
@@ -59,6 +64,93 @@ msgstr ""
 #: package/contents/ui/components/Header.qml:29
 #, kde-format
 msgid "About"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:46
+#, kde-format
+msgid "Changelog"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:51
+#, kde-format
+msgid "Releases"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:57
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Discord"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:63
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "Matrix"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:71
+#, kde-format
+msgid "Project page"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:74
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "GitHub"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:78
+#, kde-format
+msgctxt ""
+"Proper noun. If you wish, transliterate it for easier reading. Otherwise, "
+"ignore."
+msgid "KDE Store"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:84
+#, kde-format
+msgid "Issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:87
+#, kde-format
+msgid "Current issues"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:91
+#, kde-format
+msgid "Report a bug"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:95
+#, kde-format
+msgid "Request a feature"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:101
+#, kde-format
+msgid "Help"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:104
+#, kde-format
+msgid "Discussions"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:108
+#, kde-format
+msgid "Send an email"
+msgstr ""
+
+#: package/contents/ui/components/Header.qml:116
+#, kde-format
+msgid "More projects"
 msgstr ""
 
 #: package/contents/ui/config.qml:103 package/contents/ui/config.qml:144
@@ -198,9 +290,19 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+#: package/contents/ui/config.qml:397
+#, kde-format
+msgid "All videos will be played"
+msgstr ""
+
 #: package/contents/ui/config.qml:400
 #, kde-format
 msgid "Plasma style"
+msgstr ""
+
+#: package/contents/ui/config.qml:402
+#, kde-format
+msgid "Current Plasma style's color scheme (light/dark)"
 msgstr ""
 
 #: package/contents/ui/config.qml:405
@@ -208,9 +310,19 @@ msgstr ""
 msgid "Custom times"
 msgstr ""
 
+#: package/contents/ui/config.qml:407
+#, kde-format
+msgid "Set custom sunrise/sunset times"
+msgstr ""
+
 #: package/contents/ui/config.qml:410
 #, kde-format
 msgid "Day-night cycle"
+msgstr ""
+
+#: package/contents/ui/config.qml:412
+#, kde-format
+msgid "Use KDE's Day-Night Cycle service"
 msgstr ""
 
 #: package/contents/ui/config.qml:415
@@ -218,9 +330,19 @@ msgstr ""
 msgid "Always day"
 msgstr ""
 
+#: package/contents/ui/config.qml:417
+#, kde-format
+msgid "Only play videos set to the day phase"
+msgstr ""
+
 #: package/contents/ui/config.qml:420
 #, kde-format
 msgid "Always night"
+msgstr ""
+
+#: package/contents/ui/config.qml:422
+#, kde-format
+msgid "Only play videos set to the night phase"
 msgstr ""
 
 #: package/contents/ui/config.qml:456
@@ -650,6 +772,16 @@ msgid ""
 "next video in the list."
 msgstr ""
 
+#: package/contents/ui/config.qml:1489
+#, kde-format
+msgid "Pick a file"
+msgstr ""
+
+#: package/contents/ui/config.qml:1499
+#, kde-format
+msgid "More actions"
+msgstr ""
+
 #: package/contents/ui/config.qml:1504
 #, kde-format
 msgid "Preview…"
@@ -668,6 +800,11 @@ msgstr ""
 #: package/contents/ui/config.qml:1529
 #, kde-format
 msgid "Remove media?"
+msgstr ""
+
+#: package/contents/ui/config.qml:1540
+#, kde-format
+msgid "Remove from list"
 msgstr ""
 
 #: package/contents/ui/config.qml:1552
