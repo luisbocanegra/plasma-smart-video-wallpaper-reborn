@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 06:18+0000\n"
+"POT-Creation-Date: 2026-09-15 20:02+0000\n"
 "PO-Revision-Date: 2026-08-16 23:14+0800\n"
 "Last-Translator: \n"
 "Language-Team: KairikiFedora <13278297951@sina.cn>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.9\n"
 
-#: package/contents/ui/VideoPlayer.qml:73
+#: package/contents/ui/VideoPlayer.qml:89
 #, kde-format
 msgid "Unknown"
 msgstr "不明"

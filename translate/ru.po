@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 06:18+0000\n"
+"POT-Creation-Date: 2026-09-15 20:02+0000\n"
 "PO-Revision-Date: 2026-06-19 13:18+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: package/contents/ui/VideoPlayer.qml:73
+#: package/contents/ui/VideoPlayer.qml:89
 #, kde-format
 msgid "Unknown"
 msgstr "Неизвестно"
