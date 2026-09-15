@@ -18,7 +18,23 @@ Item {
     property alias fillMode: videoOutput.fillMode
     property alias loops: player.loops
     property alias position: player.position
-    property alias playbackRate: player.playbackRate
+    property real globalPlaybackRate: 1.0
+    property real alternativePlaybackRateGlobal: 0.5
+    property bool useAlternativePlaybackRate: false
+    property real videoPlaybackRate: playerSource?.playbackRate ?? 0
+    property real videoAlternativePlaybackRate: playerSource?.alternativePlaybackRate ?? 0
+    readonly property real playbackRate: {
+        let rate = 1;
+        if (root.useAlternativePlaybackRate) {
+            rate = root.videoAlternativePlaybackRate || root.alternativePlaybackRateGlobal;
+        } else {
+            rate = root.videoPlaybackRate || root.globalPlaybackRate;
+        }
+        // Ignore very small values as it makes the video go crazy fast, stops
+        // responding to this property and needs to be stopped to recover
+        // TODO: Check if this has been reported to Qt
+        return Math.max(rate, 0.01);
+    }
     property bool firstFrame: true
     property bool shouldPlay: false
     property int lastVideoPosition: 0
@@ -142,6 +158,7 @@ Item {
         videoOutput: videoOutput
         audioOutput: audioOutput
         source: root.playerSource?.filename ?? ""
+        playbackRate: root.playbackRate
         autoPlay: true
 
         onMediaStatusChanged: {

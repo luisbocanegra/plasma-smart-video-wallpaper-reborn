@@ -29,30 +29,16 @@ StackView {
     property bool useAlternativePlaybackRate: false
     property string audioOutputDevice
     property bool shouldPlay: true
-    property real playbackRate: 1
     property int loops: {
         if ((changeWallpaperMode === Enum.ChangeWallpaperMode.Never || !multipleVideos) && !crossfadeEnabled) {
             return MediaPlayer.Infinite;
         }
         return 1;
     }
-    function updatePlaybackRate() {
-        let rate = 1;
-        if (root.useAlternativePlaybackRate) {
-            rate = currentSource?.alternativePlaybackRate || alternativePlaybackRateGlobal;
-        } else {
-            rate = currentSource?.playbackRate || globalPlaybackRate;
-        }
-        // Ignore very small values as it makes the video go crazy fast, stops
-        // responding to this property and needs to be stopped to recover
-        // TODO: Check if this has been reported to Qt
-        playbackRate = Math.max(rate, 0.01);
-    }
 
     property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime]
 
     onPropertiesMonitorChanged: {
-        updatePlaybackRate();
         if (root.currentItem) {
             root.currentItem.globalVolume = root.globalVolume;
             root.currentItem.muted = root.muted;
@@ -66,7 +52,12 @@ StackView {
             root.currentItem.crossfadeEnabled = root.crossfadeEnabled;
             root.currentItem.debugEnabled = root.debugEnabled;
             root.currentItem.audioFadeInOutDuration = root.audioFadeInOutDuration;
-            root.currentItem.loadAheadTime = loadAheadTime;
+            root.currentItem.loadAheadTime = root.loadAheadTime;
+            root.currentItem.globalPlaybackRate = root.globalPlaybackRate;
+            root.currentItem.useAlternativePlaybackRate = root.useAlternativePlaybackRate;
+            root.currentItem.alternativePlaybackRateGlobal = root.alternativePlaybackRateGlobal;
+            root.currentItem.videoPlaybackRate = root.currentSource?.playbackRate ?? 0;
+            root.currentItem.videoAlternativePlaybackRate = root.currentSource?.alternativePlaybackRate ?? 0;
         }
     }
 
@@ -116,7 +107,11 @@ StackView {
             "fillMode": root.fillMode,
             "muted": root.muted,
             "audioOutputDevice": root.audioOutputDevice,
-            "playbackRate": Qt.binding(() => root.playbackRate),
+            "globalPlaybackRate": root.globalPlaybackRate,
+            "useAlternativePlaybackRate": root.useAlternativePlaybackRate,
+            "alternativePlaybackRateGlobal": root.alternativePlaybackRateGlobal,
+            "videoPlaybackRate": root.currentSource?.playbackRate ?? 0,
+            "videoAlternativePlaybackRate": root.currentSource?.alternativePlaybackRate ?? 0,
             "changeWallpaperMode": root.changeWallpaperMode,
             "shouldPlay": Qt.binding(() => root.shouldPlay),
             "lastVideoPosition": root.resumeLastVideo && root._restoreLastPosition ? root.lastVideoPosition : 0,
