@@ -28,6 +28,7 @@ import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrols 2.0 as KQuickControls
 import "code/enum.js" as Enum
+import "code/utils.js" as Utils
 import "components" as Components
 
 /**
@@ -1351,6 +1352,7 @@ ColumnLayout {
                     required property real alternativePlaybackRate
                     required property bool loop
                     required property int dayNightPhase
+                    required property var model
                     readonly property string icon: Qt.resolvedUrl("../icons/dayNight/" + ["night", "sunrise", "day", "sunset", "disabled"][dayNightPhase] + ".svg")
                     // qmlformat off
                     readonly property string displayText: [
@@ -1381,6 +1383,24 @@ ColumnLayout {
                                 onMoveRequested: (oldIndex, newIndex) => {
                                     videosModel.moveItem(oldIndex, newIndex, 1);
                                 }
+                            }
+                            Button {
+                                flat: true
+                                hoverEnabled: true
+                                icon.name: "quickview-symbolic"
+                                onHoveredChanged: {
+                                    if (hovered) {
+                                        videoPreview.playerSource = itemDelegate.model;
+                                    } else {
+                                        videoPreview.playerSource = null;
+                                    }
+                                }
+                                Layout.fillHeight: true
+                                Layout.preferredWidth: height
+                                Kirigami.Theme.inherit: true
+                                ToolTip.delay: 1000
+                                ToolTip.visible: hovered
+                                ToolTip.text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Preview")
                             }
                             Button {
                                 icon.name: itemDelegate.enabled ? "checkmark-symbolic" : "dialog-close-symbolic"
@@ -1531,7 +1551,7 @@ ColumnLayout {
                                     id: mediaMenu
                                     y: parent.height
                                     MenuItem {
-                                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Preview…")
+                                        text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Open in default application…")
                                         icon.name: "document-preview-symbolic"
                                         onClicked: {
                                             Qt.openUrlExternally(itemDelegate.filename);
@@ -1571,6 +1591,55 @@ ColumnLayout {
                             }
                         }
                     }
+                }
+            }
+        }
+        Rectangle {
+            id: videoPreview
+            property var playerSource: null
+            height: Math.floor(Math.min(dropArea.height * 0.8, 600))
+            width: Math.floor(Math.min(dropArea.width * 0.8, 1024))
+            anchors.centerIn: parent
+            Kirigami.Theme.inherit: false
+            Kirigami.Theme.colorSet: Kirigami.Theme.View
+            color: Kirigami.Theme.backgroundColor
+            radius: Kirigami.Units.cornerRadius
+            visible: false
+            border.color: Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, Kirigami.Theme.frameContrast)
+            border.width: 1
+
+            onPlayerSourceChanged: {
+                if (playerSource) {
+                    previewTimer.restart();
+                } else {
+                    previewTimer.stop();
+                    videoPreview.visible = false;
+                    previewPlayer.playerSource = Utils.createVideo("");
+                }
+            }
+            Timer {
+                id: previewTimer
+                interval: Kirigami.Units.veryLongDuration
+                onTriggered: {
+                    previewPlayer.playerSource = videoPreview.playerSource;
+                    videoPreview.visible = true;
+                }
+            }
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: 4
+                color: root.cfg_BackgroundColor
+                clip: true
+                VideoPlayer {
+                    id: previewPlayer
+                    playerSource: Utils.createVideo("")
+                    shouldPlay: true
+                    debugEnabled: true
+                    anchors.fill: parent
+                    crossfadeEnabled: false
+                    audioFadeInOutDuration: root.cfg_AudioFadeInOutDuration * 1000
+                    fillBlur: root.cfg_FillBlur
+                    fillMode: root.cfg_FillMode
                 }
             }
         }
