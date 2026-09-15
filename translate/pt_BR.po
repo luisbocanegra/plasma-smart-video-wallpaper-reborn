@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 06:18+0000\n"
+"POT-Creation-Date: 2026-09-15 20:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Arthur Lobo <arthurciprianolobo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: package/contents/ui/VideoPlayer.qml:73
+#: package/contents/ui/VideoPlayer.qml:89
 #, kde-format
 msgid "Unknown"
 msgstr ""

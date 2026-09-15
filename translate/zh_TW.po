@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 06:18+0000\n"
+"POT-Creation-Date: 2026-09-15 20:02+0000\n"
 "PO-Revision-Date: 2026-07-02 03:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 26.07.70\n"
 
-#: package/contents/ui/VideoPlayer.qml:73
+#: package/contents/ui/VideoPlayer.qml:89
 #, kde-format
 msgid "Unknown"
 msgstr "未知"
