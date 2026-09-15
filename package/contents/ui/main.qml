@@ -38,7 +38,15 @@ WallpaperItem {
     property bool isLoading: true
     property string videoUrls: main.configuration.VideoUrls
     property list<var> videosConfig: []
-
+    property int longestLoadingTime: 0
+    property string longestLoadingVideo
+    readonly property int currentLoadingTime: player.player?.loadingTime ?? 0
+    onCurrentLoadingTimeChanged: {
+        if (currentLoadingTime > longestLoadingTime) {
+            longestLoadingTime = currentLoadingTime;
+            longestLoadingVideo = currentSource.filename;
+        }
+    }
     property int videosCount: videosConfig.length || 0
     property bool hasVideos: videosCount > 0
     property bool videoUpdatePending: false
@@ -436,7 +444,9 @@ WallpaperItem {
                         text += `id: ${Plasmoid.id}\n`;
                         text += `volume: ${player.player.volume.toFixed(2)}\n`;
                         text += `audioFadeInOutDuration: ${player.player.audioFadeInOutDuration}\n`;
-                        text += `currentAudioDevice: ${player.player.currentAudioDevice}`;
+                        text += `currentAudioDevice: ${player.player.currentAudioDevice}\n`;
+                        text += `loadingTime: current ${main.currentLoadingTime} longest ${main.longestLoadingTime}\n`;
+                        text += `longestLoadingVideo: ${main.longestLoadingVideo}`;
                         return text;
                     }
                 }
