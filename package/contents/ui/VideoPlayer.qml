@@ -23,6 +23,8 @@ Item {
     property bool shouldPlay: false
     property int lastVideoPosition: 0
     property bool debugEnabled: false
+    readonly property var creationDate: Date.now()
+    property int loadingTime: 0
 
     property int audioFadeInOutDuration: 5000
     property real fadeInOutRatio: {
@@ -161,6 +163,7 @@ Item {
                     break;
                 case MediaPlayer.BufferedMedia:
                     statusString = `${MediaPlayer.BufferedMedia} MediaPlayer.BufferedMedia`;
+                    root.loadingTime = Date.now() - root.creationDate;
                     break;
                 case MediaPlayer.EndOfMedia:
                     statusString = `${MediaPlayer.EndOfMedia} MediaPlayer.EndOfMedia`;
@@ -169,7 +172,7 @@ Item {
                     statusString = `${MediaPlayer.InvalidMedia} MediaPlayer.InvalidMedia`;
                     break;
                 }
-                console.log(this, "Media status:", statusString);
+                console.log(this, "Media status:", statusString, Date.now() - root.creationDate);
             }
             if (mediaStatus === MediaPlayer.EndOfMedia && !root.crossfadeEnabled && !root.ending) {
                 root.aboutToFinish();
