@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.15.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.1...v2.15.0) (2026-09-19)
+
+
+### Features
+
+* add button to show video preview on hover ([5464c21](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/5464c212f6bfc3b06c26280627f811c324ac9832)), closes [#188](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/188)
+* add day-night cycle ([#233](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/233)) ([420afbc](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/420afbcfe1f43a78dc9d4b4976a8b0008a95ecfe))
+* add French translation ([beabd6f](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/beabd6f670c73a71ce6085374b0dcfb7a1b3c1ea))
+* audio fade in and out ([7cbb79a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/7cbb79afa385ed6ff13c99fe699b1e6c7513cea1)), closes [#270](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/270)
+* crossfade animation is now cubic instead of linear ([#312](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/312)) ([85626ea](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/85626eab232e0924b6caaa8debcf423f905bcace))
+* load ahead time to work around blank frames between videos [#208](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/208) ([e4e6281](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e4e628137fc269831294dde15a06bcf607ee74e4))
+* resume playback on windowaperture effect (Peek at/Show desktop) ([30b6f8f](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/30b6f8ffa952dce31a21566b59878c2ea381d8c0)), closes [#37](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/37) [#101](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/101)
+* video decoding configuration ([c049ad9](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/c049ad9f20534c3ebdfabe5e56b04e6ec4f8d5f0))
+
+
+### Bug Fixes
+
+* day-night cycle detection on startup ([638994a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/638994a9e64eff7a1762bcd17e777f27198b2a03))
+* day-night phase button checked state ([09059f1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/09059f1a7d045fa809e0ef376ae9afe61d75ccb4))
+* enable clipping for DropArea ([3e597d6](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/3e597d6f73a3091e25b638259adbab30bfbb7ea9)), closes [#268](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/268)
+* gdbus_get_signal.sh leaking tail processes on every ScreenSaver signal ([e4cc9cd](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e4cc9cd6e36c119dcbd278d3942ba90bea65a736)), closes [#267](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/267)
+* not looping if crossfade is enabled with a single video ([e15e000](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e15e000615b98de64ae63fc5fd7db878d39c0736))
+* pause on fullscreen window not working ([01e54ce](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/01e54ceee16decb1c5e60dd10fce0764815b7582))
+* undefined wallpaper property error ([f4c5cdf](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/f4c5cdfa04d584d10677b65aecdd0b0079646943))
+* window tracking in Plasma 6.7 ([c80ad8d](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/c80ad8d8aff75f5329e3393fc002f82b35d57c44))
+
 ## [2.14.1](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.0...v2.14.1) (2026-08-19)
 
 
