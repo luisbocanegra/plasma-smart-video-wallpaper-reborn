@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.16.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.15.0...v2.16.0) (2026-09-20)
+
+
+### Features
+
+* Update Japanese and zh_CN Language ([#322](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/322)) ([865a20a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/865a20aded54a854afcacbd00ed23a6c5fc0e105))
+
 ## [2.15.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.14.1...v2.15.0) (2026-09-20)
 
 
