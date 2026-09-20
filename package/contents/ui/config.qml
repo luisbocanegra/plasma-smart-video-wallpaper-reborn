@@ -1269,10 +1269,19 @@ ColumnLayout {
 
             Kirigami.SelectableLabel {
                 visible: root.currentTab === 3
-                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "In case of issues, you can delete <code>%1</code> and logout or reboot to undo all the changes.", envVarsModel.plasmaEnvFile)
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "In case of issues, you can delete <strong>%1</strong> and logout or reboot to undo all the changes.", envVarsModel.plasmaEnvFile)
                 Layout.preferredWidth: 650
                 wrapMode: Label.WordWrap
                 onLinkActivated: link => Qt.openUrlExternally(link)
+                textFormat: Text.RichText
+            }
+
+            Kirigami.SelectableLabel {
+                visible: root.currentTab === 3
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "These settings only apply to the Desktop and Lock screen, for them to also work on the Login Screen copy <strong>$HOME/.config/plasma-workspace/env/luisbocanegra.smart.video.wallpaper.reborn.sh</strong> to <strong>/etc/profile.d/</strong> or copy its contents to <strong>/etc/environment</strong>.")
+                Layout.preferredWidth: 650
+                wrapMode: Label.WordWrap
+                // onLinkActivated: link => Qt.openUrlExternally(link)
                 textFormat: Text.RichText
             }
 
@@ -1286,9 +1295,9 @@ ColumnLayout {
                 visible: root.currentTab === 3
             }
 
-            Kirigami.SelectableLabel {
+            Kirigami.Heading {
                 visible: root.currentTab === 3
-                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Possible values based on GPU combination:")
+                text: i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Pick one based on the GPUs in your system")
                 Layout.preferredWidth: 650
                 wrapMode: Label.WordWrap
             }
