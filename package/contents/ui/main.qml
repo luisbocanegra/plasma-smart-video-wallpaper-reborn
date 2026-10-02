@@ -299,7 +299,7 @@ WallpaperItem {
     }
 
     function nextVideo(forceSwitch) {
-        if (main.changeWallpaperMode === Enum.ChangeWallpaperMode.Never || currentSource.loop || main.videosConfig.length === 1) {
+        if (main.changeWallpaperMode !== Enum.ChangeWallpaperMode.Slideshow || currentSource.loop || main.videosConfig.length === 1) {
             player.player.ending = true;
             player.loadVideo();
         } else {
