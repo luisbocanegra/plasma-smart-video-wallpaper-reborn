@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.16.0...v2.17.0) (2026-10-12)
+
+
+### Features
+
+* Update French (fr_FR) translation ([#328](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/328)) ([e31379a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e31379a8bf4550ece591b0ef6306ae3ec4f02dd7))
+
 ## [2.16.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.15.0...v2.16.0) (2026-10-04)
 
 
