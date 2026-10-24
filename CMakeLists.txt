@@ -31,6 +31,12 @@ message("Version: ${CUR_VERSION}")
 if(INSTALL_WALLPAPER)
     find_package(Plasma ${PROJECT_DEP_VERSION} REQUIRED)
     plasma_install_package(package ${PLUGIN_ID} wallpapers)
+
+    install(PROGRAMS
+        "${CMAKE_CURRENT_SOURCE_DIR}/package/contents/ui/tools/gdbus_get_signal.sh"
+        DESTINATION "${PLASMA_DATA_INSTALL_DIR}/wallpapers/${PLUGIN_ID}/contents/ui/tools"
+    )
+
     add_subdirectory(translate)
 endif()
 
