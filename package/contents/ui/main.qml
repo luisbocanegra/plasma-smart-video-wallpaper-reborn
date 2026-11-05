@@ -289,7 +289,7 @@ WallpaperItem {
 
     function setNextSource() {
         printLog("- Prev " + currentVideoIndex + ": " + currentSource.filename);
-        currentVideoIndex = (currentVideoIndex + 1) % videosConfig.length;
+        currentVideoIndex = (currentVideoIndex + 1) % videosCount;
         printLog("- Next " + currentVideoIndex + ": " + currentSource.filename);
     }
 
@@ -339,13 +339,13 @@ WallpaperItem {
             anchors.fill: parent
             muted: main.muteAudio
             lastVideoPosition: main.configuration.LastVideoPosition
-            visible: main.videosConfig.length !== 0
+            visible: videosCount !== 0
             onSetNextSource: {
                 printLog("main.player.onSetNextSource");
                 main.nextVideo();
             }
             crossfadeEnabled: main.crossfadeEnabled
-            multipleVideos: main.videosConfig.length > 1
+            multipleVideos: videosCount > 1
             targetCrossfadeDuration: main.configuration.CrossfadeDuration
             debugEnabled: main.debugEnabled
             changeWallpaperMode: main.changeWallpaperMode

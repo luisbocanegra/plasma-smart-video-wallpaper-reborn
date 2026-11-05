@@ -29,16 +29,16 @@ StackView {
     property bool useAlternativePlaybackRate: false
     property string audioOutputDevice
     property bool shouldPlay: true
-    property int loops: {
-        if ((changeWallpaperMode === Enum.ChangeWallpaperMode.Never || !multipleVideos) && !crossfadeEnabled) {
-            return MediaPlayer.Infinite;
-        }
-        return 1;
-    }
+    property int loops: MediaPlayer.Infinite
 
-    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, loops, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime]
+    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime]
 
     onPropertiesMonitorChanged: {
+        if (!multipleVideos || (currentSource?.loop && !crossfadeEnabled) || changeWallpaperMode !== Enum.ChangeWallpaperMode.Slideshow) {
+            root.loops = MediaPlayer.Infinite;
+        } else {
+            root.loops = 1;
+        }
         if (root.currentItem) {
             root.currentItem.globalVolume = root.globalVolume;
             root.currentItem.muted = root.muted;
