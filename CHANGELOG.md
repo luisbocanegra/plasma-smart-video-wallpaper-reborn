@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.17.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.16.0...v2.17.0) (2026-11-06)
+
+
+### Features
+
+* Update French (fr_FR) translation ([#328](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/328)) ([e31379a](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/e31379a8bf4550ece591b0ef6306ae3ec4f02dd7))
+
+
+### Bug Fixes
+
+* do not hardcode intel_backlight or call kscreen-doctor without a display ([1ee2ff3](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/1ee2ff30bd82f2bf0d4226d0ce0cf328870d4c32))
+* don't create audio stream when mute is set to always ([23ac9b3](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/23ac9b37d8685040edf4c1ee91a022581ff65ad5))
+* preserve executable bit of gdbus_get_signal.sh when installing ([#332](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/332)) ([0b4beb8](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/0b4beb873850d5a857fe35af9d63571d9df35e63))
+* video restarts when it should loop seamlessly ([bce3c4e](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/commit/bce3c4eadd54e87e4105a17ecfd6c7e9f88fb7aa)), closes [#331](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/issues/331)
+
 ## [2.16.0](https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn/compare/v2.15.0...v2.16.0) (2026-10-04)
 
 
