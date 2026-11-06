@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:51+0000\n"
+"POT-Creation-Date: 2026-11-06 00:52+0000\n"
 "PO-Revision-Date: 2026-10-10 05:57+0200\n"
 "Last-Translator: Lorsoen <fashim99@gmail.com>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: package/contents/ui/VideoPlayer.qml:89
+#: package/contents/ui/VideoPlayer.qml:90
 #, kde-format
 msgid "Unknown"
 msgstr "Inconnu"
@@ -37,9 +37,9 @@ msgstr "Merci d'avoir choisi Smart Video Wallpaper Reborn !"
 #: package/contents/ui/components/Donate.qml:15
 #, kde-format
 msgid ""
-"If you enjoy using the plugin please consider sponsoring or donating so I can "
-"dedicate more time to maintain and improve this and <a href=\"%1\">my other "
-"projects</a>."
+"If you enjoy using the plugin please consider sponsoring or donating so I "
+"can dedicate more time to maintain and improve this and <a href=\"%1\">my "
+"other projects</a>."
 msgstr ""
 "Si vous aimez ce plugin, pensez à me sponsoriser / faire un don pour que je "
 "puisse allouer plus de temps à l'entretenir et l'améliorer, en plus de <a "
@@ -260,16 +260,17 @@ msgstr ""
 #, kde-format
 msgid ""
 "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
-"recover from crash remove the videos from the configuration using the command "
-"below in a terminal/tty then reboot:<br><strong><code>sed -i 's/"
+"recover from crash remove the videos from the configuration using the "
+"command below in a terminal/tty then reboot:<br><strong><code>sed -i 's/"
 "^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
 "Plantage / Écran noir ? Essayez de changer le backend Qt Media sur gstreamer."
 "<br>Pour sortir du plantage, retirez les vidéos de la configuration avec la "
 "commande suivante dans un terminal / tty, puis redémarrez :"
-"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-"
-"org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
+"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
+"code></strong>"
 
 #: package/contents/ui/config.qml:396
 #, kde-format
@@ -599,13 +600,13 @@ msgstr "Fondu d'entrée / sortie audio"
 msgid ""
 "Gradually increase and decrease the volume at the beginning and end of "
 "videos. If crossfade is enabled, the final volume is a multiplication of the "
-"volume produced by the crossfade and the volume produced by the audio fade in/"
-"out."
+"volume produced by the crossfade and the volume produced by the audio fade "
+"in/out."
 msgstr ""
 "Augmente et diminue progressivement le volume eu début et à la fin de la "
-"vidéo. Si le fondu enchaîné est actif, le volume final est une multiplication "
-"du volume causé par le fondu avec celui produit par le fondu d'entrée / "
-"sortie audio."
+"vidéo. Si le fondu enchaîné est actif, le volume final est une "
+"multiplication du volume causé par le fondu avec celui produit par le fondu "
+"d'entrée / sortie audio."
 
 #: package/contents/ui/config.qml:962
 #, kde-format
@@ -754,8 +755,8 @@ msgstr "Une déconnexion est requise pour appliquer ces changements !"
 #: package/contents/ui/config.qml:1272
 #, kde-format
 msgid ""
-"In case of issues, you can delete <strong>%1</strong> and logout or reboot to "
-"undo all the changes."
+"In case of issues, you can delete <strong>%1</strong> and logout or reboot "
+"to undo all the changes."
 msgstr ""
 "En cas de problème, vous pouvez supprimer <strong>%1</strong> et vous "
 "déconnecter / redémarrer pour annuler les changements."
@@ -766,7 +767,8 @@ msgid ""
 "These settings only apply to the Desktop and Lock screen, for them to also "
 "work on the Login Screen copy <strong>$HOME/.config/plasma-workspace/env/"
 "luisbocanegra.smart.video.wallpaper.reborn.sh</strong> to <strong>/etc/"
-"profile.d/</strong> or copy its contents to <strong>/etc/environment</strong>."
+"profile.d/</strong> or copy its contents to <strong>/etc/environment</"
+"strong>."
 msgstr ""
 "Ces options ne s'appliquent qu'au bureau et à l'écran de verrouillage. Pour "
 "les appliquer à l'écran de connexion, copiez <strong>$HOME/.config/ plasma-"
@@ -800,13 +802,14 @@ msgstr ""
 #: package/contents/ui/config.qml:1312
 #, kde-format
 msgid ""
-"AMD only or paired with another vendor GPU:<br>- FFmpeg + VA-API acceleration "
-"backend + radeonsi VA-API driver<br>- FFmpeg + Vulkan acceleration backend if "
-"AMD is the primary renderer or the other GPU does not support it"
+"AMD only or paired with another vendor GPU:<br>- FFmpeg + VA-API "
+"acceleration backend + radeonsi VA-API driver<br>- FFmpeg + Vulkan "
+"acceleration backend if AMD is the primary renderer or the other GPU does "
+"not support it"
 msgstr ""
-"AMD uniquement / de pair avec un GPU d'une autre marque :<br>- Backend FFmpeg "
-"+ VA-API + Pilote radeonsi VA-API<br>- FFmpeg + Backend Vulkan si AMD est le "
-"GPU principal ou que le deuxième ne le prend pas en charge"
+"AMD uniquement / de pair avec un GPU d'une autre marque :<br>- Backend "
+"FFmpeg + VA-API + Pilote radeonsi VA-API<br>- FFmpeg + Backend Vulkan si AMD "
+"est le GPU principal ou que le deuxième ne le prend pas en charge"
 
 #: package/contents/ui/config.qml:1318
 #, kde-format
@@ -919,8 +922,8 @@ msgid ""
 "You can use this to force a specific gpu, for example by setting "
 "<strong>vaapi</strong> to use an integrated Intel/AMD gpu instead of a "
 "dedicated NVIDIA gpu, which normally uses <strong>cuda</strong>.<br><br>It's "
-"important to note that this may not work with some setups, create an issue on "
-"GitHub or ping me on the Discord server if you need help."
+"important to note that this may not work with some setups, create an issue "
+"on GitHub or ping me on the Discord server if you need help."
 msgstr ""
 "Vous pouvez l'utiliser pour forcer un GPU en particulier, en choisissant par "
 "exemple <strong>VAAPI</strong> pour utiliser le GPU Intel / AMD intégré au "
@@ -972,15 +975,15 @@ msgstr "Désactiver la conversion des textures matérielles :"
 msgid ""
 "GPU-based conversion for decoded and rendered video frames can significantly "
 "reduce CPU usage.<br>It is recommended to keep this disabled (unchecked) "
-"unless you encounter rendering issues like <a href='%1'>#104</a>, or log spam "
-"like the following:<br><code>eglCreateImage failed for plane 0 with error "
-"code 12300</code><br><code>vaExportSurfaceHandle failed</code>"
+"unless you encounter rendering issues like <a href='%1'>#104</a>, or log "
+"spam like the following:<br><code>eglCreateImage failed for plane 0 with "
+"error code 12300</code><br><code>vaExportSurfaceHandle failed</code>"
 msgstr ""
 "La conversion par GPU pour les images vidéo décodées et rendues peut "
-"sensiblement réduire l'utilisation du CPU.<br>Il est recommandé de la laisser "
-"inactive (décoché) sauf si vous rencontrez des problèmes de rendu comme sur "
-"<ahref='%1'>#104<a>, ou que le journal est rempli d'erreurs ressemblant à : "
-"<br><code>eglCreateImage failed for plane 0 with error code "
+"sensiblement réduire l'utilisation du CPU.<br>Il est recommandé de la "
+"laisser inactive (décoché) sauf si vous rencontrez des problèmes de rendu "
+"comme sur <ahref='%1'>#104<a>, ou que le journal est rempli d'erreurs "
+"ressemblant à : <br><code>eglCreateImage failed for plane 0 with error code "
 "12300<code><br><code>vaExportSurfaceHandle failed</code>"
 
 #: package/contents/ui/config.qml:1643
@@ -1070,8 +1073,8 @@ msgstr "Fichier local ou URL statique"
 #: package/contents/ui/config.qml:1830
 #, kde-format
 msgid ""
-"Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to ignore "
-"this setting."
+"Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
+"ignore this setting."
 msgstr ""
 "Vitesse de lecture pour cette vidéo. Le minimum accepté est 0.01. Mettez 0.0 "
 "pour ignorer cette option."
@@ -1082,8 +1085,8 @@ msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
 msgstr ""
-"Vitesse de lecture alternative pour cette vidéo. Le minimum accepté est 0.01. "
-"Mettez 0.0 pour ignorer cette option."
+"Vitesse de lecture alternative pour cette vidéo. Le minimum accepté est "
+"0.01. Mettez 0.0 pour ignorer cette option."
 
 #: package/contents/ui/config.qml:1873
 #, kde-format
@@ -1093,8 +1096,8 @@ msgid ""
 "<strong>%1</strong>"
 msgstr ""
 "Phase du jour où la vidéo jouera. Si <strong>Désactivé</strong> est choisi, "
-"la vidéo se lancera, peu importe la phase actuelle.<br>Moment de la journée : "
-"<strong>%1</strong>"
+"la vidéo se lancera, peu importe la phase actuelle.<br>Moment de la "
+"journée : <strong>%1</strong>"
 
 #: package/contents/ui/config.qml:1888
 #, kde-format
@@ -1104,8 +1107,8 @@ msgid ""
 "next video in the list."
 msgstr ""
 "Lorsque cette option est active, la vidéo bouclera au lieu de défiler."
-"<br>Utilisez <strong>Vidéo suivante</strong> depuis le menu Clic droit sur le "
-"bureau pour jouer la prochaine dans la liste."
+"<br>Utilisez <strong>Vidéo suivante</strong> depuis le menu Clic droit sur "
+"le bureau pour jouer la prochaine dans la liste."
 
 #: package/contents/ui/config.qml:1902
 #, kde-format
@@ -1152,42 +1155,42 @@ msgstr "Tous les fichiers"
 msgid "Video files"
 msgstr "Fichiers vidéo"
 
-#: package/contents/ui/main.qml:384
+#: package/contents/ui/main.qml:385
 #, kde-format
 msgid "No video source \n"
 msgstr "Aucune source vidéo \n"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:610
 #, kde-format
 msgid "Next Video"
 msgstr "Vidéo suivante"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Pause"
 msgstr "Pause"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Play"
 msgstr "Jouer"
 
-#: package/contents/ui/main.qml:621
+#: package/contents/ui/main.qml:622
 #, kde-format
 msgid "Default Playback"
 msgstr "Statut Pause par défaut"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Mute"
 msgstr "Muet"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Unmute"
 msgstr "Non muet"
 
-#: package/contents/ui/main.qml:644
+#: package/contents/ui/main.qml:646
 #, kde-format
 msgid "Default Muting"
 msgstr "Statut Muet par défaut"

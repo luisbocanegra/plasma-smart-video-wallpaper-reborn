@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:51+0000\n"
+"POT-Creation-Date: 2026-11-06 00:52+0000\n"
 "PO-Revision-Date: 2026-02-07 02:04-0600\n"
 "Last-Translator: Luis Bocanegra <luisbocanegra17b@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 25.12.2\n"
 
-#: package/contents/ui/VideoPlayer.qml:89
+#: package/contents/ui/VideoPlayer.qml:90
 #, kde-format
 msgid "Unknown"
 msgstr ""
@@ -1094,42 +1094,42 @@ msgstr "Todos los archivos"
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: package/contents/ui/main.qml:384
+#: package/contents/ui/main.qml:385
 #, kde-format
 msgid "No video source \n"
 msgstr "No hay fuente de vídeo \n"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:610
 #, kde-format
 msgid "Next Video"
 msgstr "Siguiente Vídeo"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Pause"
 msgstr "Pausar"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Play"
 msgstr "Reproducir"
 
-#: package/contents/ui/main.qml:621
+#: package/contents/ui/main.qml:622
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Reproducción"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Mute"
 msgstr "Silenciar"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Unmute"
 msgstr "Habilitar sonido"
 
-#: package/contents/ui/main.qml:644
+#: package/contents/ui/main.qml:646
 #, fuzzy, kde-format
 msgid "Default Muting"
 msgstr "Por defecto"
@@ -1139,14 +1139,15 @@ msgstr "Por defecto"
 #~ "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer."
 #~ "<br>To recover from crash remove the videos from the configuration using "
 #~ "this enabled below in terminal/tty then reboot:<br><strong><code>sed -i "
-#~ "'s/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma."
-#~ "desktop-appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
+#~ "'s/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-"
+#~ "org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</code></"
+#~ "strong>"
 #~ msgstr ""
 #~ "¿Se bloquea o se queda en negro? Pruebe a cambiar el backend de Qt Media "
 #~ "a gstreamer.<br>Para recuperarse de una falla, elimine los videos de la "
 #~ "configuración usando esto a continuación en la terminal/tty y luego "
-#~ "reinicie:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/."
-#~ "config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/"
+#~ "reinicie:<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' "
+#~ "$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/"
 #~ "kscreenlockerrc</code></strong>"
 
 #, kde-format

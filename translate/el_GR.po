@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:51+0000\n"
+"POT-Creation-Date: 2026-11-06 00:52+0000\n"
 "PO-Revision-Date: 2025-02-18 13:47+0200\n"
 "Last-Translator: omen <elahistos@yahoo.gr>\n"
 "Language-Team: Greek <kde-i18n-doc@kde.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.12.2\n"
 
-#: package/contents/ui/VideoPlayer.qml:89
+#: package/contents/ui/VideoPlayer.qml:90
 #, kde-format
 msgid "Unknown"
 msgstr ""
@@ -263,8 +263,8 @@ msgstr ""
 "gstreamer.<br>Για να ανακάμψετε από την πτώση, αφαιρέστε τα βίντεο από τη "
 "διαμόρφωση χρησιμοποιώντας αυτήν την εντολή παρακάτω στο τερματικό/tty και, "
 "στη συνέχεια, επανεκκινήστε:<br><strong><code>sed -i 's/^VideoUrls=.*$/"
-"VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc $HOME/."
-"config/kscreenlockerrc</code></strong>"
+"VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-appletsrc "
+"$HOME/.config/kscreenlockerrc</code></strong>"
 
 #: package/contents/ui/config.qml:396
 #, kde-format
@@ -1075,42 +1075,42 @@ msgstr "Όλα τα αρχεία"
 msgid "Video files"
 msgstr "Αρχεία βίντεο"
 
-#: package/contents/ui/main.qml:384
+#: package/contents/ui/main.qml:385
 #, kde-format
 msgid "No video source \n"
 msgstr "Χωρίς πηγή βίντεο \n"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:610
 #, kde-format
 msgid "Next Video"
 msgstr ""
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Pause"
 msgstr ""
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Play"
 msgstr ""
 
-#: package/contents/ui/main.qml:621
+#: package/contents/ui/main.qml:622
 #, fuzzy, kde-format
 msgid "Default Playback"
 msgstr "Αναπαραγωγή"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Mute"
 msgstr ""
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Unmute"
 msgstr ""
 
-#: package/contents/ui/main.qml:644
+#: package/contents/ui/main.qml:646
 #, kde-format
 msgid "Default Muting"
 msgstr ""
