@@ -338,6 +338,7 @@ WallpaperItem {
             id: player
             anchors.fill: parent
             muted: main.muteAudio
+            disableAudioOutput: main.configuration.MuteMode === Enum.MuteMode.Always
             lastVideoPosition: main.configuration.LastVideoPosition
             visible: videosCount !== 0
             onSetNextSource: {
@@ -637,6 +638,7 @@ WallpaperItem {
             }
         },
         PlasmaCore.Action {
+            visible: main.configuration.MuteMode !== Enum.MuteMode.Always
             text: {
                 if (main.muteOverride === Enum.MuteOverride.Default) {
                     return main.muteAudio ? i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Unmute") : i18nd("plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn", "Mute");

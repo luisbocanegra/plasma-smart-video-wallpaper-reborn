@@ -30,8 +30,9 @@ StackView {
     property string audioOutputDevice
     property bool shouldPlay: true
     property int loops: MediaPlayer.Infinite
+    property bool disableAudioOutput: false
 
-    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime]
+    property list<var> propertiesMonitor: [currentSource, globalVolume, muted, fillMode, targetCrossfadeDuration, changeWallpaperMode, fillBlurRadius, fillBlur, audioOutputDevice, crossfadeEnabled, debugEnabled, useAlternativePlaybackRate, alternativePlaybackRateGlobal, globalPlaybackRate, audioFadeInOutDuration, loadAheadTime, disableAudioOutput]
 
     onPropertiesMonitorChanged: {
         if (!multipleVideos || (currentSource?.loop && !crossfadeEnabled) || changeWallpaperMode !== Enum.ChangeWallpaperMode.Slideshow) {
@@ -56,6 +57,7 @@ StackView {
             root.currentItem.globalPlaybackRate = root.globalPlaybackRate;
             root.currentItem.useAlternativePlaybackRate = root.useAlternativePlaybackRate;
             root.currentItem.alternativePlaybackRateGlobal = root.alternativePlaybackRateGlobal;
+            root.currentItem.disableAudioOutput = root.disableAudioOutput;
             root.currentItem.videoPlaybackRate = root.currentSource?.playbackRate ?? 0;
             root.currentItem.videoAlternativePlaybackRate = root.currentSource?.alternativePlaybackRate ?? 0;
         }
@@ -117,7 +119,8 @@ StackView {
             "lastVideoPosition": root.resumeLastVideo && root._restoreLastPosition ? root.lastVideoPosition : 0,
             "debugEnabled": root.debugEnabled,
             "audioFadeInOutDuration": root.audioFadeInOutDuration,
-            "loadAheadTime": root.loadAheadTime
+            "loadAheadTime": root.loadAheadTime,
+            "disableAudioOutput": root.disableAudioOutput
         };
         pendingVideo = baseVideo.createObject(root, properties);
 
