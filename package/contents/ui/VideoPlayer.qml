@@ -44,6 +44,7 @@ Item {
 
     property int audioFadeInOutDuration: 5000
     property int loadAheadTime: 0
+    property bool disableAudioOutput: false
 
     readonly property real fadeInOutRatio: {
         if (audioFadeInOutDuration === 0) {
@@ -156,7 +157,7 @@ Item {
     MediaPlayer {
         id: player
         videoOutput: videoOutput
-        audioOutput: audioOutput
+        audioOutput: root.disableAudioOutput ? null : audioOutput
         source: root.playerSource?.filename ?? ""
         playbackRate: root.playbackRate
         autoPlay: true
