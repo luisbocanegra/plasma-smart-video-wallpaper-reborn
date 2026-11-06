@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luisbocanegra.smart.video.wallpaper.reborn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:51+0000\n"
+"POT-Creation-Date: 2026-11-06 00:52+0000\n"
 "PO-Revision-Date: 2026-09-20 11:51+0800\n"
 "Last-Translator: KairikiFedora <13278297951@sina.cn>\n"
 "Language-Team: KairikiFedora <13278297951@sina.cn>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.9\n"
 
-#: package/contents/ui/VideoPlayer.qml:89
+#: package/contents/ui/VideoPlayer.qml:90
 #, kde-format
 msgid "Unknown"
 msgstr "不明"
@@ -39,8 +39,9 @@ msgid ""
 "can dedicate more time to maintain and improve this and <a href=\"%1\">my "
 "other projects</a>."
 msgstr ""
-"プラグインの使用を楽しんでいただけたら、スポンサーになったり寄付を検討していただけるとありがたいです。そうすれば、これおよび<a "
-"href=\"%1\">他のプロジェクト</a>の維持・改善にもっと時間を費やすことができます。"
+"プラグインの使用を楽しんでいただけたら、スポンサーになったり寄付を検討してい"
+"ただけるとありがたいです。そうすれば、これおよび<a href=\"%1\">他のプロジェク"
+"ト</a>の維持・改善にもっと時間を費やすことができます。"
 
 #: package/contents/ui/components/Donate.qml:27
 #, kde-format
@@ -247,21 +248,25 @@ msgstr "情報オーバーレイを表示し、デバッグメッセージをシ
 #: package/contents/ui/config.qml:384
 #, kde-format
 msgid "Videos are loaded in RAM, bigger files will use more system resources!"
-msgstr "ビデオはRAMに読み込まれます。大きなファイルはより多くのシステムリソースを使用します！"
+msgstr ""
+"ビデオはRAMに読み込まれます。大きなファイルはより多くのシステムリソースを使用"
+"します！"
 
 #: package/contents/ui/config.qml:391
 #, kde-format
 msgid ""
 "Crashes/Black screen? Try changing the Qt Media Backend to gstreamer.<br>To "
 "recover from crash remove the videos from the configuration using the "
-"command below in a terminal/tty then reboot:<br><strong><code>sed -i "
-"'s/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
+"command below in a terminal/tty then reboot:<br><strong><code>sed -i 's/"
+"^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-org.kde.plasma.desktop-"
 "appletsrc $HOME/.config/kscreenlockerrc</code></strong>"
 msgstr ""
-"クラッシュ/ブラックスクリーンですか？Qtメディアバックエンドをgstreamerに変更してみてください。<br>クラッシュから回復するには、下記のコマンドを端末/ttyで実行して設定からビデオを削除し、その後再起動してください：<br><strong><code>sed"
-" -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/plasma-"
-"org.kde.plasma.desktop-appletsrc "
-"$HOME/.config/kscreenlockerrc</code></strong>"
+"クラッシュ/ブラックスクリーンですか？Qtメディアバックエンドをgstreamerに変更"
+"してみてください。<br>クラッシュから回復するには、下記のコマンドを端末/ttyで"
+"実行して設定からビデオを削除し、その後再起動してください："
+"<br><strong><code>sed -i 's/^VideoUrls=.*$/VideoUrls=/g' $HOME/.config/"
+"plasma-org.kde.plasma.desktop-appletsrc $HOME/.config/kscreenlockerrc</"
+"code></strong>"
 
 #: package/contents/ui/config.qml:396
 #, kde-format
@@ -271,9 +276,11 @@ msgstr "Qt メディアバックエンドの指示"
 #: package/contents/ui/config.qml:406
 #, kde-format
 msgid ""
-"Make sure to enable Hardware video acceleration in your system to reduce "
-"CPU/GPU usage when videos are playing."
-msgstr "動画再生時のCPU/GPU使用率を下げるために、システムでハードウェアビデオアクセラレーションを有効にしてください。"
+"Make sure to enable Hardware video acceleration in your system to reduce CPU/"
+"GPU usage when videos are playing."
+msgstr ""
+"動画再生時のCPU/GPU使用率を下げるために、システムでハードウェアビデオアクセラ"
+"レーションを有効にしてください。"
 
 #: package/contents/ui/config.qml:411
 #, kde-format
@@ -385,13 +392,14 @@ msgstr "設定"
 #: package/contents/ui/config.qml:542
 #, kde-format
 msgid ""
-"⚠ The C++ plugin is not available, this feature will not work. Switch to the"
-" Smart Video Wallpaper Reborn package for your distribution if available, or"
-" build the plugin from source. See <a href='%1'>install instructions</a>."
+"⚠ The C++ plugin is not available, this feature will not work. Switch to the "
+"Smart Video Wallpaper Reborn package for your distribution if available, or "
+"build the plugin from source. See <a href='%1'>install instructions</a>."
 msgstr ""
-"⚠ C++プラグインが利用できないため、この機能は動作しません。ディストリビューション向けのSmart Video Wallpaper "
-"Rebornパッケージがあれば切り替えてください。なければソースからプラグインをビルドしてください。<a "
-"href='%1'>インストール手順</a>を参照してください。"
+"⚠ C++プラグインが利用できないため、この機能は動作しません。ディストリビュー"
+"ション向けのSmart Video Wallpaper Rebornパッケージがあれば切り替えてくださ"
+"い。なければソースからプラグインをビルドしてください。<a href='%1'>インストー"
+"ル手順</a>を参照してください。"
 
 #: package/contents/ui/config.qml:551
 #, kde-format
@@ -434,7 +442,9 @@ msgstr "半径: %1px"
 msgid ""
 "Quality of the blur is reduced if value exceeds 64. Higher values may cause "
 "the blur to stop working!"
-msgstr "値が64を超えるとぼかしの品質が低下します。より高い値はぼかしが機能しなくなる原因となる可能性があります！"
+msgstr ""
+"値が64を超えるとぼかしの品質が低下します。より高い値はぼかしが機能しなくなる"
+"原因となる可能性があります！"
 
 #: package/contents/ui/config.qml:632
 #, kde-format
@@ -468,8 +478,9 @@ msgid ""
 "change the wallpaper manually using <strong>Next Video</strong> from the "
 "Desktop right click menu."
 msgstr ""
-"選択した戦略を使用して次のビデオを自動的に再生します。デスクトップの右クリックメニューの <strong>次のビデオ</strong> "
-"を使って、壁紙を手動で変更することもできます。"
+"選択した戦略を使用して次のビデオを自動的に再生します。デスクトップの右クリッ"
+"クメニューの <strong>次のビデオ</strong> を使って、壁紙を手動で変更することも"
+"できます。"
 
 #: package/contents/ui/config.qml:692
 #, kde-format
@@ -525,7 +536,8 @@ msgid ""
 "Adds a smooth transition between videos. <strong>Uses additional Memory and "
 "may cause playback isues when enabled.</strong>"
 msgstr ""
-"動画の間にスムーズな切り替えを追加します。<strong>有効にすると追加のメモリを使用し、再生に問題が出ることがあります。</strong>"
+"動画の間にスムーズな切り替えを追加します。<strong>有効にすると追加のメモリを"
+"使用し、再生に問題が出ることがあります。</strong>"
 
 #: package/contents/ui/config.qml:825
 #, kde-format
@@ -535,10 +547,11 @@ msgstr "先読み時間："
 #: package/contents/ui/config.qml:848
 #, kde-format
 msgid ""
-"Loads the next video before the current one finishes to prevent blank frames"
-" between videos. Increase this value if you still see them."
+"Loads the next video before the current one finishes to prevent blank frames "
+"between videos. Increase this value if you still see them."
 msgstr ""
-"現在のビデオが終了する前に次のビデオを読み込み、ビデオ間の空白フレームを防ぎます。それでも空白フレームが表示される場合は、この値を大きくしてください。"
+"現在のビデオが終了する前に次のビデオを読み込み、ビデオ間の空白フレームを防ぎ"
+"ます。それでも空白フレームが表示される場合は、この値を大きくしてください。"
 
 #: package/contents/ui/config.qml:854
 #, kde-format
@@ -579,11 +592,13 @@ msgstr "オーディオのフェードイン/アウト（秒）："
 #, kde-format
 msgid ""
 "Gradually increase and decrease the volume at the beginning and end of "
-"videos. If crossfade is enabled, the final volume is a multiplication of the"
-" volume produced by the crossfade and the volume produced by the audio fade "
+"videos. If crossfade is enabled, the final volume is a multiplication of the "
+"volume produced by the crossfade and the volume produced by the audio fade "
 "in/out."
 msgstr ""
-"ビデオの先頭と末尾で音量を徐々に上げ下げします。クロスフェードが有効な場合、最終的な音量はクロスフェードによる音量とオーディオのフェードイン/アウトによる音量の積になります。"
+"ビデオの先頭と末尾で音量を徐々に上げ下げします。クロスフェードが有効な場合、"
+"最終的な音量はクロスフェードによる音量とオーディオのフェードイン/アウトによる"
+"音量の積になります。"
 
 #: package/contents/ui/config.qml:962
 #, kde-format
@@ -651,16 +666,18 @@ msgstr "画面状態コマンド："
 #, kde-format
 msgid ""
 "The command/script must return '0' (zero) or 'off' when the screen is off"
-msgstr "画面がオフのとき、コマンド/スクリプトは「0」または「off」を返さなければなりません"
+msgstr ""
+"画面がオフのとき、コマンド/スクリプトは「0」または「off」を返さなければなりま"
+"せん"
 
 #: package/contents/ui/config.qml:1160
 #, kde-format
 msgid ""
-"Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the"
-" wallpaper when they become active. Comma separated names."
+"Control how the Desktop Effects (e.g Overview or Peek at Desktop) affect the "
+"wallpaper when they become active. Comma separated names."
 msgstr ""
-"デスクトップエフェクト（例: "
-"概要表示やデスクトップのプレビュー）がアクティブになったときに壁紙にどのように影響するかを制御します。カンマで区切った名前。"
+"デスクトップエフェクト（例: 概要表示やデスクトップのプレビュー）がアクティブ"
+"になったときに壁紙にどのように影響するかを制御します。カンマで区切った名前。"
 
 #: package/contents/ui/config.qml:1170
 #, kde-format
@@ -690,9 +707,11 @@ msgstr "有効時に第2速度を有効にする："
 #: package/contents/ui/config.qml:1208
 #, kde-format
 msgid ""
-"Currently enabled and <u><strong><font color='%1'>active</font></strong></u>"
-" Desktop Effects:"
-msgstr "現在有効で<u><strong><font color='%1'>アクティブ</font></strong></u>なデスクトップ効果:"
+"Currently enabled and <u><strong><font color='%1'>active</font></strong></u> "
+"Desktop Effects:"
+msgstr ""
+"現在有効で<u><strong><font color='%1'>アクティブ</font></strong></u>なデスク"
+"トップ効果:"
 
 #: package/contents/ui/config.qml:1218
 #, kde-format
@@ -705,15 +724,17 @@ msgid ""
 "See <a href=\"%1\">Improve performance by enabling Hardware Video "
 "Acceleration</a> for how to enable and verify if it's working."
 msgstr ""
-"有効化方法と動作確認方法については、<a "
-"href=\"%1\">ハードウェアビデオアクセラレーションを有効にしてパフォーマンスを向上</a>を参照してください。"
+"有効化方法と動作確認方法については、<a href=\"%1\">ハードウェアビデオアクセラ"
+"レーションを有効にしてパフォーマンスを向上</a>を参照してください。"
 
 #: package/contents/ui/config.qml:1255
 #, kde-format
 msgid ""
 "Everything in this page will also affect other programs running inside "
 "Plasma, make sure video playback still works after changing any of this."
-msgstr "このページのすべての設定はPlasma内で実行中の他のプログラムにも影響します。変更後もビデオ再生が正常に動作することを確認してください。"
+msgstr ""
+"このページのすべての設定はPlasma内で実行中の他のプログラムにも影響します。変"
+"更後もビデオ再生が正常に動作することを確認してください。"
 
 #: package/contents/ui/config.qml:1264
 #, kde-format
@@ -725,19 +746,24 @@ msgstr "これらの変更を適用するにはログアウトが必要です！
 msgid ""
 "In case of issues, you can delete <strong>%1</strong> and logout or reboot "
 "to undo all the changes."
-msgstr "問題が発生した場合は、<strong>%1</strong>を削除してからログアウトまたは再起動すると、すべての変更を元に戻せます。"
+msgstr ""
+"問題が発生した場合は、<strong>%1</strong>を削除してからログアウトまたは再起動"
+"すると、すべての変更を元に戻せます。"
 
 #: package/contents/ui/config.qml:1281
 #, kde-format
 msgid ""
 "These settings only apply to the Desktop and Lock screen, for them to also "
-"work on the Login Screen copy <strong>$HOME/.config/plasma-"
-"workspace/env/luisbocanegra.smart.video.wallpaper.reborn.sh</strong> to "
-"<strong>/etc/profile.d/</strong> or copy its contents to "
-"<strong>/etc/environment</strong>."
+"work on the Login Screen copy <strong>$HOME/.config/plasma-workspace/env/"
+"luisbocanegra.smart.video.wallpaper.reborn.sh</strong> to <strong>/etc/"
+"profile.d/</strong> or copy its contents to <strong>/etc/environment</"
+"strong>."
 msgstr ""
-"これらの設定はデスクトップとロック画面にのみ適用されます。ログイン画面にも適用するには、<strong>$HOME/.config/plasma-"
-"workspace/env/luisbocanegra.smart.video.wallpaper.reborn.sh</strong>を<strong>/etc/profile.d/</strong>にコピーするか、その内容を<strong>/etc/environment</strong>にコピーしてください。"
+"これらの設定はデスクトップとロック画面にのみ適用されます。ログイン画面にも適"
+"用するには、<strong>$HOME/.config/plasma-workspace/env/"
+"luisbocanegra.smart.video.wallpaper.reborn.sh</strong>を<strong>/etc/"
+"profile.d/</strong>にコピーするか、その内容を<strong>/etc/environment</"
+"strong>にコピーしてください。"
 
 #: package/contents/ui/config.qml:1289 package/contents/ui/config.qml:1924
 #, kde-format
@@ -757,9 +783,10 @@ msgid ""
 "acceleration backend<br>- FFmpeg + Vulkan acceleration backend if Intel is "
 "the primary renderer or the other GPU does not support it"
 msgstr ""
-"Intel単体または他社GPUと併用：<br>- FFmpeg + VA-APIアクセラレーションバックエンド + iHD VA-"
-"APIドライバー<br>- FFmpeg + Quick Syncアクセラレーションバックエンド<br>- "
-"Intelがプライマリレンダラーであるか、他のGPUが対応していない場合はFFmpeg + Vulkanアクセラレーションバックエンド"
+"Intel単体または他社GPUと併用：<br>- FFmpeg + VA-APIアクセラレーションバックエ"
+"ンド + iHD VA-APIドライバー<br>- FFmpeg + Quick Syncアクセラレーションバック"
+"エンド<br>- Intelがプライマリレンダラーであるか、他のGPUが対応していない場合"
+"はFFmpeg + Vulkanアクセラレーションバックエンド"
 
 #: package/contents/ui/config.qml:1312
 #, kde-format
@@ -769,9 +796,9 @@ msgid ""
 "acceleration backend if AMD is the primary renderer or the other GPU does "
 "not support it"
 msgstr ""
-"AMD単体または他社GPUと併用：<br>- FFmpeg + VA-APIアクセラレーションバックエンド + radeonsi VA-"
-"APIドライバー<br>- AMDがプライマリレンダラーであるか、他のGPUが対応していない場合はFFmpeg + "
-"Vulkanアクセラレーションバックエンド"
+"AMD単体または他社GPUと併用：<br>- FFmpeg + VA-APIアクセラレーションバックエン"
+"ド + radeonsi VA-APIドライバー<br>- AMDがプライマリレンダラーであるか、他の"
+"GPUが対応していない場合はFFmpeg + Vulkanアクセラレーションバックエンド"
 
 #: package/contents/ui/config.qml:1318
 #, kde-format
@@ -780,8 +807,9 @@ msgid ""
 "acceleration backend<br>- FFmpeg + Vulkan acceleration backend if NVIDIA is "
 "the primary renderer or the other GPU does not support it"
 msgstr ""
-"NVIDIA単体または他社GPUと併用：<br>- FFmpeg + CUDAアクセラレーションバックエンド<br>- "
-"NVIDIAがプライマリレンダラーであるか、他のGPUが対応していない場合はFFmpeg + Vulkanアクセラレーションバックエンド"
+"NVIDIA単体または他社GPUと併用：<br>- FFmpeg + CUDAアクセラレーションバックエ"
+"ンド<br>- NVIDIAがプライマリレンダラーであるか、他のGPUが対応していない場合は"
+"FFmpeg + Vulkanアクセラレーションバックエンド"
 
 #: package/contents/ui/config.qml:1340
 #, kde-format
@@ -801,13 +829,16 @@ msgstr "システムのデフォルト"
 #, kde-format
 msgid ""
 "By default Qt will use the FFmpeg backend, if it causes playback issues in "
-"your system try switching to the GStreamer backend instead.<br><br>Make sure"
-" you have both backends installed in your system, on Arch the packages are "
-"<strong>qt6-multimedia-ffmpeg</strong> and <strong>qt6-multimedia-"
-"gstreamer</strong>"
+"your system try switching to the GStreamer backend instead.<br><br>Make sure "
+"you have both backends installed in your system, on Arch the packages are "
+"<strong>qt6-multimedia-ffmpeg</strong> and <strong>qt6-multimedia-gstreamer</"
+"strong>"
 msgstr ""
-"デフォルトではQtはFFmpegバックエンドを使用します。システムで再生の問題が発生する場合は、GStreamerバックエンドに切り替えてみてください。<br><br>両方のバックエンドがシステムにインストールされていることを確認してください。Archではパッケージは<strong>qt6-multimedia-"
-"ffmpeg</strong>と<strong>qt6-multimedia-gstreamer</strong>です。"
+"デフォルトではQtはFFmpegバックエンドを使用します。システムで再生の問題が発生"
+"する場合は、GStreamerバックエンドに切り替えてみてください。<br><br>両方のバッ"
+"クエンドがシステムにインストールされていることを確認してください。Archでは"
+"パッケージは<strong>qt6-multimedia-ffmpeg</strong>と<strong>qt6-multimedia-"
+"gstreamer</strong>です。"
 
 #: package/contents/ui/config.qml:1371 package/contents/ui/config.qml:1449
 #, kde-format
@@ -879,11 +910,15 @@ msgstr "NVIDIA、Intel、AMD。GPUとドライバーのサポートが必要"
 msgid ""
 "You can use this to force a specific gpu, for example by setting "
 "<strong>vaapi</strong> to use an integrated Intel/AMD gpu instead of a "
-"dedicated NVIDIA gpu, which normally uses <strong>cuda</strong>.<br><br>It's"
-" important to note that this may not work with some setups, create an issue "
+"dedicated NVIDIA gpu, which normally uses <strong>cuda</strong>.<br><br>It's "
+"important to note that this may not work with some setups, create an issue "
 "on GitHub or ping me on the Discord server if you need help."
 msgstr ""
-"特定のGPUを強制的に使用することもできます。例えば<strong>vaapi</strong>に設定すると、通常は<strong>cuda</strong>を使用するNVIDIA専用GPUの代わりに、Intel/AMD統合GPUを使用できます。<br><br>一部の構成では動作しないことがあります。サポートが必要な場合は、GitHubでIssueを作成するか、Discordサーバーでご連絡ください。"
+"特定のGPUを強制的に使用することもできます。例えば<strong>vaapi</strong>に設定"
+"すると、通常は<strong>cuda</strong>を使用するNVIDIA専用GPUの代わりに、Intel/"
+"AMD統合GPUを使用できます。<br><br>一部の構成では動作しないことがあります。サ"
+"ポートが必要な場合は、GitHubでIssueを作成するか、Discordサーバーでご連絡くだ"
+"さい。"
 
 #: package/contents/ui/config.qml:1457
 #, kde-format
@@ -893,9 +928,11 @@ msgstr "VA-APIドライバー："
 #: package/contents/ui/config.qml:1472
 #, kde-format
 msgid ""
-"Select the VA-API driver to use. See the link at the top of this section for"
-" the required system packages."
-msgstr "使用するVA-APIドライバーを選択してください。必要なシステムパッケージについては、このセクション上部のリンクを参照してください。"
+"Select the VA-API driver to use. See the link at the top of this section for "
+"the required system packages."
+msgstr ""
+"使用するVA-APIドライバーを選択してください。必要なシステムパッケージについて"
+"は、このセクション上部のリンクを参照してください。"
 
 #: package/contents/ui/config.qml:1478 package/contents/ui/config.qml:1507
 #: package/contents/ui/config.qml:1543
@@ -911,7 +948,9 @@ msgstr "VDPAUドライバー："
 #: package/contents/ui/config.qml:1501
 #, kde-format
 msgid "NVIDIA (and older AMD) not recommended or supported on modern hardware"
-msgstr "NVIDIA（および旧年式AMD）はモダンなハードウェアでは推奨されず、サポートされていません"
+msgstr ""
+"NVIDIA（および旧年式AMD）はモダンなハードウェアでは推奨されず、サポートされて"
+"いません"
 
 #: package/contents/ui/config.qml:1515
 #, kde-format
@@ -921,16 +960,17 @@ msgstr "ハードウェアテクスチャ変換を無効にする："
 #: package/contents/ui/config.qml:1532
 #, kde-format
 msgid ""
-"GPU-based conversion for decoded and rendered video frames can significantly"
-" reduce CPU usage.<br>It is recommended to keep this disabled (unchecked) "
+"GPU-based conversion for decoded and rendered video frames can significantly "
+"reduce CPU usage.<br>It is recommended to keep this disabled (unchecked) "
 "unless you encounter rendering issues like <a href='%1'>#104</a>, or log "
 "spam like the following:<br><code>eglCreateImage failed for plane 0 with "
 "error code 12300</code><br><code>vaExportSurfaceHandle failed</code>"
 msgstr ""
-"デコードおよびレンダリングされたビデオフレームのGPUベースの変換は、CPU使用率を大幅に削減できます。<br><a "
-"href='%1'>#104</a>のようなレンダリングの問題が発生するか、次のようなログの大量出力がない限り、これを無効（チェック解除）のままにすることをお勧めします：<br><code>eglCreateImage"
-" failed for plane 0 with error code "
-"12300</code><br><code>vaExportSurfaceHandle failed</code>"
+"デコードおよびレンダリングされたビデオフレームのGPUベースの変換は、CPU使用率"
+"を大幅に削減できます。<br><a href='%1'>#104</a>のようなレンダリングの問題が発"
+"生するか、次のようなログの大量出力がない限り、これを無効（チェック解除）のま"
+"まにすることをお勧めします：<br><code>eglCreateImage failed for plane 0 with "
+"error code 12300</code><br><code>vaExportSurfaceHandle failed</code>"
 
 #: package/contents/ui/config.qml:1643
 #, kde-format
@@ -1021,23 +1061,28 @@ msgstr "ローカルファイルまたは静的URL"
 msgid ""
 "Playback speed for this video. Minimum accepted is 0.01, set to 0.0 to "
 "ignore this setting."
-msgstr "このビデオの再生速度。最小許容値は0.01で、この設定を無視するには0.0に設定してください。"
+msgstr ""
+"このビデオの再生速度。最小許容値は0.01で、この設定を無視するには0.0に設定して"
+"ください。"
 
 #: package/contents/ui/config.qml:1847
 #, kde-format
 msgid ""
 "Alternative playback speed for this video. Minimum accepted is 0.01, set to "
 "0.0 to ignore this setting."
-msgstr "このビデオの代替再生速度。最低値は0.01で、この設定を無視するには0.0に設定してください。"
+msgstr ""
+"このビデオの代替再生速度。最低値は0.01で、この設定を無視するには0.0に設定して"
+"ください。"
 
 #: package/contents/ui/config.qml:1873
 #, kde-format
 msgid ""
-"Phase of the day at which this video will play. If set to "
-"<strong>Disabled</strong> the video will play regardless of the current "
-"phase. <br>Current: <strong>%1</strong>"
+"Phase of the day at which this video will play. If set to <strong>Disabled</"
+"strong> the video will play regardless of the current phase. <br>Current: "
+"<strong>%1</strong>"
 msgstr ""
-"このビデオが再生される時間帯。<strong>無効</strong>に設定すると、現在の時間帯に関係なく再生されます。<br>現在：<strong>%1</strong>"
+"このビデオが再生される時間帯。<strong>無効</strong>に設定すると、現在の時間帯"
+"に関係なく再生されます。<br>現在：<strong>%1</strong>"
 
 #: package/contents/ui/config.qml:1888
 #, kde-format
@@ -1046,7 +1091,9 @@ msgid ""
 "<strong>Next Video</strong> from the Desktop right click menu to play the "
 "next video in the list."
 msgstr ""
-"有効にすると、次の動画を再生する代わりに動画が繰り返されます。<br>リスト内の次の動画を再生するには、デスクトップの右クリックメニューから<strong>次の動画</strong>を使用してください。"
+"有効にすると、次の動画を再生する代わりに動画が繰り返されます。<br>リスト内の"
+"次の動画を再生するには、デスクトップの右クリックメニューから<strong>次の動画"
+"</strong>を使用してください。"
 
 #: package/contents/ui/config.qml:1902
 #, kde-format
@@ -1093,42 +1140,42 @@ msgstr "すべてのファイル"
 msgid "Video files"
 msgstr "ビデオファイル"
 
-#: package/contents/ui/main.qml:384
+#: package/contents/ui/main.qml:385
 #, kde-format
 msgid "No video source \n"
 msgstr "ビデオソースがありません \n"
 
-#: package/contents/ui/main.qml:609
+#: package/contents/ui/main.qml:610
 #, kde-format
 msgid "Next Video"
 msgstr "次のビデオ"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Pause"
 msgstr "一時停止"
 
-#: package/contents/ui/main.qml:619
+#: package/contents/ui/main.qml:620
 #, kde-format
 msgid "Play"
 msgstr "再生"
 
-#: package/contents/ui/main.qml:621
+#: package/contents/ui/main.qml:622
 #, kde-format
 msgid "Default Playback"
 msgstr "デフォルト再生"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Mute"
 msgstr "ミュート"
 
-#: package/contents/ui/main.qml:642
+#: package/contents/ui/main.qml:644
 #, kde-format
 msgid "Unmute"
 msgstr "ミュート解除"
 
-#: package/contents/ui/main.qml:644
+#: package/contents/ui/main.qml:646
 #, kde-format
 msgid "Default Muting"
 msgstr "デフォルトでミュート"
