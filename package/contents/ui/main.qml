@@ -364,16 +364,20 @@ WallpaperItem {
             loadAheadTime: main.configuration.LoadAheadTime
         }
     }
-    FastBlur {
+    property real blurRadius: main.showBlur ? main.configuration.BlurRadius : 0
+    Behavior on blurRadius {
+        NumberAnimation {
+            duration: main.blurAnimationDuration
+        }
+    }
+    // Only create the blur (and its offscreen textures) while the radius is non-zero
+    Loader {
         id: mainBlur
-        source: background
-        radius: main.showBlur ? main.configuration.BlurRadius : 0
-        visible: radius !== 0
+        active: main.blurRadius !== 0
         anchors.fill: background
-        Behavior on radius {
-            NumberAnimation {
-                duration: main.blurAnimationDuration
-            }
+        sourceComponent: FastBlur {
+            source: background
+            radius: main.blurRadius
         }
     }
 
