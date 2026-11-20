@@ -230,25 +230,30 @@ Item {
         }
     }
 
-    ShaderEffectSource {
-        id: videoBlur
-        width: parent.width * root.fitScale + (root.fillBlurRadius * 2)
-        height: parent.height * root.fitScale + (root.fillBlurRadius * 2)
-        sourceItem: root.showFillBlur ? videoOutput : null
-        live: true
-        anchors.centerIn: parent
-        clip: true
-        visible: false
-    }
-
-    FastBlur {
-        id: fillBlur
-        source: videoBlur
-        radius: root.fillBlurRadius
-        visible: root.showFillBlur && videoBlur.sourceItem
-        anchors.fill: videoBlur
-        anchors.centerIn: parent
+    // Only create the blur layers (and their offscreen textures) when actually shown
+    Loader {
+        active: root.showFillBlur
+        anchors.fill: parent
         z: -1
+        sourceComponent: Item {
+            ShaderEffectSource {
+                id: videoBlur
+                width: parent.width * root.fitScale + (root.fillBlurRadius * 2)
+                height: parent.height * root.fitScale + (root.fillBlurRadius * 2)
+                sourceItem: videoOutput
+                live: true
+                anchors.centerIn: parent
+                clip: true
+                visible: false
+            }
+
+            FastBlur {
+                id: fillBlur
+                source: videoBlur
+                radius: root.fillBlurRadius
+                anchors.fill: videoBlur
+            }
+        }
     }
 
     Component {
